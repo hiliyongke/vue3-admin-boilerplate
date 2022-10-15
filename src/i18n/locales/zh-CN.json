@@ -1,0 +1,11 @@
+{
+  "login": {
+    "login": "登录",
+    "userName": "用户名",
+    "password": "密码",
+    "time": "登录时间"
+  },
+  "common": {
+    "now": "当前时间:{time}"
+  }
+}

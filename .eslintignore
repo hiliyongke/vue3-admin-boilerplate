@@ -1,0 +1,8 @@
+# eslint 忽略检查
+node_modules
+# .vscode
+coverage
+dist
+release
+# .*.js
+/src/assets

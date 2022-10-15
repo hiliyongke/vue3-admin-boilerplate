@@ -1,0 +1,121 @@
+{
+  "store新建页面": {
+    "scope": "typescript",
+    "prefix": "store",
+    "body": [
+      "import { defineStore } from 'pinia'",
+      "import { piniaStore } from '@store'",
+      "",
+      "export const use$1Store = defineStore(",
+      "    '${1/(.*)/${1:/camelcase}/}',",
+      "    {",
+      "        state: () => ({}),",
+      "        getters: {},",
+      "        actions: {}",
+      "    }",
+      ")",
+      "",
+      "export function use$1OutsideStore() {",
+      "    return use$1Store(piniaStore)",
+      "}"
+    ],
+    "description": "store page"
+  },
+  "vue新建页面": {
+    "scope": "vue",
+    "prefix": "page",
+    "body": [
+      "<template>",
+      "    <div>",
+      "       $3",
+      "    </div>",
+      "</template>",
+      "",
+      "<script setup name='$1'>",
+      "// const { proxy } = getCurrentInstance()",
+      "// const router = useRouter()",
+      "// const route = useRoute()",
+      "    $2",
+      "</script>",
+      "",
+      "<style lang='less' scoped>",
+      "    $4",
+      "</style>"
+    ],
+    "description": "vue page"
+  },
+  "onBeforeMount": {
+    "prefix": "onBeforeMount",
+    "body": ["onBeforeMount(() => {", "  ${0}", "})"],
+    "description": "onBeforeMount 钩子"
+  },
+  "onMounted": {
+    "prefix": "onMounted",
+    "body": ["onMounted(() => {", "  ${0}", "})"],
+    "description": "onMounted 钩子"
+  },
+  "onBeforeUpdate": {
+    "prefix": "onBeforeUpdate",
+    "body": ["onBeforeUpdate(() => {", "  ${0}", "})"],
+    "description": "onBeforeUpdate 钩子"
+  },
+  "onUpdated": {
+    "prefix": "onUpdated",
+    "body": ["onUpdated(() => {", "  ${0}", "})"],
+    "description": "onUpdated 钩子"
+  },
+  "onBeforeUnmount": {
+    "prefix": "onBeforeUnmount",
+    "body": ["onBeforeUnmount(() => {", "  ${0}", "})"],
+    "description": "onBeforeUnmount 钩子"
+  },
+  "onUnmounted": {
+    "prefix": "onUnmounted",
+    "body": ["onUnmounted(() => {", "  ${0}", "})"],
+    "description": "onUnmounted 钩子"
+  },
+  "onErrorCaptured": {
+    "prefix": "onErrorCaptured",
+    "body": ["onErrorCaptured(() => {", "  ${0}", "})"],
+    "description": "onErrorCaptured 钩子"
+  },
+  "onRenderTracked": {
+    "prefix": "onRenderTracked",
+    "body": ["onRenderTracked(() => {", "  ${0}", "})"],
+    "description": "onRenderTracked 钩子"
+  },
+  "onRenderTriggered": {
+    "prefix": "onRenderTriggered",
+    "body": ["onRenderTriggered(() => {", "  ${0}", "})"],
+    "description": "onRenderTriggered 钩子"
+  },
+  "onActivated": {
+    "prefix": "onActivated",
+    "body": ["onActivated(() => {", "  ${0}", "})"],
+    "description": "onActivated 钩子"
+  },
+  "onDeactivated": {
+    "prefix": "onDeactivated",
+    "body": ["onDeactivated(() => {", "  ${0}", "})"],
+    "description": "onDeactivated 钩子"
+  },
+  "computed-to-fun": {
+    "prefix": "computed-to-fun",
+    "body": ["const ${1} = computed(() => {", "  ${2}", "})"],
+    "description": "setup中计算属性的函数写法"
+  },
+  "computed-to-obj": {
+    "prefix": "computed-to-obj",
+    "body": [
+      "const ${1} = computed({",
+      "  get: () => {",
+      "    ${2}",
+      "  },",
+      "  set: (val) => {",
+      "    ${3}",
+      "  },",
+      "})"
+    ],
+    "description": "setup中计算属性的对象写法"
+  }
+}

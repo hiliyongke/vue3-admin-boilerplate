@@ -1,0 +1,11 @@
+{
+  "login": {
+    "login": "Log in",
+    "userName": "userName",
+    "password": "password",
+    "time": "Log in time"
+  },
+  "common": {
+    "now": "now:{time}"
+  }
+}

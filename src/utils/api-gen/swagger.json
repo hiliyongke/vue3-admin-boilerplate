@@ -1,0 +1,10 @@
+[
+  {
+    "moduleName": "xx2",
+    "url": ""
+  },
+  {
+    "moduleName": "xx1",
+    "input": "./src/utils/api-gen/swagger1.json"
+  }
+]
