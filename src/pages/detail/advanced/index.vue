@@ -191,7 +191,7 @@ import {
 } from './constants';
 import { getPurchaseList } from '@/api/detail';
 
-import Product from './components/Product.vue';
+import Product from './components/product.vue';
 
 const data = ref([]);
 const pagination = ref({
