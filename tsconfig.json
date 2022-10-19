@@ -15,10 +15,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
     "moduleResolution": "node",
     "baseUrl": ".",
     "lib": ["esnext", "dom"],
-    "types": ["node", "vite-plugin-vue-layouts/client"],
+    "types": ["node"],
     "paths": {
       "@/*": ["src/*"],
       "@api/*": ["src/api/*"]

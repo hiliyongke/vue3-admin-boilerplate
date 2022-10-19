@@ -7,6 +7,7 @@
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
   },
+
   "editor.tabSize": 2,
   "stylelint.enable": true,
   "stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass"],
@@ -220,8 +221,10 @@
     "onlevelchange",
     "persistedstate",
     "pinia",
+    "plopfile",
     "pnpm",
     "preformance",
+    "preinstall",
     "qihu",
     "qqbrowser",
     "qrcode",
@@ -236,6 +239,7 @@
     "taze",
     "tdvns",
     "tinymce",
+    "tpls",
     "tvision",
     "typecheck",
     "ucbrowser",
@@ -247,6 +251,7 @@
     "versionrc",
     "vitejs",
     "vueuse",
+    "wangeditor",
     "wechat",
     "windi",
     "windicss",
@@ -307,5 +312,10 @@
     "XXX",
     "[ ]",
     "[x]"
-  ]
+  ],
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.referencesCodeLens.showOnAllFunctions": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true
 }

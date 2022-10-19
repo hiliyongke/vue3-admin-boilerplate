@@ -35,9 +35,17 @@ setupGlobalProperties(app);
 // 个性化控制台
 setupConsole();
 
+app.component('JsonSchemaEditor', JsonSchemaEditor);
+
 app.use(i18n);
 app.use(pinia);
 app.use(router);
 
-app.component('JsonSchemaEditor', JsonSchemaEditor);
-app.mount('#app');
+// 现在所有的导航都是异步的，等路由ready以后再进行挂载组件；
+router.isReady().then(() => app.mount('#app'));
+
+// 在导航期间每次发生未捕获的错误时都会调用该处理程序
+// eslint-disable-next-line no-console
+router.onError(err => {
+  console.error(err);
+});

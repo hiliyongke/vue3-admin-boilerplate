@@ -52,6 +52,18 @@ export default [
         meta: { title: '代码编辑器' }
       },
       {
+        path: 'rich-editor',
+        name: 'demo-rich-editor',
+        component: () => import('@/pages/demo/rich-editor/index.vue'),
+        meta: { title: '文本编辑器' }
+      },
+      {
+        path: 'md-editor',
+        name: 'demo-md-editor',
+        component: () => import('@/pages/demo/md-editor/index.vue'),
+        meta: { title: 'md编辑器' }
+      },
+      {
         path: 'guide',
         name: 'demo-guide',
         component: () => import('@/pages/demo/guide/index.vue'),
@@ -86,6 +98,34 @@ export default [
         name: 'demo-workflow',
         component: () => import('@/pages/demo/workflow/index.vue'),
         meta: { title: '工作流' }
+      },
+      {
+        path: 'qrcode',
+        name: 'demo-qrcode',
+        component: () => import('@/pages/demo/qrcode/index.vue'),
+        meta: { title: '二维码' }
+      },
+      {
+        path: 'css-tree',
+        name: 'demo-css-tree',
+        redirect: '/demo/css-h-tree',
+        meta: { title: 'css-tree' },
+        children: [
+          {
+            path: 'css-h-tree',
+            name: 'demo-css-h-tree',
+            component: () =>
+              import('@/pages/demo/css-tree/horizontal-tree/index.vue'),
+            meta: { title: 'css-horizontal-tree' }
+          },
+          {
+            path: 'css-v-tree',
+            name: 'demo-css-v-tree',
+            component: () =>
+              import('@/pages/demo/css-tree/vertical-tree/index.vue'),
+            meta: { title: 'vertical-tree' }
+          }
+        ]
       },
       {
         path: 'secondePage',

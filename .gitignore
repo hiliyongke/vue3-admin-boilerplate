@@ -20,3 +20,5 @@ types/components.d.ts
 *.njsproj
 *.sln
 *.sw?
+!.eslintrc.js
+!.versionrc.js

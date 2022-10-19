@@ -11,7 +11,7 @@ module.exports = {
     },
     {
       type: 'feat',
-      section: '✨【feat】:新功能'
+      section: '✨【feat】:新增功能'
     },
     {
       type: 'fix',
@@ -30,7 +30,7 @@ module.exports = {
     {
       type: 'refactor',
       hidden: true,
-      section: '📦【refactor】:代码重构'
+      section: '📦【refactor】:代码重构（不包括 bug 修复、功能新增）'
     },
     {
       type: 'merge',
@@ -40,17 +40,18 @@ module.exports = {
     {
       type: 'test',
       hidden: true,
-      section: '🚨【test】:单元测试'
+      section: '🚨【test】:添加、修改测试用例'
     },
     {
       type: 'chore',
       hidden: true,
-      section: '🔨【chore】:其他修改'
+      section:
+        '🔨【chore】:对构建过程或辅助工具和库的更改（不影响源文件、测试用例）'
     },
     {
       type: 'ci',
       hidden: true,
-      section: '🔧【ci】:项目结构变动 工具 ci 构建'
+      section: '🔧【ci】:修改 CI 配置、脚本'
     },
     {
       type: 'revert',

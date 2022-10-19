@@ -17,7 +17,7 @@ module.exports = defineConfig({
   /* 优先级低于parse的语法解析配置 */
   parserOptions: {
     parser: '@typescript-eslint/parser',
-    ecmaVersion: 2021,
+    ecmaVersion: 'latest',
     //模块化方案
     sourceType: 'module',
     jsxPragma: 'React',
