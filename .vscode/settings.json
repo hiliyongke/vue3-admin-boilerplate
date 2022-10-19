@@ -58,6 +58,9 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[vue]": {
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true,
@@ -188,12 +191,14 @@
     "antv",
     "applewebkit",
     "attributify",
+    "blimone",
     "breakline",
     "brotli",
     "browserslist",
     "codemirror",
     "commitlint",
     "cropperjs",
+    "customing",
     "echarts",
     "enhand",
     "esnext",
@@ -209,12 +214,15 @@
     "lint-staged",
     "lintstagedrc",
     "logicflow",
+    "longpress",
     "macintel",
     "maxthon",
     "metasr",
     "micromessenger",
     "mockjs",
+    "modeless",
     "nprogress",
+    "octo",
     "onchargingchange",
     "onchargingtimechange",
     "ondischargingtimechange",
@@ -228,6 +236,7 @@
     "qihu",
     "qqbrowser",
     "qrcode",
+    "requireds",
     "secondarycontainer",
     "sider",
     "sortablejs",

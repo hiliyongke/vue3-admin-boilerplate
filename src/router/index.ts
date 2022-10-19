@@ -34,7 +34,7 @@ const defaultRouterList: Array<RouteRecordRaw> = [
   }
 ];
 
-export const allRoutes = [...defaultRouterList, ...asyncRouterList];
+export const allRoutes = [...asyncRouterList, ...defaultRouterList];
 
 export const getRoutesExpanded = () => {
   const expandedRoutes = [];

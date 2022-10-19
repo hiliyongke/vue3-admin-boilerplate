@@ -1,11 +1,11 @@
 const modules = import.meta.glob('./**/*.ts', { eager: true });
 
-const asyncMoudles: any[] = [];
+const asyncModules: any[] = [];
 
 Object.keys(modules).forEach(path => {
   if (path.startsWith('./index.')) return;
   const value = modules[path].default;
-  asyncMoudles.push(...value);
+  asyncModules.push(...value);
 });
 
-export default asyncMoudles;
+export default asyncModules;

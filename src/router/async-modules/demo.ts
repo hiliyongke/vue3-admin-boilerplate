@@ -6,14 +6,14 @@ export default [
     path: '/demo',
     name: 'demo',
     component: Layout,
-    redirect: '/demo/introduce',
+    redirect: '/demo/windicss',
     meta: { title: 'Demo', icon: DetailIcon },
     children: [
       {
-        path: 'introduce',
-        name: 'demo-introduce',
-        component: () => import('@/pages/demo/introduce/index.vue'),
-        meta: { title: '项目介绍' }
+        path: 'windicss',
+        name: 'demo-windicss',
+        component: () => import('@/pages/demo/windicss/index.vue'),
+        meta: { title: 'windicss' }
       },
       {
         path: 'i18n',
@@ -131,12 +131,12 @@ export default [
         path: 'secondePage',
         name: 'demo-secondePage',
         meta: { title: '二级菜单' },
-        redirect: '/demo/introduce',
+        redirect: '/demo/windicss',
         children: [
           {
-            path: 'introduce',
-            name: 'demo-t-introduce',
-            component: () => import('@/pages/demo/introduce/index.vue'),
+            path: 'windicss',
+            name: 'demo-t-windicss',
+            component: () => import('@/pages/demo/windicss/index.vue'),
             meta: { title: '三级菜单' }
           }
         ]

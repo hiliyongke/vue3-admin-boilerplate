@@ -1,10 +1,12 @@
+import { Ref } from 'vue';
+
 /**
  * counter utils
  * @param duration
  * @returns
  */
 export const useCounter = (duration = 60): [Ref<number>, () => void] => {
-  let intervalTimer;
+  let intervalTimer: NodeJS.Timeout;
   onUnmounted(() => {
     clearInterval(intervalTimer);
   });

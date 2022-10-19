@@ -9,12 +9,10 @@
  */
 
 import type { App, DirectiveBinding } from 'vue';
-interface ElType extends HTMLElement {
-  parentNode: any;
-}
-function debounce(el: ElType, binding: DirectiveBinding<any>) {
+
+function debounce(el: HTMLElement, binding: DirectiveBinding) {
   const [fn, event = 'input', delay = 200] = binding.value;
-  let timer: string | number | NodeJS.Timeout | undefined;
+  let timer: NodeJS.Timeout | null;
   el.addEventListener(event, () => {
     timer && clearTimeout(timer);
     timer = setTimeout(() => {

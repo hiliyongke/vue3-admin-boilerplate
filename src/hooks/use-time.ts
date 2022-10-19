@@ -4,7 +4,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
 export function useTime() {
-  let timer; // 定时器
+  let timer: NodeJS.Timeout; // 定时器
   const year = ref(0); // 年份
   const month = ref(0); // 月份
   const week = ref(''); // 星期几
@@ -32,17 +32,6 @@ export function useTime() {
       );
     second.value = date.getSeconds();
   };
-
-  // 原生时间格式化
-  // new Intl.DateTimeFormat('zh', {
-  //     year: 'numeric',
-  //     month: '2-digit',
-  //     day: '2-digit',
-  //     hour: '2-digit',
-  //     minute: '2-digit',
-  //     second: '2-digit',
-  //     hour12: false
-  // }).format(new Date())
 
   updateTime();
 

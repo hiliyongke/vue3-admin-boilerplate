@@ -7,11 +7,11 @@
  *  @param {Array} binding.value - [fn,event,delay]
  *  例：<el-button v-throttle="[reset,`click`,500]">刷新</el-button>
  */
-import type { App } from 'vue';
+import type { App, DirectiveBinding } from 'vue';
 
-function throttle(el, binding) {
+function throttle(el: HTMLElement, binding: DirectiveBinding) {
   const [fn, event = 'click', delay = 500] = binding.value;
-  let timer;
+  let timer: NodeJS.Timeout | null;
   el.addEventListener(event, () => {
     if (timer) return;
     timer = setTimeout(() => {

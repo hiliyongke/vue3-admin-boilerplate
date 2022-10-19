@@ -9,7 +9,11 @@ import isFunction from 'lodash/isFunction';
 import cloneDeep from 'lodash/cloneDeep';
 import { CreateAxiosOptions } from './transform';
 import { AxiosCanceler } from './cancel';
-import { AxiosRequestConfigRetry, RequestOptions, Result } from '@/types/axios';
+import {
+  AxiosRequestConfigRetry,
+  RequestOptions,
+  Result
+} from '../../../types/axios';
 
 // Axios模块
 export class VAxios {

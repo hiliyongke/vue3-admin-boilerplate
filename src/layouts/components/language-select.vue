@@ -2,7 +2,7 @@
   <t-dropdown
     :options="langOptions"
     trigger="click"
-    @click="handleSetlang"
+    @click="handleSetLanguage"
   >
     <t-button variant="text">
       <InternetIcon />
@@ -20,7 +20,7 @@ const state = reactive({
 });
 const settingStore = useSettingStore();
 const { locale } = useI18n();
-const handleSetlang = data => {
+const handleSetLanguage = data => {
   localStorage.setItem('language', data.value);
   settingStore.language = data.value;
   //auto refresh not reload the page

@@ -108,13 +108,10 @@
           <template #content>{{ local['remove_node'] }}</template>
           <t-button
             variant="text"
-            class="close-icon ant-btn-icon-only"
+            class="close-icon"
             @click="removeNode"
           >
-            <i
-              aria-label="icon: plus"
-              class="anticon anticon-plus"
-            >
+            <i aria-label="icon: plus">
               <svg
                 viewBox="64 64 896 896"
                 data-icon="plus"
@@ -175,7 +172,6 @@
       <t-form
         label-align="top"
         :data="advancedValue"
-        class="ant-advanced-search-form"
       >
         <t-row :gutter="30">
           <t-col
@@ -236,10 +232,7 @@
         </t-row>
       </t-form>
       <h3 v-show="custom">{{ local['add_custom'] }}</h3>
-      <t-form
-        v-show="custom"
-        class="ant-advanced-search-form"
-      >
+      <t-form v-show="custom">
         <t-row :gutter="30">
           <t-col
             v-for="item in customProps"
@@ -671,13 +664,10 @@ export default {
   padding: 0 8px;
   border-left: 3px solid #1890ff;
 }
-.json-schema-editor-advanced-modal .ant-advanced-search-form .ant-form-item {
+.json-schema-editor-advanced-modal {
   display: flex;
 }
-.json-schema-editor-advanced-modal
-  .ant-advanced-search-form
-  .ant-form-item
-  .ant-form-item-control-wrapper {
+.json-schema-editor-advanced-modal {
   flex: 1;
 }
 </style>

@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-svg-loader" />
+/// <reference types="file-saver" />
+
 declare module '*.vue' {
   import { DefineComponent } from 'vue';
   const component: DefineComponent<{}, {}, any>;

@@ -47,9 +47,9 @@ module.exports = {
   actions: data => {
     let path = '';
     if (data.isGlobal) {
-      path = 'src/components/{{properCase name}}/index.vue';
+      path = 'src/components/{{kebabCase name}}/index.vue';
     } else {
-      path = `${data.path}/components/{{properCase name}}/index.vue`;
+      path = `${data.path}/components/{{kebabCase name}}/index.vue`;
     }
     const actions = [
       {

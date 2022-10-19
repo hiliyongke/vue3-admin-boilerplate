@@ -32,15 +32,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: pnpm
 
-      
-      # 这里展示了如何执行多条命令
-      - name: Install deps and Build
-        run: | 
-          pnpm install
-          pnpm run build:dev
-      
+      - name: Install deps
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build:dev
       # 这里引用了别人写好的发布库，具体参数信息可以查阅上面的链接
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

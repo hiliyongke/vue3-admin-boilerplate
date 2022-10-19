@@ -31,7 +31,34 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
 
     // 强制预构建插件包
     optimizeDeps: {
-      include: ['axios']
+      include: [
+        'axios',
+        'splitpanes',
+        'sortablejs',
+        'dom-to-image',
+        'wangeditor',
+        '@toast-ui/editor',
+        'vue-pdf-embed',
+        'vue3-pdfjs/esm',
+        '@codemirror/lang-javascript',
+        '@codemirror/lang-html',
+        '@codemirror/lang-json',
+        '@codemirror/lang-markdown',
+        '@codemirror/lang-cpp',
+        '@codemirror/lang-java',
+        '@codemirror/lang-php',
+        '@codemirror/lang-python',
+        '@codemirror/lang-rust',
+        '@codemirror/lang-sql',
+        '@codemirror/lang-rust',
+        '@codemirror/theme-one-dark',
+        'codemirror',
+        '@codemirror/view',
+        '@codemirror/state',
+        '@codemirror/commands',
+        '@codemirror/language',
+        'generate-schema'
+      ]
     },
 
     // css

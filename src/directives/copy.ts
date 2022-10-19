@@ -4,21 +4,17 @@
 
 import type { App, DirectiveBinding } from 'vue';
 import { MessagePlugin } from 'tdesign-vue-next';
-interface ElType extends HTMLElement {
-  parentNode: any;
-}
-function copy(el: ElType, binding: DirectiveBinding<any>) {
-  el.targetContent = binding.value;
+function copy(el: HTMLElement, binding: DirectiveBinding) {
+  el.textContent = binding.value;
   el.addEventListener('click', () => {
-    if (!el.targetContent)
-      return MessagePlugin.warning('没有需要复制的目标内容');
+    if (!el.textContent) return MessagePlugin.warning('没有需要复制的目标内容');
     // 创建textarea标签
     const textarea = document.createElement('textarea');
     textarea.readOnly = true;
     textarea.style.position = 'fixed';
     textarea.style.top = '-99999px';
     // 把目标内容赋值给它的value属性
-    textarea.value = el.targetContent;
+    textarea.value = el.textContent;
     // 插入到页面
     document.body.appendChild(textarea);
     // 调用onselect()方法

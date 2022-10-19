@@ -10,11 +10,6 @@ export const globalConfig = Object.assign(
     // 可以在此处定义更多自定义配置，具体可配置内容参看 API 文档 https://tdesign.tencent.com/vue-next/config
     calendar: {},
     table: {},
-    pagination: {
-      itemsPerPage: '{size} / page',
-      jumpTo: 'jump to',
-      page: '',
-      total: 'Total {total} items'
-    }
+    pagination: {}
   }
 );

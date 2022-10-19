@@ -4,7 +4,12 @@
  */
 import type { App } from 'vue';
 
-function addWaterMark(str, parentNode, font, textColor) {
+function addWaterMark(
+  str: string,
+  parentNode: HTMLElement,
+  font: string,
+  textColor: string
+) {
   // 水印文字，父元素，字体，文字颜色
   const can = document.createElement('canvas');
   parentNode.appendChild(can);

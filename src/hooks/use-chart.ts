@@ -1,3 +1,6 @@
+import echarts from 'echarts';
+import { Ref } from 'vue';
+
 /**
  * eChart hook
  * @param domId

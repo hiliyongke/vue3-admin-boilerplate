@@ -3,10 +3,12 @@
  * 长按指令，长按时触发事件
  */
 
+import { App, DirectiveBinding } from 'vue';
+
 export function longPressDirective(app: App) {
   app.directive('longpress', {
     // 当被绑定的元素插入到 DOM 中时……
-    mounted(el, binding) {
+    mounted(el: HTMLElement, binding: DirectiveBinding) {
       if (typeof binding.value !== 'function') {
         throw 'callback must be a function';
       }

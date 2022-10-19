@@ -8,7 +8,9 @@
       mode="out-in"
     >
       <keep-alive :include="aliveViews">
-        <component :is="Component" />
+        <t-card>
+          <component :is="Component" />
+        </t-card>
       </keep-alive>
     </transition>
   </router-view>

@@ -9,14 +9,14 @@ import {
   setupGlobDirectives,
   setupGlobalProperties,
   setupLogger,
-  setupConsole
+  setupConsole,
+  setupCustomComponents
 } from '@/plugins';
 import i18n from '@/i18n';
 import './router/guards';
 import 'default-passive-events'; //解决滚动背景的问题
 import '@/style/index.less';
 import 'virtual:windi.css';
-import JsonSchemaEditor from '@/components/basic/json-schema-editor/index.vue';
 
 const app = createApp(App);
 
@@ -29,13 +29,14 @@ setupLogger();
 // Register global directive
 setupGlobDirectives(app);
 
+// Register global component
+setupCustomComponents(app);
+
 // Register global properties
 setupGlobalProperties(app);
 
 // 个性化控制台
 setupConsole();
-
-app.component('JsonSchemaEditor', JsonSchemaEditor);
 
 app.use(i18n);
 app.use(pinia);

@@ -3,10 +3,8 @@
  */
 import type { App } from 'vue';
 
-// import { SvgIcon } from '@/components/basic/svg-icon';
-// import { IconFont } from '@/components/basic/iconfont';
+import JsonSchemaEditor from '@/components/basic/json-schema-editor/index.vue';
 
 export function setupCustomComponents(app: App) {
-  // app.component(SvgIcon.name, SvgIcon);
-  // app.component(IconFont.name, IconFont);
+  app.component('JsonSchemaEditor', JsonSchemaEditor);
 }

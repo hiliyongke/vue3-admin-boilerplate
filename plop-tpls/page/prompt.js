@@ -38,10 +38,11 @@ module.exports = {
   ],
   actions: data => {
     let relativePath = path.relative('src/pages', data.path);
-    const actions = [
+    let actions = [];
+    actions.push[
       {
         type: 'add',
-        path: `${data.path}/{{dotCase name}}.vue`,
+        path: `${data.path}/{{kebabCase name}}/index.vue`,
         templateFile: 'plop-tpls/page/index.hbs',
         data: {
           componentName: `${relativePath} ${data.name}`
