@@ -1,32 +1,46 @@
+# name 可以自定义
 name: Build and Deploy
 
+# 指定触发workflow的条件
+# 下面的意思就是在监听到main分支push操作的时候运行
 on:
   push:
-    branches: ['main']
-
+    branches: ['main'] # master 分支有 push 时触发
+    paths-ignore: # 下列文件的变更不触发部署，可以自行添加
+      - README.md
+      
+# jobs 表示要执行的一项或者多项任务
 jobs:
-  build:
+  # 任务名，可自定义
+  build-and-deploy:
+    # runs-on字段指定运行所需要的虚拟机环境。它是必填字段。目前可用的虚拟机如下。
     runs-on: ubuntu-latest
+    # steps表示执行步骤
     steps:
-      - uses: actions/checkout@v3
+      # 下载源码
+      # 检出代码，这里用了 actions/checkout@master 库来完成
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3.5.1
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 16
+          cache: pnpm
 
-      - uses: pnpm/action-setup@v2.2.3
+      - uses: pnpm/action-setup@v2
         with:
           version: 7.12.2
       
-      - name: install deps
-        run: pnpm install
-  
-      - name: Build
-        run: pnpm build:dev
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+      # 这里展示了如何执行多条命令
+      - name: Install deps and Build
+        run: | 
+          pnpm install
+          pnpm run build:dev
+      
+      # 这里引用了别人写好的发布库，具体参数信息可以查阅上面的链接
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: dist
