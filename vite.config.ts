@@ -33,6 +33,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     optimizeDeps: {
       include: [
         'axios',
+        'lodash',
+        'pinyin',
         'splitpanes',
         'sortablejs',
         'dom-to-image',

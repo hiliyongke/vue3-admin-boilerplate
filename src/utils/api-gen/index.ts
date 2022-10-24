@@ -1,7 +1,17 @@
 // 根据 swagger.json 生成 api
 const { generateApi } = require('swagger-typescript-api');
 const path = require('path');
-const swagger = require('./swagger.json');
+
+const swagger = [
+  // {
+  //   moduleName: 'xx2',
+  //   url: ''
+  // },
+  {
+    moduleName: 'xx1',
+    input: './src/utils/api-gen/swagger1.json'
+  }
+];
 
 for (let i = 0; i < swagger.length; i++) {
   const item = swagger[i];

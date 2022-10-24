@@ -84,12 +84,12 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
 import { SearchIcon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
 import ProductCard from '@/components/product-card/index.vue';
 import DialogForm from './components/dialog-form.vue';
-import request from '@/utils/request';
-import { ResDataType } from '@/interface';
+import { getCardList } from '@/api/list';
 
 const INITIAL_DATA = {
   name: '',
@@ -108,15 +108,12 @@ const dataLoading = ref(true);
 
 const fetchData = async () => {
   try {
-    const res: ResDataType = await request.get('/api/get-card-list');
-    if (res.code === 0) {
-      const { list = [] } = res.data;
-      productList.value = list;
-      pagination.value = {
-        ...pagination.value,
-        total: list.length
-      };
-    }
+    const { list } = await getCardList();
+    productList.value = list;
+    pagination.value = {
+      ...pagination.value,
+      total: list.length
+    };
   } catch (e) {
     console.log(e);
   } finally {

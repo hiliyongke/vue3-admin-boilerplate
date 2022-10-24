@@ -8,7 +8,7 @@ import { ProxyOptions } from 'vite';
 type ProxyTargetList = Record<string, ProxyOptions>;
 
 const init: ProxyTargetList = {
-  // test
+  // api
   [API_BASE_URL]: {
     target: API_TARGET_URL,
     changeOrigin: true,

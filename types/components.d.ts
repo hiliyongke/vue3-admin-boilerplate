@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddIcon: typeof import('tdesign-icons-vue-next')['AddIcon']
+    BacktopIcon: typeof import('tdesign-icons-vue-next')['BacktopIcon']
     CheckIcon: typeof import('tdesign-icons-vue-next')['CheckIcon']
     ChevronDownIcon: typeof import('tdesign-icons-vue-next')['ChevronDownIcon']
     ChevronRightIcon: typeof import('tdesign-icons-vue-next')['ChevronRightIcon']
@@ -54,6 +55,7 @@ declare module '@vue/runtime-core' {
     TLayout: typeof import('tdesign-vue-next')['Layout']
     TList: typeof import('tdesign-vue-next')['List']
     TListItem: typeof import('tdesign-vue-next')['ListItem']
+    TListItemMeta: typeof import('tdesign-vue-next')['ListItemMeta']
     TLoading: typeof import('tdesign-vue-next')['Loading']
     TMenu: typeof import('tdesign-vue-next')['Menu']
     TMenuItem: typeof import('tdesign-vue-next')['MenuItem']

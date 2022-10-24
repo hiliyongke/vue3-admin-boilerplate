@@ -100,8 +100,7 @@
         :hover="hover"
         :pagination="pagination"
         :loading="dataLoading"
-        :header-affixed-top="true"
-        :header-affix-props="{ offsetTop, container: getContainer }"
+        :header-affixed-top="{ offsetTop, container: getContainer }"
         @page-change="rehandlePageChange"
         @change="rehandleChange"
       >
@@ -159,7 +158,7 @@
             />
           </p>
           <p
-            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECIPT"
+            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT"
             class="payment-col"
           >
             收款
@@ -195,11 +194,12 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
 import { MessagePlugin } from 'tdesign-vue-next';
 import Trend from '@/components/trend/index.vue';
-import request from '@/utils/request';
-import { ResDataType } from '@/interface';
+import { getList } from '@/api/list';
 import { useSettingStore } from '@/store';
+import { prefix } from '@/config/global';
 
 import {
   CONTRACT_STATUS,
@@ -279,15 +279,12 @@ const dataLoading = ref(false);
 const fetchData = async () => {
   dataLoading.value = true;
   try {
-    const res: ResDataType = await request.get('/api/get-list');
-    if (res.code === 0) {
-      const { list = [] } = res.data;
-      data.value = list;
-      pagination.value = {
-        ...pagination.value,
-        total: list.length
-      };
-    }
+    const { list } = await getList();
+    data.value = list;
+    pagination.value = {
+      ...pagination.value,
+      total: list.length
+    };
   } catch (e) {
     console.log(e);
   } finally {
@@ -350,7 +347,7 @@ const offsetTop = computed(() => {
 });
 
 const getContainer = () => {
-  return document.querySelector('.tdesign-starter-layout');
+  return document.querySelector(`.${prefix}-layout`);
 };
 </script>
 
@@ -358,7 +355,7 @@ const getContainer = () => {
 .list-common-table {
   padding: 30px 32px;
   background-color: var(--td-bg-color-container);
-  border-radius: var(--td-border-radius);
+  border-radius: @border-radius;
   .table-container {
     margin-top: 30px;
   }

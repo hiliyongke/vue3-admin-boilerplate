@@ -1,6 +1,3 @@
-<!--
- * @Description: 描述
--->
 <template>
   <div>
     <t-card class="list-card-container">
@@ -42,8 +39,7 @@
         :pagination="pagination"
         :selected-row-keys="selectedRowKeys"
         :loading="dataLoading"
-        :header-affixed-top="true"
-        :header-affix-props="{ offsetTop, container: getContainer }"
+        :header-affixed-top="{ offsetTop, container: getContainer }"
         @page-change="rehandlePageChange"
         @change="rehandleChange"
         @select-change="rehandleSelectChange"
@@ -102,7 +98,7 @@
             />
           </div>
           <div
-            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECIPT"
+            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT"
             class="payment-col"
           >
             收款
@@ -147,6 +143,7 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { SearchIcon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
@@ -155,11 +152,11 @@ import {
   CONTRACT_STATUS,
   CONTRACT_TYPES,
   CONTRACT_PAYMENT_TYPES
-} from '@/enums';
+} from '@/enums/index';
 import Trend from '@/components/trend/index.vue';
-import { ResDataType } from '@/interface';
-import request from '@/utils/request';
+import { getList } from '@/api/list';
 import { useSettingStore } from '@/store';
+import { prefix } from '@/config/global';
 
 import { COLUMNS } from './constants';
 
@@ -178,15 +175,12 @@ const dataLoading = ref(false);
 const fetchData = async () => {
   dataLoading.value = true;
   try {
-    const res: ResDataType = await request.get('/api/get-list');
-    if (res.code === 0) {
-      const { list = [] } = res.data;
-      data.value = list;
-      pagination.value = {
-        ...pagination.value,
-        total: list.length
-      };
-    }
+    const { list } = await getList();
+    data.value = list;
+    pagination.value = {
+      ...pagination.value,
+      total: list.length
+    };
   } catch (e) {
     console.log(e);
   } finally {
@@ -261,7 +255,7 @@ const offsetTop = computed(() => {
 });
 
 const getContainer = () => {
-  return document.querySelector('.tdesign-starter-layout');
+  return document.querySelector(`.${prefix}-layout`);
 };
 </script>
 

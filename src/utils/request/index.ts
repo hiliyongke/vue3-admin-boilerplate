@@ -3,14 +3,10 @@ import isString from 'lodash/isString';
 import merge from 'lodash/merge';
 import type { AxiosTransform, CreateAxiosOptions } from './transform';
 import { VAxios } from './axios';
-import proxy from '@/config/proxy';
 import { joinTimestamp, formatRequestDate, setObjToUrlParams } from './util';
 import { TOKEN_NAME } from '@/config/global';
 
 const env = import.meta.env.MODE || 'development';
-
-// 如果是mock模式 或 没启用直连代理 就不配置host 会走本地Mock拦截 或 Vite 代理
-const host = env === 'mock' || !proxy.isRequestProxy ? '' : proxy[env].host;
 
 // 数据处理，方便区分多种处理方式
 const transform: AxiosTransform = {
@@ -179,13 +175,11 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // 配置项，下面的选项都可以在独立的接口请求中覆盖
         requestOptions: {
           // 接口地址
-          apiUrl: host,
           // 是否自动添加接口前缀
           isJoinPrefix: true,
           // 接口前缀
           // 例如: https://www.baidu.com/api
           // urlPrefix: '/api'
-          urlPrefix: '/api',
           // 是否返回原生响应头 比如：需要获取响应头时使用该属性
           isReturnNativeResponse: false,
           // 需要对返回数据进行处理

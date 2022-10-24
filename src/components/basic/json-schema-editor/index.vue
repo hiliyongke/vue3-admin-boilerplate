@@ -111,23 +111,7 @@
             class="close-icon"
             @click="removeNode"
           >
-            <i aria-label="icon: plus">
-              <svg
-                viewBox="64 64 896 896"
-                data-icon="plus"
-                width="1em"
-                height="1em"
-                fill="currentColor"
-                aria-hidden="true"
-                focusable="false"
-                class=""
-              >
-                <path
-                  d="M810.666667 273.493333L750.506667 213.333333 512 451.84 273.493333 213.333333 213.333333 273.493333 451.84 512 213.333333 750.506667 273.493333 810.666667 512 572.16 750.506667 810.666667 810.666667 750.506667 572.16 512z"
-                  p-id="1142"
-                />
-              </svg>
-            </i>
+            <CloseIcon slot="icon" />
           </t-button>
         </t-popup>
       </t-col>
@@ -429,7 +413,7 @@ export default {
   methods: {
     onInputName(e) {
       const oldKey = this.pickKey;
-      const newKey = e.target.value;
+      const newKey = e;
       if (oldKey === newKey) return;
 
       const nodeValue = this.parent.properties[oldKey];
@@ -475,7 +459,7 @@ export default {
     },
     changeEnumValue(e) {
       const pickType = this.pickValue.type;
-      const value = e.target.value;
+      const value = e;
       var arr = value.split('\n');
 
       if (pickType === 'string') {
@@ -638,14 +622,13 @@ export default {
   border: none;
 }
 .json-schema-editor .row .plus-icon {
+  color: #888888;
   border: none;
 }
 .json-schema-editor .row .close-icon {
   color: #888888;
   border: none;
 }
-</style>
-<style>
 .json-schema-editor-advanced-modal {
   min-width: 600px;
   color: rgba(0, 0, 0, 0.65);

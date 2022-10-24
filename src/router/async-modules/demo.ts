@@ -22,6 +22,12 @@ export default [
         meta: { title: '国际化' }
       },
       {
+        path: 'pinyin',
+        name: 'demo-pinyin',
+        component: () => import('@/pages/demo/pinyin/index.vue'),
+        meta: { title: '拼音' }
+      },
+      {
         path: 'directives',
         name: 'demo-directives',
         component: () => import('@/pages/demo/directives/index.vue'),
