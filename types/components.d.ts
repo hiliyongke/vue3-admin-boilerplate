@@ -8,7 +8,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddIcon: typeof import('tdesign-icons-vue-next')['AddIcon']
-    BacktopIcon: typeof import('tdesign-icons-vue-next')['BacktopIcon']
     CheckIcon: typeof import('tdesign-icons-vue-next')['CheckIcon']
     ChevronDownIcon: typeof import('tdesign-icons-vue-next')['ChevronDownIcon']
     ChevronRightIcon: typeof import('tdesign-icons-vue-next')['ChevronRightIcon']

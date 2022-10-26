@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import keys from 'lodash/keys';
+import keys from 'lodash-es/keys';
 import {
   COLOR_TOKEN,
   LIGHT_CHART_COLORS,
@@ -8,7 +8,7 @@ import {
 } from '@/config/color';
 import STYLE_CONFIG from '@/config/style';
 import pinia from '@/store';
-import { DEFAULT_LANGUAGE } from '../../../config/constant';
+import { DEFAULT_LANGUAGE } from '../../../build/constant';
 const state = {
   ...STYLE_CONFIG,
   showSettingPanel: false,

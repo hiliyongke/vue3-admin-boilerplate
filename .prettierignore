@@ -5,3 +5,8 @@ coverage
 release
 types/auto-imports.d.ts
 types/components.d.ts
+
+.DS_Store
+.eslintignore
+.gitignore
+.prettierignore

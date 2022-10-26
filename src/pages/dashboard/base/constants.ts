@@ -84,7 +84,7 @@ export const SALE_TEND_LIST: Array<TendItem> = [
 export const BUY_TEND_LIST: Array<TendItem> = [
   {
     growUp: 1,
-    productName: '腾讯科技（深圳）有限公司',
+    productName: 'xx科技有限公司',
     count: 3015,
     date: '2021-09-01'
   },

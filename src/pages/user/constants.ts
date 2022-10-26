@@ -17,7 +17,7 @@ export const USER_INFO_LIST = [
   },
   {
     title: '管理主体',
-    content: '腾讯集团'
+    content: 'xx集团'
   },
   {
     title: '直属上级',
@@ -33,7 +33,7 @@ export const USER_INFO_LIST = [
   },
   {
     title: '所属团队',
-    content: '腾讯/腾讯公司/某事业群/某产品部/某运营中心/商户服务组',
+    content: 'xx/xx公司/某事业群/某产品部/某运营中心/商户服务组',
     span: 6
   }
 ];

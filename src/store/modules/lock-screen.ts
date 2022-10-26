@@ -4,7 +4,7 @@
 import { defineStore } from 'pinia';
 import { IS_LOCK_SCREEN } from '@/enums/cache-enum';
 import { Storage } from '@/utils/storage';
-import { DEFAULT_LOCK_TIME } from '../../../config/constant';
+import { DEFAULT_LOCK_TIME } from '../../../build/constant';
 
 const isLock = Storage.get(IS_LOCK_SCREEN, false);
 

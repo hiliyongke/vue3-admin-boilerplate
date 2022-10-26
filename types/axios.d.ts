@@ -15,6 +15,7 @@ export interface RequestOptions {
     count: number;
     delay: number;
   };
+  showErrorMessage?: boolean;
 }
 
 export interface Result<T = any> {

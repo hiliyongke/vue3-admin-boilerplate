@@ -1,9 +1,10 @@
-!.eslintrc.js
 # eslint 忽略检查
-node_modules
-# .vscode
-coverage
-dist
-release
-# .*.js
-/src/assets
+bash
+dist/
+node_modules/
+public/
+src/assets
+coverage/
+package.json
+package-lock.json
+**/*.d.ts

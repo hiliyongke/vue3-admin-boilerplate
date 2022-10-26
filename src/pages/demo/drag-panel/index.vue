@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { Splitpanes, Pane } from 'splitpanes';
+import { Splitpanes, Pane } from 'splitpanes/dist/splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 </script>
 

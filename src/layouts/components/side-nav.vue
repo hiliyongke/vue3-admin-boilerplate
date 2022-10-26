@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { computed, onMounted, PropType } from 'vue';
 import { useRouter } from 'vue-router';
-import union from 'lodash/union';
+import union from 'lodash-es/union';
 
 import { useSettingStore } from '@/store';
 import { prefix } from '@/config/global';

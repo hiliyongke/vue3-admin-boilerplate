@@ -1,5 +1,7 @@
 .DS_Store
 node_modules
+coverage
+# production
 dist
 .local
 .history
@@ -8,13 +10,20 @@ dist
 # 注意：components.d.ts 文件会在 vue-tsc 运行的时候进行更新，建议把他加入 gitignore 中，以免出现频繁更改导致 git 监测到项目内容一直变动的问题
 types/components.d.ts
 # Log files
-# pnpm-lock.yaml*
-
+log
 # Editor directories and files
 .idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 # .vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+# test unit
+tests/e2e/videos/
+tests/e2e/screenshots/

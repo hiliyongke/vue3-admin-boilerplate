@@ -639,7 +639,7 @@ export function createVitePlugins(isBuild: boolean) {
 而`vite.config.ts`便干净多了
 
 ```typescript
-import { createVitePlugins } from './config/vite/plugins'
+import { createVitePlugins } from './build/vite/plugins'
 ...
 return {
     resolve: {

@@ -74,7 +74,7 @@
 
 <script setup lang="ts">
 import { computed, PropType } from 'vue';
-import isObject from 'lodash/isObject';
+import isObject from 'lodash-es/isObject';
 import { MenuRoute } from '@/interface';
 import { getActive } from '@/router';
 

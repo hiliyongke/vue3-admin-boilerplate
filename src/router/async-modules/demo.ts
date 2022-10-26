@@ -34,16 +34,22 @@ export default [
         meta: { title: '指令测试' }
       },
       {
+        path: 'icons',
+        name: 'demo-icons',
+        component: () => import('@/pages/demo/icons/index.vue'),
+        meta: { title: 'icons' }
+      },
+      {
         path: 'drag-panel',
         name: 'demo-drag-panel',
         component: () => import('@/pages/demo/drag-panel/index.vue'),
-        meta: { title: '拖拽面板' }
+        meta: { title: '拆分布局' }
       },
       {
         path: 'signboard',
         name: 'demo-signboard',
         component: () => import('@/pages/demo/signboard/index.vue'),
-        meta: { title: 'signboard' }
+        meta: { title: '拖拽列表' }
       },
       {
         path: 'webworker',

@@ -19,7 +19,7 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "lib": ["esnext", "dom"],
-    "types": ["node"],
+    "types": ["node", "jest", "vite/client", "vite-svg-loader"],
     "paths": {
       "@/*": ["src/*"],
       "@api/*": ["src/api/*"]
@@ -35,7 +35,8 @@
     "**/*.md",
     "plop-tpls/component/prompt.js",
     "plopfile.js",
-    "postcss.config.js"
+    "postcss.config.js",
+    "build/release.js"
   ],
   "exclude": ["node_modules", "dist"]
 }

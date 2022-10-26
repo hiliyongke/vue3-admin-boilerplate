@@ -5,8 +5,8 @@ import axios, {
   AxiosError
 } from 'axios';
 import { stringify } from 'qs';
-import isFunction from 'lodash/isFunction';
-import cloneDeep from 'lodash/cloneDeep';
+import isFunction from 'lodash-es/isFunction';
+import cloneDeep from 'lodash-es/cloneDeep';
 import { CreateAxiosOptions } from './transform';
 import { AxiosCanceler } from './cancel';
 import {
@@ -14,7 +14,6 @@ import {
   RequestOptions,
   Result
 } from '../../../types/axios';
-
 // Axios模块
 export class VAxios {
   // axios句柄
@@ -211,9 +210,11 @@ export class VAxios {
             reject(requestCatchHook(e, opt));
             return;
           }
+
           if (axios.isAxiosError(e)) {
             // 在这里重写Axios的错误信息
           }
+
           reject(e);
         });
     });

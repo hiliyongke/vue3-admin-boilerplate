@@ -1,25 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
+    <meta
+      name="google"
+      content="notranslate"
+    />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0"
+    />
     <link
       rel="icon"
       href="/favicon.ico"
     />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <title>Vue3-Boilerplate+Vite3.X+TS+...</title>
+    <title><%= title %></title>
+    <style>
+      body,
+      ul,
+      ol,
+      dl,
+      dd,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      figure,
+      form,
+      fieldset,
+      legend,
+      input,
+      textarea,
+      button,
+      p,
+      blockquote,
+      th,
+      td,
+      pre,
+      xmp {
+        padding: 0;
+        margin: 0;
+      }
+      body,
+      input,
+      textarea,
+      button,
+      select,
+      pre,
+      xmp,
+      tt,
+      code,
+      kbd,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      small,
+      big,
+      input,
+      textarea,
+      button,
+      select {
+        font-size: 100%;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      b,
+      strong {
+        font-weight: normal;
+      }
+      address,
+      cite,
+      dfn,
+      em,
+      i,
+      optgroup,
+      var {
+        font-style: normal;
+      }
+      table {
+        text-align: left;
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+      caption,
+      th {
+        text-align: inherit;
+      }
+      ul,
+      ol,
+      menu {
+        list-style: none;
+      }
+      fieldset,
+      img {
+        border: 0;
+      }
+      img,
+      object,
+      input,
+      textarea,
+      button,
+      select {
+        vertical-align: middle;
+      }
+      article,
+      aside,
+      footer,
+      header,
+      section,
+      nav,
+      figure,
+      figcaption,
+      hgroup,
+      details,
+      menu {
+        display: block;
+      }
+      audio,
+      video {
+        display: none;
+        *display: inline;
+        *zoom: 1;
+      }
+      blockquote::before,
+      blockquote::after,
+      q::before,
+      q::after {
+        content: '\0020';
+      }
+      textarea {
+        overflow: auto;
+        resize: vertical;
+      }
+      input,
+      textarea,
+      button,
+      select,
+      a {
+        border: 0;
+        outline: 0 none;
+      }
+      button::-moz-focus-inner,
+      input::-moz-focus-inner {
+        padding: 0;
+        border: 0;
+      }
+      mark {
+        background-color: transparent;
+      }
+      a,
+      ins,
+      s,
+      u,
+      del {
+        text-decoration: none;
+      }
+      sup,
+      sub {
+        vertical-align: baseline;
+      }
+      html {
+        font-size: 12px;
+        color: #000000;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        width: 100%;
+        min-width: 1080px;
+        font-size: 0.28em;
+        line-height: 1;
+        -webkit-text-size-adjust: none;
+      }
+      hr {
+        height: 0.02rem;
+        margin: 0.1rem 0;
+        border: medium none;
+        border-top: 0.02rem solid #cacaca;
+      }
+    </style>
+
+    <style>
+      .app-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+      }
+      .app-loading .app-loading-wrap {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        -webkit-transform: translate3d(-50%, -50%, 0);
+        transform: translate3d(-50%, -50%, 0);
+      }
+      .app-loading .app-loading-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
+          'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+        font-size: 30px;
+        color: #0052d9;
+      }
+      .app-loading-spinner .circular {
+        width: 42px;
+        height: 42px;
+        animation: loading-rotate 2s linear infinite;
+      }
+      .app-loading-spinner .path {
+        stroke: #0052d9;
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: 0;
+        stroke-linecap: round;
+        stroke-width: 3;
+        animation: loading-dash 1.5s ease-in-out infinite;
+      }
+
+      @keyframes loading-rotate {
+        to {
+          transform: rotate(1turn);
+        }
+      }
+
+      @keyframes loading-dash {
+        0% {
+          stroke-dasharray: 1, 200;
+          stroke-dashoffset: 0;
+        }
+        50% {
+          stroke-dasharray: 90, 150;
+          stroke-dashoffset: -40px;
+        }
+        to {
+          stroke-dasharray: 90, 150;
+          stroke-dashoffset: -120px;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <div id="app"></div>
+    <noscript>
+      <strong>
+        We're sorry but <%= title %> doesn't work properly without JavaScript
+        enabled. Please enable it to continue.
+      </strong>
+    </noscript>
+    <div
+      id="app"
+      class="app"
+    >
+      <div class="app-loading">
+        <div class="app-loading-wrap">
+          <div class="app-loading-title"><%= title %></div>
+          <div class="app-loading-spinner">
+            <svg
+              class="circular"
+              viewBox="25 25 50 50"
+            >
+              <circle
+                class="path"
+                cx="50"
+                cy="50"
+                r="20"
+                fill="none"
+              ></circle>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
     <script
       type="module"
-      src="/src/main.ts"
+      src="./src/main.ts"
     ></script>
+    <!-- built files will be auto injected -->
   </body>
-
-  <script></script>
 </html>

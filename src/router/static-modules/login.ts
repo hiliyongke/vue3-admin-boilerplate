@@ -3,17 +3,11 @@ import { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/login',
+    path: '/loginRedirect',
     name: 'loginRedirect',
-    meta: { title: '登录页', icon: LogoutIcon },
-    component: () => import('@/layouts/blank.vue'),
-    children: [
-      {
-        path: 'index',
-        redirect: '/login',
-        meta: { title: '登录中心' }
-      }
-    ]
+    meta: { title: '登录页', icon: LogoutIcon, single: true },
+    redirect: '/login',
+    children: []
   }
 ];
 export default routes;

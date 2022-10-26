@@ -1,10 +1,11 @@
 // axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
-import isString from 'lodash/isString';
-import merge from 'lodash/merge';
+import isString from 'lodash-es/isString';
+import merge from 'lodash-es/merge';
 import type { AxiosTransform, CreateAxiosOptions } from './transform';
 import { VAxios } from './axios';
 import { joinTimestamp, formatRequestDate, setObjToUrlParams } from './util';
 import { TOKEN_NAME } from '@/config/global';
+import { handleError } from './handle-error';
 
 const env = import.meta.env.MODE || 'development';
 
@@ -138,12 +139,16 @@ const transform: AxiosTransform = {
   // 响应错误处理
   responseInterceptorsCatch: (error: any) => {
     const { config } = error;
-    if (!config || !config.requestOptions.retry) return Promise.reject(error);
+    handleError(error);
+    if (!config || !config.requestOptions.retry) {
+      return Promise.reject(error);
+    }
 
     config.retryCount = config.retryCount || 0;
 
-    if (config.retryCount >= config.requestOptions.retry.count)
+    if (config.retryCount >= config.requestOptions.retry.count) {
       return Promise.reject(error);
+    }
 
     config.retryCount += 1;
 
@@ -198,7 +203,9 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           retry: {
             count: 3,
             delay: 1000
-          }
+          },
+          // 显示错误信息
+          showErrorMessage: true
         }
       },
       opt || {}

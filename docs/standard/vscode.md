@@ -1,0 +1,25 @@
+# VScode 插件
+
+`VScode`是一款非常热门、有强大用户基础的一款开发工具。目前我们团队都统一推荐是用`VScode`编辑器，结合脚手架提供的项目框架，以下列举一些实用的、高效的，便捷的插件工具：
+
+| 插件名                                                                                                                                                       | 说明                                                                                                                 | 推荐指数            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| [Eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)                                                                         | 将 ESLint 集成到 VS Code 中，编写符合代码风格的代码                                                                  | 5 星 ⭐ ⭐ ⭐ ⭐ ⭐ |
+| [Prettier - Code formatter ](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)                                                     | 一款更漂亮的代码格式化的工具                                                                                         | 5 星 ⭐ ⭐ ⭐ ⭐ ⭐ |
+| [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur) / [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) | vue 开发者必备的一款插件,Vetur 用于 vue2，Volar 用于 vue3                                                            | 5 星 ⭐ ⭐ ⭐ ⭐ ⭐ |
+| [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)                                              | 检查代码中单词拼写是否正确，当单词不正常的时候，就会在下方出现波浪线进行提示，还可以自定义词典，忽略某个单词的检查等 | 5 星 ⭐ ⭐ ⭐ ⭐ ⭐ |
+| [Tabnine Autocomplete AI](https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode)                                                        | 功能强大的人工智能助手，旨在帮助您更快地编码，减少错误并发现最佳编码实践                                             | 5 星 ⭐ ⭐ ⭐ ⭐ ⭐ |
+| [Vue VSCode Snippets ](https://marketplace.visualstudio.com/items?itemName=sdras.vue-vscode-snippets)                                                        | Vue 代码片段，同时支持 vue2 和 vue3                                                                                  | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)                                                    | 用于定义代码格式的文件和一批编辑器插件                                                                               | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [Path Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)                                                  | 自动补全代码中的路径和文件名                                                                                         | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [GitLens — Git supercharged](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)                                                            | git 管理插件，方便查看变更日志和历史记录                                                                             | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [TODO Tree ](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree)                                                                      | 标记需要修改或者以后要完善的代码，并且方便后续定位到对应位置                                                         | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)                                              | 这是一款拼写检查插件，可以为开发者提示一些常见的拼写不规范。适合命名驼峰式代码                                       | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [Color Highlight](https://marketplace.visualstudio.com/items?itemName=naumovs.color-highlight)                                                               | 这个扩展插件可以风格化在文件中找到对应的 css/web 颜色，让你无需打开页面就能看到它们是什么颜色。                      | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)                                                                  | CSS 样式代码检测工具                                                                                                 | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [Bracket Pair Colorizer](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer)                                               | 让括号拥有独立的颜色，易于区分。                                                                                     | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [Project Manager](https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager)                                                           | 让你轻松在项目直接替换，无需在导入项目文件夹打开                                                                     | 4 星 ⭐ ⭐ ⭐ ⭐    |
+| [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) | 强大的 Markdown 插件，可以选择 vue 风格实时预览文档 | 3 星 ⭐ ⭐ ⭐ |
+| [Jest Runner](https://marketplace.visualstudio.com/items?itemName=firsttris.vscode-jest-runner) | Jest 单元测试工具 | 3 星 ⭐ ⭐ ⭐ |
+
+**推荐至少安装指数 `5` 星插件工具，其余按自己实际情况安装即可**

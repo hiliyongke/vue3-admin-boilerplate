@@ -21,3 +21,8 @@ ignore:
   - .*.js
   - .github
   - .git
+  - .circleci
+  - .vscode
+  - .idea
+  - .local
+  - .husky

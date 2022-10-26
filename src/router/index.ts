@@ -4,7 +4,7 @@ import {
   createWebHashHistory,
   RouteRecordRaw
 } from 'vue-router';
-import uniq from 'lodash/uniq';
+import uniq from 'lodash-es/uniq';
 
 import asyncModules from './async-modules';
 import staticModules from './static-modules';

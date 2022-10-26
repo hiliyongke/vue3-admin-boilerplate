@@ -8,7 +8,7 @@
   </t-config-provider>
 </template>
 <script setup lang="ts">
-import { APP_TITLE } from '../config/constant';
+import { APP_TITLE } from '../build/constant';
 import { useSettingStore } from '@/store';
 import LockScreen from '@/components/basic/lock-screen/index.vue';
 import { globalConfig } from '@/config/global';
