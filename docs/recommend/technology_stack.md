@@ -16,7 +16,7 @@
 | 状态持久化库         | [pinia-plugin-persistedstate](https://prazdevs.github.io/pinia-plugin-persistedstate/) |                                                                  |
 | 样式和预处理         | [LESS](https://lesscss.org/)                                     |                                                                    |
 | CSS 模块作用域      | [Scoped CSS](https://vue-loader.vuejs.org/zh/guide/scoped-css.html)       |                                                              |
-| 样式规范和质量检查   | [StyleLint](https://stylelint.io/)                           |       [腾讯 CSS 代码规范](./language/css.md)       |
-| 代码规范和质量检查   | [ESLint](https://eslint.org/docs/user-guide/getting-started) |       [腾讯 JavaScript 代码规范](./language/javascript.md) |
+| 样式规范和质量检查   | [StyleLint](https://stylelint.io/)                           |       [腾讯 CSS 代码规范](./css.md)       |
+| 代码规范和质量检查   | [ESLint](https://eslint.org/docs/user-guide/getting-started) |       [腾讯 JavaScript 代码规范](./javascript.md) |
 | 统一代码格式        | [Prettier](https://prettier.io/docs/en/index.html)           |                                                                    |
 | 统一文件命名        | [ls-lint](https://ls-lint.org/)                              |                                                                    |

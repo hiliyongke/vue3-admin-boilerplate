@@ -155,7 +155,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       manifest: true, // 是否产出manifest.json
       outDir: OUTPUT_DIR || 'dist', // 产出目录
       assetsDir: 'static',
-      chunkSizeWarningLimit: 2000, // 限制最大包的大小
+      chunkSizeWarningLimit: 500, // 限制最大包的大小
       rollupOptions,
       sourcemap: mode === 'development' // 是否产出sourcemap.json
     },

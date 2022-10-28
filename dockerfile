@@ -9,7 +9,7 @@ COPY dist/  /usr/share/nginx/html/
 
 # 删除基础镜像中的Nginx配置文件替换成自己写的
 RUN rm /etc/nginx/conf.d/default.conf 
-ADD default.conf /etc/nginx/conf.d/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # 暴露端口
 EXPOSE 80

@@ -117,5 +117,5 @@ module.exports = {
 
 ## 公司代码规范
 
-- [js 代码规范](./language/javascript.md)
-- [css 代码规范](./language/css.md)
+- [js 代码规范](./javascript.md)
+- [css 代码规范](./css.md)

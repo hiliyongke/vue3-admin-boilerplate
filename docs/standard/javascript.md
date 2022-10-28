@@ -71,7 +71,7 @@ module.exports = {
 
 **注意：使用 prettier 规则之后，会自动禁用掉与之相冲突的格式相关的规则。由于prettier与ESLint存在冲突，开源扫描仍以ESLint扫描结果为准。**
 
-发布方法详见: [#Publish](./CONTRIBUTING.md#Publish)
+发布方法详见: [#Publish]
 
 ### Orange-ci 插件
 

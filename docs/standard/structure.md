@@ -121,11 +121,11 @@ store
 
 **style/**
 
-全局样式目录。[详见](./style.md)
+全局样式目录。[详见]
 
 **api/**
 
-数据请求，基于`axios`强大的请求库封装`request`。 [详见](./request.md)
+数据请求，基于`axios`强大的请求库封装`request`。 [详见]
 
 **directives/**
 
@@ -133,7 +133,7 @@ store
 
 **hooks/**
 
-基于 Vue 组合式 API 编写的`Hooks`工具函数目录，具体编写规则和使用。[详见]()
+基于 Vue 组合式 API 编写的`Hooks`工具函数目录，具体编写规则和使用。[详见]
 
 **plugins/**
 
