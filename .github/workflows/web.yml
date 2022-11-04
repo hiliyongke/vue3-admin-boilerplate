@@ -1,5 +1,5 @@
 # name 可以自定义
-name: Build and Deploy docs
+name: Build and Deploy web
 
 # 指定触发workflow的条件
 # 下面的意思就是在监听到main分支push操作的时候运行
@@ -8,12 +8,14 @@ on:
     branches: ['main'] # master 分支有 push 时触发
     paths-ignore: # 下列文件的变更不触发部署，可以自行添加
       - README.md
-
-
+      
+# jobs 表示要执行的一项或者多项任务
 jobs:
   # 任务名，可自定义
   build-and-deploy:
+    # runs-on字段指定运行所需要的虚拟机环境。它是必填字段。目前可用的虚拟机如下。
     runs-on: ubuntu-latest
+    # steps表示执行步骤
     steps:
       # 下载源码
       # 检出代码，这里用了 actions/checkout@master 库来完成
@@ -35,12 +37,12 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm docs:build
+        run: pnpm build:dev
       # 这里引用了别人写好的发布库，具体参数信息可以查阅上面的链接
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           # 这是文档部署到的分支名称
-          branch: docs
-          folder: docs/.vitepress/dist
+          branch: gh-pages
+          folder: dist
           clean: true
