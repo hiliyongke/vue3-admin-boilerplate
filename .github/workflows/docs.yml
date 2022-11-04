@@ -32,7 +32,7 @@ jobs:
           node-version: 16
 
       - name: Install deps
-        run: pnpm install
+        run: pnpm i --frozen-lockfile 
 
       - name: Build
         run: pnpm docs:build
