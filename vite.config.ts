@@ -90,7 +90,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       '@codemirror/commands',
       '@codemirror/language',
       'generate-schema',
-      'splitpanes/dist/splitpanes'
+      'splitpanes'
     ]
   };
 
