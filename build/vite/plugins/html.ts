@@ -10,29 +10,15 @@ import { GLOB_CONFIG_FILE_NAME, APP_TITLE, PUBLIC_PATH } from '../../constant';
 export const configHtmlPlugin = (isBuild: boolean) => {
   const path = PUBLIC_PATH.endsWith('/') ? PUBLIC_PATH : `${PUBLIC_PATH}/`;
 
-  const getAppConfigSrc = () =>
-    `${path || '/'}${GLOB_CONFIG_FILE_NAME}?v=${
-      pkg.version
-    }-${new Date().getTime()}`;
-
   const htmlPlugin = createHtmlPlugin({
     minify: isBuild,
     inject: {
       // Inject data into ejs template
       data: {
-        title: APP_TITLE
+        title: '欢迎使用' + APP_TITLE
       },
       // Embed the generated app.config.js file
-      tags: isBuild
-        ? [
-            {
-              tag: 'script',
-              attrs: {
-                src: getAppConfigSrc()
-              }
-            }
-          ]
-        : []
+      tags: []
     }
   });
   return htmlPlugin;

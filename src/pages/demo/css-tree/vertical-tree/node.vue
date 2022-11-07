@@ -32,6 +32,7 @@
 export default {
   name: 'NodePort',
   props: {
+    // eslint-disable-next-line vue/require-prop-types
     nodeList: []
   }
 };

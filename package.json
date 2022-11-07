@@ -12,7 +12,6 @@
     "start:logger": "pnpm -C ./packages/logger start",
     "start:indexedDbHelper": "pnpm -C ./packages/IndexedDbHelper start",
     "start:itools": "pnpm -C ./packages/itools start",
-    "start:generator": "pnpm -C ./packages/generator start",
     "dev": "vite --mode development",
     "dev:open": "vite --open --mode development",
     "build:dev": "vite build --mode development",

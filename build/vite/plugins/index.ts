@@ -16,7 +16,6 @@ import { ConfigSvgLoaderPlugin } from './svgLoader';
 import { ConfigProgressPlugin } from './progress';
 import { ConfigVConsolePlugin } from './vConsole';
 import { ConfigWindicssPlugin } from './windicss';
-import { configHmrPlugin } from './hmr';
 import { configHtmlPlugin } from './html';
 import { configPwa } from './pwa';
 import { configSvgIconsPlugin } from './svgIcons';
@@ -40,8 +39,6 @@ export function createVitePlugins(isBuild: boolean) {
     ConfigSvgLoaderPlugin(),
     // vite-plugin-mock
     ConfigMockPlugin(isBuild),
-    // 配置 HMR 插件
-    configHmrPlugin(isBuild),
     // 在 index.html 中最小化和使用 ejs 模板语法的插件。
     configHtmlPlugin(isBuild),
     // VConsole 调试工具

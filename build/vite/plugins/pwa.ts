@@ -19,12 +19,12 @@ export const configPwa = () => {
         short_name: VITE_GLOB_APP_SHORT_NAME,
         icons: [
           {
-            src: './resource/img/pwa-192x192.png',
+            src: './resource/images/logo-192x192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: './resource/img/pwa-512x512.png',
+            src: './resource/images/logo-512x512.png',
             sizes: '512x512',
             type: 'image/png'
           }
