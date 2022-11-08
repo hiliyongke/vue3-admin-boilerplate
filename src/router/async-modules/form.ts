@@ -7,7 +7,7 @@ export default [
     name: 'form',
     component: Layout,
     redirect: '/form/base',
-    meta: { title: '表单页', icon: FormIcon },
+    meta: { title: '表单页', icon: FormIcon, order: 1 },
     children: [
       {
         path: 'base',

@@ -7,7 +7,7 @@ export default [
     name: 'list',
     component: Layout,
     redirect: '/list/base',
-    meta: { title: '列表页', icon: ListIcon },
+    meta: { title: '列表页', icon: ListIcon, order: 2 },
     children: [
       {
         path: 'base',

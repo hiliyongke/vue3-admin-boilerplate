@@ -4,55 +4,102 @@ export function createFakeUserList() {
   return [
     {
       user_id: '3306',
-      user_name: 'blindmonk',
-      real_name: 'xxx',
+      user_name: 'admin',
+      real_name: '渣男',
       avatar: 'https://api.multiavatar.com/blindmonk.svg',
       desc: 'xxxxx',
-      password: 'blindmonk',
-      token: 'P1DeqWBao0HTU47Q',
+      password: 'admin',
+      token: 'main_token',
       organization: '某大型公司CTO',
       location: '中国',
       email: '896226896@qq.com',
-      auths: [],
       is_admin: 1,
       dev_languages: 'JavaScript/Vue/React/Node/PHP',
-      role: 'admin'
+      roles: ['all', 'dev', 'test', 'admin']
     },
     {
       user_id: '80',
       user_name: 'test',
-      real_name: '盲僧水友',
+      real_name: '损友',
       avatar: 'https://api.multiavatar.com/test.svg',
-      desc: '欢迎加入扫地盲僧水友群',
+      desc: '牛逼的大佬',
       password: 'test',
-      token: 'yg8bE8nZwiCL4nQg',
+      token: 'other_token',
       organization: '某大型公司CTO',
       location: '中国',
       email: '8888@china.com',
-      auths: [],
+      roles: ['UserIndex', 'DashboardBase', 'login'],
       is_admin: 0,
-      dev_languages: 'JavaScript/Vue/React/Node/PHP',
-
-      role: 'user'
+      dev_languages: 'JavaScript/Vue/React/Node/PHP'
     }
   ];
 }
 export default [
-  // {
-  //   url: '/user/login',
-  //   timeout: 200,
-  //   method: 'post',
-  //   response: (request: requestParams) => {
-  //     const { username, password } = request?.body;
-  //     const checkUser = createFakeUserList().find(
-  //       item => item.user_name === username && item.password === password
-  //     );
-  //     if (!checkUser) {
-  //       return errorResult('不存在该用户');
-  //     }
-  //     return successResult({ token: checkUser.token });
-  //   }
-  // },
+  {
+    url: '/user/login',
+    timeout: 20,
+    method: 'post',
+    response: (request: {
+      body: {
+        phone: string;
+        account: string;
+        password: string;
+        verifyCode: string;
+        checked: boolean;
+      };
+    }) => {
+      const { account, password } = request?.body;
+      const checkUser = createFakeUserList().find(
+        item => item.user_name === account && item.password === password
+      );
+      if (!checkUser) {
+        return {
+          code: 0,
+          data: {
+            userInfo: null,
+            token: ''
+          },
+          msg: '用户不存在'
+        };
+      }
+      return {
+        code: 0,
+        data: {
+          userInfo: checkUser,
+          token: 'main_token'
+        },
+        msg: '登录成功'
+      };
+    }
+  },
+  {
+    url: '/user/getUser',
+    timeout: 20,
+    method: 'post',
+    response: (request: {
+      body: {
+        token;
+      };
+    }) => {
+      const { token } = request?.body;
+      const checkUser = createFakeUserList().find(item => item.token === token);
+      if (!checkUser) {
+        return {
+          code: 1,
+          data: null,
+          msg: '用户不存在'
+        };
+      }
+      return {
+        code: 0,
+        data: {
+          userInfo: checkUser,
+          token: 'main_token'
+        },
+        msg: '登录成功'
+      };
+    }
+  },
   {
     url: '/text',
     method: 'post',

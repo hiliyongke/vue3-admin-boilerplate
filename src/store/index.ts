@@ -1,5 +1,6 @@
 import { createPinia } from 'pinia';
 import { createPersistedState } from 'pinia-plugin-persistedstate';
+import { App } from 'vue';
 
 const pinia = createPinia();
 
@@ -21,4 +22,7 @@ export * from './modules/user';
 export * from './modules/setting';
 export * from './modules/tabs-router';
 
+export function setupPinia(app: App<Element>) {
+  app.use(pinia);
+}
 export default pinia;

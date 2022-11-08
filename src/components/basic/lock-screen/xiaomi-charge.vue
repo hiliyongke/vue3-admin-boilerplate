@@ -150,7 +150,6 @@ export default defineComponent({
   }
   .line-box {
     position: absolute;
-    bottom: -2px;
     width: 80px;
     height: 400px;
     overflow: hidden;

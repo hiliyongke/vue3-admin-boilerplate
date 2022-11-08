@@ -5,7 +5,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/loginRedirect',
     name: 'loginRedirect',
-    meta: { title: '登录页', icon: LogoutIcon, single: true },
+    meta: { title: '登录页', icon: LogoutIcon, single: true, order: 6 },
     redirect: '/login',
     children: []
   }

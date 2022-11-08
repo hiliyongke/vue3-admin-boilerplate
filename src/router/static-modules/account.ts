@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'user',
     component: Layout,
     redirect: '/user/index',
-    meta: { title: '个人页', icon: 'user-circle' },
+    meta: { title: '个人页', icon: 'user-circle', order: 4 },
     children: [
       {
         path: 'index',

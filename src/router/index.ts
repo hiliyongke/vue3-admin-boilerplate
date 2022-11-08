@@ -8,13 +8,13 @@ import uniq from 'lodash-es/uniq';
 
 import asyncModules from './async-modules';
 import staticModules from './static-modules';
+import { App } from 'vue';
 
-// 存放动态路由
-// TODO 这里可能需要对路由进行排序
+// 对路由进行排序
 export const asyncRouterList: Array<RouteRecordRaw> = [
   ...asyncModules,
   ...staticModules
-];
+].sort((a, b) => a.meta?.order - b.meta?.order);
 
 // 存放固定路由
 const defaultRouterList: Array<RouteRecordRaw> = [
@@ -78,5 +78,9 @@ const router = createRouter({
     };
   }
 });
+
+export function setupRouter(app: App<Element>) {
+  app.use(router);
+}
 
 export default router;

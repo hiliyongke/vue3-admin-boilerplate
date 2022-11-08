@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     redirect: '/dashboard/base',
     name: 'dashboard',
-    meta: { title: '仪表盘', icon: DashboardIcon },
+    meta: { title: '仪表盘', icon: DashboardIcon, order: 0 },
     children: [
       {
         path: 'base',

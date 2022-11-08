@@ -116,6 +116,12 @@
 
         <div class="setting-group-title">元素开关</div>
         <t-form-item
+          label="显示 pageLoading"
+          name="showPageLoading"
+        >
+          <t-switch v-model="formData.showPageLoading" />
+        </t-form-item>
+        <t-form-item
           v-show="formData.layout === 'side'"
           label="显示 Header"
           name="showHeader"

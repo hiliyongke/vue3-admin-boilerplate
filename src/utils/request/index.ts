@@ -7,8 +7,6 @@ import { joinTimestamp, formatRequestDate, setObjToUrlParams } from './util';
 import { TOKEN_NAME } from '@/config/global';
 import { handleError } from './handle-error';
 
-const env = import.meta.env.MODE || 'development';
-
 // 数据处理，方便区分多种处理方式
 const transform: AxiosTransform = {
   // 处理请求数据。如果数据不是预期格式，可直接抛出错误
@@ -38,7 +36,7 @@ const transform: AxiosTransform = {
     }
 
     //  这里 code为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code } = data;
+    const { code, msg } = data;
 
     // 这里逻辑可以根据项目进行修改
     const hasSuccess = data && code === 0;
@@ -46,7 +44,7 @@ const transform: AxiosTransform = {
       return data.data;
     }
 
-    throw new Error(`请求接口错误, 错误码: ${code}`);
+    throw new Error(`请求接口错误, 错误码: ${code}, 错误信息: ${msg}`);
   },
 
   // 请求前处理配置

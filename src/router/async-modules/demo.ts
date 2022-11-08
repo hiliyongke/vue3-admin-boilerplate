@@ -7,7 +7,7 @@ export default [
     name: 'demo',
     component: Layout,
     redirect: '/demo/windicss',
-    meta: { title: 'Demo', icon: DetailIcon },
+    meta: { title: 'Demo', icon: DetailIcon, order: 8 },
     children: [
       {
         path: 'windicss',

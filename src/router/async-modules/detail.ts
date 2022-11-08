@@ -7,7 +7,7 @@ export default [
     name: 'detail',
     component: Layout,
     redirect: '/detail/base',
-    meta: { title: '详情页', icon: DetailIcon },
+    meta: { title: '详情页', icon: DetailIcon, order: 3 },
     children: [
       {
         path: 'base',

@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'result',
     component: Layout,
     redirect: '/result/success',
-    meta: { title: '结果页', icon: 'check-circle' },
+    meta: { title: '结果页', icon: 'check-circle', order: 5 },
     children: [
       {
         path: 'success',

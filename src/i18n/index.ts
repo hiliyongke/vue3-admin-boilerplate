@@ -2,6 +2,7 @@
  * @Description:国际化配置
  */
 
+import { App } from 'vue';
 import { createI18n } from 'vue-i18n';
 
 const messages: { [x: string]: any } = {};
@@ -19,4 +20,7 @@ const i18n = createI18n({
   legacy: false
 });
 
+export function setupI18n(app: App<Element>) {
+  app.use(i18n);
+}
 export default i18n;

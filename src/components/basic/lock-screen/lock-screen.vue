@@ -90,6 +90,7 @@ import { useBattery } from '@/hooks/use-battery';
 import { useLockScreenStore } from '@/store/modules/lock-screen';
 import { useUserStore } from '@/store/modules/user';
 import { MessagePlugin } from 'tdesign-vue-next';
+import { login } from '@/api/user';
 const LOGIN_NAME = 'login';
 const lockScreenStore = useLockScreenStore();
 const userStore = useUserStore();
@@ -108,7 +109,7 @@ const state = reactive({
   isShowLogin: false,
   loginLoading: false, // 正在登录
   loginForm: {
-    username: userStore.name,
+    username: userStore.userInfo.user_name,
     password: ''
   }
 });
@@ -118,10 +119,23 @@ const unLockLogin = (val: boolean) => (state.isShowLogin = val);
 
 // 登录
 const onLogin = async () => {
-  if (state.loginForm.password.trim() == '')
+  if (state.loginForm.password.trim() == '') {
     return MessagePlugin.warning('请输入密码');
-  // const params = { ...state.loginForm };
+  }
+  const params = { ...state.loginForm };
   state.loginLoading = true;
+  const res = await login({
+    account: params.username,
+    password: params.password
+  });
+  if (res.userInfo?.user_name == params.username) {
+    MessagePlugin.success('解锁成功');
+    state.loginLoading = false;
+    unLockLogin(false);
+    lockScreenStore.setLock(false);
+  } else {
+    MessagePlugin.error('密码错误');
+  }
   // params.password = md5(params.password)
   // const { code, message: msg } = await userStore.login(params).finally(() => {
   //   state.loginLoading = false;
@@ -135,9 +149,6 @@ const onLogin = async () => {
   // } else {
   //   message.info(msg || '登录失败');
   // }
-  state.loginLoading = false;
-  unLockLogin(false);
-  lockScreenStore.setLock(false);
 };
 
 const nav2login = () => {

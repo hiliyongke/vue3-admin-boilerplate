@@ -16,7 +16,7 @@ const isLock = computed(() => lockScreenStore.isLock);
 const lockTime = computed(() => lockScreenStore.lockTime);
 const isMounted = ref(false);
 
-let timer;
+let timer: NodeJS.Timeout;
 
 const timekeeping = () => {
   clearInterval(timer);

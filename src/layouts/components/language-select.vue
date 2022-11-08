@@ -1,13 +1,15 @@
 <template>
-  <t-dropdown
-    :options="langOptions"
-    trigger="click"
-    @click="handleSetLanguage"
-  >
-    <t-button variant="text">
-      <InternetIcon />
-    </t-button>
-  </t-dropdown>
+  <div>
+    <t-dropdown
+      :options="langOptions"
+      trigger="click"
+      @click="handleSetLanguage"
+    >
+      <t-button variant="text">
+        {{ langOptions.find(x => x.value === settingStore.language)?.content }}
+      </t-button>
+    </t-dropdown>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -20,12 +22,11 @@ const state = reactive({
 });
 const settingStore = useSettingStore();
 const { locale } = useI18n();
-const handleSetLanguage = data => {
-  localStorage.setItem('language', data.value);
-  settingStore.language = data.value;
-  //auto refresh not reload the page
+const handleSetLanguage = (data: { value: string }) => {
+  settingStore.updateConfig({
+    language: data.value
+  });
   locale.value = data.value;
-  // location.reload()
 };
 //导出属性到页面中使用
 let { langOptions } = toRefs(state);

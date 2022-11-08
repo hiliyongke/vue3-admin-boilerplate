@@ -8,13 +8,11 @@ import {
 } from '@/config/color';
 import STYLE_CONFIG from '@/config/style';
 import pinia from '@/store';
-import { DEFAULT_LANGUAGE } from '../../../build/constant';
 const state = {
   ...STYLE_CONFIG,
   showSettingPanel: false,
   colorList: COLOR_TOKEN,
-  chartColors: LIGHT_CHART_COLORS,
-  language: localStorage.getItem('language') || DEFAULT_LANGUAGE
+  chartColors: LIGHT_CHART_COLORS
 };
 
 export type TState = typeof state;
