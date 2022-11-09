@@ -1,0 +1,1 @@
+import{_ as s,c as n,o as a,a as p}from"./app.9b55ddf1.js";const g=JSON.parse('{"title":"\u76EE\u5F55\u7ED3\u6784","description":"","frontmatter":{},"headers":[],"relativePath":"standard/structure.md"}'),l={name:"standard/structure.md"},o=p("",47),e=[o];function t(c,r,i,C,A,y){return a(),n("div",null,e)}const D=s(l,[["render",t]]);export{g as __pageData,D as default};
