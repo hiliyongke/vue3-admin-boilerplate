@@ -8,12 +8,12 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddIcon: typeof import('tdesign-icons-vue-next')['AddIcon']
+    ArrowUpIcon: typeof import('tdesign-icons-vue-next')['ArrowUpIcon']
     CheckIcon: typeof import('tdesign-icons-vue-next')['CheckIcon']
     ChevronDownIcon: typeof import('tdesign-icons-vue-next')['ChevronDownIcon']
     ChevronRightIcon: typeof import('tdesign-icons-vue-next')['ChevronRightIcon']
     CloseIcon: typeof import('tdesign-icons-vue-next')['CloseIcon']
     FileIcon: typeof import('tdesign-icons-vue-next')['FileIcon']
-    InternetIcon: typeof import('tdesign-icons-vue-next')['InternetIcon']
     LoadingIcon: typeof import('tdesign-icons-vue-next')['LoadingIcon']
     LockOffIcon: typeof import('tdesign-icons-vue-next')['LockOffIcon']
     RouterLink: typeof import('vue-router')['RouterLink']

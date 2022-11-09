@@ -76,6 +76,7 @@
       <l-footer />
     </t-footer>
   </t-layout>
+  <back-top :target="`.${prefix}-layout`" />
 </template>
 
 <script setup lang="ts">
