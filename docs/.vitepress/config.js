@@ -29,7 +29,12 @@ export default {
         link: '/other/index'
       }
     ],
-    socialLinks: [{ icon: 'github', link: 'https://gitee.com/geeksdidi' }],
+    socialLinks: [
+      {
+        icon: 'github',
+        link: 'https://github.com/hiliyongke/vue3-admin-boilerplate'
+      }
+    ],
     sidebar: {
       '/guid/': [
         {
@@ -54,14 +59,14 @@ export default {
             { text: '格式规范', link: '/standard/format' },
             { text: 'Ignore规范', link: '/standard/ignore' }
           ]
-        },
-        {
-          text: '公司统一规范',
-          items: [
-            { text: 'javascript', link: '/standard/javascript' },
-            { text: 'css', link: '/standard/css' }
-          ]
         }
+        // {
+        //   text: '公司统一规范',
+        //   items: [
+        //     { text: 'javascript', link: '/standard/javascript' },
+        //     { text: 'css', link: '/standard/css' }
+        //   ]
+        // }
       ],
       '/basic/': [
         {
