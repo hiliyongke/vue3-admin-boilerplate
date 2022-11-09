@@ -1,5 +1,6 @@
 export default {
   // base:'/docs/',
+  base: '/vue3-admin-boilerplate/',
   title: '前端技术指南',
   description: '前端规范', //网站描述
   lang: 'zh-CN', //语言
