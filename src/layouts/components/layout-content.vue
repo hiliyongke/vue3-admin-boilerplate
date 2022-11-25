@@ -2,7 +2,7 @@
   <t-layout :class="`${prefix}-layout`">
     <t-tabs
       v-if="settingStore.isUseTabsRouter"
-      theme="card"
+      theme="normal"
       :class="`${prefix}-layout-tabs-nav`"
       :value="$route.path"
       :style="{ position: 'sticky', top: 0, width: '100%' }"
@@ -20,10 +20,10 @@
             trigger="context-menu"
             :min-column-width="128"
             :popup-props="{
-              overlayClassName: 'route-tabs-dropdown',
-              onVisibleChange: (visible: boolean, ctx) => handleTabMenuClick(visible, ctx, routeItem.path),
-              visible: activeTabPath === routeItem.path,
-            }"
+            overlayClassName: 'route-tabs-dropdown',
+            onVisibleChange: (visible: boolean, ctx) => handleTabMenuClick(visible, ctx, routeItem.path),
+            visible: activeTabPath === routeItem.path,
+          }"
           >
             <template v-if="!routeItem.isHome">
               {{ routeItem.title }}

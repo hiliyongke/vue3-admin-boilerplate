@@ -1,11 +1,13 @@
 <template>
   <div :class="prefix + '-footer'">
-    Copyright @ 2022-{{ new Date().getFullYear() }} xxx. All Rights Reserved
+    Copyright @ 2021-{{ new Date().getFullYear() }} {{ COMPANY_NAME }}. All
+    Rights Reserved
   </div>
 </template>
 
 <script setup lang="ts">
 import { prefix } from '@/config/global';
+import { COMPANY_NAME } from '../../../build/constant';
 </script>
 
 <style lang="less" scoped>

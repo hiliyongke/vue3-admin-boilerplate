@@ -19,6 +19,7 @@ import 'default-passive-events'; //解决滚动背景的问题
 import '@/style/index.less';
 import 'virtual:windi.css';
 import 'virtual:svg-icons-register';
+import MiniMonitor from '@/utils/mini-monitor/index';
 
 const app = createApp(AppPage);
 
@@ -56,6 +57,17 @@ function bootstrap(app: App<any>) {
   // 个性化控制台
   setupConsole();
 
+  new MiniMonitor({
+    url: 'xxx', // 收集数据的服务接口地址
+    // 如果服务端接口有一些必传字段，可通过baseParams来实现
+    baseParams: {},
+    // 白名单。设定收集数据的指定域
+    whiteName: ['test1.baidu.com', 'test2.baidu.com'],
+    // FP大于fpLimit则不做收集操作，默认4000ms。目的：排除一些极端情况和一些无意义的数据，如debug因素造成的FP时间太长
+    fpLimit: 3000,
+    // 是否控制台显示
+    showConsole: true
+  });
   // 现在所有的导航都是异步的，等路由ready以后再进行挂载组件；
   router.isReady().then(() => app.mount('#app'));
   // 在导航期间每次发生未捕获的错误时都会调用该处理程序

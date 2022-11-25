@@ -12,8 +12,8 @@
           class="header-logo-container"
           @click="handleNav('/dashboard/base')"
         >
-          <!-- <span class="t-logo">Vue3 Admin Starter</span> -->
-          <logo-full class="t-logo" />
+          <span class="t-logo">Vue3 Admin Starter</span>
+          <!-- <logo-full class="t-logo" /> -->
         </span>
         <div
           v-else
@@ -49,7 +49,7 @@
           <!-- 全局通知 -->
           <notice />
 
-          <t-tooltip
+          <!-- <t-tooltip
             placement="bottom"
             content="代码仓库"
           >
@@ -61,8 +61,8 @@
             >
               <t-icon name="logo-github" />
             </t-button>
-          </t-tooltip>
-          <t-tooltip
+          </t-tooltip> -->
+          <!-- <t-tooltip
             placement="bottom"
             content="帮助文档"
           >
@@ -74,7 +74,7 @@
             >
               <t-icon name="help-circle" />
             </t-button>
-          </t-tooltip>
+          </t-tooltip> -->
           <t-tooltip
             placement="bottom"
             content="锁定屏幕"

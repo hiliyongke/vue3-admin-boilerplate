@@ -1,37 +1,53 @@
 .light {
-  &.login-wrapper {
+  &.wrapper {
     background-color: white;
-    background-image: url('@/assets/images/bg1.jpg');
-    background-size: 100% 100%;
+    background-image: url(@/assets/images/bg.png);
+    background-size: cover;
   }
 }
 
 .dark {
-  &.login-wrapper {
+  &.wrapper {
     background-color: var(--td-bg-color-page);
-    background-image: url('@/assets/images/bg.jpg');
+    background-image: url(@/assets/images/bg.png);
     background-size: 100% 100%;
   }
+}
+.login-one-ball {
+  opacity: 0.4;
+  position: absolute;
+  max-width: 568px;
+  left: -400px;
+  bottom: 0px;
+}
+
+.login-two-ball {
+  opacity: 0.4;
+  position: absolute;
+  max-width: 320px;
+  right: -200px;
+  top: -60px;
 }
 
 .login-wrapper {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-size: cover;
-  background-position: 100%;
   position: relative;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-container {
-  padding: 40px 80px;
+  padding: 30px;
   position: absolute;
-  top: 25%;
-  left: 5%;
+  text-align: center;
   min-height: 500px;
   line-height: 22px;
-  box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
+  border: 5px solid #fff;
+  border-radius: 8px;
+  background: hsla(0, 0%, 100%, 0.5);
+  backdrop-filter: blur(30px);
 }
 
 .title-container {
@@ -194,7 +210,8 @@
 .copyright {
   font-size: 14px;
   position: absolute;
-  left: 5%;
+  width: 100%;
+  text-align: center;
   bottom: 64px;
   color: var(--td-text-color-secondary);
 }

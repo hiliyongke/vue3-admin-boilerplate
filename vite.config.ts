@@ -1,4 +1,4 @@
-import { ConfigEnv, UserConfigExport, loadEnv, defineConfig } from 'vite';
+import { ConfigEnv, UserConfigExport, defineConfig } from 'vite';
 import path from 'path';
 import { createVitePlugins } from './build/vite/plugins';
 import proxy from './build/vite/proxy';

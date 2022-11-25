@@ -13,18 +13,31 @@
           :class="`${prefix}-side-nav-logo-wrapper`"
           @click="goHome"
         >
-          <component
+          <span
+            v-if="collapsed"
+            style="margin-left: 20px; font-size: 20px"
+          >
+            Admin
+          </span>
+          <span
+            v-else
+            style="margin-left: 20px; font-size: 20px"
+          >
+            Vue3 Admin Starter
+          </span>
+
+          <!-- <component
             :is="getLogo()"
             :class="`${prefix}-side-nav-logo-${
               collapsed ? 'min' : 'large'
             }-logo`"
-          />
+          /> -->
         </span>
       </template>
       <menu-content :nav-data="menu" />
       <template #operations>
         <span class="version-container">
-          {{ !collapsed ? 'Vue3 Admin Starter' : '' }} {{ pgk.version }}
+          {{ !collapsed ? 'v' : 'v' }} {{ pgk.version }}
         </span>
       </template>
     </t-menu>

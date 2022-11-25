@@ -4,13 +4,15 @@
  */
 
 // ================== App start ==================
+// 公司名
+export const COMPANY_NAME = '冲向大佬';
 
 // 应用名
 export const APP_TITLE = 'Admin';
 
+// spa shortname 轻应用
 export const PWA = true;
 
-// spa shortname 轻应用
 export const VITE_GLOB_APP_SHORT_NAME = 'Admin';
 
 // 默认语言
