@@ -1,2 +1,0 @@
-const a={FAIL:0,AUDIT_PENDING:1,EXEC_PENDING:2,EXECUTING:3,FINISH:4},l=[{value:a.FAIL,label:"审核失败"},{value:a.AUDIT_PENDING,label:"待审核"},{value:a.EXEC_PENDING,label:"待履行"},{value:a.EXECUTING,label:"审核成功"},{value:a.FINISH,label:"已完成"}],e={MAIN:0,SUB:1,SUPPLEMENT:2},E=[{value:e.MAIN,label:"主合同"},{value:e.SUB,label:"子合同"},{value:e.SUPPLEMENT,label:"补充合同"}],N={PAYMENT:0,RECIPT:1},I={low:"primary",middle:"warning",high:"danger"};export{a as C,I as N,e as a,N as b,l as c,E as d};
-//# sourceMappingURL=index-a0836ed2.js.map
