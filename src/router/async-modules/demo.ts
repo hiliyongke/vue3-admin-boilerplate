@@ -6,14 +6,14 @@ export default [
     path: '/demo',
     name: 'demo',
     component: Layout,
-    redirect: '/demo/windicss',
+    redirect: '/demo/unocss',
     meta: { title: 'Demo', icon: DetailIcon, order: 8 },
     children: [
       {
-        path: 'windicss',
-        name: 'demo-windicss',
-        component: () => import('@/pages/demo/windicss/index.vue'),
-        meta: { title: 'windicss' }
+        path: 'unocss',
+        name: 'demo-unocss',
+        component: () => import('@/pages/demo/unocss/index.vue'),
+        meta: { title: 'unocss' }
       },
       {
         path: 'i18n',
@@ -143,15 +143,21 @@ export default [
         path: 'secondePage',
         name: 'demo-secondePage',
         meta: { title: '二级菜单' },
-        redirect: '/demo/windicss',
+        redirect: '/demo/unocss',
         children: [
           {
-            path: 'windicss',
-            name: 'demo-t-windicss',
-            component: () => import('@/pages/demo/windicss/index.vue'),
+            path: 'unocss',
+            name: 'secondePage-demo-unocss',
+            component: () => import('@/pages/demo/unocss/index.vue'),
             meta: { title: '三级菜单' }
           }
         ]
+      },
+      {
+        path: 'https://github.com/hiliyongke/vue3-boilerplate.git',
+        name: 'https://github.com/hiliyongke/vue3-boilerplate.git',
+        meta: { title: '外链' },
+        component: () => {}
       }
     ]
   }

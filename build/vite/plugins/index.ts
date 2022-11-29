@@ -15,10 +15,10 @@ import { ConfigRestartPlugin } from './restart';
 import { ConfigSvgLoaderPlugin } from './svgLoader';
 import { ConfigProgressPlugin } from './progress';
 import { ConfigVConsolePlugin } from './vConsole';
-import { ConfigWindicssPlugin } from './windicss';
 import { configHtmlPlugin } from './html';
 import { configPwa } from './pwa';
 import { configSvgIconsPlugin } from './svgIcons';
+import { ConfigUnocssPlugin } from './unocss';
 
 export function createVitePlugins(isBuild: boolean) {
   const vitePlugins: (Plugin | Plugin[])[] = [
@@ -45,8 +45,8 @@ export function createVitePlugins(isBuild: boolean) {
     ConfigVConsolePlugin(isBuild),
     // rollup-plugin-visualizer
     ConfigVisualizerPlugin(isBuild),
-    // 支持 windicss
-    ConfigWindicssPlugin(),
+    // 支持 unocss
+    ConfigUnocssPlugin(),
     // 支持svgicons
     configSvgIconsPlugin(isBuild),
     // 构建时显示进度条

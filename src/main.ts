@@ -15,11 +15,13 @@ import {
   setupConsole,
   setupCustomComponents
 } from '@/plugins';
-import 'default-passive-events'; //解决滚动背景的问题
-import '@/style/index.less';
-import 'virtual:windi.css';
-import 'virtual:svg-icons-register';
 import MiniMonitor from '@/utils/mini-monitor/index';
+import 'default-passive-events'; //解决滚动背景的问题
+import 'virtual:svg-icons-register';
+
+// css
+import 'uno.css';
+import '@/style/index.less';
 
 const app = createApp(AppPage);
 

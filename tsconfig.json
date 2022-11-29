@@ -36,7 +36,8 @@
     "plop-tpls/component/prompt.js",
     "plopfile.js",
     "postcss.config.js",
-    "build/release.js"
+    "build/release.js",
+    "unocss.config.js"
   ],
   "exclude": ["node_modules", "dist"]
 }

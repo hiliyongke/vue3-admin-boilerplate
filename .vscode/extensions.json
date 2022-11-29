@@ -5,10 +5,10 @@
     "vue.vscode-typescript-vue-plugin",
     "vue.volar",
     "lokalise.i18n-ally",
-    "voorjaar.windicss-intellisense",
     "Gruntfuggly.todo-tree",
     "mikestead.dotenv",
     "streetsidesoftware.code-spell-checker",
-    "DavidAnson.vscode-markdownlint"
+    "DavidAnson.vscode-markdownlint",
+    "antfu.unocss"
   ]
 }
