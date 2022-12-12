@@ -2,7 +2,7 @@
   <workflow v-model="dataSource" />
 </template>
 <script setup lang="ts">
-import workflow from '@/components/basic/workflow/index.vue';
+import workflow from '@/components/workflow/index.vue';
 
 const dataSource = ref({
   name: '发起人',

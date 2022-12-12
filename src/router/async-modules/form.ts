@@ -1,5 +1,5 @@
 import Layout from '@/layouts/index.vue';
-import FormIcon from '@/assets/icons/assets-slide-form.svg';
+import FormIcon from '@/assets/svg/assets-slide-form.svg';
 
 export default [
   {

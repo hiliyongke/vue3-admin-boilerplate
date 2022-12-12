@@ -3,9 +3,9 @@
  */
 import type { App } from 'vue';
 
-import JsonSchemaEditor from '@/components/basic/json-schema-editor/index.vue';
-import SvgIcon from '@/components/basic/svg-icon/index.vue';
-import BackTop from '@/components/basic/back-top/index.vue';
+import JsonSchemaEditor from '@/components/json-schema-editor/index.vue';
+import SvgIcon from '@/components/svg-icon/index.vue';
+import BackTop from '@/components/back-top/index.vue';
 export function setupCustomComponents(app: App) {
   app.component('JsonSchemaEditor', JsonSchemaEditor);
   app.component('SvgIcons', SvgIcon);

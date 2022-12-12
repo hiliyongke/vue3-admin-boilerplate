@@ -1,6 +1,6 @@
 # Svg 图标
 
-把预先下载好的`svg`文件，导入目录`src/assets/icons/`，使用`BaseIcon`组件。具体详情说明和使用
+把预先下载好的`svg`文件，导入目录`src/assets/svg/`，使用`BaseIcon`组件。具体详情说明和使用
 
 ## 介绍
 
@@ -74,7 +74,7 @@ module.exports = {
 };
 ```
 
-1. 导入`svg`文件（导入目录`src/assets/icons`）
+1. 导入`svg`文件（导入目录`src/assets/svg`）
 
 2. 编写插件应用`Icon.ts`
 
@@ -111,7 +111,7 @@ app.use(Icon).mount('#app');
 <!-- 支持svg icon -->
 <BaseIcon name="arrow-up" />
 <!-- 支持图片链接 -->
-<BaseIcon name="https://www.flaticon.com/svg/static/icons/svg/3468/3468081.svg" />
+<BaseIcon name="https://www.flaticon.com/svg/static/svg/svg/3468/3468081.svg" />
 <!-- 支持TDesign icon -->
 <BaseIcon name="icon-success" />
 ```

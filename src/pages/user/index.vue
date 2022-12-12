@@ -7,7 +7,7 @@
           <span class="regular">下午好，今天是你加入公司第 100 天～</span>
         </div>
         <!-- <img
-          src="@/assets/icons/assets-tencent-logo.png"
+          src="@/assets/svg/assets-tencent-logo.png"
           class="logo"
         /> -->
       </div>
@@ -179,10 +179,10 @@ import { useSettingStore } from '@/store';
 import { LAST_7_DAYS } from '@/utils/date';
 import { USER_INFO_LIST, TEAM_MEMBERS, PRODUCT_LIST } from './constants';
 import { getFolderLineDataSet } from './index';
-import ProductAIcon from '@/assets/icons/assets-product-1.svg';
-import ProductBIcon from '@/assets/icons/assets-product-2.svg';
-import ProductCIcon from '@/assets/icons/assets-product-3.svg';
-import ProductDIcon from '@/assets/icons/assets-product-4.svg';
+import ProductAIcon from '@/assets/svg/assets-product-1.svg';
+import ProductBIcon from '@/assets/svg/assets-product-2.svg';
+import ProductCIcon from '@/assets/svg/assets-product-3.svg';
+import ProductDIcon from '@/assets/svg/assets-product-4.svg';
 import { changeChartsTheme } from '@/utils/color';
 
 echarts.use([

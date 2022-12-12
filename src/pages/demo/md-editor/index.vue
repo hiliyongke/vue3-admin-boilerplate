@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from 'vue';
 
-import Editor from '@/components/basic/markdown-editor/index.vue';
+import Editor from '@/components/markdown-editor/index.vue';
 
 export default defineComponent({
   components: {

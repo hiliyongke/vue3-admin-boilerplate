@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import LogoFullIcon from '@/assets/icons/assets-logo-full.svg';
+import LogoFullIcon from '@/assets/svg/assets-logo-full.svg';
 import { useSettingStore } from '@/store';
 
 const settingStore = useSettingStore();

@@ -58,8 +58,8 @@ import pgk from '../../../package.json';
 import { MenuRoute } from '@/interface';
 import { getActive, getRoutesExpanded } from '@/router';
 
-import AssetLogo from '@/assets/icons/assets-t-logo.svg';
-import AssetLogoFull from '@/assets/icons/assets-logo-full.svg';
+import AssetLogo from '@/assets/svg/assets-t-logo.svg';
+import AssetLogoFull from '@/assets/svg/assets-logo-full.svg';
 import MenuContent from './menu-content.vue';
 
 const MIN_POINT = 992 - 1;

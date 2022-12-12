@@ -4,5 +4,5 @@
   </div>
 </template>
 <script setup lang="ts">
-import PafPreview from '@/components/basic/pdf-preview/index.vue';
+import PafPreview from '@/components/pdf-preview/index.vue';
 </script>

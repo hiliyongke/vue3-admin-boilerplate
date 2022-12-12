@@ -1,4 +1,4 @@
-import LogoutIcon from '@/assets/icons/assets-slide-logout.svg';
+import LogoutIcon from '@/assets/svg/assets-slide-logout.svg';
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [

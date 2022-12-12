@@ -98,7 +98,7 @@ export default {
 import { storeToRefs } from 'pinia';
 import { NOTIFICATION_TYPES } from '@/enums';
 import { NotificationItem } from '@/interface';
-import EmptyIcon from '@/assets/icons/assets-empty.svg';
+import EmptyIcon from '@/assets/svg/assets-empty.svg';
 import { useNotificationStore } from '@/store';
 
 const TAB_LIST = [

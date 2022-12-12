@@ -173,9 +173,9 @@ import ColorContainer from '@/components/color/index.vue';
 import STYLE_CONFIG from '@/config/style';
 import { insertThemeStylesheet, generateColorMap } from '@/config/color';
 
-import SettingDarkIcon from '@/assets/icons/assets-setting-dark.svg';
-import SettingLightIcon from '@/assets/icons/assets-setting-light.svg';
-import SettingAutoIcon from '@/assets/icons/assets-setting-auto.svg';
+import SettingDarkIcon from '@/assets/svg/assets-setting-dark.svg';
+import SettingLightIcon from '@/assets/svg/assets-setting-light.svg';
+import SettingAutoIcon from '@/assets/svg/assets-setting-auto.svg';
 
 const settingStore = useSettingStore();
 

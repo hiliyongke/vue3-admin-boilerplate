@@ -155,7 +155,7 @@ import { useRouter } from 'vue-router';
 import { useSettingStore } from '@/store';
 import { getActive } from '@/router';
 import { prefix } from '@/config/global';
-import LogoFull from '@/assets/icons/assets-logo-full.svg';
+import LogoFull from '@/assets/svg/assets-logo-full.svg';
 import { MenuRoute } from '@/interface';
 
 import Notice from './notice.vue';

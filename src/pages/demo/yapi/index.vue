@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import JsonSchemaEditor from '@/components/basic/json-schema-editor/index.vue';
+import JsonSchemaEditor from '@/components/json-schema-editor/index.vue';
 import GenerateSchema from 'generate-schema';
 export default {
   name: 'App',

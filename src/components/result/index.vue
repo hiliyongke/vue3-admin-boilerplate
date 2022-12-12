@@ -9,12 +9,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import Result403Icon from '@/assets/icons/assets-result-403.svg';
-import Result404Icon from '@/assets/icons/assets-result-404.svg';
-import Result500Icon from '@/assets/icons/assets-result-500.svg';
-import ResultIeIcon from '@/assets/icons/assets-result-ie.svg';
-import ResultWifiIcon from '@/assets/icons/assets-result-wifi.svg';
-import ResultMaintenanceIcon from '@/assets/icons/assets-result-maintenance.svg';
+import Result403Icon from '@/assets/svg/assets-result-403.svg';
+import Result404Icon from '@/assets/svg/assets-result-404.svg';
+import Result500Icon from '@/assets/svg/assets-result-500.svg';
+import ResultIeIcon from '@/assets/svg/assets-result-ie.svg';
+import ResultWifiIcon from '@/assets/svg/assets-result-wifi.svg';
+import ResultMaintenanceIcon from '@/assets/svg/assets-result-maintenance.svg';
 
 const props = defineProps({
   bgUrl: String,

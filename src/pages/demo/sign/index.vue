@@ -36,7 +36,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
-import CanvasSign from '@/components/basic/canvas-sign/index.vue';
+import CanvasSign from '@/components/canvas-sign/index.vue';
 
 const blankimg =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=';

@@ -9,7 +9,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import Editor from '@/components/basic/rich-editor/index.vue';
+import Editor from '@/components/rich-editor/index.vue';
 
 export default defineComponent({
   components: {

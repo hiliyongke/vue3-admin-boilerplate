@@ -1,5 +1,5 @@
 import Layout from '@/layouts/index.vue';
-import DetailIcon from '@/assets/icons/assets-slide-detail.svg';
+import DetailIcon from '@/assets/svg/assets-slide-detail.svg';
 
 export default [
   {

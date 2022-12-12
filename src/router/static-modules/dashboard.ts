@@ -1,5 +1,5 @@
 import Layout from '@/layouts/index.vue';
-import DashboardIcon from '@/assets/icons/assets-slide-dashboard.svg';
+import DashboardIcon from '@/assets/svg/assets-slide-dashboard.svg';
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [

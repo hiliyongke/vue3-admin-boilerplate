@@ -9,7 +9,7 @@
 </template>
 <script setup lang="ts">
 import { APP_TITLE } from '../build/constant';
-import LockScreen from '@/components/basic/lock-screen/index.vue';
+import LockScreen from '@/components/lock-screen/index.vue';
 import { globalConfigEn, globalConfigZh } from '@/config/global';
 import { useSettingStore } from '@/store';
 import enUs from 'tdesign-vue-next/es/locale/en_US';

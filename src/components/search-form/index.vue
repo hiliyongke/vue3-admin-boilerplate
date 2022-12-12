@@ -49,7 +49,7 @@
 
 <script setup lang="ts" name="searchForm">
 import { ref, computed, onMounted } from 'vue';
-import { ColumnProps } from '@/components/basic/pro-table/interface';
+import { ColumnProps } from '@/components/pro-table/interface';
 import SearchFormItem from './components/search-form-item.vue';
 
 interface ProTableProps {

@@ -32,7 +32,7 @@ export function configSvgIconsPlugin(isBuild: boolean) {
 }
 ```
 
-3. 导入`svg`文件（导入目录`src/assets/icons/svg`）
+3. 导入`svg`文件（导入目录`src/assets/svg/svg`）
 
 4. 使用插件应用`svgSprite.ts`
 
@@ -92,7 +92,7 @@ void bootstrap(app);
 <!-- 支持svg icon -->
 <free-icon name="arrow-up" />
 <!-- 支持图片链接 -->
-<free-icon name="https://www.flaticon.com/svg/static/icons/svg/3468/3468081.svg" />
+<free-icon name="https://www.flaticon.com/svg/static/svg/svg/3468/3468081.svg" />
 <!-- 支持element icon -->
 <free-icon name="el-icon-success" />
 ```

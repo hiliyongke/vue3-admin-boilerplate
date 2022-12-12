@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import SvgIcons from '@/components/basic/svg-icon/index.vue';
+// import SvgIcons from '@/components/svg-icon/index.vue';
 
 const icons: string[] = [
   'excel',

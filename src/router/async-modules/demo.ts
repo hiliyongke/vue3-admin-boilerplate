@@ -1,5 +1,5 @@
 import Layout from '@/layouts/index.vue';
-import DetailIcon from '@/assets/icons/assets-slide-detail.svg';
+import DetailIcon from '@/assets/svg/assets-slide-detail.svg';
 
 export default [
   {
@@ -36,7 +36,7 @@ export default [
       {
         path: 'icons',
         name: 'demo-icons',
-        component: () => import('@/pages/demo/icons/index.vue'),
+        component: () => import('@/pages/demo/svg/index.vue'),
         meta: { title: 'icons' }
       },
       {

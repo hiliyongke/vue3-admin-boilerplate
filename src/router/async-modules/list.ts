@@ -1,5 +1,5 @@
 import Layout from '@/layouts/index.vue';
-import ListIcon from '@/assets/icons/assets-slide-list.svg';
+import ListIcon from '@/assets/svg/assets-slide-list.svg';
 
 export default [
   {
