@@ -1,0 +1,2 @@
+import{d as n,az as a,c as s,a as t,t as l,w as o,o as e,b3 as i}from"./.pnpm-baced213.js";const d=n({__name:"index",setup:n=>(a(),(n,a)=>{const d=i("t");return e(),s("div",null,[t("div",null,l(n.$d(new Date)),1),t("div",null,l(n.$t("common.now",{time:Date.now().toString()})),1),t("div",null,l(n.$t("login.userName")),1),o(t("div",null,null,512),[[d,"login.password"]])])})});export{d as default};
+//# sourceMappingURL=index-3133d559.js.map
