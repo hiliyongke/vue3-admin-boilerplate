@@ -42,7 +42,6 @@ export const useTabsRouterStore = defineStore({
           (route: TRouterInfo) => route.path === newRoute.path
         )
       ) {
-        // eslint-disable-next-line no-param-reassign
         this.tabRouterList = this.tabRouterList.concat({
           ...newRoute,
           isAlive: needAlive

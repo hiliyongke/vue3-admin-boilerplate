@@ -152,12 +152,6 @@ export default [
             meta: { title: '三级菜单' }
           }
         ]
-      },
-      {
-        path: 'https://github.com/hiliyongke/vue3-boilerplate.git',
-        name: 'https://github.com/hiliyongke/vue3-boilerplate.git',
-        meta: { title: '外链' },
-        component: () => {}
       }
     ]
   }

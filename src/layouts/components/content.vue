@@ -12,11 +12,14 @@
       </keep-alive>
     </transition>
   </router-view>
+  <frame-page />
 </template>
 
 <script setup lang="ts">
-import { computed, ComputedRef } from 'vue';
+import { computed } from 'vue';
+import type { ComputedRef } from 'vue';
 import { useTabsRouterStore } from '@/store';
+import FramePage from '@/layouts/frame/index.vue';
 
 // <suspense>标签属于实验性功能，请谨慎使用
 // 如果存在需解决/page/1=> /page/2 刷新数据问题 请修改代码 使用activeRouteFullPath 作为key
@@ -46,7 +49,7 @@ const isRefreshing = computed(() => {
 <style lang="less" scoped>
 .fade-leave-active,
 .fade-enter-active {
-  transition: opacity var(--td-anim-duration-slow) var(--td-anim-time-fn-easing);
+  transition: opacity @anim-duration-slow @anim-time-fn-easing;
 }
 .fade-enter,
 .fade-leave-to {
