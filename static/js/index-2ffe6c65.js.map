@@ -1,0 +1,1 @@
+{"version":3,"file":"index-2ffe6c65.js","sources":["../../../src/pages/demo/pro-table/index.vue"],"sourcesContent":["<template>\n  <div>表格hooks</div>\n</template>\n\n<script setup></script>\n\n<style lang=\"less\" scoped></style>\n"],"names":["_ctx","_cache"],"mappings":"mIACE,SAAAA,EAAAC"}
