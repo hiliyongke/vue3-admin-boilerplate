@@ -1,0 +1,1 @@
+import{_ as t,c as r,o as e,a as d}from"./app.8a49408b.js";const f=JSON.parse('{"title":"技术栈和组件库选型规范","description":"","frontmatter":{},"headers":[],"relativePath":"recommend/technology_stack.md"}'),a={name:"recommend/technology_stack.md"},s=d("",2),n=[s];function o(l,h,i,c,_,g){return e(),r("div",null,n)}const u=t(a,[["render",o]]);export{f as __pageData,u as default};

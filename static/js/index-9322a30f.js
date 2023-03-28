@@ -1,2 +1,0 @@
-import{d as t,k as a,o as r,c as s,y as e,u as n}from"./.pnpm-23496a1a.js";import{_ as l}from"./_plugin-vue_export-helper-1b428a4d.js";const o=["src"],u=l(t({__name:"index",props:{url:String,type:{type:String,default:"layout"}},setup(t){const l=t,u=a(()=>{const{type:t}=l;return["thumbnail-container",{"thumbnail-circle":"circle"===t,"thumbnail-layout":"layout"===t}]});return(a,l)=>(r(),s("img",{class:e(n(u)),src:t.url},null,10,o))}}),[["__scopeId","data-v-0af7b362"]]);export{u as T};
-//# sourceMappingURL=index-9322a30f.js.map

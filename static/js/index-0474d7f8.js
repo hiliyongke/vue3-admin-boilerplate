@@ -1,2 +1,0 @@
-import{g as e,c as t,a as s,t as a,u as n,o}from"./.pnpm-23496a1a.js";const r=s("div",null,"the recommend using way of worker",-1),l={__name:"index",setup(l){const u=(e=>{const t=new Blob([`(${e.toString()})()`]),s=URL.createObjectURL(t);return new Worker(s)})(()=>{onmessage=e=>{let t=0;for(let s=0;s<e.data;s++)t=s+t;postMessage(t)}});u.postMessage(3e7);let m=e(null);return u.onmessage=e=>{m.value=e.data,u.terminate()},(e,l)=>(o(),t("div",null,[r,s("div",null,"计算结果："+a(n(m)),1)]))}};export{l as default};
-//# sourceMappingURL=index-0474d7f8.js.map
