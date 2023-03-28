@@ -19,7 +19,7 @@
 </template>
 <script lang="ts" setup>
 import { CSSProperties, watch, ref, unref, computed } from 'vue';
-import debounce from 'lodash/debounce';
+import debounce from 'lodash-es/debounce';
 import { useWindowSizeFn } from '@/hooks/use-window-size';
 import { prefix } from '@/config/global';
 import { useSettingStore } from '@/store';

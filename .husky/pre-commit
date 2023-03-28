@@ -3,4 +3,4 @@
 
 # 因为 lint-staged 是局部安装的，所以你要用 npx 去 执行 他
 npx @ls-lint/ls-lint
-npx lint-staged
+npx lint-staged --verbose

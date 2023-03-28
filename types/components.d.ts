@@ -67,7 +67,6 @@ declare module '@vue/runtime-core' {
     TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
     TRow: typeof import('tdesign-vue-next')['Row']
     TSelect: typeof import('tdesign-vue-next')['Select']
-    TSkeleton: typeof import('tdesign-vue-next')['Skeleton']
     TStepItem: typeof import('tdesign-vue-next')['StepItem']
     TSteps: typeof import('tdesign-vue-next')['Steps']
     TSubmenu: typeof import('tdesign-vue-next')['Submenu']

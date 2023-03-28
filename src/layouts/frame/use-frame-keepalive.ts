@@ -1,5 +1,5 @@
 import { computed, toRaw, unref } from 'vue';
-import uniqBy from 'lodash/uniqBy';
+import uniqBy from 'lodash-es/uniqBy';
 import { useRouter } from 'vue-router';
 import { useSettingStore, useTabsRouterStore } from '@/store';
 import type { MenuRoute } from '../../../types/interface';

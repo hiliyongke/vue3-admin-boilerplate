@@ -13,13 +13,13 @@ export const AutoRegistryComponents = () => {
   // 按需引入
   return Components({
     dirs: [], // dirs这个配置的默认值就是 src/components。按需加载的文件夹,配置需要默认导入的自定义组件文件夹，该文件夹下的所有组件都会自动 import
-    extensions: ['vue', 'md', 'tsx'],
+    extensions: ['vue', 'tsx'],
     deep: true,
     dts: 'types/components.d.ts',
-    directoryAsNamespace: true,
+    directoryAsNamespace: false,
     globalNamespaces: [],
     directives: true,
-    include: [/\.vue$/, /\.vue\?vue/, /\.md$/, /\.tsx$/, /\.tsx\?tsx/],
+    include: [/\.vue$/, /\.vue\?vue/, /\.tsx$/, /\.tsx\?tsx/],
     exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]\.nuxt[\\/]/],
     resolvers: [
       // 自动导入 iconify 图标组件

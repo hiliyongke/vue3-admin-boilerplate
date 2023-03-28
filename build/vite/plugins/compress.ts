@@ -27,7 +27,6 @@
 // # 是否在http header中添加Vary: Accept-Encoding，建议开启
 // gzip_vary on;
 
-import { Console } from 'console';
 import viteCompression from 'vite-plugin-compression';
 import { COMPRESSION, COMPRESSION_ALGORITHM } from '../../constant';
 
@@ -41,7 +40,7 @@ export const ConfigCompressPlugin = () => {
       ext: '.gz', // 文件类型
       threshold: 10240, // 压缩前最小文件大小,
       success: () => {
-        console.log('压缩成功啦！');
+        // console.log('压缩成功啦！');
       }
     });
   }

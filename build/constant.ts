@@ -10,9 +10,10 @@ export const COMPANY_NAME = '冲向大佬';
 // 应用名
 export const APP_TITLE = 'Admin';
 
-// spa shortname 轻应用
+// spa
 export const PWA = true;
 
+// shortname 轻应用
 export const VITE_GLOB_APP_SHORT_NAME = 'Admin';
 
 // 默认语言
@@ -24,7 +25,7 @@ export const DEFAULT_LOCK_TIME = 10 * 60;
 // 本地服务端口
 export const VITE_PORT = 3000;
 
-// prefix
+// api prefix
 export const API_PREFIX = '/api';
 
 // serve
@@ -39,7 +40,7 @@ export const MOCK_API_TARGET_URL = 'http://localhost:3000';
 
 // ================== Vite start ==================
 
-// mock
+// PUBLIC_PATH
 export const PUBLIC_PATH = './';
 
 // mock
@@ -68,10 +69,7 @@ export const PROGRESS = true;
 
 export const V_CONSOLE = false;
 
-// ================== Vite end ==================
-
 // 输出目录
 export const OUTPUT_DIR = 'dist';
 
-//全局配置文件名
-export const GLOB_CONFIG_FILE_NAME = '_app.config.js';
+// ================== Vite end ==================
