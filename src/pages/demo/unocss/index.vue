@@ -40,8 +40,9 @@
           dark:hover="op80"
         >
           <a
-            href="https://antfu.me/posts/reimagine-atomic-css-zh"
+            :href="readingLink"
             target="_blank"
+            rel="noopener noreferrer"
           >
             推荐阅读：重新构想原子化 CSS
           </a>
@@ -50,3 +51,16 @@
     </div>
   </div>
 </template>
+
+<script lang="ts">
+export default {
+  name: 'UnocssDemo'
+};
+</script>
+
+<script setup lang="ts">
+/**
+ * 推荐阅读链接
+ */
+const readingLink: string = 'https://antfu.me/posts/reimagine-atomic-css-zh';
+</script>

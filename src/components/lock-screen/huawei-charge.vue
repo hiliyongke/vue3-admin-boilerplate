@@ -35,30 +35,43 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import type { PropType } from 'vue';
+export default {
+  name: 'HuaweiCharge'
+};
+</script>
+
+<script setup lang="ts">
 import type { Battery } from '@/hooks/use-battery';
 
-export default defineComponent({
-  name: 'HuaweiCharge',
-  props: {
-    battery: {
-      // 电池对象
-      type: Object as PropType<Battery>,
-      default: () => ({})
-    },
-    calcDischargingTime: {
-      // 电池剩余时间可用时间
-      type: String,
-      default: ''
-    },
-    batteryStatus: {
-      // 电池状态
-      type: String,
-      validator: (val: string) =>
-        ['充电中', '已充满', '已断开电源'].includes(val)
-    }
-  }
+/**
+ * 电池状态类型
+ */
+type BatteryStatus = '充电中' | '已充满' | '已断开电源';
+
+/**
+ * 组件属性接口
+ */
+interface Props {
+  /** 电池对象 */
+  battery?: Battery;
+  /** 电池剩余可用时间 */
+  calcDischargingTime?: string;
+  /** 电池状态 */
+  batteryStatus?: BatteryStatus;
+}
+
+/**
+ * 组件属性
+ */
+const props = withDefaults(defineProps<Props>(), {
+  battery: () => ({
+    level: 0,
+    charging: false,
+    chargingTime: Infinity,
+    dischargingTime: Infinity
+  } as Battery),
+  calcDischargingTime: '',
+  batteryStatus: '已断开电源'
 });
 </script>
 

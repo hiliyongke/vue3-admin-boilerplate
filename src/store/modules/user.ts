@@ -27,15 +27,29 @@ export const useUserStore = defineStore({
       checked: boolean;
     }) {
       const res = await login(userInfo);
-      if (res) {
+      if (res && res.code === 200) {
         this.token = res.token;
+        this.userInfo = res.userInfo;
+        localStorage.setItem(TOKEN_NAME, res.token);
+
+        // 登录成功后立即初始化路由权限
+        const permissionStore = usePermissionStore();
+        await permissionStore.initRoutes(res.userInfo.roles);
       } else {
-        throw res;
+        throw new Error(res.message || '登录失败');
       }
     },
     async getUserInfo() {
       const res = await getUser({ token: this.token });
-      this.userInfo = res.userInfo;
+      if (res && res.code === 200) {
+        this.userInfo = res.userInfo;
+
+        // 获取用户信息后初始化路由权限
+        const permissionStore = usePermissionStore();
+        await permissionStore.initRoutes(res.userInfo.roles);
+      } else {
+        throw new Error(res.message || '获取用户信息失败');
+      }
     },
     async logout() {
       localStorage.removeItem(TOKEN_NAME);

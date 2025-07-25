@@ -5,15 +5,35 @@
   />
 </template>
 <script setup lang="ts">
-const props = defineProps({
-  url: String,
-  type: {
-    type: String,
-    default: 'layout'
-  }
+import { computed } from 'vue';
+
+/**
+ * 缩略图类型
+ */
+type ThumbnailType = 'circle' | 'layout';
+
+/**
+ * 组件属性接口
+ */
+interface Props {
+  /** 图片URL */
+  url?: string;
+  /** 缩略图类型 */
+  type?: ThumbnailType;
+}
+
+/**
+ * 定义组件属性
+ */
+const props = withDefaults(defineProps<Props>(), {
+  url: '',
+  type: 'layout'
 });
 
-const className = computed(() => {
+/**
+ * 计算样式类名
+ */
+const className = computed<(string | Record<string, boolean>)[]>(() => {
   const { type } = props;
   return [
     'thumbnail-container',

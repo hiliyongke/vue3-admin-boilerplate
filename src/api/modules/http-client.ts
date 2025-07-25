@@ -79,15 +79,22 @@ export class HttpClient<SecurityDataType = unknown> {
     params1: AxiosRequestConfig,
     params2?: AxiosRequestConfig
   ): AxiosRequestConfig {
-    return {
+    const merged = {
       ...this.instance.defaults,
       ...params1,
-      ...(params2 || {}),
-      headers: {
-        ...(this.instance.defaults.headers || {}),
-        ...(params1.headers || {}),
-        ...((params2 && params2.headers) || {})
-      }
+      ...(params2 || {})
+    };
+
+    // 安全地合并 headers
+    const headers = {
+      ...(this.instance.defaults.headers as any || {}),
+      ...(params1.headers as any || {}),
+      ...((params2 && params2.headers as any) || {})
+    };
+
+    return {
+      ...merged,
+      headers
     };
   }
 
@@ -129,22 +136,22 @@ export class HttpClient<SecurityDataType = unknown> {
       body !== null &&
       typeof body === 'object'
     ) {
-      requestParams.headers.common = { Accept: '*/*' };
-      requestParams.headers.post = {};
-      requestParams.headers.put = {};
-
       body = this.createFormData(body as Record<string, unknown>);
     }
+
+    // 安全地构建请求头
+    const finalHeaders = {
+      ...(requestParams.headers as any || {}),
+      ...(type && type !== ContentType.FormData
+        ? { 'Content-Type': type }
+        : {}),
+      ...(type === ContentType.FormData ? { Accept: '*/*' } : {})
+    };
 
     return this.instance
       .request({
         ...requestParams,
-        headers: {
-          ...(type && type !== ContentType.FormData
-            ? { 'Content-Type': type }
-            : {}),
-          ...(requestParams.headers || {})
-        },
+        headers: finalHeaders,
         params: query,
         responseType: responseFormat,
         data: body,

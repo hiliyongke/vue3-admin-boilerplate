@@ -75,9 +75,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { PropType } from 'vue';
+import { useRoute } from 'vue-router';
 import isObject from 'lodash-es/isObject';
 import type { MenuRoute } from '../../../types/interface';
-import { getActive } from '@/router';
 
 const props = defineProps({
   navData: {
@@ -86,7 +86,8 @@ const props = defineProps({
   }
 });
 
-const active = computed(() => getActive());
+const route = useRoute();
+const active = computed(() => route.path);
 const list = computed(() => {
   const { navData } = props;
   return getMenuList(navData);
@@ -129,10 +130,12 @@ const getHref = (item: MenuRoute) => {
 };
 
 const getPath = item => {
-  if (active.value.startsWith(item.path)) {
+  // 如果当前路由匹配这个菜单项，返回当前路由路径
+  if (active.value === item.path || active.value.startsWith(item.path + '/')) {
     return active.value;
   }
-  return item.meta?.single ? item.redirect : item.path;
+  // 否则返回菜单项的路径
+  return item.path;
 };
 
 const beIcon = (item: MenuRoute) => {

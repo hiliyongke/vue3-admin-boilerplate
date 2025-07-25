@@ -241,7 +241,9 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { MessagePlugin } from 'tdesign-vue-next';
+import type { UploadFile } from 'tdesign-vue-next';
 import {
   FORM_RULES,
   INITIAL_DATA,
@@ -250,33 +252,88 @@ import {
   PARTY_B_OPTIONS
 } from './constants';
 
+/**
+ * 表单验证结果接口
+ */
+interface ValidateResult {
+  validateResult: boolean;
+}
+
+/**
+ * 上传失败事件参数接口
+ */
+interface UploadFailEvent {
+  file: UploadFile;
+}
+
+/**
+ * 上传响应接口
+ */
+interface UploadResponse {
+  url?: string;
+  error?: string;
+  [key: string]: any;
+}
+
+/**
+ * 表单数据
+ */
 const formData = ref({ ...INITIAL_DATA });
 
-const onReset = () => {
+/**
+ * 重置表单
+ */
+const onReset = (): void => {
   MessagePlugin.warning('取消新建');
 };
-const onSubmit = ({ validateResult }) => {
+
+/**
+ * 提交表单
+ * @param param 验证结果
+ */
+const onSubmit = ({ validateResult }: ValidateResult): void => {
   if (validateResult === true) {
     MessagePlugin.success('新建成功');
   }
 };
-const beforeUpload = file => {
-  if (!/\.(pdf)$/.test(file.name)) {
+
+/**
+ * 上传前验证
+ * @param file 上传文件
+ * @returns 是否允许上传
+ */
+const beforeUpload = (file: UploadFile): boolean => {
+  if (!/\.(pdf)$/.test(file.name || '')) {
     MessagePlugin.warning('请上传pdf文件');
     return false;
   }
-  if (file.size > 60 * 1024 * 1024) {
+  if ((file.size || 0) > 60 * 1024 * 1024) {
     MessagePlugin.warning('上传文件不能大于60M');
     return false;
   }
   return true;
 };
-const handleFail = ({ file }) => {
+
+/**
+ * 上传失败处理
+ * @param param 失败事件参数
+ */
+const handleFail = ({ file }: UploadFailEvent): void => {
   MessagePlugin.error(`文件 ${file.name} 上传失败`);
 };
-// 用于格式化接口响应值，error 会被用于上传失败的提示文字；url 表示文件/图片地址
-const formatResponse = res => {
-  return { ...res, error: '上传失败，请重试', url: res.url };
+
+/**
+ * 格式化上传响应
+ * 用于格式化接口响应值，error 会被用于上传失败的提示文字；url 表示文件/图片地址
+ * @param res 响应数据
+ * @returns 格式化后的响应
+ */
+const formatResponse = (res: UploadResponse): UploadResponse => {
+  return {
+    ...res,
+    error: '上传失败，请重试',
+    url: res.url
+  };
 };
 </script>
 

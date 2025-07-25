@@ -16,10 +16,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-// import SvgIcons from '@/components/svg-icon/index.vue';
+export default {
+  name: 'SvgDemo'
+};
+</script>
 
-const icons: string[] = [
+<script setup lang="ts">
+import SvgIcons from '@/components/svg-icon/index.vue';
+
+/**
+ * 图标名称列表
+ */
+const icons: readonly string[] = [
   'excel',
   'fullscreen-exit',
   'fullscreen-line',
@@ -29,16 +37,7 @@ const icons: string[] = [
   'ppt',
   'settings',
   'word'
-];
-
-export default defineComponent({
-  // components: { SvgIcons },
-  setup() {
-    return {
-      icons
-    };
-  }
-});
+] as const;
 </script>
 
 <style lang="less" scoped>

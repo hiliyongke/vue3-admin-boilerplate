@@ -2,4 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 # 提交记录检查
-npx commitlint --config commitlint.config.js --edit "$1"
+npx commitlint --config commitlint.config.ts --edit "$1"

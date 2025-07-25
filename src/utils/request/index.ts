@@ -1,50 +1,70 @@
-// axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
-import isString from 'lodash-es/isString';
-import merge from 'lodash-es/merge';
+/**
+ * @description Axios请求配置文件
+ * @author 优化版本
+ *
+ * 主要功能：
+ * 1. 配置请求和响应拦截器
+ * 2. 统一处理请求参数和响应数据
+ * 3. 集成token认证机制
+ * 4. 提供错误处理和重试机制
+ * 5. 支持请求取消和防重复请求
+ */
+
+import { isString } from 'lodash-es';
+import { merge } from 'lodash-es';
 import type { AxiosTransform, CreateAxiosOptions } from './transform';
 import { VAxios } from './axios';
 import { joinTimestamp, formatRequestDate, setObjToUrlParams } from './util';
 import { TOKEN_NAME } from '@/config/global';
 import { handleError } from './handle-error';
 
-// 数据处理，方便区分多种处理方式
+/**
+ * 请求和响应数据转换配置
+ */
 const transform: AxiosTransform = {
-  // 处理请求数据。如果数据不是预期格式，可直接抛出错误
+  /**
+   * 响应数据处理钩子
+   * @param res 响应对象
+   * @param options 请求选项
+   * @returns 处理后的数据
+   */
   transformRequestHook: (res, options) => {
     const { isTransformResponse, isReturnNativeResponse } = options;
 
-    // 如果204无内容直接返回
+    // 处理无内容响应（204状态码或PUT/PATCH请求）
     const method = res.config.method?.toLowerCase();
     if (res.status === 204 || method === 'put' || method === 'patch') {
       return res;
     }
 
-    // 是否返回原生响应头 比如：需要获取响应头时使用该属性
+    // 返回原生响应对象（包含响应头等完整信息）
     if (isReturnNativeResponse) {
       return res;
     }
-    // 不进行任何处理，直接返回
-    // 用于页面代码可能需要直接获取code，data，message这些信息时开启
+
+    // 不进行数据转换，直接返回响应数据
     if (!isTransformResponse) {
       return res.data;
     }
 
-    // 错误的时候返回
+    // 验证响应数据格式
     const { data } = res;
     if (!data) {
-      throw new Error('请求接口错误');
+      throw new Error('服务器响应数据为空');
     }
 
-    //  这里 code为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
-    const { code, msg } = data;
+    // 解构响应数据（根据后端API格式调整）
+    const { code, msg, message } = data;
+    const errorMessage = msg || message || '未知错误';
 
-    // 这里逻辑可以根据项目进行修改
-    const hasSuccess = data && code === 0;
-    if (hasSuccess) {
-      return data.data;
+    // 判断请求是否成功（根据业务约定调整成功状态码）
+    const isSuccess = data && (code === 0 || code === 200);
+    if (isSuccess) {
+      return data.data || data;
     }
 
-    throw new Error(`请求接口错误, 错误码: ${code}, 错误信息: ${msg}`);
+    // 抛出业务错误
+    throw new Error(`请求失败: [${code}] ${errorMessage}`);
   },
 
   // 请求前处理配置

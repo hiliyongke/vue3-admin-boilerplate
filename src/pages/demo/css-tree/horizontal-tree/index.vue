@@ -64,7 +64,16 @@
   </div>
 </template>
 
-<script setup></script>
+<script lang="ts">
+export default {
+  name: 'HorizontalTreeDemo'
+};
+</script>
+
+<script setup lang="ts">
+// 水平树形结构演示页面
+// 使用纯 CSS 实现的树形结构布局
+</script>
 
 <style lang="less" scoped>
 *,

@@ -1,13 +1,13 @@
 <template>
   <t-form
-    ref="form"
+    ref="formRef"
     :class="['item-container', `register-${type}`]"
     :data="formData"
     :rules="FORM_RULES"
     label-width="0"
     @submit="onSubmit"
   >
-    <template v-if="type == 'phone'">
+    <template v-if="type === 'phone'">
       <t-form-item name="phone">
         <t-input
           v-model="formData.phone"
@@ -22,7 +22,7 @@
       </t-form-item>
     </template>
 
-    <template v-if="type == 'email'">
+    <template v-if="type === 'email'">
       <t-form-item name="email">
         <t-input
           v-model="formData.email"
@@ -57,7 +57,7 @@
       </t-input>
     </t-form-item>
 
-    <template v-if="type == 'phone'">
+    <template v-if="type === 'phone'">
       <t-form-item
         class="verification-code"
         name="verifyCode"
@@ -72,7 +72,7 @@
           :disabled="countDown > 0"
           @click="handleCounter"
         >
-          {{ countDown == 0 ? '发送验证码' : `${countDown}秒后可重发` }}
+          {{ countDown === 0 ? '发送验证码' : `${countDown}秒后可重发` }}
         </t-button>
       </t-form-item>
     </template>
@@ -100,18 +100,53 @@
     <div class="switch-container">
       <span
         class="tip"
-        @click="switchType(type == 'phone' ? 'email' : 'phone')"
+        @click="switchType(type === 'phone' ? 'email' : 'phone')"
       >
-        {{ type == 'phone' ? '使用邮箱注册' : '使用手机号注册' }}
+        {{ type === 'phone' ? '使用邮箱注册' : '使用手机号注册' }}
       </span>
     </div>
   </t-form>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import { MessagePlugin } from 'tdesign-vue-next';
 import { useCounter } from '@/hooks/use-counter';
 
-const INITIAL_DATA = {
+/**
+ * 注册类型
+ */
+type RegisterType = 'phone' | 'email';
+
+/**
+ * 表单数据接口
+ */
+interface FormData {
+  phone: string;
+  email: string;
+  password: string;
+  verifyCode: string;
+  checked: boolean;
+}
+
+/**
+ * 表单验证结果接口
+ */
+interface ValidateResult {
+  validateResult: boolean;
+}
+
+/**
+ * 表单实例接口
+ */
+interface FormInstance {
+  reset: () => void;
+}
+
+/**
+ * 初始表单数据
+ */
+const INITIAL_DATA: FormData = {
   phone: '',
   email: '',
   password: '',
@@ -119,6 +154,9 @@ const INITIAL_DATA = {
   checked: false
 };
 
+/**
+ * 表单验证规则
+ */
 const FORM_RULES = {
   phone: [{ required: true, message: '手机号必填', type: 'error' }],
   email: [
@@ -127,20 +165,45 @@ const FORM_RULES = {
   ],
   password: [{ required: true, message: '密码必填', type: 'error' }],
   verifyCode: [{ required: true, message: '验证码必填', type: 'error' }]
-};
+} as const;
 
-const type = ref('phone');
+/**
+ * 当前注册类型
+ */
+const type = ref<RegisterType>('phone');
 
-const form = ref();
-const formData = ref({ ...INITIAL_DATA });
+/**
+ * 表单实例引用
+ */
+const formRef = ref<FormInstance>();
 
-const showPsw = ref(false);
+/**
+ * 表单数据
+ */
+const formData = ref<FormData>({ ...INITIAL_DATA });
 
+/**
+ * 是否显示密码
+ */
+const showPsw = ref<boolean>(false);
+
+/**
+ * 验证码倒计时
+ */
 const [countDown, handleCounter] = useCounter();
 
-const emit = defineEmits(['registerSuccess']);
+/**
+ * 定义组件事件
+ */
+const emit = defineEmits<{
+  registerSuccess: [];
+}>();
 
-const onSubmit = ({ validateResult }) => {
+/**
+ * 提交表单
+ * @param param 验证结果
+ */
+const onSubmit = ({ validateResult }: ValidateResult): void => {
   if (validateResult === true) {
     if (!formData.value.checked) {
       MessagePlugin.error('请同意服务协议和隐私声明');
@@ -151,9 +214,13 @@ const onSubmit = ({ validateResult }) => {
   }
 };
 
-const switchType = val => {
-  form.value.reset();
-  type.value = val;
+/**
+ * 切换注册类型
+ * @param newType 新的注册类型
+ */
+const switchType = (newType: RegisterType): void => {
+  formRef.value?.reset();
+  type.value = newType;
 };
 </script>
 

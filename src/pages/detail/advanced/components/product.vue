@@ -59,15 +59,56 @@
 </template>
 
 <script lang="ts">
-export default defineComponent({
-  props: {
-    data: {
-      type: Object,
-      default: () => {
-        return {};
-      }
-    }
-  }
+export default {
+  name: 'ProductComponent'
+};
+</script>
+
+<script setup lang="ts">
+/**
+ * 产品数据接口
+ */
+interface ProductData {
+  /** 产品名称 */
+  name: string;
+  /** 副标题 */
+  subtitle: string;
+  /** 规格大小 */
+  size: string;
+  /** CPU 配置 */
+  cpu: string;
+  /** 内存配置 */
+  memory: string;
+  /** 产品信息 */
+  info: string;
+  /** 已使用数量 */
+  use: number;
+  /** 库存数量 */
+  stock: number;
+}
+
+/**
+ * 组件属性接口
+ */
+interface Props {
+  /** 产品数据 */
+  data?: ProductData;
+}
+
+/**
+ * 组件属性
+ */
+withDefaults(defineProps<Props>(), {
+  data: () => ({
+    name: '',
+    subtitle: '',
+    size: '',
+    cpu: '',
+    memory: '',
+    info: '',
+    use: 0,
+    stock: 0
+  })
 });
 </script>
 

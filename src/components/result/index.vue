@@ -9,6 +9,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue';
+import type { Component } from 'vue';
 import Result403Icon from '@/assets/svg/assets-result-403.svg';
 import Result404Icon from '@/assets/svg/assets-result-404.svg';
 import Result500Icon from '@/assets/svg/assets-result-500.svg';
@@ -16,30 +18,52 @@ import ResultIeIcon from '@/assets/svg/assets-result-ie.svg';
 import ResultWifiIcon from '@/assets/svg/assets-result-wifi.svg';
 import ResultMaintenanceIcon from '@/assets/svg/assets-result-maintenance.svg';
 
-const props = defineProps({
-  bgUrl: String,
-  title: String,
-  tip: String,
-  type: String
+/**
+ * 结果页面类型
+ */
+type ResultType = '403' | '404' | '500' | 'ie' | 'wifi' | 'maintenance';
+
+/**
+ * 组件属性接口
+ */
+interface Props {
+  /** 背景图片URL */
+  bgUrl?: string;
+  /** 标题 */
+  title?: string;
+  /** 提示信息 */
+  tip?: string;
+  /** 结果类型 */
+  type?: ResultType;
+}
+
+/**
+ * 定义组件属性
+ */
+const props = withDefaults(defineProps<Props>(), {
+  bgUrl: '',
+  title: '',
+  tip: '',
+  type: '403'
 });
 
-const dynamicComponent = computed(() => {
-  switch (props.type) {
-    case '403':
-      return Result403Icon;
-    case '404':
-      return Result404Icon;
-    case '500':
-      return Result500Icon;
-    case 'ie':
-      return ResultIeIcon;
-    case 'wifi':
-      return ResultWifiIcon;
-    case 'maintenance':
-      return ResultMaintenanceIcon;
-    default:
-      return Result403Icon;
-  }
+/**
+ * 图标组件映射表
+ */
+const ICON_MAP: Record<ResultType, Component> = {
+  '403': Result403Icon,
+  '404': Result404Icon,
+  '500': Result500Icon,
+  'ie': ResultIeIcon,
+  'wifi': ResultWifiIcon,
+  'maintenance': ResultMaintenanceIcon
+} as const;
+
+/**
+ * 动态组件计算属性
+ */
+const dynamicComponent = computed<Component>(() => {
+  return ICON_MAP[props.type] || ICON_MAP['403'];
 });
 </script>
 <style lang="less" scoped>

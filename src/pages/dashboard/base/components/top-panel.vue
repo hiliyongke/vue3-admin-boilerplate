@@ -77,102 +77,164 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import * as echarts from 'echarts/core';
 import { LineChart, BarChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { useSettingStore } from '@/store';
 import { changeChartsTheme } from '@/utils/color';
-
-// 导入样式
 import Trend from '@/components/trend/index.vue';
 import { constructInitDashboardDataset } from '../index';
-
 import { PANE_LIST } from '../constants';
 
+// 注册 ECharts 组件
 echarts.use([LineChart, BarChart, CanvasRenderer]);
 
-const store = useSettingStore();
-const resizeTime = ref(1);
+/**
+ * 图表类型
+ */
+type ChartType = 'line' | 'bar';
 
-// moneyCharts
-let moneyContainer: HTMLElement;
-let moneyChart: echarts.ECharts;
-const renderMoneyChart = () => {
+/**
+ * 设置 store
+ */
+const store = useSettingStore();
+
+/**
+ * 响应式缩放比例
+ */
+const resizeTime = ref<number>(1);
+
+/**
+ * 收入图表相关变量
+ */
+let moneyContainer: HTMLElement | null = null;
+let moneyChart: echarts.ECharts | null = null;
+
+/**
+ * 退款图表相关变量
+ */
+let refundContainer: HTMLElement | null = null;
+let refundChart: echarts.ECharts | null = null;
+
+/**
+ * 渲染收入图表
+ */
+const renderMoneyChart = (): void => {
   if (!moneyContainer) {
     moneyContainer = document.getElementById('moneyContainer');
   }
-  moneyChart = echarts.init(moneyContainer);
-  moneyChart.setOption(constructInitDashboardDataset('line'));
+  if (moneyContainer) {
+    moneyChart = echarts.init(moneyContainer);
+    moneyChart.setOption(constructInitDashboardDataset('line'));
+  }
 };
 
-// refundCharts
-let refundContainer: HTMLElement;
-let refundChart: echarts.ECharts;
-const renderRefundChart = () => {
+/**
+ * 渲染退款图表
+ */
+const renderRefundChart = (): void => {
   if (!refundContainer) {
     refundContainer = document.getElementById('refundContainer');
   }
-  refundChart = echarts.init(refundContainer);
-  refundChart.setOption(constructInitDashboardDataset('bar'));
+  if (refundContainer) {
+    refundChart = echarts.init(refundContainer);
+    refundChart.setOption(constructInitDashboardDataset('bar'));
+  }
 };
 
-const renderCharts = () => {
+/**
+ * 渲染所有图表
+ */
+const renderCharts = (): void => {
   renderMoneyChart();
   renderRefundChart();
 };
 
-// chartSize update
-const updateContainer = () => {
-  if (
-    document.documentElement.clientWidth >= 1400 &&
-    document.documentElement.clientWidth < 1920
-  ) {
-    resizeTime.value = Number(
-      (document.documentElement.clientWidth / 2080).toFixed(2)
-    );
-  } else if (document.documentElement.clientWidth < 1080) {
-    resizeTime.value = Number(
-      (document.documentElement.clientWidth / 1080).toFixed(2)
-    );
+/**
+ * 更新容器尺寸
+ */
+const updateContainer = (): void => {
+  const clientWidth = document.documentElement.clientWidth;
+
+  if (clientWidth >= 1400 && clientWidth < 1920) {
+    resizeTime.value = Number((clientWidth / 2080).toFixed(2));
+  } else if (clientWidth < 1080) {
+    resizeTime.value = Number((clientWidth / 1080).toFixed(2));
   } else {
     resizeTime.value = 1;
   }
-  moneyChart.resize({
-    width: resizeTime.value * 120,
-    height: resizeTime.value * 66
-  });
-  refundChart.resize({
-    width: resizeTime.value * 120,
-    height: resizeTime.value * 42
-  });
+
+  // 调整图表尺寸
+  if (moneyChart) {
+    moneyChart.resize({
+      width: resizeTime.value * 120,
+      height: resizeTime.value * 66
+    });
+  }
+
+  if (refundChart) {
+    refundChart.resize({
+      width: resizeTime.value * 120,
+      height: resizeTime.value * 42
+    });
+  }
 };
 
+/**
+ * 组件挂载时初始化
+ */
 onMounted(() => {
   renderCharts();
   nextTick(() => {
     updateContainer();
   });
-  window.addEventListener('resize', updateContainer, false);
+  window.addEventListener('resize', updateContainer, { passive: true });
 });
 
+/**
+ * 组件卸载时清理
+ */
 onUnmounted(() => {
   window.removeEventListener('resize', updateContainer);
+
+  // 销毁图表实例
+  if (moneyChart) {
+    moneyChart.dispose();
+    moneyChart = null;
+  }
+  if (refundChart) {
+    refundChart.dispose();
+    refundChart = null;
+  }
 });
 
+/**
+ * 监听主题变化
+ */
 watch(
   () => store.brandTheme,
   () => {
-    changeChartsTheme([refundChart]);
+    if (refundChart) {
+      changeChartsTheme([refundChart]);
+    }
   }
 );
 
+/**
+ * 监听模式变化
+ */
 watch(
   () => store.mode,
   () => {
-    [moneyChart, refundChart].forEach(item => {
-      item.dispose();
+    // 销毁现有图表
+    [moneyChart, refundChart].forEach(chart => {
+      if (chart) {
+        chart.dispose();
+      }
     });
 
+    // 重新渲染图表
     renderCharts();
   }
 );

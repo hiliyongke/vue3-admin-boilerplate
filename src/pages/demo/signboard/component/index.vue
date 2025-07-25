@@ -18,37 +18,70 @@
   </div>
 </template>
 
-<script setup>
-import SortableJsExample from 'sortablejs';
-const props = defineProps({
-  headerText: {
-    type: String,
-    default: 'Header'
-  },
+<script lang="ts">
+export default {
+  name: 'SignboardComponent'
+};
+</script>
 
-  list: {
-    type: Array,
-    default() {
-      return [];
-    }
-  }
+<script setup lang="ts">
+import { onMounted, nextTick } from 'vue';
+import SortableJsExample from 'sortablejs';
+
+/**
+ * 任务项接口
+ */
+interface MissionItem {
+  /** 任务名称 */
+  name: string;
+  /** 任务ID */
+  id: number;
+}
+
+/**
+ * 组件属性接口
+ */
+interface Props {
+  /** 标题文本 */
+  headerText?: string;
+  /** 任务列表 */
+  list?: MissionItem[];
+}
+
+/**
+ * 组件属性
+ */
+const props = withDefaults(defineProps<Props>(), {
+  headerText: 'Header',
+  list: () => []
 });
-//拖拽
+
+/**
+ * 初始化拖拽功能
+ */
+const rowDrop = (): void => {
+  const element = document.querySelector('#' + props.headerText);
+  if (element) {
+    new SortableJsExample(element as HTMLElement, {
+      group: {
+        name: 'group',
+        put: true
+      }
+    });
+  }
+};
+
+/**
+ * 组件挂载后初始化拖拽
+ */
 onMounted(() => {
-  console.log(props.list);
+  console.log('看板任务列表:', props.list);
   nextTick(() => {
     rowDrop();
   });
 });
-const rowDrop = () => {
-  new SortableJsExample(document.querySelector('#' + props.headerText), {
-    group: {
-      name: 'group',
-      put: true
-    }
-  });
-};
 </script>
+
 <style lang="less" scoped>
 .board-column {
   height: auto;

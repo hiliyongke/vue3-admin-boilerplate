@@ -166,6 +166,7 @@ export default {
 };
 </script>
 <script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import * as echarts from 'echarts/core';
 import {
   GridComponent,
@@ -185,6 +186,30 @@ import ProductCIcon from '@/assets/svg/assets-product-3.svg';
 import ProductDIcon from '@/assets/svg/assets-product-4.svg';
 import { changeChartsTheme } from '@/utils/color';
 
+/**
+ * 产品类型
+ */
+type ProductType = 'a' | 'b' | 'c' | 'd';
+
+/**
+ * 日期范围类型
+ */
+type DateRange = [string, string] | string[];
+
+/**
+ * 图表配置接口
+ */
+interface ChartOption {
+  grid: {
+    x: number;
+    y: number;
+    x2: number;
+    y2: number;
+  };
+  [key: string]: any;
+}
+
+// 注册 ECharts 组件
 echarts.use([
   GridComponent,
   TooltipComponent,
@@ -193,19 +218,50 @@ echarts.use([
   LegendComponent
 ]);
 
+/**
+ * 图表容器元素
+ */
 let lineContainer: HTMLElement;
+
+/**
+ * 图表实例
+ */
 let lineChart: echarts.ECharts;
+
+/**
+ * 设置 store
+ */
 const store = useSettingStore();
+
+/**
+ * 图表颜色配置
+ */
 const chartColors = computed(() => store.chartColors);
 
-const onLineChange = value => {
-  lineChart.setOption(getFolderLineDataSet(value));
+/**
+ * 处理日期范围变化
+ * @param value 日期范围值
+ */
+const onLineChange = (value: DateRange): void => {
+  if (lineChart) {
+    lineChart.setOption(getFolderLineDataSet(value));
+  }
 };
 
-const initChart = () => {
-  lineContainer = document.getElementById('lineContainer');
+/**
+ * 初始化图表
+ */
+const initChart = (): void => {
+  const container = document.getElementById('lineContainer');
+  if (!container) {
+    console.error('图表容器未找到');
+    return;
+  }
+
+  lineContainer = container;
   lineChart = echarts.init(lineContainer);
-  lineChart.setOption({
+
+  const chartOption: ChartOption = {
     grid: {
       x: 30, // 默认是80px
       y: 30, // 默认是60px
@@ -213,28 +269,29 @@ const initChart = () => {
       y2: 30 // 默认60px
     },
     ...getFolderLineDataSet({ ...chartColors.value })
-  });
+  };
+
+  lineChart.setOption(chartOption);
 };
 
-const updateContainer = () => {
-  lineChart?.resize({
-    width: lineContainer.clientWidth,
-    height: lineContainer.clientHeight
-  });
+/**
+ * 更新图表容器尺寸
+ */
+const updateContainer = (): void => {
+  if (lineChart && lineContainer) {
+    lineChart.resize({
+      width: lineContainer.clientWidth,
+      height: lineContainer.clientHeight
+    });
+  }
 };
 
-onMounted(() => {
-  nextTick(() => {
-    initChart();
-  });
-  window.addEventListener('resize', updateContainer, false);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateContainer);
-});
-
-const getIcon = type => {
+/**
+ * 获取产品图标组件
+ * @param type 产品类型
+ * @returns 图标组件
+ */
+const getIcon = (type: ProductType): any => {
   switch (type) {
     case 'a':
       return ProductAIcon;
@@ -249,10 +306,29 @@ const getIcon = type => {
   }
 };
 
+// 组件挂载时初始化图表
+onMounted(() => {
+  nextTick(() => {
+    initChart();
+  });
+  window.addEventListener('resize', updateContainer, false);
+});
+
+// 组件卸载时清理事件监听器
+onUnmounted(() => {
+  window.removeEventListener('resize', updateContainer);
+  if (lineChart) {
+    lineChart.dispose();
+  }
+});
+
+// 监听主题变化
 watch(
   () => store.brandTheme,
   () => {
-    changeChartsTheme([lineChart]);
+    if (lineChart) {
+      changeChartsTheme([lineChart]);
+    }
   }
 );
 </script>

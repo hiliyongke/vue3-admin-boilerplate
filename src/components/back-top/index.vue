@@ -17,91 +17,158 @@
     </div>
   </transition>
 </template>
-<script setup>
-import { onMounted, ref, onBeforeUnmount, useSlots } from 'vue';
-const props = defineProps({
-  target: {
-    type: String,
-    default: 'body'
-  },
-  visibilityHeight: {
-    type: Number,
-    default: 240
-  },
-  right: {
-    type: Number,
-    default: 20
-  },
-  bottom: {
-    type: Number,
-    default: 40
-  },
-  customClass: String
+<script setup lang="ts">
+import { onMounted, ref, onBeforeUnmount, useSlots, computed } from 'vue';
+
+/**
+ * 组件属性接口
+ */
+interface Props {
+  /** 滚动目标元素选择器 */
+  target?: string;
+  /** 显示回到顶部按钮的滚动高度 */
+  visibilityHeight?: number;
+  /** 距离右边的距离 */
+  right?: number;
+  /** 距离底部的距离 */
+  bottom?: number;
+  /** 自定义样式类名 */
+  customClass?: string;
+}
+
+/**
+ * 定义组件属性
+ */
+const props = withDefaults(defineProps<Props>(), {
+  target: 'body',
+  visibilityHeight: 240,
+  right: 20,
+  bottom: 40,
+  customClass: ''
 });
-const backtopShow = ref(false);
-const scrollTop = ref(0);
-const timer = ref(null);
+
+/**
+ * 是否显示回到顶部按钮
+ */
+const backtopShow = ref<boolean>(false);
+
+/**
+ * 当前滚动位置
+ */
+const scrollTop = ref<number>(0);
+
+/**
+ * 滚动动画定时器
+ */
+const timer = ref<NodeJS.Timeout | null>(null);
+
+/**
+ * 插槽
+ */
 const slot = useSlots();
-const right = ref(props.right + 'px');
-const bottom = ref(props.bottom + 'px');
-const backtop = () => {
-  clearInterval(timer.value);
+
+/**
+ * 计算右边距离样式
+ */
+const right = computed<string>(() => `${props.right}px`);
+
+/**
+ * 计算底部距离样式
+ */
+const bottom = computed<string>(() => `${props.bottom}px`);
+
+/**
+ * 回到顶部功能
+ */
+const backtop = (): void => {
+  if (timer.value) {
+    clearInterval(timer.value);
+  }
+
   timer.value = setInterval(() => {
     scrollTop.value -= 30;
-    if (props.target == 'body') {
+
+    if (props.target === 'body') {
       if (typeof document !== 'undefined') {
-        document.body.scrollTop =
-          scrollTop.value =
-          document.documentElement.scrollTop =
-            scrollTop.value;
+        document.body.scrollTop = scrollTop.value;
+        document.documentElement.scrollTop = scrollTop.value;
       }
     } else {
       if (typeof document !== 'undefined') {
-        document.querySelector(props.target).scrollTop = scrollTop.value;
+        const targetElement = document.querySelector(props.target) as HTMLElement;
+        if (targetElement) {
+          targetElement.scrollTop = scrollTop.value;
+        }
       }
     }
+
     if (scrollTop.value <= 0) {
       scrollTop.value = 0;
-      clearInterval(timer.value);
+      if (timer.value) {
+        clearInterval(timer.value);
+        timer.value = null;
+      }
     }
-  });
+  }, 16); // 约60fps
 };
-const handleScroll = () => {
+
+/**
+ * 处理滚动事件
+ */
+const handleScroll = (): void => {
   if (typeof document !== 'undefined') {
-    scrollTop.value =
-      props.target == 'body'
-        ? document.body.scrollTop || document.documentElement.scrollTop
-        : document.querySelector(props.target).scrollTop;
+    if (props.target === 'body') {
+      scrollTop.value = document.body.scrollTop || document.documentElement.scrollTop;
+    } else {
+      const targetElement = document.querySelector(props.target) as HTMLElement;
+      if (targetElement) {
+        scrollTop.value = targetElement.scrollTop;
+      }
+    }
   }
-  if (scrollTop.value >= props.visibilityHeight) {
-    backtopShow.value = true;
-  } else {
-    backtopShow.value = false;
-  }
+
+  backtopShow.value = scrollTop.value >= props.visibilityHeight;
 };
+
+/**
+ * 组件挂载时添加滚动监听
+ */
 onMounted(() => {
-  if (props.target == 'body') {
+  if (props.target === 'body') {
     if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', handleScroll, false);
+      window.addEventListener('scroll', handleScroll, { passive: true });
     }
   } else {
     if (typeof document !== 'undefined') {
-      document
-        .querySelector(props.target)
-        .addEventListener('scroll', handleScroll, false);
+      const targetElement = document.querySelector(props.target);
+      if (targetElement) {
+        targetElement.addEventListener('scroll', handleScroll, { passive: true });
+      }
     }
   }
 });
+
+/**
+ * 组件卸载时移除滚动监听和清理定时器
+ */
 onBeforeUnmount(() => {
-  if (props.target == 'body') {
+  // 清理定时器
+  if (timer.value) {
+    clearInterval(timer.value);
+    timer.value = null;
+  }
+
+  // 移除事件监听
+  if (props.target === 'body') {
     if (typeof window !== 'undefined') {
       window.removeEventListener('scroll', handleScroll);
     }
   } else {
     if (typeof document !== 'undefined') {
-      document
-        .querySelector(props.target)
-        .removeEventListener('scroll', handleScroll);
+      const targetElement = document.querySelector(props.target);
+      if (targetElement) {
+        targetElement.removeEventListener('scroll', handleScroll);
+      }
     }
   }
 });

@@ -55,17 +55,32 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from 'vue';
+export default {
+  name: 'XiaomiCharge'
+};
+</script>
+
+<script setup lang="ts">
 import type { Battery } from '@/hooks/use-battery';
-export default defineComponent({
-  name: 'XiaomiCharge',
-  props: {
-    battery: {
-      // 电池对象
-      type: Object as PropType<Battery>,
-      default: () => ({})
-    }
-  }
+
+/**
+ * 组件属性接口
+ */
+interface Props {
+  /** 电池对象 */
+  battery?: Battery;
+}
+
+/**
+ * 组件属性
+ */
+const props = withDefaults(defineProps<Props>(), {
+  battery: () => ({
+    level: 0,
+    charging: false,
+    chargingTime: Infinity,
+    dischargingTime: Infinity
+  } as Battery)
 });
 </script>
 

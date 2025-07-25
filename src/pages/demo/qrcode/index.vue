@@ -42,80 +42,141 @@
   </div>
 </template>
 <script lang="ts">
+export default {
+  name: 'QrcodeDemo'
+};
+</script>
+
+<script setup lang="ts">
+import { ref } from 'vue';
 import qrcodeVue from 'qrcode.vue';
-/* in ES 6 */
 import domtoimage from 'dom-to-image';
-import { defineComponent, ref } from 'vue';
+import { MessagePlugin } from 'tdesign-vue-next';
 import { urlToBlob } from '@/utils/transfer2blob';
 
-export default defineComponent({
-  components: {
-    qrcodeVue
-  },
-  setup() {
-    const qrcodeImgSrc = ref();
-    const qrcodeRef = ref();
-    const configFormRef = ref();
-    const value = ref('https://example.com');
-    const configRules = {
-      hostName: [
-        { required: true, message: '请输入二维码链接', trigger: 'blur' }
-      ]
-    };
-    const configForm = ref({
-      hostName: 'https://example.com'
-    });
+/**
+ * 表单配置接口
+ */
+interface ConfigForm {
+  hostName: string;
+}
 
-    /**
-     * @description 下载图片
-     */
-    const handleDownImg = () => {
-      urlToBlob(qrcodeImgSrc.value, (res: any) => {
-        const link = document.createElement('a');
-        const href = window.URL.createObjectURL(res); // 创建下载的链接
-        link.href = href;
-        link.download = 'Download.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
-      ElMessage.success('保存成功！');
-    };
+/**
+ * 表单验证规则接口
+ */
+interface FormRules {
+  hostName: Array<{
+    required: boolean;
+    message: string;
+    trigger: string;
+  }>;
+}
 
-    /**
-     * @description 生成海报图片
-     * @param
-     */
-    const generateImg = () => {
-      const options = { cacheBust: true, width: 375, bgcolor: '#fff' };
-      domtoimage
-        .toBlob(qrcodeRef.value, options)
-        .then((blob: Blob) => {
-          const reader = new FileReader();
-          reader.onload = e => {
-            qrcodeImgSrc.value = e?.target?.result;
-            handleDownImg();
-          };
-          if (blob) {
-            reader.readAsDataURL(blob);
-          }
-        })
-        .catch((error: any) => {
-          // eslint-disable-next-line no-console
-          console.error('oops, something went wrong!', error);
-        });
-    };
+/**
+ * DOM转图片选项接口
+ */
+interface DomToImageOptions {
+  cacheBust: boolean;
+  width: number;
+  bgcolor: string;
+}
 
-    return {
-      qrcodeRef,
-      value,
-      configFormRef,
-      configForm,
-      configRules,
-      generateImg
-    };
-  }
+/**
+ * 二维码图片源
+ */
+const qrcodeImgSrc = ref<string>('');
+
+/**
+ * 二维码容器引用
+ */
+const qrcodeRef = ref<HTMLElement>();
+
+/**
+ * 表单引用
+ */
+const configFormRef = ref();
+
+/**
+ * 默认值
+ */
+const value = ref<string>('https://example.com');
+
+/**
+ * 表单验证规则
+ */
+const configRules: FormRules = {
+  hostName: [
+    { required: true, message: '请输入二维码链接', trigger: 'blur' }
+  ]
+};
+
+/**
+ * 表单配置
+ */
+const configForm = ref<ConfigForm>({
+  hostName: 'https://example.com'
 });
+
+/**
+ * 下载图片
+ */
+const handleDownImg = (): void => {
+  if (!qrcodeImgSrc.value) {
+    MessagePlugin.error('图片生成失败');
+    return;
+  }
+
+  urlToBlob(qrcodeImgSrc.value, (res: Blob) => {
+    const link = document.createElement('a');
+    const href = window.URL.createObjectURL(res);
+    link.href = href;
+    link.download = 'qrcode.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(href);
+  });
+  MessagePlugin.success('保存成功！');
+};
+
+/**
+ * 生成海报图片
+ */
+const generateImg = (): void => {
+  if (!qrcodeRef.value) {
+    MessagePlugin.error('二维码容器未找到');
+    return;
+  }
+
+  const options: DomToImageOptions = {
+    cacheBust: true,
+    width: 375,
+    bgcolor: '#fff'
+  };
+
+  domtoimage
+    .toBlob(qrcodeRef.value, options)
+    .then((blob: Blob | null) => {
+      if (!blob) {
+        MessagePlugin.error('图片生成失败');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const result = e.target?.result;
+        if (typeof result === 'string') {
+          qrcodeImgSrc.value = result;
+          handleDownImg();
+        }
+      };
+      reader.readAsDataURL(blob);
+    })
+    .catch((error: Error) => {
+      console.error('生成二维码图片失败:', error);
+      MessagePlugin.error('生成图片失败，请重试');
+    });
+};
 </script>
 <style lang="less" scoped>
 .qrcode-container {

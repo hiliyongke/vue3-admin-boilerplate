@@ -20,80 +20,100 @@
 </template>
 
 <script lang="ts">
-import NodePort from './node.vue';
 export default {
-  components: {
-    NodePort
-  },
-  data() {
-    return {
-      nodeList: [
-        {
-          label: '模板名称',
-          id: 1,
-          type: 'root',
-          children: [
-            {
-              label: '子节点1',
-              id: 2,
-              type: 'card',
-              children: [
-                {
-                  label: '子节点1-1',
-                  id: 4,
-                  type: 'btn'
-                },
-                {
-                  label: '子节点1-2',
-                  id: 44,
-                  type: 'btn',
-                  children: [
-                    {
-                      label: '叶子节点1-2-1',
-                      id: 7,
-                      type: 'btn'
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              label: '子节点3',
-              id: 8,
-              type: 'card',
-              children: [
-                {
-                  label: '子节点3-1',
-                  id: 12,
-                  type: 'btn',
-                  children: [
-                    {
-                      label: '叶子节点1',
-                      id: 108,
-                      type: 'btn'
-                    }
-                  ]
-                },
-                {
-                  label: '子节点3-2',
-                  id: 13,
-                  type: 'btn',
-                  children: [
-                    {
-                      label: '叶子节点2',
-                      id: 132,
-                      type: 'btn'
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    };
-  }
+  name: 'VerticalTreeDemo'
 };
+</script>
+
+<script setup lang="ts">
+import NodePort from './node.vue';
+
+/**
+ * 树节点类型
+ */
+type NodeType = 'root' | 'card' | 'btn';
+
+/**
+ * 树节点接口
+ */
+interface TreeNode {
+  /** 节点标签 */
+  label: string;
+  /** 节点ID */
+  id: number;
+  /** 节点类型 */
+  type: NodeType;
+  /** 子节点列表 */
+  children?: TreeNode[];
+}
+
+/**
+ * 节点列表数据
+ */
+const nodeList: TreeNode[] = [
+  {
+    label: '模板名称',
+    id: 1,
+    type: 'root',
+    children: [
+      {
+        label: '子节点1',
+        id: 2,
+        type: 'card',
+        children: [
+          {
+            label: '子节点1-1',
+            id: 4,
+            type: 'btn'
+          },
+          {
+            label: '子节点1-2',
+            id: 44,
+            type: 'btn',
+            children: [
+              {
+                label: '叶子节点1-2-1',
+                id: 7,
+                type: 'btn'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        label: '子节点3',
+        id: 8,
+        type: 'card',
+        children: [
+          {
+            label: '子节点3-1',
+            id: 12,
+            type: 'btn',
+            children: [
+              {
+                label: '叶子节点1',
+                id: 108,
+                type: 'btn'
+              }
+            ]
+          },
+          {
+            label: '子节点3-2',
+            id: 13,
+            type: 'btn',
+            children: [
+              {
+                label: '叶子节点2',
+                id: 132,
+                type: 'btn'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];
 </script>
 <style lang="less" scoped>
 .processDesign {

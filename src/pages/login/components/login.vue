@@ -1,6 +1,6 @@
 <template>
   <t-form
-    ref="form"
+    ref="formRef"
     :class="['item-container', `login-${type}`]"
     :data="formData"
     :rules="FORM_RULES"
@@ -123,15 +123,43 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import QrcodeVue from 'qrcode.vue';
 import { MessagePlugin } from 'tdesign-vue-next';
 import { useCounter } from '@/hooks/use-counter';
 import { useUserStore } from '@/store';
 
-const userStore = useUserStore();
+/**
+ * 登录类型
+ */
+type LoginType = 'password' | 'qrcode' | 'phone';
 
-const INITIAL_DATA = {
+/**
+ * 表单数据接口
+ */
+interface FormData {
+  phone: string;
+  account: string;
+  password: string;
+  verifyCode: string;
+  checked: boolean;
+}
+
+/**
+ * 表单验证结果接口
+ */
+interface ValidateResult {
+  validateResult: boolean;
+}
+
+const userStore = useUserStore();
+const router = useRouter();
+
+/**
+ * 初始表单数据
+ */
+const INITIAL_DATA: FormData = {
   phone: '',
   account: 'admin',
   password: 'admin',
@@ -139,38 +167,59 @@ const INITIAL_DATA = {
   checked: false
 };
 
+/**
+ * 表单验证规则
+ */
 const FORM_RULES = {
   phone: [{ required: true, message: '手机号必填', type: 'error' }],
   account: [{ required: true, message: '账号必填', type: 'error' }],
   password: [{ required: true, message: '密码必填', type: 'error' }],
   verifyCode: [{ required: true, message: '验证码必填', type: 'error' }]
-};
+} as const;
 
-const type = ref('password');
+/**
+ * 当前登录类型
+ */
+const type = ref<LoginType>('password');
 
-const formData = ref({ ...INITIAL_DATA });
-const showPsw = ref(false);
+/**
+ * 表单数据
+ */
+const formData = ref<FormData>({ ...INITIAL_DATA });
 
+/**
+ * 是否显示密码
+ */
+const showPsw = ref<boolean>(false);
+
+/**
+ * 验证码倒计时
+ */
 const [countDown, handleCounter] = useCounter();
 
-const switchType = (val: string) => {
-  type.value = val;
+/**
+ * 切换登录类型
+ * @param newType 新的登录类型
+ */
+const switchType = (newType: LoginType): void => {
+  type.value = newType;
 };
 
-const router = useRouter();
-
-const onSubmit = async ({ validateResult }) => {
+/**
+ * 提交表单
+ * @param param 验证结果
+ */
+const onSubmit = async ({ validateResult }: ValidateResult): Promise<void> => {
   if (validateResult === true) {
     try {
       await userStore.login(formData.value);
-
       MessagePlugin.success('登录成功');
-      router.push({
+      await router.push({
         path: '/dashboard/base'
       });
-    } catch (e) {
-      console.log(e);
-      MessagePlugin.error(e.message);
+    } catch (error: any) {
+      console.error('登录失败:', error);
+      MessagePlugin.error(error?.message || '登录失败，请重试');
     }
   }
 };

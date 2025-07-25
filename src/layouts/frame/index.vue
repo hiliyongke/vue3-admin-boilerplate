@@ -13,20 +13,23 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, unref, computed } from 'vue';
-import FrameContent from '../components/frame-content.vue';
+export default {
+  name: 'FrameLayout'
+};
+</script>
 
+<script setup lang="ts">
+import { unref, computed } from 'vue';
+import FrameContent from '../components/frame-content.vue';
 import { useFrameKeepAlive } from './use-frame-keepalive';
 
-export default defineComponent({
-  name: 'FrameLayout',
-  components: { FrameContent },
-  setup() {
-    const { getFramePages, hasRenderFrame, showIframe } = useFrameKeepAlive();
+/**
+ * 使用框架保活功能
+ */
+const { getFramePages, hasRenderFrame, showIframe } = useFrameKeepAlive();
 
-    const showFrame = computed(() => unref(getFramePages).length > 0);
-
-    return { getFramePages, hasRenderFrame, showIframe, showFrame };
-  }
-});
+/**
+ * 是否显示框架
+ */
+const showFrame = computed<boolean>(() => unref(getFramePages).length > 0);
 </script>

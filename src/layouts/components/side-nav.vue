@@ -49,14 +49,14 @@
 
 <script setup lang="ts">
 import { computed, onMounted, PropType } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import union from 'lodash-es/union';
 
 import { useSettingStore } from '@/store';
 import { prefix } from '@/config/global';
 import pgk from '../../../package.json';
 import { MenuRoute } from '@/interface';
-import { getActive, getRoutesExpanded } from '@/router';
+import { getRoutesExpanded } from '@/router';
 
 import AssetLogo from '@/assets/svg/assets-t-logo.svg';
 import AssetLogoFull from '@/assets/svg/assets-logo-full.svg';
@@ -95,12 +95,13 @@ const props = defineProps({
   }
 });
 
+const route = useRoute();
 const collapsed = computed(() => useSettingStore().isSidebarCompact);
 
-const active = computed(() => getActive());
+const active = computed(() => route.path);
 
 const defaultExpanded = computed(() => {
-  const path = getActive();
+  const path = route.path;
   const parentPath = path.substring(0, path.lastIndexOf('/'));
   const expanded = getRoutesExpanded();
   return union(expanded, parentPath === '' ? [] : [parentPath]);

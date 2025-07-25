@@ -4,7 +4,7 @@
 
 import type { App } from 'vue';
 import api from '@/api/index';
-import itools from 'itools';
+import itools from '../../packages/itools/src/index.js';
 import mitt from 'mitt';
 
 export function setupGlobalProperties(app: App) {

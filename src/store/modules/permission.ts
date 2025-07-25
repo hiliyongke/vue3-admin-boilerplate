@@ -37,16 +37,17 @@ export const usePermissionStore = defineStore({
   actions: {
     async initRoutes(roles: Array<unknown>) {
       let accessedRouters = [];
-
       let removeRoutes = [];
-      // special token
-      if (roles.includes('all')) {
+
+      // 如果用户有 admin 角色或 all 权限，允许访问所有路由
+      if (roles.includes('all') || roles.includes('admin')) {
         accessedRouters = asyncRouterList;
       } else {
         const res = filterPermissionsRouters(asyncRouterList, roles);
         accessedRouters = res.accessedRouters;
         removeRoutes = res.removeRoutes;
       }
+
       this.routers = accessedRouters;
       this.removeRoutes = removeRoutes;
 

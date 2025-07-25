@@ -122,33 +122,28 @@ const onLogin = async () => {
   if (state.loginForm.password.trim() == '') {
     return MessagePlugin.warning('请输入密码');
   }
+
   const params = { ...state.loginForm };
   state.loginLoading = true;
-  const res = await login({
-    account: params.username,
-    password: params.password
-  });
-  if (res.userInfo?.user_name == params.username) {
+
+  try {
+    // 使用 userStore 的登录方法进行模拟登录验证
+    await userStore.login({
+      account: params.username,
+      password: params.password,
+      phone: '',
+      verifyCode: '',
+      checked: false
+    });
+
     MessagePlugin.success('解锁成功');
     state.loginLoading = false;
     unLockLogin(false);
     lockScreenStore.setLock(false);
-  } else {
+  } catch (error) {
     MessagePlugin.error('密码错误');
+    state.loginLoading = false;
   }
-  // params.password = md5(params.password)
-  // const { code, message: msg } = await userStore.login(params).finally(() => {
-  //   state.loginLoading = false;
-  //   message.destroy();
-  // });
-  // if (code == 0) {
-  //   Modal.destroyAll();
-  //   message.success('登录成功！');
-  //   unLockLogin(false);
-  //   lock-screenStore.setLock(false);
-  // } else {
-  //   message.info(msg || '登录失败');
-  // }
 };
 
 const nav2login = () => {

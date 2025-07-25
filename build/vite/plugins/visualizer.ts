@@ -1,4 +1,4 @@
-import visualizer from 'rollup-plugin-visualizer';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { ANALYSIS } from '../../constant';
 
 export function ConfigVisualizerPlugin(isBuild: boolean) {

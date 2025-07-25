@@ -1,4 +1,4 @@
-import Logger from 'logger';
+import Logger from '../../packages/logger/src/index.js';
 // 日志
 export function setupLogger() {
   new Logger({

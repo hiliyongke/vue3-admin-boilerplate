@@ -21,26 +21,54 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts">
+export default {
+  name: 'SignboardDemo'
+};
+</script>
+
+<script setup lang="ts">
+import { reactive } from 'vue';
 import signboard from './component/index.vue';
 
-const list1 = reactive([
-  { name: 'Mission1', id: 1 },
-  { name: 'Mission2', id: 2 },
-  { name: 'Mission3', id: 3 },
-  { name: 'Mission4', id: 4 }
+/**
+ * 任务项接口
+ */
+interface MissionItem {
+  /** 任务名称 */
+  name: string;
+  /** 任务ID */
+  id: number;
+}
+
+/**
+ * 待办任务列表
+ */
+const list1 = reactive<MissionItem[]>([
+  { name: '任务1', id: 1 },
+  { name: '任务2', id: 2 },
+  { name: '任务3', id: 3 },
+  { name: '任务4', id: 4 }
 ]);
-const list2 = reactive([
-  { name: 'Mission5', id: 5 },
-  { name: 'Mission6', id: 6 },
-  { name: 'Mission7', id: 7 },
-  { name: 'Mission8', id: 8 }
+
+/**
+ * 进行中任务列表
+ */
+const list2 = reactive<MissionItem[]>([
+  { name: '任务5', id: 5 },
+  { name: '任务6', id: 6 },
+  { name: '任务7', id: 7 },
+  { name: '任务8', id: 8 }
 ]);
-const list3 = reactive([
-  { name: 'Mission9', id: 9 },
-  { name: 'Mission10', id: 10 },
-  { name: 'Mission11', id: 11 },
-  { name: 'Mission12', id: 12 }
+
+/**
+ * 已完成任务列表
+ */
+const list3 = reactive<MissionItem[]>([
+  { name: '任务9', id: 9 },
+  { name: '任务10', id: 10 },
+  { name: '任务11', id: 11 },
+  { name: '任务12', id: 12 }
 ]);
 </script>
 

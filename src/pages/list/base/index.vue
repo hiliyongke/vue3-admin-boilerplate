@@ -147,6 +147,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { SearchIcon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
+import type { PageInfo } from 'tdesign-vue-next';
 
 import {
   CONTRACT_STATUS,
@@ -160,19 +161,79 @@ import { prefix } from '@/config/global';
 
 import { COLUMNS } from './constants';
 
-const store = useSettingStore();
+/**
+ * 合同数据接口
+ */
+interface ContractData {
+  index: number;
+  name: string;
+  status: number;
+  contractType: number;
+  paymentType: number;
+  [key: string]: any;
+}
 
-const data = ref([]);
-const pagination = ref({
+/**
+ * 分页配置接口
+ */
+interface PaginationConfig {
+  defaultPageSize: number;
+  total: number;
+  defaultCurrent: number;
+}
+
+/**
+ * 删除行参数接口
+ */
+interface DeleteRowParams {
+  rowIndex: number;
+}
+
+/**
+ * 表格变化参数接口
+ */
+interface ChangeParams {
+  [key: string]: any;
+}
+
+/**
+ * 触发数据接口
+ */
+interface TriggerAndData {
+  [key: string]: any;
+}
+
+const store = useSettingStore();
+const router = useRouter();
+
+/**
+ * 表格数据
+ */
+const data = ref<ContractData[]>([]);
+
+/**
+ * 分页配置
+ */
+const pagination = ref<PaginationConfig>({
   defaultPageSize: 20,
   total: 100,
   defaultCurrent: 1
 });
 
-const searchValue = ref('');
+/**
+ * 搜索值
+ */
+const searchValue = ref<string>('');
 
-const dataLoading = ref(false);
-const fetchData = async () => {
+/**
+ * 数据加载状态
+ */
+const dataLoading = ref<boolean>(false);
+
+/**
+ * 获取列表数据
+ */
+const fetchData = async (): Promise<void> => {
   dataLoading.value = true;
   try {
     const { list } = await getList();
@@ -188,8 +249,15 @@ const fetchData = async () => {
   }
 };
 
-const deleteIdx = ref(-1);
-const confirmBody = computed(() => {
+/**
+ * 待删除项索引
+ */
+const deleteIdx = ref<number>(-1);
+
+/**
+ * 确认删除弹窗内容
+ */
+const confirmBody = computed<string>(() => {
   if (deleteIdx.value > -1) {
     const { name } = data.value[deleteIdx.value];
     return `删除后，${name}的所有合同信息将被清空，且无法恢复`;
@@ -197,21 +265,32 @@ const confirmBody = computed(() => {
   return '';
 });
 
-onMounted(() => {
-  fetchData();
-});
+/**
+ * 确认弹窗显示状态
+ */
+const confirmVisible = ref<boolean>(false);
 
-const confirmVisible = ref(false);
+/**
+ * 选中的行键
+ */
+const selectedRowKeys = ref<number[]>([1, 2]);
 
-const selectedRowKeys = ref([1, 2]);
+/**
+ * 表格行键
+ */
+const rowKey = 'index';
 
-const router = useRouter();
-
-const resetIdx = () => {
+/**
+ * 重置删除索引
+ */
+const resetIdx = (): void => {
   deleteIdx.value = -1;
 };
 
-const onConfirmDelete = () => {
+/**
+ * 确认删除
+ */
+const onConfirmDelete = (): void => {
   // 真实业务请发起请求
   data.value.splice(deleteIdx.value, 1);
   pagination.value.total = data.value.length;
@@ -224,39 +303,81 @@ const onConfirmDelete = () => {
   resetIdx();
 };
 
-const onCancel = () => {
+/**
+ * 取消删除
+ */
+const onCancel = (): void => {
   resetIdx();
 };
 
-const rowKey = 'index';
-
-const rehandleSelectChange = (val: number[]) => {
+/**
+ * 处理选择变化
+ * @param val 选中的行键数组
+ */
+const rehandleSelectChange = (val: number[]): void => {
   selectedRowKeys.value = val;
 };
-const rehandlePageChange = (curr, pageInfo) => {
+
+/**
+ * 处理分页变化
+ * @param curr 当前页
+ * @param pageInfo 分页信息
+ */
+const rehandlePageChange = (curr: number, pageInfo: PageInfo): void => {
   console.log('分页变化', curr, pageInfo);
 };
-const rehandleChange = (changeParams, triggerAndData) => {
+
+/**
+ * 处理表格变化
+ * @param changeParams 变化参数
+ * @param triggerAndData 触发数据
+ */
+const rehandleChange = (changeParams: ChangeParams, triggerAndData: TriggerAndData): void => {
   console.log('统一Change', changeParams, triggerAndData);
 };
-const handleClickDetail = () => {
+
+/**
+ * 点击详情
+ */
+const handleClickDetail = (): void => {
   router.push('/detail/base');
 };
-const handleSetupContract = () => {
+
+/**
+ * 新建合同
+ */
+const handleSetupContract = (): void => {
   router.push('/form/base');
 };
-const handleClickDelete = (row: { rowIndex: any }) => {
+
+/**
+ * 点击删除
+ * @param row 行数据
+ */
+const handleClickDelete = (row: DeleteRowParams): void => {
   deleteIdx.value = row.rowIndex;
   confirmVisible.value = true;
 };
 
-const offsetTop = computed(() => {
+/**
+ * 计算顶部偏移量
+ */
+const offsetTop = computed<number>(() => {
   return store.isUseTabsRouter ? 48 : 0;
 });
 
-const getContainer = () => {
+/**
+ * 获取容器元素
+ * @returns 容器元素
+ */
+const getContainer = (): Element | null => {
   return document.querySelector(`.${prefix}-layout`);
 };
+
+// 组件挂载时获取数据
+onMounted(() => {
+  fetchData();
+});
 </script>
 
 <style lang="less" scoped>

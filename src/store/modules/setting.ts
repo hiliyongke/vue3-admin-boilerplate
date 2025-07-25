@@ -8,6 +8,7 @@ import {
 } from '@/config/color';
 import STYLE_CONFIG from '@/config/style';
 import pinia from '@/store';
+
 const state = {
   ...STYLE_CONFIG,
   showSettingPanel: false,
@@ -21,10 +22,10 @@ export const useSettingStore = defineStore({
   id: 'setting',
   state: () => state,
   getters: {
-    showSidebar: state => state.layout !== 'top',
-    showSidebarLogo: state => state.layout === 'side',
-    showHeaderLogo: state => state.layout !== 'side',
-    displayMode: state => {
+    showSidebar: (state: TState) => state.layout !== 'top',
+    showSidebarLogo: (state: TState) => state.layout === 'side',
+    showHeaderLogo: (state: TState) => state.layout !== 'side',
+    displayMode: (state: TState) => {
       if (state.mode === 'auto') {
         const media = window.matchMedia('(prefers-color-scheme:dark)');
         if (media.matches) {
@@ -63,17 +64,21 @@ export const useSettingStore = defineStore({
       this.colorList = { ...this.colorList, ...payload };
     },
     updateConfig(payload: Partial<TState>) {
-      for (const key in payload) {
-        if (payload[key] !== undefined) {
-          this[key] = payload[key];
+      Object.keys(payload).forEach((key) => {
+        const typedKey = key as keyof TState;
+        const value = payload[typedKey];
+
+        if (value !== undefined) {
+          (this as any)[key] = value;
+
+          if (key === 'mode' && typeof value === 'string') {
+            this.changeMode(value as 'dark' | 'light' | 'auto');
+          }
+          if (key === 'brandTheme' && typeof value === 'string') {
+            this.changeBrandTheme(value);
+          }
         }
-        if (key === 'mode') {
-          this.changeMode(payload[key]);
-        }
-        if (key === 'brandTheme') {
-          this.changeBrandTheme(payload[key]);
-        }
-      }
+      });
     }
   },
   persist: {

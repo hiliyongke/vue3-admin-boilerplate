@@ -10,34 +10,42 @@
   </svg>
 </template>
 
-<script>
-import { defineComponent, computed } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
 
-export default defineComponent({
-  props: {
-    prefix: {
-      type: String,
-      default: 'icon'
-    },
-    name: {
-      type: String,
-      required: true
-    },
-    className: {
-      type: String,
-      default: ''
-    }
-  },
-  setup(props) {
-    const symbolId = computed(() => `#${props.name}`);
-    const svgClass = computed(() => {
-      if (props.className) {
-        return `svg-icon ${props.className}`;
-      }
-      return 'svg-icon';
-    });
-    return { symbolId, svgClass };
+/**
+ * 组件属性接口
+ */
+interface Props {
+  /** 图标前缀 */
+  prefix?: string;
+  /** 图标名称 */
+  name: string;
+  /** 自定义类名 */
+  className?: string;
+}
+
+/**
+ * 组件属性
+ */
+const props = withDefaults(defineProps<Props>(), {
+  prefix: 'icon',
+  className: ''
+});
+
+/**
+ * 符号ID
+ */
+const symbolId = computed<string>(() => `#${props.name}`);
+
+/**
+ * SVG类名
+ */
+const svgClass = computed<string>(() => {
+  if (props.className) {
+    return `svg-icon ${props.className}`;
   }
+  return 'svg-icon';
 });
 </script>
 <style scope>

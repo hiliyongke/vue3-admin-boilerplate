@@ -6,20 +6,44 @@
     />
     <div class="result-success-title">项目已创建成功</div>
     <div class="result-success-describe">可以联系负责人分发应用</div>
-    <div>
-      <t-button @click="() => $router.push('/form/base')">返回首页</t-button>
+    <div class="result-success-actions">
+      <t-button @click="handleGoHome">返回首页</t-button>
       <t-button
         theme="default"
-        @click="() => $router.push('/detail/advanced')"
+        @click="handleViewProgress"
       >
         查看进度
       </t-button>
     </div>
   </div>
 </template>
+
 <script lang="ts">
 export default {
   name: 'ResultSuccess'
+};
+</script>
+
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+/**
+ * 路由实例
+ */
+const router = useRouter();
+
+/**
+ * 返回首页
+ */
+const handleGoHome = (): void => {
+  router.push('/form/base');
+};
+
+/**
+ * 查看进度
+ */
+const handleViewProgress = (): void => {
+  router.push('/detail/advanced');
 };
 </script>
 <style lang="less" scoped>

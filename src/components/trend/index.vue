@@ -44,16 +44,38 @@
   </span>
 </template>
 <script setup lang="ts">
-const props = defineProps({
-  type: String,
-  describe: [String, Number],
-  isReverseColor: {
-    type: Boolean,
-    default: false
-  }
+import { computed } from 'vue';
+
+/**
+ * 趋势类型
+ */
+type TrendType = 'up' | 'down';
+
+/**
+ * 组件属性接口
+ */
+interface Props {
+  /** 趋势类型：上升或下降 */
+  type?: TrendType;
+  /** 描述文本或数字 */
+  describe?: string | number;
+  /** 是否反色显示 */
+  isReverseColor?: boolean;
+}
+
+/**
+ * 定义组件属性
+ */
+const props = withDefaults(defineProps<Props>(), {
+  type: 'up',
+  describe: '',
+  isReverseColor: false
 });
 
-const containerCls = computed(() => {
+/**
+ * 计算容器样式类名
+ */
+const containerCls = computed<(string | Record<string, boolean>)[]>(() => {
   const { isReverseColor, type } = props;
   return [
     'trend-container',
@@ -65,7 +87,10 @@ const containerCls = computed(() => {
   ];
 });
 
-const iconCls = computed(() => ['trend-icon-container']);
+/**
+ * 计算图标样式类名
+ */
+const iconCls = computed<string[]>(() => ['trend-icon-container']);
 </script>
 
 <style lang="less" scoped>

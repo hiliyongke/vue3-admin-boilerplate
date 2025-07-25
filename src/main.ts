@@ -1,7 +1,16 @@
-/*
- * @Description: vue实例入口
+/**
+ * @description Vue3应用程序入口文件
+ * @author 优化版本
+ *
+ * 主要功能：
+ * 1. 创建Vue应用实例
+ * 2. 配置全局插件和中间件
+ * 3. 设置路由守卫和错误处理
+ * 4. 初始化国际化和状态管理
+ * 5. 配置性能监控
  */
-import { App, createApp } from 'vue';
+
+import { type App, createApp } from 'vue';
 import AppPage from '@/app.vue';
 import router, { setupRouter } from '@/router';
 import { setupPinia } from '@/store';
@@ -16,66 +25,95 @@ import {
   setupCustomComponents
 } from '@/plugins';
 import MiniMonitor from '@/utils/mini-monitor/index';
-import 'default-passive-events'; //解决滚动背景的问题
+
+// 解决移动端滚动穿透问题
+import 'default-passive-events';
+// 注册SVG图标
 import 'virtual:svg-icons-register';
 
-// css
+// 样式文件导入
 import 'uno.css';
 import '@/style/index.less';
 
+/**
+ * 创建Vue应用实例
+ */
 const app = createApp(AppPage);
 
-function bootstrap(app: App<any>) {
-  // 设置此项为 true 可以在浏览器开发工具的“性能/时间线”页中启用对组件初始化、编译、渲染和修补的性能表现追踪。
-  app.config.performance = true;
+/**
+ * 应用程序启动配置函数
+ * @param app Vue应用实例
+ */
+function bootstrap(app: App<Element>): void {
+  // 开启性能追踪 - 在开发环境下启用组件性能监控
+  if (import.meta.env.DEV) {
+    app.config.performance = true;
+  }
 
-  // Register global directive
+  // 注册全局指令 - 包括权限、防抖、拖拽等指令
   setupGlobDirectives(app);
 
-  // Register global component
+  // 注册全局组件 - 注册常用的业务组件
   setupCustomComponents(app);
 
-  // Register global properties
+  // 注册全局属性 - 挂载全局方法和属性到Vue实例
   setupGlobalProperties(app);
 
-  // global configure error handler
+  // 配置全局错误处理器 - 统一处理应用程序错误
   setupErrorHandle(app);
 
-  // pinia
+  // 配置状态管理 - 初始化Pinia状态管理
   setupPinia(app);
 
-  // router
+  // 配置路由系统 - 注册Vue Router
   setupRouter(app);
 
-  // router-guard
+  // 配置路由守卫 - 设置权限验证、页面跳转拦截等
   setupRouterGuard(router);
 
-  //i18n
+  // 配置国际化 - 初始化多语言支持
   setupI18n(app);
 
-  // logger
+  // 配置日志系统 - 初始化应用日志记录
   setupLogger();
 
-  // 个性化控制台
+  // 配置开发控制台 - 美化开发环境控制台输出
   setupConsole();
 
-  new MiniMonitor({
-    url: 'xxx', // 收集数据的服务接口地址
-    // 如果服务端接口有一些必传字段，可通过baseParams来实现
-    baseParams: {},
-    // 白名单。设定收集数据的指定域
-    whiteName: ['test1.baidu.com', 'test2.baidu.com'],
-    // FP大于fpLimit则不做收集操作，默认4000ms。目的：排除一些极端情况和一些无意义的数据，如debug因素造成的FP时间太长
-    fpLimit: 3000,
-    // 是否控制台显示
-    showConsole: true
+  // 初始化性能监控系统
+  if (import.meta.env.PROD) {
+    new MiniMonitor({
+      url: import.meta.env.VITE_MONITOR_URL || '', // 监控数据收集接口
+      baseParams: {
+        appName: import.meta.env.VITE_APP_TITLE || 'Vue3-Admin',
+        version: import.meta.env.VITE_APP_VERSION || '1.0.0'
+      },
+      // 监控域名白名单
+      whiteName: [
+        location.hostname,
+        'localhost',
+        '127.0.0.1'
+      ],
+      // 首屏渲染时间阈值，超过此值不进行数据收集
+      fpLimit: 4000,
+      // 生产环境关闭控制台输出
+      showConsole: import.meta.env.DEV
+    });
+  }
+
+  // 等待路由准备完成后挂载应用
+  // 这确保了所有异步路由都已加载完成
+  router.isReady().then(() => {
+    app.mount('#app');
+    console.log('🚀 应用启动成功');
   });
-  // 现在所有的导航都是异步的，等路由ready以后再进行挂载组件；
-  router.isReady().then(() => app.mount('#app'));
-  // 在导航期间每次发生未捕获的错误时都会调用该处理程序
-  router.onError(err => {
-    console.error(err);
+
+  // 配置路由错误处理
+  router.onError((error: Error) => {
+    console.error('🚨 路由错误:', error);
+    // 可以在这里添加错误上报逻辑
   });
 }
 
+// 启动应用程序
 void bootstrap(app);

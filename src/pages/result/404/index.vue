@@ -4,7 +4,7 @@
     tip="抱歉，您访问的页面不存在"
     type="404"
   >
-    <t-button @click="() => $router.push('/')">返回首页</t-button>
+    <t-button @click="handleGoHome">返回首页</t-button>
   </result>
 </template>
 
@@ -15,5 +15,18 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import Result from '@/components/result/index.vue';
+
+/**
+ * 路由实例
+ */
+const router = useRouter();
+
+/**
+ * 返回首页
+ */
+const handleGoHome = (): void => {
+  router.push('/');
+};
 </script>

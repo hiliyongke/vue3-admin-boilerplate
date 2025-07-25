@@ -1,20 +1,44 @@
-import { createPinia } from 'pinia';
+/**
+ * @description Pinia状态管理配置
+ * @author 优化版本
+ *
+ * 主要功能：
+ * 1. 创建Pinia实例
+ * 2. 配置状态持久化插件
+ * 3. 导出所有store模块
+ * 4. 提供store安装函数
+ */
+
+import { createPinia, type Pinia } from 'pinia';
 import { createPersistedState } from 'pinia-plugin-persistedstate';
-import { App } from 'vue';
+import type { App } from 'vue';
 
-const pinia = createPinia();
+/**
+ * 创建Pinia实例
+ */
+const pinia: Pinia = createPinia();
 
+/**
+ * 配置状态持久化插件
+ * 支持将store状态自动保存到localStorage
+ */
 pinia.use(
   createPersistedState({
-    // storage: localStorage,
+    // 默认使用localStorage存储
+    storage: localStorage,
+    // 数据序列化配置
     serializer: {
-      // 指定参数序列化器
       serialize: JSON.stringify,
       deserialize: JSON.parse
-    }
+    },
+    // 可以通过key函数自定义存储键名
+    key: (id: string) => `__persisted__${id}`,
+    // 默认持久化所有状态，可在具体store中配置
+    auto: true
   })
 );
 
+// 导出所有store模块
 export * from './modules/lock-screen';
 export * from './modules/notification';
 export * from './modules/permission';
@@ -22,7 +46,12 @@ export * from './modules/user';
 export * from './modules/setting';
 export * from './modules/tabs-router';
 
-export function setupPinia(app: App<Element>) {
+/**
+ * 安装Pinia到Vue应用
+ * @param app Vue应用实例
+ */
+export function setupPinia(app: App<Element>): void {
   app.use(pinia);
 }
+
 export default pinia;

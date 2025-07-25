@@ -285,16 +285,42 @@
     </t-dialog>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from 'vue';
+import {
+  AddIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  CloseIcon,
+  SettingIcon
+} from 'tdesign-icons-vue-next';
 import { isNull } from './util';
-import { TYPE_NAME, TYPE } from './type/type';
-
+import { TYPE_NAME, TYPE, SchemaType, Wrapper } from './type/type';
 import LocalProvider from './local-provider';
-export default {
+
+interface Schema {
+  [key: string]: any;
+}
+
+interface CustomProp {
+  key: string;
+  value: any;
+}
+
+export default defineComponent({
   name: 'JsonSchemaEditor',
+  components: {
+    AddIcon,
+    CheckIcon,
+    ChevronDownIcon,
+    ChevronRightIcon,
+    CloseIcon,
+    SettingIcon
+  },
   props: {
     value: {
-      type: Object,
+      type: Object as PropType<Record<string, Schema>>,
       required: true
     },
     disabled: {
@@ -324,7 +350,7 @@ export default {
     },
     parent: {
       //父节点
-      type: Object,
+      type: Object as PropType<Schema | null>,
       default: null
     },
     custom: {
@@ -334,11 +360,21 @@ export default {
     },
     lang: {
       // i18n language
-      type: String,
+      type: String as PropType<'zh_CN' | 'en_US'>,
       default: 'zh_CN'
     }
   },
-  data() {
+  data(): {
+    TYPE_NAME: typeof TYPE_NAME;
+    hidden: boolean;
+    countAdd: number;
+    modalVisible: boolean;
+    advancedValue: Record<string, any>;
+    addProp: Partial<CustomProp>;
+    customProps: CustomProp[];
+    customing: boolean;
+    local: Record<string, string>;
+  } {
     return {
       TYPE_NAME,
       hidden: false,
@@ -352,32 +388,32 @@ export default {
     };
   },
   computed: {
-    pickValue() {
+    pickValue(): Schema {
       return Object.values(this.value)[0];
     },
-    pickKey() {
+    pickKey(): string {
       return Object.keys(this.value)[0];
     },
-    isObject() {
+    isObject(): boolean {
       return this.pickValue.type === 'object';
     },
-    isArray() {
+    isArray(): boolean {
       return this.pickValue.type === 'array';
     },
-    checked() {
-      return (
+    checked(): boolean {
+      return !!(
         this.parent &&
         this.parent.required &&
         this.parent.required.indexOf(this.pickKey) >= 0
       );
     },
-    advanced() {
-      return TYPE[this.pickValue.type];
+    advanced(): Wrapper {
+      return TYPE[this.pickValue.type as SchemaType];
     },
-    advancedAttr() {
-      return TYPE[this.pickValue.type].attr;
+    advancedAttr(): Record<string, any> {
+      return TYPE[this.pickValue.type as SchemaType].attr;
     },
-    ownProps() {
+    ownProps(): string[] {
       return [
         'type',
         'title',
@@ -387,177 +423,188 @@ export default {
         ...Object.keys(this.advancedAttr)
       ];
     },
-    advancedNotEmptyValue() {
-      const jsonNode = Object.assign({}, this.advancedValue);
-      for (let key in jsonNode) {
-        isNull(jsonNode[key]) && delete jsonNode[key];
+    advancedNotEmptyValue(): Record<string, any> {
+      const jsonNode = { ...this.advancedValue };
+      for (const key in jsonNode) {
+        if (isNull(jsonNode[key])) {
+          delete jsonNode[key];
+        }
       }
       return jsonNode;
     },
-    completeNodeValue() {
-      const t = {};
+    completeNodeValue(): Schema {
+      const t: Record<string, any> = {};
       const basicValue = { ...this.pickValue };
       for (const item of this.customProps) {
         t[item.key] = item.value;
       }
       this._pickDiffKey().forEach(key => delete basicValue[key]);
-      return Object.assign({}, basicValue, t, this.advancedNotEmptyValue);
+      return { ...basicValue, ...t, ...this.advancedNotEmptyValue };
     },
-    enumText() {
+    enumText(): string {
       const t = this.advancedValue['enum'];
-      if (!t) return '';
-      if (!t.length) return '';
+      if (!t || !t.length) return '';
       return t.join('\n');
     }
   },
   methods: {
-    onInputName(e) {
+    onInputName(e: string) {
       const oldKey = this.pickKey;
       const newKey = e;
-      if (oldKey === newKey) return;
+      if (oldKey === newKey || !this.parent?.properties) return;
 
       const nodeValue = this.parent.properties[oldKey];
-
-      // 替换key名
       delete this.parent.properties[oldKey];
-      // eslint-disable-next-line vue/no-mutating-props
       this.parent.properties[newKey] = nodeValue;
 
-      // required重新设置
       const requireds = this.parent.required || [];
       const oldIndex = requireds.indexOf(oldKey);
       if (requireds.length > 0 && oldIndex > -1) {
         requireds.splice(oldIndex, 1);
         requireds.push(newKey);
-        // eslint-disable-next-line vue/no-mutating-props
-        this.parent['required'] = [...new Set(requireds)];
+        this.parent.required = [...new Set(requireds)];
       }
     },
     onChangeType() {
       this.parseCustomProps();
-      // 删除自定义属性
       this.customProps.forEach(item => {
         delete this.pickValue[item.key];
       });
       this.customProps = [];
 
-      delete this.pickValue['properties'];
-      delete this.pickValue['items'];
-      delete this.pickValue['required'];
-      delete this.pickValue['format'];
-      delete this.pickValue['enum'];
+      delete this.pickValue.properties;
+      delete this.pickValue.items;
+      delete this.pickValue.required;
+      delete this.pickValue.format;
+      delete this.pickValue.enum;
 
       if (this.isArray) {
-        this.pickValue['items'] = { type: 'string' };
+        this.pickValue.items = { type: 'string' };
       }
     },
-    onCheck(checked) {
-      this._checked(checked, this.parent);
+    onCheck(checked: boolean) {
+      if (this.parent) {
+        this._checked(checked, this.parent);
+      }
     },
-    onRootCheck(checked) {
+    onRootCheck(checked: boolean) {
       this._deepCheck(checked, this.pickValue);
     },
-    changeEnumValue(e) {
+    changeEnumValue(e: string) {
       const pickType = this.pickValue.type;
       const value = e;
-      var arr = value.split('\n');
+      const arr = value.split('\n');
 
       if (pickType === 'string') {
-        this.advancedValue.enum = arr.map(item => item);
+        this.advancedValue.enum = arr;
       } else {
-        if (arr.length === 0 || (arr.length === 1 && arr[0] == '')) {
+        if (arr.length === 0 || (arr.length === 1 && arr[0] === '')) {
           this.advancedValue.enum = null;
         } else {
           this.advancedValue.enum = arr.map(item => +item);
         }
       }
     },
-    _deepCheck(checked, node) {
+    _deepCheck(checked: boolean, node: Schema) {
       if (node.type === 'object' && node.properties) {
-        checked
-          ? (node['required'] = Object.keys(node.properties))
-          : delete node['required'];
+        if (checked) {
+          node.required = Object.keys(node.properties);
+        } else {
+          delete node.required;
+        }
         Object.keys(node.properties).forEach(key =>
           this._deepCheck(checked, node.properties[key])
         );
-      } else if (node.type === 'array' && node.items.type === 'object') {
-        checked
-          ? (node.items['required'] = Object.keys(node.items.properties))
-          : delete node.items['required'];
+      } else if (
+        node.type === 'array' &&
+        node.items &&
+        node.items.type === 'object'
+      ) {
+        if (checked) {
+          node.items.required = Object.keys(node.items.properties);
+        } else {
+          delete node.items.required;
+        }
         Object.keys(node.items.properties).forEach(key =>
           this._deepCheck(checked, node.items.properties[key])
         );
       }
     },
-    _checked(checked, parent) {
+    _checked(checked: boolean, parent: Schema) {
       let required = parent.required;
       if (checked) {
-        // eslint-disable-next-line vue/no-mutating-props
-        required || (this.parent['required'] = []);
-
-        required = this.parent.required;
-        required.indexOf(this.pickKey) === -1 && required.push(this.pickKey);
+        if (!required) {
+          parent.required = [];
+        }
+        required = parent.required;
+        if (required.indexOf(this.pickKey) === -1) {
+          required.push(this.pickKey);
+        }
       } else {
-        const pos = required.indexOf(this.pickKey);
-        pos >= 0 && required.splice(pos, 1);
+        if (required) {
+          const pos = required.indexOf(this.pickKey);
+          if (pos >= 0) {
+            required.splice(pos, 1);
+          }
+          if (required.length === 0) {
+            delete parent.required;
+          }
+        }
       }
-      required.length === 0 && delete parent['required'];
     },
     addChild() {
       const name = this._joinName();
       const type = 'string';
       const node = this.pickValue;
-      node.properties || (node['properties'] = {}); // this.$set(node,'properties',{})
+      if (!node.properties) {
+        node.properties = {};
+      }
       const props = node.properties;
-      props[name] = { type: type }; //this.$set(props,name,{type: type})
+      props[name] = { type };
     },
     parseCustomProps() {
       const ownProps = this.ownProps;
       Object.keys(this.pickValue).forEach(key => {
         if (ownProps.indexOf(key) === -1) {
-          this.confirmAddCustomNode({ key: key, value: this.pickValue[key] });
-          // this.$delete(this.pickValue,key)
+          this.confirmAddCustomNode({ key, value: this.pickValue[key] });
         }
       });
     },
     addCustomNode() {
-      // this.$set(this.addProp,'key',this._joinName())
-      // this.$set(this.addProp,'value','')
-      this.addProp['key'] = this._joinName();
-      this.addProp['value'] = '';
+      this.addProp = { key: this._joinName(), value: '' };
       this.customing = true;
     },
-    removeCustomNode(key) {
-      this.customProps.forEach((item, index) => {
-        if (item.key === key) {
-          this.customProps.splice(index, 1);
-          return;
-        }
-      });
+    removeCustomNode(key: string) {
+      const index = this.customProps.findIndex(item => item.key === key);
+      if (index > -1) {
+        this.customProps.splice(index, 1);
+      }
     },
-    confirmAddCustomNode(prop) {
+    confirmAddCustomNode(prop: CustomProp | null) {
       const p = prop || this.addProp;
-      let existKey = false;
-      this.customProps.forEach(item => {
-        if (item.key === p.key) {
-          existKey = true;
-        }
-      });
+      if (!p?.key) return;
+      const existKey = this.customProps.some(item => item.key === p.key);
       if (existKey) return;
-      this.customProps.push(p);
+      this.customProps.push(p as CustomProp);
       this.addProp = {};
       this.customing = false;
     },
     removeNode() {
-      const { properties, required } = this.parent;
-      delete properties[this.pickKey];
-      if (required) {
-        const pos = required.indexOf(this.pickKey);
-        pos >= 0 && required.splice(pos, 1);
-        required.length === 0 && delete this.parent['required'];
+      if (this.parent?.properties) {
+        const { properties, required } = this.parent;
+        delete properties[this.pickKey];
+        if (required) {
+          const pos = required.indexOf(this.pickKey);
+          if (pos >= 0) {
+            required.splice(pos, 1);
+          }
+          if (required.length === 0) {
+            delete this.parent.required;
+          }
+        }
       }
     },
-    _joinName() {
+    _joinName(): string {
       return `field_${this.deep}_${this.countAdd++}`;
     },
     onSetting() {
@@ -570,7 +617,6 @@ export default {
       }
       this.parseCustomProps();
     },
-
     handleOk() {
       this.modalVisible = false;
       for (const key in this.advancedValue) {
@@ -586,12 +632,12 @@ export default {
         this.pickValue[item.key] = item.value;
       }
     },
-    _pickDiffKey() {
+    _pickDiffKey(): string[] {
       const keys = Object.keys(this.pickValue);
       return keys.filter(item => this.ownProps.indexOf(item) === -1);
     }
   }
-};
+});
 </script>
 <style scoped>
 .json-schema-editor .row {

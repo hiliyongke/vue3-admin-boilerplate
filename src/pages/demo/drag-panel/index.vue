@@ -51,9 +51,18 @@
   </splitpanes>
 </template>
 
-<script setup>
+<script lang="ts">
+export default {
+  name: 'DragPanelDemo'
+};
+</script>
+
+<script setup lang="ts">
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
+
+// 拖拽面板演示页面
+// 使用 splitpanes 组件实现可拖拽调整大小的面板布局
 </script>
 
 <style lang="less" scoped>

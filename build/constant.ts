@@ -44,7 +44,7 @@ export const MOCK_API_TARGET_URL = 'http://localhost:3000';
 export const PUBLIC_PATH = './';
 
 // mock
-export const MOCK = true;
+export const MOCK = false;
 
 // 包依赖分析
 export const ANALYSIS = true;

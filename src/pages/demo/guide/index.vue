@@ -50,13 +50,50 @@
   </t-row>
 </template>
 
-<script setup>
+<script lang="ts">
+export default {
+  name: 'GuideDemo'
+};
+</script>
+
+<script setup lang="ts">
 import { ref } from 'vue';
 
-const visible = ref(false);
-const current = ref(-1);
+/**
+ * 引导步骤配置接口
+ */
+interface GuideStep {
+  element: string;
+  title: string;
+  body: string;
+  placement: 'top' | 'bottom' | 'left' | 'right' | 'bottom-right';
+}
 
-const steps = [
+/**
+ * 引导事件参数接口
+ */
+interface GuideEventParams {
+  e: Event;
+  current: number;
+  total: number;
+  prev?: number;
+  next?: number;
+}
+
+/**
+ * 抽屉显示状态
+ */
+const visible = ref<boolean>(false);
+
+/**
+ * 当前引导步骤
+ */
+const current = ref<number>(-1);
+
+/**
+ * 引导步骤配置
+ */
+const steps: GuideStep[] = [
   {
     element: '.main-title',
     title: '新手引导标题',
@@ -77,33 +114,57 @@ const steps = [
   }
 ];
 
-const handleClick = () => {
+/**
+ * 开始引导
+ */
+const handleClick = (): void => {
   visible.value = true;
   setTimeout(() => {
     current.value = 0;
   }, 800);
 };
 
-const handleChange = (current, { e, total }) => {
-  console.log(current, e, total);
+/**
+ * 引导步骤变化
+ * @param currentStep 当前步骤
+ * @param params 事件参数
+ */
+const handleChange = (currentStep: number, params: Omit<GuideEventParams, 'current'>): void => {
+  console.log('引导步骤变化:', currentStep, params);
 };
 
-const handlePrevStepClick = ({ e, prev, current, total }) => {
-  console.log(e, prev, current, total);
+/**
+ * 上一步点击
+ * @param params 事件参数
+ */
+const handlePrevStepClick = (params: GuideEventParams): void => {
+  console.log('上一步点击:', params);
 };
 
-const handleNextStepClick = ({ e, next, current, total }) => {
-  console.log(e, next, current, total);
+/**
+ * 下一步点击
+ * @param params 事件参数
+ */
+const handleNextStepClick = (params: GuideEventParams): void => {
+  console.log('下一步点击:', params);
 };
 
-const handleFinish = ({ e, current, total }) => {
+/**
+ * 完成引导
+ * @param params 事件参数
+ */
+const handleFinish = (params: GuideEventParams): void => {
   visible.value = false;
-  console.log(e, current, total);
+  console.log('完成引导:', params);
 };
 
-const handleSkip = ({ e, current, total }) => {
+/**
+ * 跳过引导
+ * @param params 事件参数
+ */
+const handleSkip = (params: GuideEventParams): void => {
   visible.value = false;
-  console.log(e, current, total);
+  console.log('跳过引导:', params);
 };
 </script>
 

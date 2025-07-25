@@ -1,4 +1,4 @@
-import { ConfigEnv, UserConfigExport, defineConfig } from 'vite';
+import { defineConfig, ConfigEnv, UserConfigExport } from 'vite';
 import path from 'path';
 import { createVitePlugins } from './build/vite/plugins';
 import proxy from './build/vite/proxy';
@@ -24,7 +24,24 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
 
   const alias = {
     '@': path.resolve(__dirname, './src'),
-    '@api': resolvePath('./src/api')
+    '@api': resolvePath('./src/api'),
+    '@components': resolvePath('./src/components'),
+    '@utils': resolvePath('./src/utils'),
+    '@types': resolvePath('./src/types'),
+    '@constants': resolvePath('./src/constants'),
+    '@hooks': resolvePath('./src/hooks'),
+    '@store': resolvePath('./src/store'),
+    '@assets': resolvePath('./src/assets'),
+    '@styles': resolvePath('./src/style'),
+    '@config': resolvePath('./src/config'),
+    '@layouts': resolvePath('./src/layouts'),
+    '@pages': resolvePath('./src/pages'),
+    '@services': resolvePath('./src/services'),
+    '@plugins': resolvePath('./src/plugins'),
+    '@router': resolvePath('./src/router'),
+    '@composables': resolvePath('./src/composables'),
+    '@directives': resolvePath('./src/directives'),
+    '@enums': resolvePath('./src/enums')
   };
 
   const esbuild = {

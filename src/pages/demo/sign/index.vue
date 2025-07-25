@@ -35,66 +35,102 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+export default {
+  name: 'SignDemo'
+};
+</script>
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import CanvasSign from '@/components/canvas-sign/index.vue';
 
-const blankimg =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=';
-export default defineComponent({
-  components: { CanvasSign },
-  setup() {
-    const imgSrc = ref(blankimg);
-    const canvasSign = ref<typeof CanvasSign>();
-    const canvasSign2 = ref<typeof CanvasSign>();
-    const width = ref<number>(
-      document.documentElement.clientWidth || document.body.clientWidth
-    );
-    const lineWidth = ref<number>(10);
+/**
+ * 空白图片 Base64
+ */
+const BLANK_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=';
 
-    // slot中save方法回调
-    const saveCallback = (imgBase64?: string) => {
-      imgSrc.value = imgBase64 || blankimg;
-    };
-    // 不使用slot的save方法
-    const saveHandle = () => {
-      canvasSign.value?.save((img?: string) => {
-        imgSrc.value = img || blankimg;
-      });
-    };
-    // 不使用slot的clear方法
-    const clearHandle = () => {
-      canvasSign.value?.clear(); // 清空图片
-      imgSrc.value = blankimg; // 清空画布
-    };
-    // 使用slot的clear方法
-    const clearWithSlotHandle = (clear: () => void) => {
-      clear && clear(); // 清空画布
-      imgSrc.value = blankimg; // 清空图片
-    };
+/**
+ * 画布签名组件实例类型
+ */
+interface CanvasSignInstance {
+  save: (callback: (img?: string) => void) => void;
+  clear: () => void;
+  reset: () => void;
+}
 
-    onMounted(() => {
-      window.onresize = () => {
-        const w =
-          document.documentElement.clientWidth || document.body.clientWidth;
-        width.value = w;
-        lineWidth.value = w / 100;
-        // 组件参数改变后，通过reset方法使属性生效
-        canvasSign.value?.reset();
-        canvasSign2.value?.reset();
-      };
-    });
+/**
+ * 生成的图片源
+ */
+const imgSrc = ref<string>(BLANK_IMAGE);
 
-    return {
-      width,
-      lineWidth,
-      canvasSign,
-      canvasSign2,
-      imgSrc,
-      saveCallback,
-      saveHandle,
-      clearHandle,
-      clearWithSlotHandle
-    };
-  }
+/**
+ * 第一个画布签名组件引用
+ */
+const canvasSign = ref<CanvasSignInstance>();
+
+/**
+ * 第二个画布签名组件引用
+ */
+const canvasSign2 = ref<CanvasSignInstance>();
+
+/**
+ * 画布宽度
+ */
+const width = ref<number>(
+  document.documentElement.clientWidth || document.body.clientWidth
+);
+
+/**
+ * 线条宽度
+ */
+const lineWidth = ref<number>(10);
+
+/**
+ * Slot 中 save 方法回调
+ * @param imgBase64 图片 Base64 字符串
+ */
+const saveCallback = (imgBase64?: string): void => {
+  imgSrc.value = imgBase64 || BLANK_IMAGE;
+};
+
+/**
+ * 不使用 slot 的 save 方法
+ */
+const saveHandle = (): void => {
+  canvasSign.value?.save((img?: string) => {
+    imgSrc.value = img || BLANK_IMAGE;
+  });
+};
+
+/**
+ * 不使用 slot 的 clear 方法
+ */
+const clearHandle = (): void => {
+  canvasSign.value?.clear(); // 清空画布
+  imgSrc.value = BLANK_IMAGE; // 清空图片
+};
+
+/**
+ * 使用 slot 的 clear 方法
+ * @param clear 清空函数
+ */
+const clearWithSlotHandle = (clear: () => void): void => {
+  clear?.(); // 清空画布
+  imgSrc.value = BLANK_IMAGE; // 清空图片
+};
+
+/**
+ * 组件挂载后设置窗口大小变化监听
+ */
+onMounted(() => {
+  window.onresize = (): void => {
+    const w = document.documentElement.clientWidth || document.body.clientWidth;
+    width.value = w;
+    lineWidth.value = w / 100;
+
+    // 组件参数改变后，通过 reset 方法使属性生效
+    canvasSign.value?.reset();
+    canvasSign2.value?.reset();
+  };
 });
 </script>

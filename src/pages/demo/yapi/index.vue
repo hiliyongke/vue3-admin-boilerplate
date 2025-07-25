@@ -19,58 +19,114 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+export default {
+  name: 'YapiDemo'
+};
+</script>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue';
 import JsonSchemaEditor from '@/components/json-schema-editor/index.vue';
 import GenerateSchema from 'generate-schema';
-export default {
-  name: 'App',
-  data() {
-    return {
-      importJson: '',
-      visible: false,
-      tree: {
-        root: {
-          type: 'object',
-          title: '条件',
-          properties: {
-            name: {
-              type: 'string',
-              title: '名称',
-              maxLength: 10,
-              minLength: 2
-            },
-            appId: {
-              type: 'integer',
-              title: '应用ID'
-            },
-            credate: {
-              type: 'string',
-              title: '创建日期',
-              format: 'date'
-            }
-          },
-          required: ['name', 'appId', 'credate']
-        }
-      }
-    };
-  },
-  computed: {
-    jsonStr: {
-      get: function () {
-        return JSON.stringify(this.tree, null, 2);
+
+/**
+ * JSON Schema 属性接口
+ */
+interface SchemaProperty {
+  type: string;
+  title: string;
+  maxLength?: number;
+  minLength?: number;
+  format?: string;
+}
+
+/**
+ * JSON Schema 对象接口
+ */
+interface SchemaObject {
+  type: string;
+  title: string;
+  properties: Record<string, SchemaProperty>;
+  required: string[];
+}
+
+/**
+ * Schema 树结构接口
+ */
+interface SchemaTree {
+  root: SchemaObject;
+}
+
+/**
+ * 导入的 JSON 字符串
+ */
+const importJson = ref<string>('');
+
+/**
+ * 导入对话框显示状态
+ */
+const visible = ref<boolean>(false);
+
+/**
+ * Schema 树结构数据
+ */
+const tree = ref<SchemaTree>({
+  root: {
+    type: 'object',
+    title: '条件',
+    properties: {
+      name: {
+        type: 'string',
+        title: '名称',
+        maxLength: 10,
+        minLength: 2
       },
-      set: function (newVal) {
-        this.tree = JSON.parse(newVal);
+      appId: {
+        type: 'integer',
+        title: '应用ID'
+      },
+      credate: {
+        type: 'string',
+        title: '创建日期',
+        format: 'date'
       }
-    }
+    },
+    required: ['name', 'appId', 'credate']
+  }
+});
+
+/**
+ * JSON 字符串计算属性
+ */
+const jsonStr = computed<string>({
+  get(): string {
+    return JSON.stringify(tree.value, null, 2);
   },
-  methods: {
-    handleImportJson() {
-      const t = GenerateSchema.json(JSON.parse(this.importJson));
-      delete t.$schema;
-      this.tree.root = t;
-      this.visible = false;
+  set(newVal: string): void {
+    try {
+      tree.value = JSON.parse(newVal);
+    } catch (error) {
+      console.error('JSON 解析错误:', error);
     }
+  }
+});
+
+/**
+ * 处理导入 JSON
+ */
+const handleImportJson = (): void => {
+  try {
+    const parsedJson = JSON.parse(importJson.value);
+    const generatedSchema = GenerateSchema.json(parsedJson);
+
+    // 删除 $schema 属性
+    delete (generatedSchema as any).$schema;
+
+    tree.value.root = generatedSchema as SchemaObject;
+    visible.value = false;
+  } catch (error) {
+    console.error('导入 JSON 失败:', error);
   }
 };
 </script>
