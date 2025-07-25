@@ -235,9 +235,12 @@ const changeColor = (hex: string) => {
 };
 
 onMounted(() => {
-  document.querySelector('.dynamic-color-btn').addEventListener('click', () => {
-    isColoPickerDisplay.value = true;
-  });
+  const dynamicColorBtn = document.querySelector('.dynamic-color-btn');
+  if (dynamicColorBtn) {
+    dynamicColorBtn.addEventListener('click', () => {
+      isColoPickerDisplay.value = true;
+    });
+  }
 });
 
 const onPopupVisibleChange = (

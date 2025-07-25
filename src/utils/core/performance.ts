@@ -64,8 +64,8 @@ export class PerformanceMonitor {
       if (navigationEntries.length > 0) {
         const entry = navigationEntries[0];
         this.metrics.ttfb = entry.responseStart - entry.requestStart;
-        this.metrics.domContentLoaded = entry.domContentLoadedEventEnd - entry.navigationStart;
-        this.metrics.loadComplete = entry.loadEventEnd - entry.navigationStart;
+        this.metrics.domContentLoaded = entry.domContentLoadedEventEnd - (entry.navigationStart || 0);
+        this.metrics.loadComplete = entry.loadEventEnd - (entry.navigationStart || 0);
       }
     }
   }

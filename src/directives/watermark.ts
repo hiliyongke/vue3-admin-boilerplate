@@ -17,13 +17,15 @@ function addWaterMark(
   can.height = 150;
   can.style.display = 'none';
   const cans = can.getContext('2d');
-  cans.rotate((-20 * Math.PI) / 180);
-  cans.font = font || '16px Microsoft JhengHei';
-  cans.fillStyle = textColor || 'rgba(180, 180, 180, 0.3)';
-  cans.textAlign = 'left';
-  cans.textBaseline = 'middle';
-  cans.fillText(str || 'vue3-admin-plus', can.width / 10, can.height / 2);
-  parentNode.style.backgroundImage = 'url(' + can.toDataURL('image/png') + ')';
+  if (cans) {
+    cans.rotate((-20 * Math.PI) / 180);
+    cans.font = font || '16px Microsoft JhengHei';
+    cans.fillStyle = textColor || 'rgba(180, 180, 180, 0.3)';
+    cans.textAlign = 'left';
+    cans.textBaseline = 'middle';
+    cans.fillText(str || 'vue3-admin-plus', can.width / 10, can.height / 2);
+    parentNode.style.backgroundImage = 'url(' + can.toDataURL('image/png') + ')';
+  }
 }
 export function watermarkDirective(app: App) {
   app.directive('watermark', {

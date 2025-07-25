@@ -1,13 +1,13 @@
 export const FORM_RULES = {
-  name: [{ required: true, message: '请输入合同名称', type: 'error' }],
-  type: [{ required: true, message: '请选择合同类型', type: 'error' }],
-  payment: [{ required: true, message: '请选择合同收付类型', type: 'error' }],
-  amount: [{ required: true, message: '请输入合同金额', type: 'error' }],
-  partyA: [{ required: true, message: '请选择甲方', type: 'error' }],
-  partyB: [{ required: true, message: '请选择乙方', type: 'error' }],
-  signDate: [{ required: true, message: '请选择日期', type: 'error' }],
-  startDate: [{ required: true, message: '请选择日期', type: 'error' }],
-  endDate: [{ required: true, message: '请选择日期', type: 'error' }]
+  name: [{ required: true, message: '请输入合同名称', trigger: 'blur' as const }],
+  type: [{ required: true, message: '请选择合同类型', trigger: 'change' as const }],
+  payment: [{ required: true, message: '请选择合同收付类型', trigger: 'change' as const }],
+  amount: [{ required: true, message: '请输入合同金额', trigger: 'blur' as const }],
+  partyA: [{ required: true, message: '请选择甲方', trigger: 'change' as const }],
+  partyB: [{ required: true, message: '请选择乙方', trigger: 'change' as const }],
+  signDate: [{ required: true, message: '请选择日期', trigger: 'change' as const }],
+  startDate: [{ required: true, message: '请选择日期', trigger: 'change' as const }],
+  endDate: [{ required: true, message: '请选择日期', trigger: 'change' as const }]
 };
 
 export const INITIAL_DATA = {

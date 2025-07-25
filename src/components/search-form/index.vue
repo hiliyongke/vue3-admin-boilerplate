@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="columns.length"
+    v-if="columns && columns.length"
     class="table-search"
   >
     <t-form
@@ -31,7 +31,7 @@
       </t-button>
       <t-button @click="reset">重置</t-button>
       <t-button
-        v-if="columns.length > maxLength"
+        v-if="columns && columns.length > maxLength"
         theme="primary"
         link
         class="search-isOpen"
@@ -60,11 +60,16 @@ interface ProTableProps {
 }
 
 // 默认值
-const props = defineProps({
-  columns: Object,
-  searchParam: Object,
-  search: Object, // 搜索方法
-  reset: Object // 重置方法
+const props = withDefaults(defineProps<{
+  columns?: Partial<ColumnProps>[];
+  searchParam?: any;
+  search?: (params: any) => void;
+  reset?: (params: any) => void;
+}>(), {
+  columns: () => [],
+  searchParam: () => ({}),
+  search: () => {},
+  reset: () => {}
 });
 
 const maxLength = ref<number>(4);
@@ -72,13 +77,13 @@ const maxWidth = ref<number>(1260);
 
 onMounted(() => {
   // * 暂时只判断这两种情况（第四个搜索项为时间/日期范围 || 前三项存在时间/日期范围选择框）(后期通过css解决)
-  if (props.columns.length >= 4) {
-    props.columns[3].searchType === 'datetimerange' ||
-    props.columns[3].searchType === 'daterange'
+  if (props.columns && props.columns.length >= 4) {
+    props.columns[3]?.searchType === 'datetimerange' ||
+    props.columns[3]?.searchType === 'daterange'
       ? ((maxWidth.value = 945), (maxLength.value = 3))
       : null;
     props.columns.slice(0, 3).forEach(item => {
-      item.searchType === 'datetimerange' || item.searchType === 'daterange'
+      item?.searchType === 'datetimerange' || item?.searchType === 'daterange'
         ? ((maxWidth.value = 1135), (maxLength.value = 3))
         : null;
     });
@@ -90,6 +95,7 @@ const searchShow = ref(false);
 
 // 根据是否展开配置搜索项长度
 const getSearchList = computed((): Partial<ColumnProps>[] => {
+  if (!props.columns) return [];
   if (searchShow.value) return props.columns;
   return props.columns.slice(0, maxLength.value);
 });

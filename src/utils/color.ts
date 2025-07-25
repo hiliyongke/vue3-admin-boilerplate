@@ -14,11 +14,11 @@ import { getSettingStore } from '@/store';
  * @param {string} theme
  * @returns {}
  */
-export function getColorFromTheme(theme: string) {
+export function getColorFromTheme(theme: string): string[] {
   const settingStore = getSettingStore();
   const { colorList, mode } = settingStore;
   const isDarkMode = mode === 'dark';
-  let themeColorList = [];
+  let themeColorList: string[] = [];
   const themeColor = getBrandColor(theme, colorList);
 
   if (!/^#[A-F\d]{6}$/i.test(theme)) {
@@ -36,7 +36,7 @@ export function getColorFromTheme(theme: string) {
       color: theme,
       colorGamut: 'bright',
       number: 8
-    });
+    }) as string[];
   }
 
   return themeColorList;

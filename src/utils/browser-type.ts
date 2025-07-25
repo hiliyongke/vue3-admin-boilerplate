@@ -51,25 +51,27 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
   } else if (system === 'android' || system === 'ios' || testUa(/mobile/g)) {
     platform = 'mobile'; // 移动端
   }
+
   // 内核和载体
-  const [engine = 'unknow', supporter = 'unknow'] = new Map([
-    [
-      testUa(/applewebkit/g),
-      [
-        'webkit',
-        new Map([
-          // webkit内核
-          [testUa(/safari/g), 'safari'], // safari浏览器
-          [testUa(/chrome/g), 'chrome'], // chrome浏览器
-          [testUa(/opr/g), 'opera'], // opera浏览器
-          [testUa(/edge/g), 'edge'] // edge浏览器
-        ]).get(true)
-      ] || 'unknow'
-    ], // [webkit内核, xxx浏览器]
-    [testUa(/gecko/g) && testUa(/firefox/g), ['gecko', 'firefox']], // [gecko内核,firefox浏览器]
-    [testUa(/presto/g), ['presto', 'opera']], // [presto内核,opera浏览器]
-    [testUa(/trident|compatible|msie/g), ['trident', 'iexplore']] // [trident内核,iexplore浏览器]
-  ]).get(true) || ['unknow', 'unknow'];
+  let engine = 'unknow';
+  let supporter = 'unknow';
+
+  if (testUa(/applewebkit/g)) {
+    engine = 'webkit';
+    if (testUa(/safari/g)) supporter = 'safari';
+    else if (testUa(/chrome/g)) supporter = 'chrome';
+    else if (testUa(/opr/g)) supporter = 'opera';
+    else if (testUa(/edge/g)) supporter = 'edge';
+  } else if (testUa(/gecko/g) && testUa(/firefox/g)) {
+    engine = 'gecko';
+    supporter = 'firefox';
+  } else if (testUa(/presto/g)) {
+    engine = 'presto';
+    supporter = 'opera';
+  } else if (testUa(/trident|compatible|msie/g)) {
+    engine = 'trident';
+    supporter = 'iexplore';
+  }
 
   // 内核版本
   const engineVs =

@@ -92,7 +92,8 @@ function createPermissionGuard(router: Router) {
           /<+\s*\w*\s*(oncontrolselect|oncopy|oncut|ondataavailable|ondatasetchanged|ondatasetcomplete|ondblclick|ondeactivate|ondrag|ondragend|ondragenter|ondragleave|ondragover|ondragstart|ondrop|οnerrοr=|onerroupdate|onfilterchange|onfinish|onfocus|onfocusin|onfocusout|onhelp|onkeydown|onkeypress|onkeyup|onlayoutcomplete|onload|onlosecapture|onmousedown|onmouseenter|onmouseleave|onmousemove|onmousout|onmouseover|onmouseup|onmousewheel|onmove|onmoveend|onmovestart|onabort|onactivate|onafterprint|onafterupdate|onbefore|onbeforeactivate|onbeforecopy|onbeforecut|onbeforedeactivate|onbeforeeditocus|onbeforepaste|onbeforeprint|onbeforeunload|onbeforeupdate|onblur|onbounce|oncellchange|onchange|onclick|oncontextmenu|onpaste|onpropertychange|onreadystatechange|onreset|onresize|onresizend|onresizestart|onrowenter|onrowexit|onrowsdelete|onrowsinserted|onscroll|onselect|onselectionchange|onselectstart|onstart|onstop|onsubmit|onunload)+\s*=+/gim
         ];
         for (const reg of illegal) {
-          if (reg.test(param && param.toLowerCase())) {
+          const paramStr = Array.isArray(param) ? param.join('') : (param || '');
+          if (reg.test(paramStr.toLowerCase())) {
             MessagePlugin.error('路由参数不合法！');
             // 取消导航
             return;
@@ -123,13 +124,13 @@ function createPermissionGuard(router: Router) {
 
           await permissionStore.initRoutes(roles);
 
-          if (router.hasRoute(to.name)) {
+          if (to.name && router.hasRoute(to.name)) {
             next();
           } else {
             next('/');
           }
         } catch (error) {
-          MessagePlugin.error(error);
+          MessagePlugin.error(error instanceof Error ? error.message : '获取用户信息失败');
           next(`/login?redirect=${to.path}`);
           NProgress.done();
         }

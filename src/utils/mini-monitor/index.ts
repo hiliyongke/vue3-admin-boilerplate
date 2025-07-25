@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * @file 性能监控
  * @des 通过performance来收集页面的性能指标，通过页面链接中拼接showPerformance=1，可在控制面板输出当前页面的性能指标信息
@@ -79,7 +80,7 @@ const utils = {
   },
 
   isVideo(param) {
-    if (/\.(mp4|rm|rmvb|mkv|avi|flv|ogv|webm)/i.test(name)) {
+    if (/\.(mp4|rm|rmvb|mkv|avi|flv|ogv|webm)/i.test(param)) {
       return true;
     }
     return false;
@@ -185,9 +186,7 @@ class MiniMonitor {
     // 获取数据信息
     this.getPerformanceTiming();
   }
-  /**
-   * 获取数据信息
-   */
+
   getPerformanceTiming() {
     // 兼容性判断,如果没有获取到正确perforance对象则直接return
     if (this.performance && JSON.stringify(this.performance) === '{}') {

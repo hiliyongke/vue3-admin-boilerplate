@@ -43,11 +43,11 @@ export function getEnvConfig(): EnvConfig {
     VITE_APP_VERSION: env.VITE_APP_VERSION || '1.0.0',
     VITE_API_BASE_URL: env.VITE_API_BASE_URL || '',
     VITE_MONITOR_URL: env.VITE_MONITOR_URL || '',
-    VITE_USE_MOCK: env.VITE_USE_MOCK === 'true',
-    VITE_USE_PWA: env.VITE_USE_PWA === 'true',
-    VITE_BUILD_COMPRESS: env.VITE_BUILD_COMPRESS === 'true',
-    VITE_DROP_CONSOLE: env.VITE_DROP_CONSOLE === 'true',
-    VITE_DROP_DEBUGGER: env.VITE_DROP_DEBUGGER === 'true'
+    VITE_USE_MOCK: String(env.VITE_USE_MOCK) === 'true',
+    VITE_USE_PWA: String(env.VITE_USE_PWA) === 'true',
+    VITE_BUILD_COMPRESS: String(env.VITE_BUILD_COMPRESS) === 'true',
+    VITE_DROP_CONSOLE: String(env.VITE_DROP_CONSOLE) === 'true',
+    VITE_DROP_DEBUGGER: String(env.VITE_DROP_DEBUGGER) === 'true'
   };
 }
 
@@ -62,14 +62,14 @@ export function getEnv(): EnvType {
  * 是否为开发环境
  */
 export function isDev(): boolean {
-  return import.meta.env.DEV;
+  return Boolean(import.meta.env.DEV);
 }
 
 /**
  * 是否为生产环境
  */
 export function isProd(): boolean {
-  return import.meta.env.PROD;
+  return Boolean(import.meta.env.PROD);
 }
 
 /**

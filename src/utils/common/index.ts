@@ -4,70 +4,10 @@
  */
 
 /**
- * 判断是否为字符串
- * @param val 待判断的值
- * @returns 是否为字符串
+ * @description 通用工具函数
+ * @author 优化版本
  */
-export function isString(val: unknown): val is string {
-  return typeof val === 'string';
-}
 
-/**
- * 判断是否为数字
- * @param val 待判断的值
- * @returns 是否为数字
- */
-export function isNumber(val: unknown): val is number {
-  return typeof val === 'number' && !isNaN(val);
-}
-
-/**
- * 判断是否为布尔值
- * @param val 待判断的值
- * @returns 是否为布尔值
- */
-export function isBoolean(val: unknown): val is boolean {
-  return typeof val === 'boolean';
-}
-
-/**
- * 判断是否为函数
- * @param val 待判断的值
- * @returns 是否为函数
- */
-export function isFunction(val: unknown): val is Function {
-  return typeof val === 'function';
-}
-
-/**
- * 判断是否为对象
- * @param val 待判断的值
- * @returns 是否为对象
- */
-export function isObject(val: unknown): val is Record<string, any> {
-  return val !== null && typeof val === 'object';
-}
-
-/**
- * 判断是否为数组
- * @param val 待判断的值
- * @returns 是否为数组
- */
-export function isArray(val: unknown): val is Array<any> {
-  return Array.isArray(val);
-}
-
-/**
- * 判断是否为空值
- * @param val 待判断的值
- * @returns 是否为空值
- */
-export function isEmpty(val: unknown): boolean {
-  if (val === null || val === undefined) return true;
-  if (isString(val) || isArray(val)) return val.length === 0;
-  if (isObject(val)) return Object.keys(val).length === 0;
-  return false;
-}
 
 /**
  * 深度克隆对象
@@ -101,7 +41,7 @@ export function debounce<T extends (...args: any[]) => any>(
   delay: number
 ): (...args: Parameters<T>) => void {
   let timeoutId: NodeJS.Timeout;
-  return (...args: Parameters<T>) => {
+  return function(this: any, ...args: Parameters<T>) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => func.apply(this, args), delay);
   };
@@ -118,7 +58,7 @@ export function throttle<T extends (...args: any[]) => any>(
   delay: number
 ): (...args: Parameters<T>) => void {
   let lastCall = 0;
-  return (...args: Parameters<T>) => {
+  return function(this: any, ...args: Parameters<T>) {
     const now = Date.now();
     if (now - lastCall >= delay) {
       lastCall = now;

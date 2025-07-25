@@ -158,7 +158,7 @@
             />
           </p>
           <p
-            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT"
+            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECIPT"
             class="payment-col"
           >
             收款
@@ -214,13 +214,13 @@ const store = useSettingStore();
 const COLUMNS = [
   {
     title: '合同名称',
-    fixed: 'left',
+    fixed: 'left' as const,
     width: 200,
     ellipsis: true,
-    align: 'left',
+    align: 'left' as const,
     colKey: 'name'
   },
-  { title: '合同状态', colKey: 'status', width: 200, cell: { col: 'status' } },
+  { title: '合同状态', colKey: 'status', width: 200 },
   {
     title: '合同编号',
     width: 200,
@@ -246,8 +246,8 @@ const COLUMNS = [
     colKey: 'amount'
   },
   {
-    align: 'left',
-    fixed: 'right',
+    align: 'left' as const,
+    fixed: 'right' as const,
     width: 200,
     colKey: 'op',
     title: '操作'
@@ -346,8 +346,8 @@ const offsetTop = computed(() => {
   return store.isUseTabsRouter ? 48 : 0;
 });
 
-const getContainer = () => {
-  return document.querySelector(`.${prefix}-layout`);
+const getContainer = (): HTMLElement => {
+  return document.querySelector(`.${prefix}-layout`) as HTMLElement;
 };
 </script>
 

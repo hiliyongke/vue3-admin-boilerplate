@@ -266,9 +266,10 @@ class ErrorHandler {
    * @param instance Vue组件实例
    * @param info 错误信息
    */
-  handleVueError(error: Error, instance: any, info: string): void {
-    const errorInfo = this.createErrorInfo(ErrorType.VUE_ERROR, error.message, {
-      stack: error.stack,
+  handleVueError(error: unknown, instance: any, info: string): void {
+    const err = error as Error;
+    const errorInfo = this.createErrorInfo(ErrorType.VUE_ERROR, err.message || String(error), {
+      stack: err.stack,
       details: {
         componentName: instance?.$options?.name || 'Unknown',
         errorInfo: info,
@@ -304,7 +305,7 @@ const errorHandler = new ErrorHandler();
  */
 export function setupErrorHandle(app: App): void {
   // 设置Vue错误处理器
-  app.config.errorHandler = (error: Error, instance, info: string) => {
+  app.config.errorHandler = (error: unknown, instance, info: string) => {
     errorHandler.handleVueError(error, instance, info);
   };
 

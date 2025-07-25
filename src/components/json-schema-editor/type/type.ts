@@ -20,7 +20,7 @@ interface Value {
 }
 
 interface Attr {
-  [key: string]: AttrInfo;
+  [key: string]: AttrInfo | any;
 }
 
 interface Wrapper {
@@ -37,4 +37,5 @@ const TYPE: Record<SchemaType, Wrapper> = {
   number: _number
 };
 
-export { TYPE, TYPE_NAME, SchemaType, Wrapper };
+export { TYPE, TYPE_NAME };
+export type { SchemaType, Wrapper };

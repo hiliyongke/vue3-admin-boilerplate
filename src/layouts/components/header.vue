@@ -166,8 +166,8 @@ import LanguageSelect from './language-select.vue';
 import ScreenFull from './screen-full.vue';
 const props = defineProps({
   theme: {
-    type: String,
-    default: ''
+    type: String as PropType<'light' | 'dark'>,
+    default: 'light'
   },
   layout: {
     type: String,

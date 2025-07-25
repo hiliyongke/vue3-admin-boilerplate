@@ -71,7 +71,8 @@ export class HttpRequest {
     this.instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         // 添加认证token
-        const token = getStorage(STORAGE_KEYS.ACCESS_TOKEN);
+        const storage = getStorage();
+        const token = storage.get(STORAGE_KEYS.ACCESS_TOKEN);
         if (token && config.headers) {
           config.headers.Authorization = `Bearer ${token}`;
         }

@@ -100,10 +100,11 @@ const tabRouters = computed(() =>
 );
 const activeTabPath = ref('');
 
-const handleChangeCurrentTab = (path: string) => {
+const handleChangeCurrentTab = (value: string | number) => {
+  const path = String(value);
   const { tabRouters } = tabsRouterStore;
   const route = tabRouters.find(i => i.path === path);
-  router.push({ path, query: route.query });
+  router.push({ path, query: route?.query });
 };
 
 const handleRemove = ({ value: path, index }) => {
@@ -121,7 +122,7 @@ const handleRefresh = (route: TRouterInfo, routeIdx: number) => {
     tabsRouterStore.toggleTabRouterAlive(routeIdx);
     router.replace({ path: route.path, query: route.query });
   });
-  activeTabPath.value = null;
+  activeTabPath.value = '';
 };
 const handleCloseAhead = (path: string, routeIdx: number) => {
   tabsRouterStore.subtractTabRouterAhead({ path, routeIdx });
@@ -160,10 +161,10 @@ const handleOperationEffect = (
     router.push({ path: nextRouter.path, query: nextRouter.query });
   }
 
-  activeTabPath.value = null;
+  activeTabPath.value = '';
 };
 const handleTabMenuClick = (visible: boolean, ctx, path: string) => {
-  if (ctx.trigger === 'document') activeTabPath.value = null;
+  if (ctx.trigger === 'document') activeTabPath.value = '';
   if (visible) activeTabPath.value = path;
 };
 </script>

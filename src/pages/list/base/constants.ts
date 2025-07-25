@@ -1,13 +1,13 @@
 export const COLUMNS = [
-  { colKey: 'row-select', type: 'multiple', width: 64, fixed: 'left' },
+  { colKey: 'row-select', type: 'multiple' as const, width: 64, fixed: 'left' as const },
   {
     title: '合同名称',
-    align: 'left',
+    align: 'left' as const,
     width: 300,
     colKey: 'name',
-    fixed: 'left'
+    fixed: 'left' as const
   },
-  { title: '合同状态', colKey: 'status', width: 200, cell: { col: 'status' } },
+  { title: '合同状态', colKey: 'status', width: 200 },
   {
     title: '合同编号',
     width: 200,
@@ -33,8 +33,8 @@ export const COLUMNS = [
     colKey: 'amount'
   },
   {
-    align: 'left',
-    fixed: 'right',
+    align: 'left' as const,
+    fixed: 'right' as const,
     width: 200,
     colKey: 'op',
     title: '操作'

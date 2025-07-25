@@ -252,12 +252,7 @@ import {
   PARTY_B_OPTIONS
 } from './constants';
 
-/**
- * 表单验证结果接口
- */
-interface ValidateResult {
-  validateResult: boolean;
-}
+import type { SubmitContext } from 'tdesign-vue-next';
 
 /**
  * 上传失败事件参数接口
@@ -289,10 +284,10 @@ const onReset = (): void => {
 
 /**
  * 提交表单
- * @param param 验证结果
+ * @param context 提交上下文
  */
-const onSubmit = ({ validateResult }: ValidateResult): void => {
-  if (validateResult === true) {
+const onSubmit = (context: SubmitContext): void => {
+  if (context.validateResult === true) {
     MessagePlugin.success('新建成功');
   }
 };

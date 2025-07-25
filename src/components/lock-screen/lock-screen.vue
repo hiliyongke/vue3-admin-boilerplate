@@ -109,7 +109,7 @@ const state = reactive({
   isShowLogin: false,
   loginLoading: false, // 正在登录
   loginForm: {
-    username: userStore.userInfo.user_name,
+    username: userStore.userInfo.user_name || '用户',
     password: ''
   }
 });

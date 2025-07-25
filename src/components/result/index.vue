@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
 /**
  * 图标组件映射表
  */
-const ICON_MAP: Record<ResultType, Component> = {
+const ICON_MAP: Record<ResultType, any> = {
   '403': Result403Icon,
   '404': Result404Icon,
   '500': Result500Icon,
@@ -62,7 +62,7 @@ const ICON_MAP: Record<ResultType, Component> = {
 /**
  * 动态组件计算属性
  */
-const dynamicComponent = computed<Component>(() => {
+const dynamicComponent = computed(() => {
   return ICON_MAP[props.type] || ICON_MAP['403'];
 });
 </script>

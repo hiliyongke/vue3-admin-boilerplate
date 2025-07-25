@@ -3,13 +3,28 @@ import { TOKEN_NAME } from '@/config/global';
 import pinia, { usePermissionStore } from '@/store';
 import { getUser, login } from '@/api/user';
 
-const InitUserInfo = {
-  roles: []
+interface UserInfo {
+  roles: string[];
+  user_name: string;
+  avatar: string;
+  email: string;
+  phone: string;
+}
+
+const InitUserInfo: UserInfo = {
+  roles: [],
+  user_name: '',
+  avatar: '',
+  email: '',
+  phone: ''
 };
 
 export const useUserStore = defineStore({
   id: 'user',
-  state: () => ({
+  state: (): {
+    token: string;
+    userInfo: UserInfo;
+  } => ({
     token: localStorage.getItem(TOKEN_NAME) || 'main_token', // 默认token不走权限
     userInfo: InitUserInfo
   }),
@@ -29,7 +44,10 @@ export const useUserStore = defineStore({
       const res = await login(userInfo);
       if (res && res.code === 200) {
         this.token = res.token;
-        this.userInfo = res.userInfo;
+        this.userInfo = {
+          ...res.userInfo,
+          phone: (res.userInfo as any).phone || ''
+        };
         localStorage.setItem(TOKEN_NAME, res.token);
 
         // 登录成功后立即初始化路由权限
@@ -42,7 +60,10 @@ export const useUserStore = defineStore({
     async getUserInfo() {
       const res = await getUser({ token: this.token });
       if (res && res.code === 200) {
-        this.userInfo = res.userInfo;
+        this.userInfo = {
+          ...res.userInfo,
+          phone: (res.userInfo as any).phone || ''
+        };
 
         // 获取用户信息后初始化路由权限
         const permissionStore = usePermissionStore();

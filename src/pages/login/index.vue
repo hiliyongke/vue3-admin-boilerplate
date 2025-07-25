@@ -57,7 +57,7 @@ import { ref } from 'vue';
 import Login from './components/login.vue';
 import Register from './components/register.vue';
 import Setting from '@/layouts/setting.vue';
-import { COMPANY_NAME } from '../../../build/constant';
+import { COMPANY_NAME } from '@/constants/app';
 
 /**
  * 登录类型：'login' | 'register'

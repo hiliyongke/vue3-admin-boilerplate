@@ -21,12 +21,12 @@ declare type dateType = string | number | Date;
  * @description 生成excel array
  */
 function generateArray(table: HTMLElement | null) {
-  const out = [];
+  const out: any[][] = [];
   // eslint-disable-next-line no-undef
   const rows = table?.querySelectorAll('tr') as NodeListOf<HTMLTableRowElement>;
-  const ranges = [];
+  const ranges: Array<{s: {r: number, c: number}, e: {r: number, c: number}}> = [];
   for (let R = 0; R < rows.length; ++R) {
-    const outRow = [];
+    const outRow: any[] = [];
     const row = rows[R];
     const columns = row.querySelectorAll('td');
     for (let C = 0; C < columns.length; ++C) {

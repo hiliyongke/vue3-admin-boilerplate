@@ -111,6 +111,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { MessagePlugin } from 'tdesign-vue-next';
+import type { SubmitContext } from 'tdesign-vue-next';
 import { useCounter } from '@/hooks/use-counter';
 
 /**
@@ -127,13 +128,6 @@ interface FormData {
   password: string;
   verifyCode: string;
   checked: boolean;
-}
-
-/**
- * 表单验证结果接口
- */
-interface ValidateResult {
-  validateResult: boolean;
 }
 
 /**
@@ -158,14 +152,14 @@ const INITIAL_DATA: FormData = {
  * 表单验证规则
  */
 const FORM_RULES = {
-  phone: [{ required: true, message: '手机号必填', type: 'error' }],
+  phone: [{ required: true, message: '手机号必填', trigger: 'blur' as const }],
   email: [
-    { required: true, message: '邮箱必填', type: 'error' },
-    { email: true, message: '请输入正确的邮箱', type: 'warning' }
+    { required: true, message: '邮箱必填', trigger: 'blur' as const },
+    { email: true, message: '请输入正确的邮箱', trigger: 'blur' as const }
   ],
-  password: [{ required: true, message: '密码必填', type: 'error' }],
-  verifyCode: [{ required: true, message: '验证码必填', type: 'error' }]
-} as const;
+  password: [{ required: true, message: '密码必填', trigger: 'blur' as const }],
+  verifyCode: [{ required: true, message: '验证码必填', trigger: 'blur' as const }]
+};
 
 /**
  * 当前注册类型
@@ -201,10 +195,10 @@ const emit = defineEmits<{
 
 /**
  * 提交表单
- * @param param 验证结果
+ * @param context 提交上下文
  */
-const onSubmit = ({ validateResult }: ValidateResult): void => {
-  if (validateResult === true) {
+const onSubmit = (context: SubmitContext<any>): void => {
+  if (context.validateResult === true) {
     if (!formData.value.checked) {
       MessagePlugin.error('请同意服务协议和隐私声明');
       return;

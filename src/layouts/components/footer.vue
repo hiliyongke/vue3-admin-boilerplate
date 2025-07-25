@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { prefix } from '@/config/global';
-import { COMPANY_NAME } from '../../../build/constant';
+import { COMPANY_NAME } from '@/constants/app';
 </script>
 
 <style lang="less" scoped>

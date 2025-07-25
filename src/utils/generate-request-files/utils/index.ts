@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as checkFns from './check-fns';
 import * as constant from './constant';
 import calculateObj from './calculate-obj';

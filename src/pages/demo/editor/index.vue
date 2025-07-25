@@ -136,8 +136,8 @@ import { oneDark } from '@codemirror/theme-one-dark';
 import { Codemirror } from './packages';
 import codeList from './packages/code-list';
 
-const themes: any = { oneDark };
-const languages: any = {
+const themes: Record<string, any> = { oneDark };
+const languages: Record<string, any> = {
   javascript: javascript(),
   html: html(),
   json: json(),
@@ -168,7 +168,7 @@ const state = reactive({
 });
 
 const extensions = computed(() => {
-  const result = [];
+  const result: any[] = [];
   result.push(languages[state.language]);
   if (themes[state.theme]) {
     result.push(themes[state.theme]);

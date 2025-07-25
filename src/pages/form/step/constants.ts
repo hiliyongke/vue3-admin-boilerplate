@@ -1,14 +1,14 @@
 export const FORM_RULES = {
-  name: [{ required: true, message: '请选择合同名称', type: 'error' }],
-  type: [{ required: true, message: '请选择发票类型', type: 'error' }],
-  title: [{ required: true, message: '请输入发票抬头', type: 'error' }],
-  taxNum: [{ required: true, message: '请输入纳税人识别号', type: 'error' }],
-  consignee: [{ required: true, message: '请输入收货人', type: 'error' }],
-  mobileNum: [{ required: true, message: '请输入手机号码', type: 'error' }],
+  name: [{ required: true, message: '请选择合同名称', trigger: 'change' as const }],
+  type: [{ required: true, message: '请选择发票类型', trigger: 'change' as const }],
+  title: [{ required: true, message: '请输入发票抬头', trigger: 'blur' as const }],
+  taxNum: [{ required: true, message: '请输入纳税人识别号', trigger: 'blur' as const }],
+  consignee: [{ required: true, message: '请输入收货人', trigger: 'blur' as const }],
+  mobileNum: [{ required: true, message: '请输入手机号码', trigger: 'blur' as const }],
   deliveryAddress: [
-    { required: true, message: '请选择收货地址', type: 'error' }
+    { required: true, message: '请选择收货地址', trigger: 'change' as const }
   ],
-  fullAddress: [{ required: true, message: '请输入详细地址', type: 'error' }]
+  fullAddress: [{ required: true, message: '请输入详细地址', trigger: 'blur' as const }]
 };
 
 export const NAME_OPTIONS = [

@@ -93,7 +93,9 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue';
 import { MessagePlugin } from 'tdesign-vue-next';
+import type { SubmitContext } from 'tdesign-vue-next';
 
 const INITIAL_DATA = {
   name: '',
@@ -127,13 +129,13 @@ const formVisible = ref(false);
 const formData = ref(props.data);
 const textareaValue = ref('');
 
-const onSubmit = ({ result, firstError }) => {
-  if (!firstError) {
+const onSubmit = (context: SubmitContext<any>) => {
+  if (context.validateResult === true) {
     MessagePlugin.success('提交成功');
     formVisible.value = false;
   } else {
-    console.log('Errors: ', result);
-    MessagePlugin.warning(firstError);
+    console.log('Errors: ', context.validateResult);
+    MessagePlugin.warning('表单验证失败');
   }
 };
 
@@ -165,6 +167,6 @@ watch(
 );
 
 const rules = {
-  name: [{ required: true, message: '请输入产品名称', type: 'error' }]
+  name: [{ required: true, message: '请输入产品名称', trigger: 'blur' as const }]
 };
 </script>

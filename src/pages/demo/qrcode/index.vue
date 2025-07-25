@@ -62,15 +62,15 @@ interface ConfigForm {
 }
 
 /**
- * 表单验证规则接口
+ * 表单验证规则类型
  */
-interface FormRules {
-  hostName: Array<{
+type ConfigFormRules = {
+  [K in keyof ConfigForm]: Array<{
     required: boolean;
     message: string;
-    trigger: string;
+    trigger: 'change' | 'blur';
   }>;
-}
+};
 
 /**
  * DOM转图片选项接口
@@ -104,7 +104,7 @@ const value = ref<string>('https://example.com');
 /**
  * 表单验证规则
  */
-const configRules: FormRules = {
+const configRules: ConfigFormRules = {
   hostName: [
     { required: true, message: '请输入二维码链接', trigger: 'blur' }
   ]

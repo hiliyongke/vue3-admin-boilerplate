@@ -13,10 +13,10 @@ export function longPressDirective(app: App) {
         throw 'callback must be a function';
       }
       // 定义变量
-      let pressTimer = null;
+      let pressTimer: ReturnType<typeof setTimeout> | null = null;
       // 创建计时器（ 2秒后执行函数 ）
-      const start = e => {
-        if (e.button) {
+      const start = (e: MouseEvent | TouchEvent) => {
+        if ('button' in e) {
           if (e.type === 'click' && e.button !== 0) {
             return;
           }
@@ -28,14 +28,14 @@ export function longPressDirective(app: App) {
         }
       };
       // 取消计时器
-      const cancel = e => {
+      const cancel = (e: Event) => {
         if (pressTimer !== null) {
           clearTimeout(pressTimer);
           pressTimer = null;
         }
       };
       // 运行函数
-      const handler = e => {
+      const handler = (e: MouseEvent | TouchEvent) => {
         binding.value(e);
       };
       // 添加事件监听器

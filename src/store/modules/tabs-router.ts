@@ -49,29 +49,38 @@ export const useTabsRouterStore = defineStore({
       }
     },
     // 处理关闭当前
+    // 处理关闭当前
     subtractCurrentTabRouter(newRoute: TRouterInfo) {
       const { routeIdx } = newRoute;
-      this.tabRouterList = this.tabRouterList
-        .slice(0, routeIdx)
-        .concat(this.tabRouterList.slice(routeIdx + 1));
+      if (routeIdx !== undefined) {
+        this.tabRouterList = this.tabRouterList
+          .slice(0, routeIdx)
+          .concat(this.tabRouterList.slice(routeIdx + 1));
+      }
     },
     // 处理关闭右侧
     subtractTabRouterBehind(newRoute: TRouterInfo) {
       const { routeIdx } = newRoute;
-      this.tabRouterList = this.tabRouterList.slice(0, routeIdx + 1);
+      if (routeIdx !== undefined) {
+        this.tabRouterList = this.tabRouterList.slice(0, routeIdx + 1);
+      }
     },
     // 处理关闭左侧
     subtractTabRouterAhead(newRoute: TRouterInfo) {
       const { routeIdx } = newRoute;
-      this.tabRouterList = homeRoute.concat(this.tabRouterList.slice(routeIdx));
+      if (routeIdx !== undefined) {
+        this.tabRouterList = homeRoute.concat(this.tabRouterList.slice(routeIdx));
+      }
     },
     // 处理关闭其他
     subtractTabRouterOther(newRoute: TRouterInfo) {
       const { routeIdx } = newRoute;
-      this.tabRouterList =
-        routeIdx === 0
-          ? homeRoute
-          : homeRoute.concat([this.tabRouterList?.[routeIdx]]);
+      if (routeIdx !== undefined) {
+        this.tabRouterList =
+          routeIdx === 0
+            ? homeRoute
+            : homeRoute.concat([this.tabRouterList?.[routeIdx]]);
+      }
     },
     removeTabRouterList() {
       this.tabRouterList = [];

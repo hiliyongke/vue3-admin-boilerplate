@@ -7,8 +7,10 @@ export { DEFAULT_CONFIG } from './component';
 
 export const Codemirror = Component;
 export const install: Plugin = (app, defaultConfig?: Props) => {
-  app.component(Component.name, Component);
-  injectGlobalConfig(app, defaultConfig);
+  app.component(Component.name || 'VueCodemirror', Component);
+  if (defaultConfig) {
+    injectGlobalConfig(app, defaultConfig);
+  }
 };
 
 export default {

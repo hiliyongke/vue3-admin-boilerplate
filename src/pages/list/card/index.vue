@@ -38,7 +38,7 @@
           >
             <product-card
               class="list-card-item"
-              :product="product"
+              :product="{ ...product, isSetup: product.isSetup ?? false }"
               @delete-item="handleDeleteItem"
               @manage-product="handleManageProduct"
             />
@@ -95,15 +95,27 @@ const INITIAL_DATA = {
   name: '',
   status: '',
   description: '',
-  type: '',
+  type: 1,
   mark: '',
   amount: 0
 };
 
-const pagination = ref({ current: 1, pageSize: 12, total: 0 });
-const deleteProduct = ref(undefined);
+interface ProductData {
+  index: number;
+  name: string;
+  status: string;
+  description: string;
+  type: number;
+  mark: string;
+  amount: number;
+  isSetup?: boolean;
+  [key: string]: any;
+}
 
-const productList = ref([]);
+const pagination = ref({ current: 1, pageSize: 12, total: 0 });
+const deleteProduct = ref<ProductData | undefined>(undefined);
+
+const productList = ref<ProductData[]>([]);
 const dataLoading = ref(true);
 
 const fetchData = async () => {
@@ -143,23 +155,35 @@ const onPageSizeChange = (size: number) => {
 const onCurrentChange = (current: number) => {
   pagination.value.current = current;
 };
-const handleDeleteItem = product => {
+const handleDeleteItem = (product: any) => {
   confirmVisible.value = true;
-  deleteProduct.value = product;
+  // 从完整的产品列表中找到对应的产品
+  const fullProduct = productList.value.find(p => p.name === product.name);
+  deleteProduct.value = fullProduct;
 };
 const onConfirmDelete = () => {
-  const { index } = deleteProduct.value;
-  productList.value.splice(index - 1, 1);
-  confirmVisible.value = false;
-  MessagePlugin.success('删除成功');
+  if (deleteProduct.value) {
+    const { index } = deleteProduct.value;
+    productList.value.splice(index - 1, 1);
+    confirmVisible.value = false;
+    MessagePlugin.success('删除成功');
+  }
 };
 const onCancel = () => {
   deleteProduct.value = undefined;
   formData.value = { ...INITIAL_DATA };
 };
-const handleManageProduct = product => {
+const handleManageProduct = (product: any) => {
   formDialogVisible.value = true;
-  formData.value = { ...product, status: product?.isSetup ? '1' : '0' };
+  // 从完整的产品列表中找到对应的产品
+  const fullProduct = productList.value.find(p => p.name === product.name);
+  if (fullProduct) {
+    formData.value = {
+      ...fullProduct,
+      status: fullProduct?.isSetup ? '1' : '0',
+      type: fullProduct.type || 1
+    };
+  }
 };
 </script>
 

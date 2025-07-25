@@ -175,6 +175,7 @@ import {
 } from 'echarts/components';
 import { LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
+import type { DateRangeValue } from 'tdesign-vue-next';
 import { useSettingStore } from '@/store';
 
 import { LAST_7_DAYS } from '@/utils/date';
@@ -201,10 +202,10 @@ type DateRange = [string, string] | string[];
  */
 interface ChartOption {
   grid: {
-    x: number;
-    y: number;
-    x2: number;
-    y2: number;
+    left: string | number;
+    top: string | number;
+    right: string | number;
+    bottom: string | number;
   };
   [key: string]: any;
 }
@@ -242,9 +243,9 @@ const chartColors = computed(() => store.chartColors);
  * 处理日期范围变化
  * @param value 日期范围值
  */
-const onLineChange = (value: DateRange): void => {
+const onLineChange = (value: DateRangeValue): void => {
   if (lineChart) {
-    lineChart.setOption(getFolderLineDataSet(value));
+    lineChart.setOption(getFolderLineDataSet(value as any));
   }
 };
 
@@ -261,15 +262,7 @@ const initChart = (): void => {
   lineContainer = container;
   lineChart = echarts.init(lineContainer);
 
-  const chartOption: ChartOption = {
-    grid: {
-      x: 30, // 默认是80px
-      y: 30, // 默认是60px
-      x2: 10, // 默认80px
-      y2: 30 // 默认60px
-    },
-    ...getFolderLineDataSet({ ...chartColors.value })
-  };
+  const chartOption = getFolderLineDataSet({ ...chartColors.value });
 
   lineChart.setOption(chartOption);
 };
@@ -291,7 +284,7 @@ const updateContainer = (): void => {
  * @param type 产品类型
  * @returns 图标组件
  */
-const getIcon = (type: ProductType): any => {
+const getIcon = (type: any): any => {
   switch (type) {
     case 'a':
       return ProductAIcon;

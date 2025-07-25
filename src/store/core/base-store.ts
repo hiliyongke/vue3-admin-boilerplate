@@ -34,7 +34,7 @@ export interface BaseStoreOptions {
 export function createBaseStore<T extends Record<string, any>>(
   options: BaseStoreOptions,
   initialState: T
-) {
+): any {
   return defineStore(options.id, () => {
     // 状态定义
     const state = ref<T & BaseState>({

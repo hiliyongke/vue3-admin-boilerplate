@@ -1,33 +1,38 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "outDir": "dist",
-    "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "outDir": "dist",
+    "declaration": false,
+    "sourceMap": true,
     "noEmit": true,
     "jsx": "preserve",
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
-    "strict": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitAny": false,
-    "declaration": true,
-    "declarationDir": "dist/types",
-    "sourceMap": true,
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": true,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "baseUrl": ".",
-    "types": ["node"],
     "paths": {
       "@/*": ["src/*"],
       "@api/*": ["src/api/*"],
@@ -48,20 +53,31 @@
       "@composables/*": ["src/composables/*"],
       "@directives/*": ["src/directives/*"],
       "@enums/*": ["src/enums/*"]
-    }
+    },
+    "types": ["node", "vite/client"]
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src/types/**/*.d.ts",
     "types/**/*.d.ts",
     "*.d.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "**/*.js"
+    "build",
+    "public",
+    "**/*.js",
+    "packages/**/*",
+    "packages/logger/**/*",
+    "packages/**/node_modules",
+    "packages/**/dist"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }

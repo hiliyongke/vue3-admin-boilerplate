@@ -76,9 +76,10 @@ watch(
   () => route.path,
   () => {
     appendNewRoute();
-    document
-      .querySelector(`.${prefix}-layout`)
-      .scrollTo({ top: 0, behavior: 'smooth' });
+    const layoutElement = document.querySelector(`.${prefix}-layout`);
+    if (layoutElement) {
+      layoutElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 );
 </script>

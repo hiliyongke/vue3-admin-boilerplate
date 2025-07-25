@@ -1,4 +1,4 @@
-import { APP_TITLE } from '../../build/constant';
+import { APP_TITLE } from '@/constants/app';
 import { version } from '../../package.json';
 export function setupConsole() {
   console.log(

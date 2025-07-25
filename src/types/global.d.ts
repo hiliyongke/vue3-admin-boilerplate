@@ -1,90 +1,65 @@
-// 全局类型声明文件
+// 全局类型定义
 
-declare module '*.vue' {
-  import type { DefineComponent } from 'vue'
-  const component: DefineComponent<{}, {}, any>
-  export default component
-}
+declare global {
+  // 通用函数类型
+  type Fn<T = any, R = T> = (...arg: T[]) => R;
 
-// 扩展 ImportMeta 接口
-declare interface ImportMeta {
-  glob: (pattern: string, options?: { eager?: boolean }) => Record<string, any>
-  globEager: (pattern: string) => Record<string, any>
-}
+  // 可记录对象类型
+  type Recordable<T = any> = Record<string, T>;
 
-// Pinia Store 类型扩展
-declare module 'pinia' {
-  export interface PiniaCustomProperties {
-    displayMode?: string
-    language?: string
-    colorList?: any
+  // 错误日志信息类型
+  interface ErrorLogInfo {
+    type: 'javascript' | 'resource' | 'ajax' | 'promise';
+    message: string;
+    stack?: string;
+    url?: string;
+    line?: number;
+    column?: number;
+    time: string;
+    userAgent: string;
+  }
+
+  // 日期范围类型
+  type DateRange = string[];
+
+  // 扩展 Navigator 接口
+  interface Navigator {
+    msSaveOrOpenBlob?: (blob: Blob, filename: string) => void;
+  }
+
+  // 扩展 Window 接口
+  interface Window {
+    webkitPerformance?: Performance;
+    msPerformance?: Performance;
+  }
+
+  // 扩展 Document 接口
+  interface Document {
+    webkitCancelFullScreen?: () => void;
+    mozCancelFullScreen?: () => void;
+    cancelFullScreen?: () => void;
+    msExitFullscreen?: () => void;
+  }
+
+  // 扩展 HTMLElement 接口
+  interface HTMLElement {
+    webkitRequestFullScreen?: () => void;
+    mozRequestFullScreen?: () => void;
+    requestFullScreen?: () => void;
+  }
+
+  // ActiveX 对象（IE 兼容）
+  declare class ActiveXObject {
+    constructor(s: string);
+  }
+
+  // 表单数据转换函数
+  declare function objectToFormData(obj: any): FormData;
+
+  // 性能导航时间接口扩展
+  interface PerformanceNavigationTiming {
+    navigationStart?: number;
   }
 }
 
-// 组件类型声明
-declare module '@/components/json-schema-editor/index.vue' {
-  const JsonSchemaEditor: any
-  export default JsonSchemaEditor
-}
-
-// 工具库类型声明
-declare module 'generate-schema' {
-  const GenerateSchema: any
-  export default GenerateSchema
-}
-
-declare module 'dom-to-image' {
-  const domtoimage: any
-  export default domtoimage
-}
-
-declare module 'pinyin' {
-  const pinyin: any
-  export default pinyin
-}
-
-declare module 'sortablejs' {
-  const Sortable: any
-  export default Sortable
-}
-
-declare module 'wangeditor' {
-  const E: any
-  export default E
-}
-
-declare module 'vue-pdf-embed' {
-  const VuePdfEmbed: any
-  export default VuePdfEmbed
-}
-
-declare module 'vue3-pdfjs/esm' {
-  export function createLoadingTask(src: string): any
-}
-
-declare module 'qrcode.vue' {
-  const QrcodeVue: any
-  export default QrcodeVue
-}
-
-declare module 'splitpanes' {
-  export const Splitpanes: any
-  export const Pane: any
-}
-
-declare module 'tvision-color' {
-  export const Color: any
-}
-
-declare module 'vue-clipboard3' {
-  const useClipboard: any
-  export default useClipboard
-}
-
-// 全局变量声明
-declare const process: {
-  env: {
-    NODE_ENV: string
-    [key: string]: any
-  }
-}
+export {};

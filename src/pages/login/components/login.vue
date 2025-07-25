@@ -146,12 +146,7 @@ interface FormData {
   checked: boolean;
 }
 
-/**
- * 表单验证结果接口
- */
-interface ValidateResult {
-  validateResult: boolean;
-}
+import type { SubmitContext } from 'tdesign-vue-next';
 
 const userStore = useUserStore();
 const router = useRouter();
@@ -171,11 +166,11 @@ const INITIAL_DATA: FormData = {
  * 表单验证规则
  */
 const FORM_RULES = {
-  phone: [{ required: true, message: '手机号必填', type: 'error' }],
-  account: [{ required: true, message: '账号必填', type: 'error' }],
-  password: [{ required: true, message: '密码必填', type: 'error' }],
-  verifyCode: [{ required: true, message: '验证码必填', type: 'error' }]
-} as const;
+  phone: [{ required: true, message: '手机号必填', trigger: 'blur' as const }],
+  account: [{ required: true, message: '账号必填', trigger: 'blur' as const }],
+  password: [{ required: true, message: '密码必填', trigger: 'blur' as const }],
+  verifyCode: [{ required: true, message: '验证码必填', trigger: 'blur' as const }]
+};
 
 /**
  * 当前登录类型
@@ -207,10 +202,10 @@ const switchType = (newType: LoginType): void => {
 
 /**
  * 提交表单
- * @param param 验证结果
+ * @param context 提交上下文
  */
-const onSubmit = async ({ validateResult }: ValidateResult): Promise<void> => {
-  if (validateResult === true) {
+const onSubmit = async (context: SubmitContext<any>): Promise<void> => {
+  if (context.validateResult === true) {
     try {
       await userStore.login(formData.value);
       MessagePlugin.success('登录成功');

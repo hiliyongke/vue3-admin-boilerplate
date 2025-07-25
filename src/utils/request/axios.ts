@@ -2,7 +2,8 @@ import axios, {
   AxiosRequestConfig,
   AxiosInstance,
   AxiosResponse,
-  AxiosError
+  AxiosError,
+  InternalAxiosRequestConfig
 } from 'axios';
 import { stringify } from 'qs';
 import isFunction from 'lodash-es/isFunction';
@@ -75,16 +76,15 @@ export class VAxios {
     const axiosCanceler = new AxiosCanceler();
 
     // 请求配置处理
-    this.instance.interceptors.request.use((config: AxiosRequestConfig) => {
-      const {
-        headers: { ignoreRepeatRequest }
-      } = config;
+    this.instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+      const headers = config.headers as any;
+      const ignoreRepeatRequest = headers?.ignoreRepeatRequest;
       const ignoreRepeat =
         ignoreRepeatRequest ?? this.options.requestOptions?.ignoreRepeatRequest;
       if (!ignoreRepeat) axiosCanceler.addPending(config);
 
       if (requestInterceptors && isFunction(requestInterceptors)) {
-        config = requestInterceptors(config, this.options);
+        config = requestInterceptors(config as AxiosRequestConfig, this.options) as InternalAxiosRequestConfig;
       }
       return config;
     }, undefined);

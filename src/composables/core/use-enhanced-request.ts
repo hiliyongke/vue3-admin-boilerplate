@@ -36,7 +36,18 @@ export interface UseRequestOptions<T> extends EnhancedRequestConfig {
 export function useEnhancedRequest<T = any>(
   requestFn: () => Promise<T>,
   options: UseRequestOptions<T> = {}
-) {
+): {
+  data: Ref<T | null>;
+  loading: Ref<boolean>;
+  error: Ref<string | null>;
+  finished: Ref<boolean>;
+  isLoading: Ref<boolean>;
+  hasError: Ref<boolean>;
+  hasData: Ref<boolean>;
+  execute: () => Promise<T | null>;
+  refresh: () => Promise<T | null>;
+  reset: () => void;
+} {
   const {
     immediate = false,
     initialData = null,
@@ -100,7 +111,7 @@ export function useEnhancedRequest<T = any>(
 
   return {
     // 状态
-    data,
+    data: data as Ref<T | null>,
     loading,
     error,
     finished,
@@ -123,7 +134,18 @@ export function useEnhancedRequest<T = any>(
 export function useGet<T = any>(
   url: string,
   options: UseRequestOptions<T> = {}
-) {
+): {
+  data: Ref<T | null>;
+  loading: Ref<boolean>;
+  error: Ref<string | null>;
+  finished: Ref<boolean>;
+  isLoading: Ref<boolean>;
+  hasError: Ref<boolean>;
+  hasData: Ref<boolean>;
+  execute: () => Promise<T | null>;
+  refresh: () => Promise<T | null>;
+  reset: () => void;
+} {
   return useEnhancedRequest<T>(
     () => enhancedRequest.get<T>(url, options),
     options
@@ -137,7 +159,18 @@ export function usePost<T = any>(
   url: string,
   data?: any,
   options: UseRequestOptions<T> = {}
-) {
+): {
+  data: Ref<T | null>;
+  loading: Ref<boolean>;
+  error: Ref<string | null>;
+  finished: Ref<boolean>;
+  isLoading: Ref<boolean>;
+  hasError: Ref<boolean>;
+  hasData: Ref<boolean>;
+  execute: () => Promise<T | null>;
+  refresh: () => Promise<T | null>;
+  reset: () => void;
+} {
   return useEnhancedRequest<T>(
     () => enhancedRequest.post<T>(url, data, options),
     options

@@ -3,7 +3,7 @@
  * @author 优化版本
  */
 
-import { type RouteRecordName, type Component } from 'vue-router';
+import { type RouteRecordName } from 'vue-router';
 import type STYLE_CONFIG from '@/config/style';
 
 /**
@@ -31,7 +31,7 @@ export interface MenuRoute {
   /** 菜单图标 */
   icon?: string | {
     /** 图标渲染函数 */
-    render: () => Component;
+    render: () => any;
   };
   /** 重定向路径 */
   redirect?: string;
@@ -115,6 +115,29 @@ export interface TRouterInfo {
   isAlive?: boolean;
   /** 是否为首页 */
   isHome?: boolean;
+  /** 路由查询参数 */
+  query?: Record<string, any>;
+  /** 路由元信息 */
+  meta?: {
+    /** 页面标题 */
+    title?: string;
+    /** 菜单图标 */
+    icon?: string;
+    /** 是否隐藏 */
+    hidden?: boolean;
+    /** 是否缓存 */
+    keepAlive?: boolean;
+    /** 权限标识 */
+    permission?: string;
+    /** 排序权重 */
+    order?: number;
+    /** 是否展开 */
+    expanded?: boolean;
+    /** 框架源地址 */
+    frameSrc?: string;
+    /** 是否在新窗口打开框架 */
+    frameBlank?: boolean;
+  };
 }
 
 /**

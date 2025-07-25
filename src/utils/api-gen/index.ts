@@ -2,7 +2,13 @@
 const { generateApi } = require('swagger-typescript-api');
 const path = require('path');
 
-const swagger = [
+interface SwaggerConfig {
+  moduleName: string;
+  input?: string;
+  url?: string;
+}
+
+const swagger: SwaggerConfig[] = [
   // {
   //   moduleName: 'xx2',
   //   url: ''
@@ -14,8 +20,8 @@ const swagger = [
 ];
 
 for (let i = 0; i < swagger.length; i++) {
-  const item = swagger[i];
-  const cfg = {
+  const item: any = swagger[i];
+  const cfg: any = {
     modular: true,
     templates: path.resolve(process.cwd(), './src/utils/api-gen/templates'),
     httpClientType: 'axios', // or "fetch"
@@ -39,12 +45,12 @@ for (let i = 0; i < swagger.length; i++) {
     enumNamesAsValues: true,
     moduleNameFirstTag: true,
     generateUnionEnums: false,
-    generateClient: true
+    generateClient: true,
+    output: path.resolve(
+      process.cwd(),
+      `./src/api/modules/${item.moduleName}`
+    ) // 输出目录
   };
-  cfg.output = path.resolve(
-    process.cwd(),
-    `./src/api/modules/${item.moduleName}`
-  ); // 输出目录
 
   // url 跟 input只能出现其一
   if (item.url) {

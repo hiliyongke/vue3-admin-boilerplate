@@ -63,6 +63,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import addNodeBtn from './add-node-btn.vue';
 import nodeMain from './node-main.vue';
 import './index.less';
@@ -83,7 +84,7 @@ const emit = defineEmits(['input']);
 
 const scaleVal = ref(100); // 流程图缩放比例 100%
 const step = ref('5');
-const changeScale = val => {
+const changeScale = (val: number) => {
   let v = scaleVal.value + val;
   if (v > 0 && v <= 200) {
     // 缩放介于0%~200%
@@ -93,12 +94,12 @@ const changeScale = val => {
 const preview = () => {
   validator(props.modelValue);
 };
-const addNode = option => {
+const addNode = (option: any) => {
   getNode(props.modelValue, option.nodeId, node => {
     /* 新增分支 */
     if (option.type === 'branch') {
       const nodeId = getRandom();
-      const conditionNodes = [];
+      const conditionNodes: any[] = [];
       for (let i = 0; i < 2; i++) {
         conditionNodes.push({
           name: `条件${i + 1}`,
@@ -116,7 +117,7 @@ const addNode = option => {
       emit('input', JSON.parse(JSON.stringify(props.modelValue)));
     } else {
       /* 新增节点 */
-      const nodeObj = {
+      const nodeObj: any = {
         type: option.type,
         name: option.type === 'approver' ? '审批人' : '抄送人',
         prevId: node.nodeId,
@@ -130,19 +131,19 @@ const addNode = option => {
     }
   });
 };
-const deleteNode = nodeId => {
+const deleteNode = (nodeId: any) => {
   del(props.modelValue, nodeId);
   emit('input', JSON.parse(JSON.stringify(props.modelValue)));
 };
 /* 根据 nodeId 查找对应的节点并执行回调 */
-const getNode = (data, nodeId, call) => {
+const getNode = (data: any, nodeId: any, call: any) => {
   if (data.type === 'branch') {
     if (data.nodeId === nodeId) {
       call(data);
     } else {
       data.childNode && getNode(data.childNode, nodeId, call);
     }
-    data.conditionNodes.map(d => {
+    data.conditionNodes.map((d: any) => {
       if (d.nodeId === nodeId) {
         call(d);
       } else {
@@ -157,7 +158,7 @@ const getNode = (data, nodeId, call) => {
     }
   }
 };
-const del = (data, nodeId) => {
+const del = (data: any, nodeId: any) => {
   if (data.childNode) {
     if (data.childNode.conditionNodes) {
       for (let i in data.childNode.conditionNodes) {
@@ -173,7 +174,7 @@ const del = (data, nodeId) => {
     }
   }
 };
-const validator = data => {
+const validator = (data: any) => {
   if (data.childNode) {
     if (data.childNode.conditionNodes) {
       for (let i in data.childNode.conditionNodes) {

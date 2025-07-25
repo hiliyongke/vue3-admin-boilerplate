@@ -67,6 +67,7 @@ import { CanvasRenderer } from 'echarts/renderers';
 import { useSettingStore } from '@/store';
 import { LAST_7_DAYS } from '@/utils/date';
 import { changeChartsTheme } from '@/utils/color';
+import type { DateRangeValue } from 'tdesign-vue-next';
 
 import { getPieChartDataSet, getLineChartDataSet } from '../index';
 
@@ -107,18 +108,22 @@ let monitorContainer: HTMLElement;
 let monitorChart: echarts.ECharts;
 const renderMonitorChart = () => {
   if (!monitorContainer) {
-    monitorContainer = document.getElementById('monitorContainer');
+    const element = document.getElementById('monitorContainer');
+    if (!element) return;
+    monitorContainer = element;
   }
   monitorChart = echarts.init(monitorContainer);
   monitorChart.setOption(getLineChartDataSet({ ...chartColors.value }));
 };
 
-// monitorChart
+// countChart
 let countContainer: HTMLElement;
 let countChart: echarts.ECharts;
 const renderCountChart = () => {
   if (!countContainer) {
-    countContainer = document.getElementById('countContainer');
+    const element = document.getElementById('countContainer');
+    if (!element) return;
+    countContainer = element;
   }
   countChart = echarts.init(countContainer);
   countChart.setOption(getPieChartDataSet(chartColors.value));
@@ -188,7 +193,8 @@ watch(
   }
 );
 
-const onCurrencyChange = (checkedValues: string[]) => {
+const onCurrencyChange = (value: DateRangeValue) => {
+  const checkedValues = Array.isArray(value) ? value.map(v => String(v)) : [];
   currentMonth.value = getThisMonth(checkedValues);
   monitorChart.setOption(
     getLineChartDataSet({ dateTime: checkedValues, ...chartColors.value })

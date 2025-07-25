@@ -39,25 +39,26 @@ export function modernDebounce<T extends (...args: any[]) => any>(
   let lastArgs: Parameters<T>;
   let result: ReturnType<T>;
 
-  function debounced(this: any, ...args: Parameters<T>) {
+  function debounced(this: ThisParameterType<T>, ...args: Parameters<T>) {
     // 检查是否被取消
     if (signal?.aborted) {
       return result;
     }
 
     lastArgs = args;
+    const context = this;
 
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
 
     if (leading && !timeoutId) {
-      result = fn.apply(this, args);
+      result = fn.apply(context, args);
     }
 
     timeoutId = window.setTimeout(() => {
       if (trailing) {
-        result = fn.apply(this, lastArgs);
+        result = fn.apply(context, lastArgs);
       }
       timeoutId = undefined;
     }, delay);
@@ -72,7 +73,7 @@ export function modernDebounce<T extends (...args: any[]) => any>(
     }
   }
 
-  function flush() {
+  function flush(this: ThisParameterType<T>) {
     if (timeoutId) {
       clearTimeout(timeoutId);
       result = fn.apply(this, lastArgs);
@@ -164,7 +165,7 @@ export function memoize<T extends (...args: any[]) => any>(
 
   const cache = new Map<string, { value: ReturnType<T>; timestamp: number }>();
 
-  function memoized(this: any, ...args: Parameters<T>): ReturnType<T> {
+  function memoized(this: ThisParameterType<T>, ...args: Parameters<T>): ReturnType<T> {
     const key = keyGenerator(...args);
     const now = Date.now();
 
@@ -189,7 +190,9 @@ export function memoize<T extends (...args: any[]) => any>(
     // 检查缓存大小
     if (cache.size > maxSize) {
       const firstKey = cache.keys().next().value;
-      cache.delete(firstKey);
+      if (firstKey !== undefined) {
+        cache.delete(firstKey);
+      }
     }
 
     return result;
@@ -225,3 +228,6 @@ export const isType = {
     return false;
   }
 };
+
+// 导出别名以保持向后兼容
+export { retry as modernRetry };

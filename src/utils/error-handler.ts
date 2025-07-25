@@ -58,14 +58,15 @@ function formatComponentName(vm: any) {
  * Vue error handler
  */
 
-function vueErrorHandler(err: Error, vm: any, info: string) {
+function vueErrorHandler(err: unknown, vm: any, info: string) {
+  const error = err as Error;
   const { name, path } = formatComponentName(vm);
   const logInfo = {
     type: ErrorTypeEnum.VUE,
     name,
     file: path,
-    message: err.message,
-    stack: processStackMsg(err),
+    message: error.message || String(err),
+    stack: processStackMsg(error),
     detail: info,
     url: window.location.href
   };
@@ -164,7 +165,9 @@ function registerResourceErrorHandler() {
  */
 export function setupErrorHandle(app: App) {
   // Vue error monitoring;
-  app.config.errorHandler = vueErrorHandler;
+  app.config.errorHandler = (err: unknown, instance: any, info: string) => {
+    vueErrorHandler(err, instance, info);
+  };
 
   // script error
   window.onerror = scriptErrorHandler;

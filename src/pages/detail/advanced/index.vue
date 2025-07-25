@@ -42,7 +42,7 @@
           />
           <t-step-item
             title="完成"
-            content
+            content=""
           />
         </t-steps>
       </t-row>

@@ -117,6 +117,7 @@ import { PANE_LIST_DATA, PRODUCT_LIST } from './constants';
 import { LAST_7_DAYS } from '@/utils/date';
 import { useSettingStore } from '@/store';
 import { changeChartsTheme } from '@/utils/color';
+import type { DateRangeValue } from 'tdesign-vue-next';
 
 import Trend from '@/components/trend/index.vue';
 
@@ -136,7 +137,9 @@ const chartColors = computed(() => store.chartColors);
 let lineContainer: HTMLElement;
 let lineChart: echarts.ECharts;
 const renderLineChart = () => {
-  lineContainer = document.getElementById('lineContainer');
+  const element = document.getElementById('lineContainer');
+  if (!element) return;
+  lineContainer = element;
   lineChart = echarts.init(lineContainer);
   lineChart.setOption(getFolderLineDataSet({ ...chartColors.value }));
 };
@@ -145,7 +148,9 @@ const renderLineChart = () => {
 let scatterContainer: HTMLElement;
 let scatterChart: echarts.ECharts;
 const renderScatterChart = () => {
-  scatterContainer = document.getElementById('scatterContainer');
+  const element = document.getElementById('scatterContainer');
+  if (!element) return;
+  scatterContainer = element;
   scatterChart = echarts.init(scatterContainer);
   scatterChart.setOption(getScatterDataSet({ ...chartColors.value }));
 };
@@ -197,10 +202,11 @@ const onSatisfyChange = () => {
   scatterChart.setOption(getScatterDataSet({ ...chartColors.value }));
 };
 
-const onMaterialChange = (value: string[]) => {
+const onMaterialChange = (value: DateRangeValue) => {
+  const dateTime = Array.isArray(value) ? value.map(v => String(v)) : [];
   const chartColors = computed(() => store.chartColors);
   lineChart.setOption(
-    getFolderLineDataSet({ dateTime: value, ...chartColors.value })
+    getFolderLineDataSet({ dateTime, ...chartColors.value })
   );
 };
 </script>

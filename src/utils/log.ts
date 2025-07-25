@@ -1,4 +1,4 @@
-import { APP_TITLE } from '../../build/constant';
+import { APP_TITLE } from '@/constants/app';
 
 export function warn(message: string) {
   console.warn(`[${APP_TITLE} warn]:${message}`);

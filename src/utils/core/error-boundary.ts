@@ -146,8 +146,8 @@ export class ErrorBoundary {
 
     // 监听资源加载错误
     window.addEventListener('error', (event) => {
-      const target = event.target as HTMLElement;
-      if (target && target !== window) {
+      const target = event.target;
+      if (target && target instanceof HTMLElement) {
         this.captureError({
           type: ErrorType.RESOURCE_ERROR,
           message: `资源加载失败: ${(target as any).src || (target as any).href}`,

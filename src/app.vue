@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { type Ref, ref, computed, watch, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
-import { APP_TITLE } from '../build/constant';
+import { APP_TITLE } from '@/constants/app';
 import LockScreen from '@/components/lock-screen/index.vue';
 import { globalConfigEn, globalConfigZh } from '@/config/global';
 import { useSettingStore } from '@/store';

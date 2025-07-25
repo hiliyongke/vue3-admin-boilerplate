@@ -118,8 +118,8 @@
     </t-row>
     <template v-if="!hidden && pickValue.properties && !isArray">
       <json-schema-editor
-        v-for="(item, key, index) in pickValue.properties"
-        :key="index"
+        v-for="(item, key) in pickValue.properties"
+        :key="key"
         :value="{ [key]: item }"
         :parent="pickValue"
         :deep="deep + 1"
@@ -448,9 +448,9 @@ export default defineComponent({
     }
   },
   methods: {
-    onInputName(e: string) {
+    onInputName(e: any) {
       const oldKey = this.pickKey;
-      const newKey = e;
+      const newKey = typeof e === 'string' ? e : e.target?.value || '';
       if (oldKey === newKey || !this.parent?.properties) return;
 
       const nodeValue = this.parent.properties[oldKey];
@@ -490,9 +490,9 @@ export default defineComponent({
     onRootCheck(checked: boolean) {
       this._deepCheck(checked, this.pickValue);
     },
-    changeEnumValue(e: string) {
+    changeEnumValue(e: any) {
       const pickType = this.pickValue.type;
-      const value = e;
+      const value = typeof e === 'string' ? e : e.target?.value || '';
       const arr = value.split('\n');
 
       if (pickType === 'string') {

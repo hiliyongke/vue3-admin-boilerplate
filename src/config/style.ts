@@ -1,4 +1,4 @@
-import { DEFAULT_LANGUAGE } from '../../build/constant';
+import { DEFAULT_LANGUAGE } from '@/constants/app';
 
 export default {
   // 页脚

@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { MessagePlugin } from 'tdesign-vue-next';
 
-export const ERROR_MESSAGES = {
+export const ERROR_MESSAGES: Record<string | number, string> = {
   400: '错误请求!',
   401: '登录失效，请尝试重新登录!',
   403: '暂无该操作权限',
@@ -19,7 +19,7 @@ export enum ErrorStatus {
 }
 
 export function handleError(error: AxiosError) {
-  let errorStatus: string | number;
+  let errorStatus: string | number = 'Unknown';
 
   const { response, message, code, config } = error || {};
   if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
@@ -32,9 +32,9 @@ export function handleError(error: AxiosError) {
     errorStatus = ErrorStatus.NetworkError;
   }
 
-  if (ERROR_MESSAGES[response?.status]) {
-    error.message = ERROR_MESSAGES[response?.status];
-    errorStatus = response?.status;
+  if (response?.status && ERROR_MESSAGES[response.status]) {
+    error.message = ERROR_MESSAGES[response.status];
+    errorStatus = response.status;
   }
 
   if (axios.isCancel(error)) {
@@ -42,7 +42,8 @@ export function handleError(error: AxiosError) {
     errorStatus = ErrorStatus.CancelToken;
   }
 
-  if (config?.requestOptions?.showErrorMessage) {
+  const configWithOptions = config as any;
+  if (configWithOptions?.requestOptions?.showErrorMessage) {
     MessagePlugin.closeAll();
     MessagePlugin.error(`接口异常：${errorStatus} - ${error.message}`);
   }

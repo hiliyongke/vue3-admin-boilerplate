@@ -70,14 +70,14 @@ const { modelValue } = toRefs(props);
 /**
  * 编辑器实例
  */
-let editor: typeof E | null = null;
+let editor: any = null;
 
 /**
  * 获取编辑器HTML内容
  * @returns HTML内容
  */
 const getHTML = (): string => {
-  return editor?.txt.html() || '';
+  return editor?.txt?.html() || '';
 };
 
 /**
@@ -85,7 +85,9 @@ const getHTML = (): string => {
  * @param html HTML内容
  */
 const setHTML = (html: string): void => {
-  editor?.txt.html(html);
+  if (editor?.txt?.html) {
+    editor.txt.html(html);
+  }
 };
 
 /**
@@ -93,21 +95,23 @@ const setHTML = (html: string): void => {
  * @returns 文本内容
  */
 const getText = (): string => {
-  return editor?.txt.text() || '';
+  return editor?.txt?.text() || '';
 };
 
 /**
  * 清空编辑器内容
  */
 const clear = (): void => {
-  editor?.txt.clear();
+  if (editor?.txt?.clear) {
+    editor.txt.clear();
+  }
 };
 
 /**
  * 销毁编辑器
  */
 const destroyEditor = (): void => {
-  if (editor) {
+  if (editor?.destroy) {
     editor.destroy();
     editor = null;
   }
@@ -118,7 +122,7 @@ const destroyEditor = (): void => {
  */
 onMounted(() => {
   if (reditor.value) {
-    editor = new E(reditor.value);
+    editor = new (E as any)(reditor.value);
 
     // 配置编辑器
     editor.config.height = props.height;
@@ -162,7 +166,7 @@ onMounted(() => {
  * 监听父组件数据变化
  */
 watch(modelValue, (newValue) => {
-  if (editor && newValue !== getHTML()) {
+  if (editor?.txt?.html && newValue !== getHTML()) {
     editor.txt.html(newValue || '');
   }
 });
@@ -172,9 +176,9 @@ watch(modelValue, (newValue) => {
  */
 watch(() => props.disabled, (newDisabled) => {
   if (editor) {
-    if (newDisabled) {
+    if (newDisabled && editor.disable) {
       editor.disable();
-    } else {
+    } else if (!newDisabled && editor.enable) {
       editor.enable();
     }
   }

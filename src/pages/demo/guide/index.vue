@@ -126,11 +126,11 @@ const handleClick = (): void => {
 
 /**
  * 引导步骤变化
- * @param currentStep 当前步骤
- * @param params 事件参数
+ * @param current 当前步骤
+ * @param context 事件上下文
  */
-const handleChange = (currentStep: number, params: Omit<GuideEventParams, 'current'>): void => {
-  console.log('引导步骤变化:', currentStep, params);
+const handleChange = (current: number, context?: { e: MouseEvent; total: number; }): void => {
+  console.log('引导步骤变化:', current, context);
 };
 
 /**

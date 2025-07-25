@@ -111,6 +111,7 @@ import { CanvasRenderer } from 'echarts/renderers';
 import { useSettingStore } from '@/store';
 import { LAST_7_DAYS } from '@/utils/date';
 import { changeChartsTheme } from '@/utils/color';
+import type { DateRangeValue } from 'tdesign-vue-next';
 
 // 导入样式
 import Trend from '@/components/trend/index.vue';
@@ -134,7 +135,9 @@ let stokeContainer: HTMLElement;
 let stokeChart: echarts.ECharts;
 const renderStokeChart = () => {
   if (!stokeContainer) {
-    stokeContainer = document.getElementById('stokeContainer');
+    const element = document.getElementById('stokeContainer');
+    if (!element) return;
+    stokeContainer = element;
   }
   stokeChart = echarts.init(stokeContainer);
   stokeChart.setOption(
@@ -199,7 +202,8 @@ watch(
   }
 );
 
-const onStokeDataChange = (checkedValues: string[]) => {
+const onStokeDataChange = (value: DateRangeValue) => {
+  const checkedValues = Array.isArray(value) ? value.map(v => String(v)) : [];
   stokeChart.setOption(
     constructInitDataset({ dateTime: checkedValues, ...chartColors.value })
   );

@@ -161,7 +161,10 @@ const pagination = ref({
 
 const fetchData = async () => {
   try {
-    const res: ResDataType = await request.get('/api/get-project-list');
+    const res: ResDataType = await request.request({
+      url: '/api/get-project-list',
+      method: 'GET'
+    });
     if (res.code === 0) {
       const { list = [] } = res.data;
       data.value = list;
@@ -180,40 +183,50 @@ const visible = ref(false);
 let monitorContainer: HTMLElement;
 let monitorChart: echarts.ECharts;
 onMounted(() => {
-  monitorContainer = document.getElementById('monitorContainer');
-  monitorChart = echarts.init(monitorContainer);
-  monitorChart.setOption(getSmoothLineDataSet({ ...chartColors.value }));
-  setInterval(() => {
+  const container = document.getElementById('monitorContainer');
+  if (container) {
+    monitorContainer = container;
+    monitorChart = echarts.init(monitorContainer);
     monitorChart.setOption(getSmoothLineDataSet({ ...chartColors.value }));
-  }, 3000);
+    setInterval(() => {
+      monitorChart.setOption(getSmoothLineDataSet({ ...chartColors.value }));
+    }, 3000);
+  }
 });
 
 // dataChart logic
 let dataContainer: HTMLElement;
 let dataChart: echarts.ECharts;
 onMounted(() => {
-  dataContainer = document.getElementById('dataContainer');
-  dataChart = echarts.init(dataContainer);
-  dataChart.setOption(get2ColBarChartDataSet({ ...chartColors.value }));
+  const container = document.getElementById('dataContainer');
+  if (container) {
+    dataContainer = container;
+    dataChart = echarts.init(dataContainer);
+    dataChart.setOption(get2ColBarChartDataSet({ ...chartColors.value }));
+  }
 });
 
-const intervalTimer = null;
+const intervalTimer = ref<NodeJS.Timeout | null>(null);
 
 /// / chartSize update
 const updateContainer = () => {
-  monitorChart.resize({
-    width: monitorContainer.clientWidth,
-    height: monitorContainer.clientHeight
-  });
-  dataChart.resize({
-    width: dataContainer.clientWidth,
-    height: dataContainer.clientHeight
-  });
+  if (monitorChart && dataChart) {
+    monitorChart.resize({
+      width: monitorContainer.clientWidth,
+      height: monitorContainer.clientHeight
+    });
+    dataChart.resize({
+      width: dataContainer.clientWidth,
+      height: dataContainer.clientHeight
+    });
+  }
 };
 
 onUnmounted(() => {
   window.removeEventListener('resize', updateContainer);
-  clearInterval(intervalTimer);
+  if (intervalTimer.value) {
+    clearInterval(intervalTimer.value);
+  }
 });
 
 const onAlertChange = () => {

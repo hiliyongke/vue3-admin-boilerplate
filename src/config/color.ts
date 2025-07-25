@@ -161,7 +161,7 @@ export function getBrandColor(
 }
 
 export function getColorList(colorArray: Array<TColorToken>): Array<string> {
-  const pureColorList = [];
+  const pureColorList: string[] = [];
   colorArray.map(colorToken =>
     Object.keys(colorToken).map(key => pureColorList.push(colorToken[key]))
   );
@@ -170,7 +170,7 @@ export function getColorList(colorArray: Array<TColorToken>): Array<string> {
 
 export function generateColorMap(
   theme: string,
-  colorPalette: Array<string>,
+  colorPalette: string[],
   mode: 'light' | 'dark'
 ) {
   const isDarkMode = mode === 'dark';
@@ -178,7 +178,7 @@ export function generateColorMap(
 
   if (isDarkMode) {
     // eslint-disable-next-line no-use-before-define
-    colorPalette.reverse().map(color => {
+    colorPalette = colorPalette.reverse().map(color => {
       const [h, s, l] = Color.colorTransform(color, 'hex', 'hsl');
       return Color.colorTransform([h, Number(s) - 4, l], 'hsl', 'hex');
     });

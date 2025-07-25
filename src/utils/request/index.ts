@@ -54,7 +54,7 @@ const transform: AxiosTransform = {
     }
 
     // 解构响应数据（根据后端API格式调整）
-    const { code, msg, message } = data;
+    const { code, msg, message } = data as any;
     const errorMessage = msg || message || '未知错误';
 
     // 判断请求是否成功（根据业务约定调整成功状态码）
@@ -176,7 +176,7 @@ const transform: AxiosTransform = {
       }, config.requestOptions.retry.delay || 1);
     });
 
-    return backoff.then(config => request.request(config));
+    return backoff.then(config => request.request(config as any));
   }
 };
 

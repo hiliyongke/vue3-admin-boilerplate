@@ -66,10 +66,12 @@ const props = defineProps({
     default: () => null
   },
   index: {
-    type: Number
+    type: Number,
+    default: 0
   },
   parentLength: {
-    type: Number
+    type: Number,
+    default: 0
   },
   addNode: {
     type: Function,

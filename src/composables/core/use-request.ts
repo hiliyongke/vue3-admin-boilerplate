@@ -3,7 +3,7 @@
  * @author 现代化架构
  */
 
-import { ref, reactive, computed, type Ref } from 'vue';
+import { ref, reactive, computed, type Ref, type UnwrapRef } from 'vue';
 import { httpRequest, type RequestConfig } from '@/api/core/request';
 
 /**
@@ -122,7 +122,7 @@ export function useRequest<T = any>(
       // 数据转换
       const data = transform ? transform(response) : response;
 
-      state.data = data;
+      (state as any).data = data;
       state.finished = true;
 
       // 成功回调
@@ -157,7 +157,7 @@ export function useRequest<T = any>(
    * 重置状态
    */
   const reset = (): void => {
-    state.data = defaultData;
+    (state as any).data = defaultData;
     state.loading = false;
     state.error = null;
     state.finished = false;
@@ -179,7 +179,7 @@ export function useRequest<T = any>(
   }
 
   return {
-    data: computed(() => state.data),
+    data: computed(() => state.data) as Ref<T | null>,
     loading: computed(() => state.loading),
     error: computed(() => state.error),
     finished: computed(() => state.finished),

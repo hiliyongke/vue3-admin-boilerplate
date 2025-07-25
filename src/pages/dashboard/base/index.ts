@@ -90,9 +90,9 @@ export function constructInitDataset({
 }: { dateTime: Array<string> } & TChartColor) {
   // const dataset: Array<Array<string>> = [['时间'], ['入库'], ['出库']];
   const divideNum = 10;
-  const timeArray = [];
-  const inArray = [];
-  const outArray = [];
+  const timeArray: string[] = [];
+  const inArray: number[] = [];
+  const outArray: number[] = [];
   for (let i = 0; i < divideNum; i++) {
     // const [timeArray, inArray, outArray] = dataset;
     if (dateTime.length > 0) {
@@ -111,8 +111,8 @@ export function constructInitDataset({
       );
     }
 
-    inArray.push(getRandomArray().toString());
-    outArray.push(getRandomArray().toString());
+    inArray.push(getRandomArray());
+    outArray.push(getRandomArray());
   }
 
   // console.log('timeArray..', timeArray);
@@ -196,9 +196,9 @@ export function getLineChartDataSet({
   borderColor
 }: { dateTime?: Array<string> } & TChartColor) {
   const divideNum = 10;
-  const timeArray = [];
-  const inArray = [];
-  const outArray = [];
+  const timeArray: string[] = [];
+  const inArray: number[] = [];
+  const outArray: number[] = [];
   for (let i = 0; i < divideNum; i++) {
     if (dateTime.length > 0) {
       const dateAbsTime: number =
@@ -216,8 +216,8 @@ export function getLineChartDataSet({
       );
     }
 
-    inArray.push(getRandomArray().toString());
-    outArray.push(getRandomArray().toString());
+    inArray.push(getRandomArray());
+    outArray.push(getRandomArray());
   }
 
   const dataSet = {

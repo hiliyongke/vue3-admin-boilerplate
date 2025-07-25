@@ -134,7 +134,7 @@ function hideLoading(): void {
   calcHeight();
 }
 
-useWindowSizeFn(calcHeight, { immediate: true });
+useWindowSizeFn(calcHeight as any, { immediate: true });
 
 watch(
   [

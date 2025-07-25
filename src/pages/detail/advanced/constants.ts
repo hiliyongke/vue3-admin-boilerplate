@@ -119,8 +119,8 @@ export const TABLE_COLUMNS_DATA = [
     sorter: (a, b) => Date.parse(a.updateTime) - Date.parse(b.updateTime)
   },
   {
-    align: 'left',
-    fixed: 'right',
+    align: 'left' as const,
+    fixed: 'right' as const,
     width: 200,
     className: 'test2',
     colKey: 'op',
@@ -131,7 +131,7 @@ export const TABLE_COLUMNS_DATA = [
 export const PRODUCT_LIST = [
   {
     name: 'MacBook Pro 2021',
-    subTitle: 'MacBook Pro 2021',
+    subtitle: 'MacBook Pro 2021',
     size: '13.3 英寸',
     cpu: 'Apple M1',
     memory: 'RAM 16GB',
@@ -141,7 +141,7 @@ export const PRODUCT_LIST = [
   },
   {
     name: 'Surface Laptop Go',
-    subTitle: '微软（Microsoft Corporation）',
+    subtitle: '微软（Microsoft Corporation）',
     size: '12.4 英寸',
     cpu: 'Core i7',
     memory: 'RAM 16GB',

@@ -7,10 +7,10 @@ function filterPermissionsRouters(
   routes: Array<RouteRecordRaw>,
   roles: Array<unknown>
 ) {
-  const res = [];
-  const removeRoutes = [];
+  const res: RouteRecordRaw[] = [];
+  const removeRoutes: RouteRecordRaw[] = [];
   routes.forEach(route => {
-    const children = [];
+    const children: RouteRecordRaw[] = [];
     route.children?.forEach(childRouter => {
       const roleCode = childRouter.meta?.roleCode || childRouter.name;
       if (roles.indexOf(roleCode) !== -1) {
@@ -31,13 +31,13 @@ export const usePermissionStore = defineStore({
   id: 'permission',
   state: () => ({
     whiteListRouters: ['/login'],
-    routers: [],
-    removeRoutes: []
+    routers: [] as RouteRecordRaw[],
+    removeRoutes: [] as RouteRecordRaw[]
   }),
   actions: {
     async initRoutes(roles: Array<unknown>) {
-      let accessedRouters = [];
-      let removeRoutes = [];
+      let accessedRouters: RouteRecordRaw[] = [];
+      let removeRoutes: RouteRecordRaw[] = [];
 
       // 如果用户有 admin 角色或 all 权限，允许访问所有路由
       if (roles.includes('all') || roles.includes('admin')) {
@@ -52,7 +52,7 @@ export const usePermissionStore = defineStore({
       this.removeRoutes = removeRoutes;
 
       removeRoutes.forEach((item: RouteRecordRaw) => {
-        if (router.hasRoute(item.name)) {
+        if (item.name && router.hasRoute(item.name)) {
           router.removeRoute(item.name);
         }
       });

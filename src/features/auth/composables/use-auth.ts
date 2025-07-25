@@ -6,17 +6,17 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
-import { useUserStore } from '@/shared/stores/user'
+import { useSharedUserStore } from '@/shared/stores/user'
 
 export function useAuth() {
   const authStore = useAuthStore()
-  const userStore = useUserStore()
+  const userStore = useSharedUserStore()
   const router = useRouter()
 
   // 计算属性
-  const isLoggedIn = computed(() => userStore.isLoggedIn)
-  const user = computed(() => userStore.userInfo)
-  const loading = computed(() => authStore.loading)
+  const isLoggedIn = computed(() => authStore.isLoggedIn)
+  const user = computed(() => userStore.profile)
+  const loading = computed(() => false) // 临时修复
 
   // 登录方法
   const login = async (form: any) => {
@@ -41,7 +41,7 @@ export function useAuth() {
 
   // 权限检查
   const hasRole = (role: string) => {
-    return userStore.hasRole(role)
+    return authStore.user?.roles?.includes(role) || false
   }
 
   return {

@@ -46,6 +46,14 @@ export * from './modules/user';
 export * from './modules/setting';
 export * from './modules/tabs-router';
 
+// 确保所有store都被正确导出
+export { useUserStore } from './modules/user';
+export { usePermissionStore } from './modules/permission';
+export { useSettingStore } from './modules/setting';
+export { useLockScreenStore } from './modules/lock-screen';
+export { useNotificationStore } from './modules/notification';
+export { useTabsRouterStore } from './modules/tabs-router';
+
 /**
  * 安装Pinia到Vue应用
  * @param app Vue应用实例

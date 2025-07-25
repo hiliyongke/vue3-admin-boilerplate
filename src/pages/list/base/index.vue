@@ -98,7 +98,7 @@
             />
           </div>
           <div
-            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT"
+            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECIPT"
             class="payment-col"
           >
             收款
@@ -147,7 +147,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { SearchIcon } from 'tdesign-icons-vue-next';
 import { MessagePlugin } from 'tdesign-vue-next';
-import type { PageInfo } from 'tdesign-vue-next';
+import type { PageInfo, SelectOptions } from 'tdesign-vue-next';
 
 import {
   CONTRACT_STATUS,
@@ -312,19 +312,20 @@ const onCancel = (): void => {
 
 /**
  * 处理选择变化
- * @param val 选中的行键数组
+ * @param selectedRowKeys 选中的行键数组
+ * @param options 选择选项
  */
-const rehandleSelectChange = (val: number[]): void => {
-  selectedRowKeys.value = val;
+const rehandleSelectChange = (selectedKeys: (string | number)[], options: SelectOptions<any>): void => {
+  selectedRowKeys.value = selectedKeys as number[];
 };
 
 /**
  * 处理分页变化
- * @param curr 当前页
  * @param pageInfo 分页信息
+ * @param newDataSource 新数据源
  */
-const rehandlePageChange = (curr: number, pageInfo: PageInfo): void => {
-  console.log('分页变化', curr, pageInfo);
+const rehandlePageChange = (pageInfo: PageInfo, newDataSource: any[]): void => {
+  console.log('分页变化', pageInfo, newDataSource);
 };
 
 /**
@@ -370,8 +371,8 @@ const offsetTop = computed<number>(() => {
  * 获取容器元素
  * @returns 容器元素
  */
-const getContainer = (): Element | null => {
-  return document.querySelector(`.${prefix}-layout`);
+const getContainer = (): HTMLElement => {
+  return document.querySelector(`.${prefix}-layout`) as HTMLElement;
 };
 
 // 组件挂载时获取数据

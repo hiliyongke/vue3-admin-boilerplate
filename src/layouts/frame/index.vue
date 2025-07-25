@@ -5,7 +5,7 @@
       :key="frame.path"
     >
       <frame-content
-        v-if="hasRenderFrame(frame.name)"
+        v-if="frame.name && hasRenderFrame(frame.name)"
         v-show="showIframe(frame)"
         :frame-src="frame.meta.frameSrc"
       />

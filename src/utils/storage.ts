@@ -19,10 +19,10 @@ export const createStorage = ({
    * @class Storage
    */
   const Storage = class {
-    private storage = storage;
-    private prefixKey?: string = prefixKey;
+    public storage = storage;
+    public prefixKey?: string = prefixKey;
 
-    private getKey(key: string) {
+    public getKey(key: string) {
       return `${this.prefixKey}${key}`.toUpperCase();
     }
 
@@ -135,5 +135,8 @@ export const createStorage = ({
 };
 
 export const Storage = createStorage();
+
+// 导出别名以保持向后兼容
+export const getStorage = () => Storage;
 
 export default Storage;
