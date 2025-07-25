@@ -63,7 +63,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       // 静态资源分类打包
       chunkFileNames: 'static/js/[name]-[hash].js',
       entryFileNames: 'static/js/[name]-[hash].js',
-      assetFileNames: 'static/[ext]/name-[hash].[ext]',
+      assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
       // 静态资源分拆打包
       manualChunks(id) {
         if (id.includes('node_modules')) {

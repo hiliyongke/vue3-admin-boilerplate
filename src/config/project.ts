@@ -196,6 +196,10 @@ export const FEATURE_CONFIG = {
   enableBreadcrumb: true,
 } as const;
 
+export const deprecatedDirs = {
+  app: true // 标记为待删除
+};
+
 /**
  * 导出所有配置
  */

@@ -1,10 +1,43 @@
-> ### 基础组件（目录说明）
+# 组件目录结构规范
 
-#### 基于 TDesign 基础组件二次封装的的组件可以放这里
+## 原子设计原则
 
-> 例如：
+组件按照以下层级组织：
 
-| 组件名称  | 描述                                                                                     | 是否全局组件 | 使用建议 |
-| --------- | ---------------------------------------------------------------------------------------- | ------------ | -------- |
-| button    | `按钮组件`基于 t-button 二次封装，主要扩展了按钮的颜色，基本使用方式与 t-button 保持一致 | 是           | --       |
-| check-box | `复选框`基于 t-checkbox 二次封装，基本使用方式与 t-button 保持一致                       | 否           | --       |
+1. **Atoms (原子)**：基础UI元素
+   - Button
+   - Input
+   - Icon
+   - ...
+
+2. **Molecules (分子)**：由原子组成的简单组件
+   - SearchBar (Input + Button)
+   - CardHeader (Icon + Text)
+   - ...
+
+3. **Organisms (有机体)**：由分子组成的复杂组件
+   - Header (Logo + Navigation + UserMenu)
+   - Sidebar (Menu + SubMenu)
+   - ...
+
+4. **Templates (模板)**：页面布局结构
+   - DefaultLayout
+   - AuthLayout
+   - ...
+
+## 目录结构
+
+```text
+components/
+├── atoms/
+├── molecules/
+├── organisms/
+├── templates/
+└── README.md
+```
+
+## 命名规范
+
+- 使用PascalCase命名组件文件
+- 组件名与文件名保持一致
+- 禁止使用index.vue作为文件名
