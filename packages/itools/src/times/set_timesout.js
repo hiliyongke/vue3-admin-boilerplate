@@ -5,17 +5,17 @@ import clearTimesout from '../times/clear_timesout';
  * https://stackoverflow.com/questions/2956966/javascript-telling-setinterval-to-only-fire-x-amount-of-times
  */
 export default function setTimesout() {
-  let func = arguments[0];
-  let delay = arguments[1] === undefined ? 0 : parseFloat(arguments[1]);
-  let times = arguments[2] === undefined ? 1 : parseInt(arguments[2], 10);
-  let _args = arguments.length > 3 ? args(arguments, 3) : null;
-  let target = {
+  const func = arguments[0];
+  const delay = arguments[1] === undefined ? 0 : parseFloat(arguments[1]);
+  const times = arguments[2] === undefined ? 1 : parseInt(arguments[2], 10);
+  const _args = arguments.length > 3 ? args(arguments, 3) : null;
+  const target = {
     index: 0,
-    times: times,
-    over: false
+    times,
+    over: false,
   };
 
-  let id = setInterval(function () {
+  const id = setInterval(function () {
     target.index++;
     if (target.index > times) {
       clearTimesout(id);

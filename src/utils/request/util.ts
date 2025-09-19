@@ -1,13 +1,10 @@
 import isString from 'lodash-es/isString';
 import isObject from 'lodash-es/isObject';
-import { Recordable } from 'vite-plugin-mock';
+import type { Recordable } from 'vite-plugin-mock';
 
 const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
-export function joinTimestamp<T extends boolean>(
-  join: boolean,
-  restful: T
-): T extends true ? string : object;
+export function joinTimestamp<T extends boolean>(join: boolean, restful: T): T extends true ? string : object;
 
 export function joinTimestamp(join: boolean, restful = false): string | object {
   if (!join) {
@@ -27,7 +24,6 @@ export function formatRequestDate(params: Recordable) {
   }
 
   for (const key in params) {
-    // eslint-disable-next-line no-underscore-dangle
     if (params[key] && params[key]._isAMomentObject) {
       params[key] = params[key].format(DATE_TIME_FORMAT);
     }
@@ -54,7 +50,5 @@ export function setObjToUrlParams(baseUrl: string, obj: object): string {
     parameters += `${key}=${encodeURIComponent(obj[key])}&`;
   }
   parameters = parameters.replace(/&$/, '');
-  return /\?$/.test(baseUrl)
-    ? baseUrl + parameters
-    : baseUrl.replace(/\/?$/, '?') + parameters;
+  return /\?$/.test(baseUrl) ? baseUrl + parameters : baseUrl.replace(/\/?$/, '?') + parameters;
 }

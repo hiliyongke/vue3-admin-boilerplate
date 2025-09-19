@@ -1,39 +1,14 @@
 <template>
   <div class="pdf-preview">
     <div class="page-tool">
-      <div
-        class="page-tool-item"
-        @click="lastPage"
-      >
-        上一页
-      </div>
-      <div
-        class="page-tool-item"
-        @click="nextPage"
-      >
-        下一页
-      </div>
+      <div class="page-tool-item" @click="lastPage">上一页</div>
+      <div class="page-tool-item" @click="nextPage">下一页</div>
       <div class="page-tool-item">{{ state.pageNum }}/{{ state.numPages }}</div>
-      <div
-        class="page-tool-item"
-        @click="pageZoomOut"
-      >
-        放大
-      </div>
-      <div
-        class="page-tool-item"
-        @click="pageZoomIn"
-      >
-        缩小
-      </div>
+      <div class="page-tool-item" @click="pageZoomOut">放大</div>
+      <div class="page-tool-item" @click="pageZoomIn">缩小</div>
     </div>
     <div class="pdf-wrap">
-      <vue-pdf-embed
-        :source="state.source"
-        :style="scale"
-        class="vue-pdf-embed"
-        :page="state.pageNum"
-      />
+      <vue-pdf-embed :source="state.source" :style="scale" class="vue-pdf-embed" :page="state.pageNum" />
     </div>
   </div>
 </template>
@@ -45,14 +20,14 @@ import { createLoadingTask } from 'vue3-pdfjs/esm'; // 获得总页数
 const props = defineProps({
   pdfUrl: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 const state = reactive({
   source: props.pdfUrl,
   pageNum: 1,
   scale: 1, // 缩放比例
-  numPages: 0 // 总页数
+  numPages: 0, // 总页数
 });
 
 onMounted(() => {

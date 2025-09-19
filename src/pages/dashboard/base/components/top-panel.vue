@@ -1,17 +1,12 @@
 <template>
   <t-row :gutter="[16, 16]">
-    <t-col
-      v-for="(item, index) in PANE_LIST"
-      :key="item.title"
-      :xs="6"
-      :xl="3"
-    >
+    <t-col v-for="(item, index) in PANE_LIST" :key="item.title" :xs="6" :xl="3">
       <t-card
         :title="item.title"
         :style="{ height: '168px' }"
         :class="{
           'dashboard-item': true,
-          'dashboard-item--main-color': index == 0
+          'dashboard-item--main-color': index == 0,
         }"
       >
         <div class="dashboard-item-top">
@@ -26,7 +21,7 @@
             class="dashboard-chart-container"
             :style="{
               width: `${resizeTime * 120}px`,
-              height: `${resizeTime * 66}px`
+              height: `${resizeTime * 66}px`,
             }"
           ></div>
           <div
@@ -35,19 +30,13 @@
             class="dashboard-chart-container"
             :style="{
               width: `${resizeTime * 120}px`,
-              height: `${resizeTime * 42}px`
+              height: `${resizeTime * 42}px`,
             }"
           ></div>
-          <span
-            v-else-if="index === 2"
-            :style="{ marginTop: `-24px` }"
-          >
+          <span v-else-if="index === 2" :style="{ marginTop: `-24px` }">
             <usergroup-icon />
           </span>
-          <span
-            v-else
-            :style="{ marginTop: '-24px' }"
-          >
+          <span v-else :style="{ marginTop: '-24px' }">
             <file-icon />
           </span>
         </div>
@@ -72,7 +61,7 @@
 
 <script lang="ts">
 export default {
-  name: 'DashboardBase'
+  name: 'DashboardBase',
 };
 </script>
 
@@ -169,14 +158,14 @@ const updateContainer = (): void => {
   if (moneyChart) {
     moneyChart.resize({
       width: resizeTime.value * 120,
-      height: resizeTime.value * 66
+      height: resizeTime.value * 66,
     });
   }
 
   if (refundChart) {
     refundChart.resize({
       width: resizeTime.value * 120,
-      height: resizeTime.value * 42
+      height: resizeTime.value * 42,
     });
   }
 };
@@ -228,7 +217,7 @@ watch(
   () => store.mode,
   () => {
     // 销毁现有图表
-    [moneyChart, refundChart].forEach(chart => {
+    [moneyChart, refundChart].forEach((chart) => {
       if (chart) {
         chart.dispose();
       }

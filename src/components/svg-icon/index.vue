@@ -1,12 +1,6 @@
 <template>
-  <svg
-    :class="svgClass"
-    aria-hidden="true"
-  >
-    <use
-      class="svg-use"
-      :href="symbolId"
-    />
+  <svg :class="svgClass" aria-hidden="true">
+    <use class="svg-use" :href="symbolId" />
   </svg>
 </template>
 
@@ -30,7 +24,7 @@ interface Props {
  */
 const props = withDefaults(defineProps<Props>(), {
   prefix: 'icon',
-  className: ''
+  className: '',
 });
 
 /**

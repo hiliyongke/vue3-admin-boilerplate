@@ -1,6 +1,6 @@
 import Layout from '@/layouts/index.vue';
 import DashboardIcon from '@/assets/svg/assets-slide-dashboard.svg';
-import { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,16 +14,16 @@ const routes: Array<RouteRecordRaw> = [
         path: 'base',
         name: 'DashboardBase',
         component: () => import('@/pages/dashboard/base/index.vue'),
-        meta: { title: '概览仪表盘' }
+        meta: { title: '概览仪表盘' },
       },
       {
         path: 'detail',
         name: 'DashboardDetail',
         component: () => import('@/pages/dashboard/detail/index.vue'),
-        meta: { title: '统计报表' }
-      }
-    ]
-  }
+        meta: { title: '统计报表' },
+      },
+    ],
+  },
 ];
 
 export default routes;

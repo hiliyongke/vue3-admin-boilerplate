@@ -8,20 +8,14 @@
     </div>
     <div class="container">
       <pre class="code">{{ jsonStr }}</pre>
-      <json-schema-editor
-        class="schema"
-        :value="tree"
-        disabled-type
-        lang="zh_CN"
-        custom
-      />
+      <json-schema-editor class="schema" :value="tree" disabled-type lang="zh_CN" custom />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'YapiDemo'
+  name: 'YapiDemo',
 };
 </script>
 
@@ -80,20 +74,20 @@ const tree = ref<SchemaTree>({
         type: 'string',
         title: '名称',
         maxLength: 10,
-        minLength: 2
+        minLength: 2,
       },
       appId: {
         type: 'integer',
-        title: '应用ID'
+        title: '应用ID',
       },
       credate: {
         type: 'string',
         title: '创建日期',
-        format: 'date'
-      }
+        format: 'date',
+      },
     },
-    required: ['name', 'appId', 'credate']
-  }
+    required: ['name', 'appId', 'credate'],
+  },
 });
 
 /**
@@ -109,7 +103,7 @@ const jsonStr = computed<string>({
     } catch (error) {
       console.error('JSON 解析错误:', error);
     }
-  }
+  },
 });
 
 /**

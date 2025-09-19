@@ -1,8 +1,5 @@
 <template>
-  <div
-    :style="style"
-    class="color-container"
-  ></div>
+  <div :style="style" class="color-container"></div>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
@@ -16,18 +13,15 @@ const panelColor =
 
 const props = defineProps({
   value: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 const style = computed(() => {
   const { value } = props;
   const { colorList } = store;
   return {
-    background:
-      value && value !== 'dynamic'
-        ? getBrandColor(value, colorList)['--td-brand-color']
-        : panelColor
+    background: value && value !== 'dynamic' ? getBrandColor(value, colorList)['--td-brand-color'] : panelColor,
   };
 });
 </script>

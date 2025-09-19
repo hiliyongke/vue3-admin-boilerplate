@@ -8,12 +8,10 @@ describe('copyToClipboard', () => {
     document.getSelection = function () {
       return {
         rangeCount: 0,
-        removeAllRanges() {
-          return;
-        },
+        removeAllRanges() {},
         addRange(x) {
           return x;
-        }
+        },
       };
     };
     document.execCommand = function (x) {
@@ -29,12 +27,10 @@ describe('copyToClipboard', () => {
         getRangeAt(x) {
           return x + 1;
         },
-        removeAllRanges() {
-          return;
-        },
+        removeAllRanges() {},
         addRange(x) {
           return x;
-        }
+        },
       };
     };
     document.execCommand = function (x) {

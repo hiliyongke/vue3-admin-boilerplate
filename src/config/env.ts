@@ -36,7 +36,7 @@ export interface EnvConfig {
  * 获取环境变量
  */
 export function getEnvConfig(): EnvConfig {
-  const env = import.meta.env;
+  const { env } = import.meta;
 
   return {
     VITE_APP_TITLE: env.VITE_APP_TITLE || 'Vue3 Admin',
@@ -47,7 +47,7 @@ export function getEnvConfig(): EnvConfig {
     VITE_USE_PWA: String(env.VITE_USE_PWA) === 'true',
     VITE_BUILD_COMPRESS: String(env.VITE_BUILD_COMPRESS) === 'true',
     VITE_DROP_CONSOLE: String(env.VITE_DROP_CONSOLE) === 'true',
-    VITE_DROP_DEBUGGER: String(env.VITE_DROP_DEBUGGER) === 'true'
+    VITE_DROP_DEBUGGER: String(env.VITE_DROP_DEBUGGER) === 'true',
   };
 }
 

@@ -30,9 +30,7 @@ export function checkArgv(arg: string[]): CheckArgvResult {
 
   checkingFn(arg, 'excludes', (state, res) => {
     if (state && !res) {
-      throw new Error(
-        '参数有误，excludes传参例子（多个url使用,分割）：\n\t--excludes=/gen,/test\n\n'
-      );
+      throw new Error('参数有误，excludes传参例子（多个url使用,分割）：\n\t--excludes=/gen,/test\n\n');
     } else if (res) {
       excludes = Array.from(new Set(res));
     }
@@ -40,9 +38,7 @@ export function checkArgv(arg: string[]): CheckArgvResult {
 
   checkingFn(arg, 'includes', (state, res) => {
     if (state && !res) {
-      throw new Error(
-        '参数有误，includes传参例子（多个url使用,分割）：\n\t--includes=/gen,/test\n\n'
-      );
+      throw new Error('参数有误，includes传参例子（多个url使用,分割）：\n\t--includes=/gen,/test\n\n');
     } else if (res) {
       includes = Array.from(new Set(res));
     }
@@ -51,14 +47,10 @@ export function checkArgv(arg: string[]): CheckArgvResult {
   return { ips, excludes, includes };
 }
 
-function checkingFn(
-  arg: string[],
-  name: string,
-  cb: (state: boolean, res: string[] | null) => void
-): void {
+function checkingFn(arg: string[], name: string, cb: (state: boolean, res: string[] | null) => void): void {
   let res: string[] | null = null;
   let state = false;
-  const argName = '--' + name + '=';
+  const argName = `--${name}=`;
   const argNameLen = argName.length;
   for (const item of arg) {
     state = item.slice(0, argNameLen) === argName;
@@ -88,7 +80,7 @@ function checkIps(ips: string[]): string[] {
     } else if (result2) {
       ips2.push(result2[0]);
     } else {
-      throw new Error('ip 有误: ' + ip);
+      throw new Error(`ip 有误: ${ip}`);
     }
   }
   ips2 = Array.from(new Set(ips2));

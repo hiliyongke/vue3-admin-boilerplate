@@ -3,15 +3,8 @@
     <div class="board-column-header">
       {{ headerText }}
     </div>
-    <div
-      :id="headerText"
-      class="board-column-content"
-    >
-      <div
-        v-for="(item, index) in list"
-        :key="index"
-        class="board-item"
-      >
+    <div :id="headerText" class="board-column-content">
+      <div v-for="(item, index) in list" :key="index" class="board-item">
         {{ item.name }}
       </div>
     </div>
@@ -20,7 +13,7 @@
 
 <script lang="ts">
 export default {
-  name: 'SignboardComponent'
+  name: 'SignboardComponent',
 };
 </script>
 
@@ -53,7 +46,7 @@ interface Props {
  */
 const props = withDefaults(defineProps<Props>(), {
   headerText: 'Header',
-  list: () => []
+  list: () => [],
 });
 
 /**
@@ -65,8 +58,8 @@ const rowDrop = (): void => {
     new SortableJsExample(element as HTMLElement, {
       group: {
         name: 'group',
-        put: true
-      }
+        put: true,
+      },
     });
   }
 };

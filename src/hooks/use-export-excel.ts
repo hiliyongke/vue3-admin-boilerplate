@@ -22,30 +22,23 @@ declare type dateType = string | number | Date;
  */
 function generateArray(table: HTMLElement | null) {
   const out: any[][] = [];
-  // eslint-disable-next-line no-undef
+
   const rows = table?.querySelectorAll('tr') as NodeListOf<HTMLTableRowElement>;
-  const ranges: Array<{s: {r: number, c: number}, e: {r: number, c: number}}> = [];
+  const ranges: Array<{ s: { r: number; c: number }; e: { r: number; c: number } }> = [];
   for (let R = 0; R < rows.length; ++R) {
     const outRow: any[] = [];
     const row = rows[R];
     const columns = row.querySelectorAll('td');
     for (let C = 0; C < columns.length; ++C) {
-      // eslint-disable-next-line no-undef
       const cell: HTMLTableDataCellElement = columns[C];
       let colspan: string | number | null = cell.getAttribute('colspan');
       let rowspan: string | number | null = cell.getAttribute('rowspan');
       let cellValue: string | number = cell.innerText;
-      if (typeof cellValue === 'number' && cellValue === Number(cellValue))
-        cellValue = Number(cellValue);
+      if (typeof cellValue === 'number' && cellValue === Number(cellValue)) cellValue = Number(cellValue);
 
       // Skip ranges
-      ranges.forEach(range => {
-        if (
-          R >= range.s.r &&
-          R <= range.e.r &&
-          outRow.length >= range.s.c &&
-          outRow.length <= range.e.c
-        ) {
+      ranges.forEach((range) => {
+        if (R >= range.s.r && R <= range.e.r && outRow.length >= range.s.c && outRow.length <= range.e.c) {
           for (let i = 0; i <= range.e.c - range.s.c; ++i) outRow.push(null);
         }
       });
@@ -57,12 +50,12 @@ function generateArray(table: HTMLElement | null) {
         ranges.push({
           s: {
             r: R,
-            c: outRow.length
+            c: outRow.length,
           },
           e: {
             r: R + (rowspan as number) - 1,
-            c: outRow.length + (colspan as number) - 1
-          }
+            c: outRow.length + (colspan as number) - 1,
+          },
         });
       }
 
@@ -70,8 +63,7 @@ function generateArray(table: HTMLElement | null) {
       outRow.push(cellValue !== '' ? cellValue : null);
 
       // Handle Colspan
-      if (colspan)
-        for (let k = 0; k < (colspan as number) - 1; ++k) outRow.push(null);
+      if (colspan) for (let k = 0; k < (colspan as number) - 1; ++k) outRow.push(null);
     }
     out.push(outRow);
   }
@@ -79,13 +71,9 @@ function generateArray(table: HTMLElement | null) {
 }
 
 function datenum(date: dateType, date1904?: undefined) {
-  // eslint-disable-next-line no-param-reassign
   if (date1904) date = Number(date) + 1462;
   const epoch = Date.parse(String(date));
-  return (
-    (epoch - Date.parse(String(new Date(Date.UTC(1899, 11, 30))))) /
-    (24 * 60 * 60 * 1000)
-  );
+  return (epoch - Date.parse(String(new Date(Date.UTC(1899, 11, 30))))) / (24 * 60 * 60 * 1000);
 }
 
 /**
@@ -101,12 +89,12 @@ function sheetFromArrayOfArrays(data: string | any[]) {
   const range = {
     s: {
       c: 10000000,
-      r: 10000000
+      r: 10000000,
     },
     e: {
       c: 0,
-      r: 0
-    }
+      r: 0,
+    },
   };
   for (let R = 0; R !== data.length; ++R) {
     for (let C = 0; C !== data[R].length; ++C) {
@@ -115,12 +103,12 @@ function sheetFromArrayOfArrays(data: string | any[]) {
       if (range.e.r < R) range.e.r = R;
       if (range.e.c < C) range.e.c = C;
       const cell: cellType = {
-        v: data[R][C]
+        v: data[R][C],
       };
       if (cell.v !== null) {
         const cellRef = XLSX.utils.encode_cell({
           c: C,
-          r: R
+          r: R,
         });
 
         if (typeof cell.v === 'number') cell.t = 'n';
@@ -191,12 +179,12 @@ export function exportTableToExcel(id: string) {
   const wbOutput = XLSX.write(wb, {
     bookType: 'xlsx',
     bookSST: false,
-    type: 'binary'
+    type: 'binary',
   });
 
   saveAs(
     new Blob([s2ab(wbOutput)], {
-      type: 'application/octet-stream'
+      type: 'application/octet-stream',
     }),
     'test.xlsx'
   );
@@ -225,14 +213,14 @@ export function exportJsonToExcel(params: jsonTypes) {
 
   if (merges.length > 0) {
     if (!worksheet['!merges']) worksheet['!merges'] = [];
-    merges.forEach(item => {
+    merges.forEach((item) => {
       worksheet['!merges'].push(XLSX.utils.decode_range(item));
     });
   }
 
   if (autoWidth) {
     /* 设置worksheet每列的最大宽度 */
-    // eslint-disable-next-line no-unused-vars
+
     const colWidth = data.map(
       (
         row: ({
@@ -244,7 +232,6 @@ export function exportJsonToExcel(params: jsonTypes) {
           };
         } | null)[]
       ) =>
-        // eslint-disable-next-line no-unused-vars
         row.map(
           (
             val: {
@@ -259,17 +246,17 @@ export function exportJsonToExcel(params: jsonTypes) {
             /* 先判断是否为null/undefined */
             if (val == null) {
               return {
-                wch: 10
+                wch: 10,
               };
             }
             /* 再判断是否为中文 */
             if (val.toString().charCodeAt(0) > 255) {
               return {
-                wch: val.toString().length * 2
+                wch: val.toString().length * 2,
               };
             }
             return {
-              wch: val.toString().length
+              wch: val.toString().length,
             };
           }
         )
@@ -294,12 +281,12 @@ export function exportJsonToExcel(params: jsonTypes) {
   const wbData = XLSX.write(wb, {
     bookType,
     bookSST: false,
-    type: 'binary'
+    type: 'binary',
   });
   // save Blob data
   saveAs(
     new Blob([s2ab(wbData)], {
-      type: 'application/octet-stream'
+      type: 'application/octet-stream',
     }),
     `${filename}.${bookType}`
   );

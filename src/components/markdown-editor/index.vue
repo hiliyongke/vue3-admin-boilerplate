@@ -6,7 +6,7 @@
 
 <script lang="ts">
 export default {
-  name: 'MarkdownEditor'
+  name: 'MarkdownEditor',
 };
 </script>
 
@@ -54,7 +54,7 @@ interface Emits {
   /** 内容更新事件 */
   'update:modelValue': [value: string];
   /** 内容变化事件 */
-  'change': [value: string];
+  change: [value: string];
 }
 
 /**
@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<Props>(), {
   height: '500px',
   theme: 'light',
   previewStyle: 'vertical',
-  initialEditType: 'markdown'
+  initialEditType: 'markdown',
 });
 
 /**
@@ -134,8 +134,8 @@ onMounted(() => {
           const markdown = getMarkdown();
           emit('update:modelValue', markdown);
           emit('change', markdown);
-        }
-      }
+        },
+      },
     });
   }
 });
@@ -154,7 +154,7 @@ defineExpose({
   getMarkdown,
   setMarkdown,
   getHTML,
-  destroyEditor
+  destroyEditor,
 });
 </script>
 

@@ -1,6 +1,3 @@
-/* eslint-disable guard-for-in */
-/* eslint-disable no-param-reassign */
-
 /**
  * itools.cookie()
  * https://github.com/hrout/onavo/blob/master/onavo.js#L209
@@ -12,10 +9,10 @@ import isNumber from '../lodash/is_number';
 const cookie = () => {
   function cookieAttrExtend() {
     let i = 0;
-    let result = {};
+    const result = {};
     for (; i < arguments.length; i++) {
-      let attributes = arguments[i];
-      for (let key in attributes) {
+      const attributes = arguments[i];
+      for (const key in attributes) {
         if (hasOwnProperty(attributes, key)) {
           result[key] = attributes[key];
         }
@@ -29,17 +26,15 @@ const cookie = () => {
       if (size(arguments) > 1) {
         attributes = cookieAttrExtend(
           {
-            path: '/'
+            path: '/',
           },
           api.defaults,
           attributes
         );
 
         if (isNumber(attributes.expires)) {
-          let expires = new Date();
-          expires.setMilliseconds(
-            expires.getMilliseconds() + attributes.expires * 864e5
-          );
+          const expires = new Date();
+          expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e5);
           attributes.expires = expires;
         }
 
@@ -63,28 +58,25 @@ const cookie = () => {
         key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
         key = key.replace(/[\(\)]/g, escape);
 
-        // eslint-disable-next-line no-return-assign
         return (document.cookie = [
           key,
           '=',
           value,
-          attributes.expires
-            ? '; expires=' + attributes.expires.toUTCString()
-            : '',
-          attributes.path ? '; path=' + attributes.path : '',
-          attributes.domain ? '; domain=' + attributes.domain : '',
-          attributes.secure ? '; secure' : ''
+          attributes.expires ? `; expires=${attributes.expires.toUTCString()}` : '',
+          attributes.path ? `; path=${attributes.path}` : '',
+          attributes.domain ? `; domain=${attributes.domain}` : '',
+          attributes.secure ? '; secure' : '',
         ].join(''));
       }
       if (!key) {
         result = {};
       }
-      let cookies = document.cookie ? document.cookie.split('; ') : [];
-      let rdecode = /(%[0-9A-Z]{2})+/g;
+      const cookies = document.cookie ? document.cookie.split('; ') : [];
+      const rdecode = /(%[0-9A-Z]{2})+/g;
       let i = 0;
 
       for (; i < cookies.length; i++) {
-        let parts = cookies[i].split('=');
+        const parts = cookies[i].split('=');
         let cookie = parts.slice(1).join('=');
 
         if (cookie.charAt(0) === '"') {
@@ -92,13 +84,11 @@ const cookie = () => {
         }
 
         try {
-          let name = parts[0].replace(rdecode, decodeURIComponent);
+          const name = parts[0].replace(rdecode, decodeURIComponent);
           cookie = converter.read
             ? converter.read(cookie, name)
-            : converter(cookie, name) ||
-              cookie.replace(rdecode, decodeURIComponent);
+            : converter(cookie, name) || cookie.replace(rdecode, decodeURIComponent);
 
-          // eslint-disable-next-line no-invalid-this
           if (this.json) {
             try {
               cookie = JSON.parse(cookie);
@@ -126,7 +116,7 @@ const cookie = () => {
     api.getJson = api.getJSON = function () {
       return api.apply(
         {
-          json: true
+          json: true,
         },
         [].slice.call(arguments)
       );
@@ -138,7 +128,7 @@ const cookie = () => {
         key,
         '',
         cookieAttrExtend(attributes, {
-          expires: -1
+          expires: -1,
         })
       );
     };

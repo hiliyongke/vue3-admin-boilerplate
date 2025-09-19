@@ -3,7 +3,7 @@
  * 长按指令，长按时触发事件
  */
 
-import { App, DirectiveBinding } from 'vue';
+import type { App, DirectiveBinding } from 'vue';
 
 export function longPressDirective(app: App) {
   app.directive('longpress', {
@@ -46,6 +46,6 @@ export function longPressDirective(app: App) {
       el.addEventListener('mouseout', cancel);
       el.addEventListener('touchend', cancel);
       el.addEventListener('touchcancel', cancel);
-    }
+    },
   });
 }

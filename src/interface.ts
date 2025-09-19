@@ -29,10 +29,12 @@ export interface MenuRoute {
   /** 菜单标题 */
   title?: string;
   /** 菜单图标 */
-  icon?: string | {
-    /** 图标渲染函数 */
-    render: () => any;
-  };
+  icon?:
+    | string
+    | {
+        /** 图标渲染函数 */
+        render: () => any;
+      };
   /** 重定向路径 */
   redirect?: string;
   /** 子菜单列表 */
@@ -69,10 +71,7 @@ export type SettingType = typeof STYLE_CONFIG;
 /**
  * CSS类名类型
  */
-export type ClassName =
-  | string
-  | Record<string, boolean>
-  | Array<string | Record<string, boolean>>;
+export type ClassName = string | Record<string, boolean> | Array<string | Record<string, boolean>>;
 
 /**
  * 通用对象类型

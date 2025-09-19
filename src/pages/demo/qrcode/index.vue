@@ -2,9 +2,7 @@
   <div class="qrcode-container">
     <div class="info">
       <t-divider content-position="left">生成二维码</t-divider>
-      <span style="text-align: left">
-        生成二维码通常用来做前台海报生成或者后台活动营销推广码配置
-      </span>
+      <span style="text-align: left"> 生成二维码通常用来做前台海报生成或者后台活动营销推广码配置 </span>
     </div>
     <div class="grid-content bg-purple-dark">
       <t-card class="box-card">
@@ -17,24 +15,12 @@
             <qrcode-vue :value="configForm.hostName"></qrcode-vue>
           </div>
           <div class="qrcode-config">
-            <t-form
-              ref="configFormRef"
-              :model="configForm"
-              :rules="configRules"
-            >
-              <t-form-item
-                label="域名"
-                prop="hostName"
-              >
+            <t-form ref="configFormRef" :model="configForm" :rules="configRules">
+              <t-form-item label="域名" prop="hostName">
                 <t-input v-model="configForm.hostName"></t-input>
               </t-form-item>
             </t-form>
-            <t-button
-              style="margin-top: 10px"
-              @click="generateImg"
-            >
-              保存二维码
-            </t-button>
+            <t-button style="margin-top: 10px" @click="generateImg"> 保存二维码 </t-button>
           </div>
         </div>
       </t-card>
@@ -43,7 +29,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'QrcodeDemo'
+  name: 'QrcodeDemo',
 };
 </script>
 
@@ -105,16 +91,14 @@ const value = ref<string>('https://example.com');
  * 表单验证规则
  */
 const configRules: ConfigFormRules = {
-  hostName: [
-    { required: true, message: '请输入二维码链接', trigger: 'blur' }
-  ]
+  hostName: [{ required: true, message: '请输入二维码链接', trigger: 'blur' }],
 };
 
 /**
  * 表单配置
  */
 const configForm = ref<ConfigForm>({
-  hostName: 'https://example.com'
+  hostName: 'https://example.com',
 });
 
 /**
@@ -151,7 +135,7 @@ const generateImg = (): void => {
   const options: DomToImageOptions = {
     cacheBust: true,
     width: 375,
-    bgcolor: '#fff'
+    bgcolor: '#fff',
   };
 
   domtoimage

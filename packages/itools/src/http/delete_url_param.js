@@ -5,10 +5,10 @@
 
 const deleteUrlParam = (param, url = window.location.href) => {
   // prefer to use l.search if you have a location/link object
-  let urlparts = url.split('?');
+  const urlparts = url.split('?');
   if (urlparts.length >= 2) {
-    let prefix = encodeURIComponent(param) + '=';
-    let pars = urlparts[1].split(/[&;]/g);
+    const prefix = `${encodeURIComponent(param)}=`;
+    const pars = urlparts[1].split(/[&;]/g);
 
     // reverse iteration as may be destructive
     for (let i = pars.length; i-- > 0; ) {
@@ -17,7 +17,7 @@ const deleteUrlParam = (param, url = window.location.href) => {
         pars.splice(i, 1);
       }
     }
-    return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
+    return urlparts[0] + (pars.length > 0 ? `?${pars.join('&')}` : '');
   } else {
     return url;
   }

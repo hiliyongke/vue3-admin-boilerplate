@@ -42,6 +42,6 @@ export function copyDirective(app: App) {
     },
     unmounted(el) {
       el.removeEventListener('click', () => {});
-    }
+    },
   });
 }

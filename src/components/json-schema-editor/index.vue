@@ -1,116 +1,55 @@
 <template>
   <div class="json-schema-editor">
-    <t-row
-      class="row"
-      :gutter="10"
-    >
-      <t-col
-        :span="4"
-        class="col-name"
-      >
-        <div
-          :style="{ marginLeft: `${25 * deep}px` }"
-          class="col-name-c"
-        >
+    <t-row class="row" :gutter="10">
+      <t-col :span="4" class="col-name">
+        <div :style="{ marginLeft: `${25 * deep}px` }" class="col-name-c">
           <t-button
             v-if="pickValue.type === 'object'"
             variant="text"
             style="color: rgba(0, 0, 0, 0.65)"
             @click="hidden = !hidden"
           >
-            <ChevronRightIcon
-              v-if="hidden"
-              slot="icon"
-            />
-            <ChevronDownIcon
-              v-else
-              slot="icon"
-            />
+            <ChevronRightIcon v-if="hidden" slot="icon" />
+            <ChevronDownIcon v-else slot="icon" />
           </t-button>
-          <span
-            v-else
-            style="display: inline-block; width: 32px"
-          ></span>
-          <t-input
-            :disabled="disabled || root"
-            :default-value="pickKey"
-            class="col-name-input"
-            @blur="onInputName"
-          />
+          <span v-else style="display: inline-block; width: 32px"></span>
+          <t-input :disabled="disabled || root" :default-value="pickKey" class="col-name-input" @blur="onInputName" />
         </div>
         <t-popup v-if="root">
           <template #content>{{ local['checked_all'] }}</template>
-          <t-checkbox
-            :disabled="!isObject && !isArray"
-            class="col-name-required"
-            @change="onRootCheck"
-          />
+          <t-checkbox :disabled="!isObject && !isArray" class="col-name-required" @change="onRootCheck" />
         </t-popup>
         <t-popup v-else>
           <template #content>{{ local['required'] }}</template>
-          <t-checkbox
-            v-model="checked"
-            :disabled="isItem"
-            class="col-name-required"
-            @change="onCheck"
-          />
+          <t-checkbox v-model="checked" :disabled="isItem" class="col-name-required" @change="onCheck" />
         </t-popup>
       </t-col>
       <t-col :span="2">
-        <t-select
-          v-model="pickValue.type"
-          :disabled="disabledType"
-          class="col-type"
-          @change="onChangeType"
-        >
-          <t-option
-            v-for="t in TYPE_NAME"
-            :key="t"
-            :value="t"
-            :label="t"
-          >
+        <t-select v-model="pickValue.type" :disabled="disabledType" class="col-type" @change="onChangeType">
+          <t-option v-for="t in TYPE_NAME" :key="t" :value="t" :label="t">
             {{ t }}
           </t-option>
         </t-select>
       </t-col>
       <t-col :span="3">
-        <t-input
-          v-model="pickValue.title"
-          class="col-title"
-          :placeholder="local['title']"
-        />
+        <t-input v-model="pickValue.title" class="col-title" :placeholder="local['title']" />
       </t-col>
-      <t-col
-        :span="3"
-        class="col-setting"
-      >
+      <t-col :span="3" class="col-setting">
         <t-popup>
           <template #content>{{ local['adv_setting'] }}</template>
-          <t-button
-            variant="text"
-            class="setting-icon"
-            @click="onSetting"
-          >
+          <t-button variant="text" class="setting-icon" @click="onSetting">
             <SettingIcon slot="icon" />
           </t-button>
         </t-popup>
         <t-popup v-if="isObject">
           <template #content>{{ local['add_child_node'] }}</template>
-          <t-button
-            variant="text"
-            class="plus-icon"
-            @click="addChild"
-          >
+          <t-button variant="text" class="plus-icon" @click="addChild">
             <AddIcon slot="icon" />
           </t-button>
         </t-popup>
         <t-popup v-if="!root && !isItem">
           <template #content>{{ local['remove_node'] }}</template>
-          <t-button
-            variant="text"
-            class="close-icon"
-            @click="removeNode"
-          >
+          <t-button variant="text" class="close-icon" @click="removeNode">
             <CloseIcon slot="icon" />
           </t-button>
         </t-popup>
@@ -153,31 +92,18 @@
       wrap-class-name="json-schema-editor-advanced-modal"
     >
       <h3>{{ local['base_setting'] }}</h3>
-      <t-form
-        label-align="top"
-        :data="advancedValue"
-      >
+      <t-form label-align="top" :data="advancedValue">
         <t-row :gutter="30">
-          <t-col
-            v-for="(item, key) in advancedValue"
-            :key="key"
-            :span="4"
-          >
+          <t-col v-for="(item, key) in advancedValue" :key="key" :span="4">
             <t-form-item :label="local[key]">
               <t-input-number
-                v-if="
-                  advancedAttr[key].type === 'integer' ||
-                  advancedAttr[key].type === 'number'
-                "
+                v-if="advancedAttr[key].type === 'integer' || advancedAttr[key].type === 'number'"
                 v-model="advancedValue[key]"
                 theme="column"
                 style="width: 100%"
                 :placeholder="key"
               />
-              <span
-                v-else-if="advancedAttr[key].type === 'boolean'"
-                style="display: inline-block; width: 100%"
-              >
+              <span v-else-if="advancedAttr[key].type === 'boolean'" style="display: inline-block; width: 100%">
                 <t-switch v-model="advancedValue[key]" />
               </span>
               <t-textarea
@@ -196,21 +122,11 @@
                 <t-option value="">
                   {{ local['nothing'] }}
                 </t-option>
-                <t-option
-                  v-for="t in advancedAttr[key].enums"
-                  :key="t"
-                  :value="t"
-                  :label="t"
-                >
+                <t-option v-for="t in advancedAttr[key].enums" :key="t" :value="t" :label="t">
                   {{ t }}
                 </t-option>
               </t-select>
-              <t-input
-                v-else
-                v-model="advancedValue[key]"
-                style="width: 100%"
-                :placeholder="key"
-              />
+              <t-input v-else v-model="advancedValue[key]" style="width: 100%" :placeholder="key" />
             </t-form-item>
           </t-col>
         </t-row>
@@ -218,61 +134,30 @@
       <h3 v-show="custom">{{ local['add_custom'] }}</h3>
       <t-form v-show="custom">
         <t-row :gutter="30">
-          <t-col
-            v-for="item in customProps"
-            :key="item.key"
-            :span="4"
-            style="margin-bottom: 10px"
-          >
+          <t-col v-for="item in customProps" :key="item.key" :span="4" style="margin-bottom: 10px">
             <t-form-item :label="item.key">
-              <t-input
-                v-model="item.value"
-                style="width: calc(100% - 30px)"
-              />
-              <t-button
-                variant="text"
-                style="width: 30px"
-                @click="removeCustomNode(item.key)"
-              >
+              <t-input v-model="item.value" style="width: calc(100% - 30px)" />
+              <t-button variant="text" style="width: 30px" @click="removeCustomNode(item.key)">
                 <CloseIcon slot="icon" />
               </t-button>
             </t-form-item>
           </t-col>
-          <t-col
-            v-show="addProp.key != undefined"
-            :span="4"
-          >
+          <t-col v-show="addProp.key != undefined" :span="4">
             <t-form-item>
               <template #label>
-                <t-input
-                  v-model="addProp.key"
-                  style="width: 100px"
-                />
+                <t-input v-model="addProp.key" style="width: 100px" />
               </template>
 
-              <t-input
-                v-model="addProp.value"
-                style="width: 90%; margin-left: 10%"
-              />
+              <t-input v-model="addProp.value" style="width: 90%; margin-left: 10%" />
             </t-form-item>
           </t-col>
           <t-col :span="4">
             <t-form-item>
-              <t-button
-                v-if="customing"
-                variant="text"
-                @click="confirmAddCustomNode(null)"
-              >
+              <t-button v-if="customing" variant="text" @click="confirmAddCustomNode(null)">
                 <CheckIcon slot="icon" />
               </t-button>
-              <t-popup
-                v-else
-                :content="local['add_custom']"
-              >
-                <t-button
-                  variant="text"
-                  @click="addCustomNode"
-                >
+              <t-popup v-else :content="local['add_custom']">
+                <t-button variant="text" @click="addCustomNode">
                   <AddIcon slot="icon" />
                 </t-button>
               </t-popup>
@@ -287,14 +172,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import {
-  AddIcon,
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  CloseIcon,
-  SettingIcon
-} from 'tdesign-icons-vue-next';
+import { AddIcon, CheckIcon, ChevronDownIcon, ChevronRightIcon, CloseIcon, SettingIcon } from 'tdesign-icons-vue-next';
 import { isNull } from './util';
 import { TYPE_NAME, TYPE, SchemaType, Wrapper } from './type/type';
 import LocalProvider from './local-provider';
@@ -316,53 +194,53 @@ export default defineComponent({
     ChevronDownIcon,
     ChevronRightIcon,
     CloseIcon,
-    SettingIcon
+    SettingIcon,
   },
   props: {
     value: {
       type: Object as PropType<Record<string, Schema>>,
-      required: true
+      required: true,
     },
     disabled: {
       //name不可编辑，根节点name不可编辑,数组元素name不可编辑
       type: Boolean,
-      default: false
+      default: false,
     },
     disabledType: {
       //禁用类型选择
       type: Boolean,
-      default: false
+      default: false,
     },
     isItem: {
       //是否数组元素
       type: Boolean,
-      default: false
+      default: false,
     },
     deep: {
       // 节点深度，根节点deep=0
       type: Number,
-      default: 0
+      default: 0,
     },
     root: {
       //是否root节点
       type: Boolean,
-      default: true
+      default: true,
     },
     parent: {
       //父节点
       type: Object as PropType<Schema | null>,
-      default: null
+      default: null,
     },
     custom: {
       //enable custom properties
       type: Boolean,
-      default: false
+      default: false,
     },
     lang: {
       // i18n language
       type: String as PropType<'zh_CN' | 'en_US'>,
-      default: 'zh_CN'
-    }
+      default: 'zh_CN',
+    },
   },
   data(): {
     TYPE_NAME: typeof TYPE_NAME;
@@ -384,7 +262,7 @@ export default defineComponent({
       addProp: {}, // 自定义属性
       customProps: [],
       customing: false,
-      local: LocalProvider(this.lang)
+      local: LocalProvider(this.lang),
     };
   },
   computed: {
@@ -401,11 +279,7 @@ export default defineComponent({
       return this.pickValue.type === 'array';
     },
     checked(): boolean {
-      return !!(
-        this.parent &&
-        this.parent.required &&
-        this.parent.required.indexOf(this.pickKey) >= 0
-      );
+      return !!(this.parent && this.parent.required && this.parent.required.indexOf(this.pickKey) >= 0);
     },
     advanced(): Wrapper {
       return TYPE[this.pickValue.type as SchemaType];
@@ -414,14 +288,7 @@ export default defineComponent({
       return TYPE[this.pickValue.type as SchemaType].attr;
     },
     ownProps(): string[] {
-      return [
-        'type',
-        'title',
-        'properties',
-        'items',
-        'required',
-        ...Object.keys(this.advancedAttr)
-      ];
+      return ['type', 'title', 'properties', 'items', 'required', ...Object.keys(this.advancedAttr)];
     },
     advancedNotEmptyValue(): Record<string, any> {
       const jsonNode = { ...this.advancedValue };
@@ -438,14 +305,14 @@ export default defineComponent({
       for (const item of this.customProps) {
         t[item.key] = item.value;
       }
-      this._pickDiffKey().forEach(key => delete basicValue[key]);
+      this._pickDiffKey().forEach((key) => delete basicValue[key]);
       return { ...basicValue, ...t, ...this.advancedNotEmptyValue };
     },
     enumText(): string {
       const t = this.advancedValue['enum'];
       if (!t || !t.length) return '';
       return t.join('\n');
-    }
+    },
   },
   methods: {
     onInputName(e: any) {
@@ -467,7 +334,7 @@ export default defineComponent({
     },
     onChangeType() {
       this.parseCustomProps();
-      this.customProps.forEach(item => {
+      this.customProps.forEach((item) => {
         delete this.pickValue[item.key];
       });
       this.customProps = [];
@@ -501,7 +368,7 @@ export default defineComponent({
         if (arr.length === 0 || (arr.length === 1 && arr[0] === '')) {
           this.advancedValue.enum = null;
         } else {
-          this.advancedValue.enum = arr.map(item => +item);
+          this.advancedValue.enum = arr.map((item) => +item);
         }
       }
     },
@@ -512,22 +379,14 @@ export default defineComponent({
         } else {
           delete node.required;
         }
-        Object.keys(node.properties).forEach(key =>
-          this._deepCheck(checked, node.properties[key])
-        );
-      } else if (
-        node.type === 'array' &&
-        node.items &&
-        node.items.type === 'object'
-      ) {
+        Object.keys(node.properties).forEach((key) => this._deepCheck(checked, node.properties[key]));
+      } else if (node.type === 'array' && node.items && node.items.type === 'object') {
         if (checked) {
           node.items.required = Object.keys(node.items.properties);
         } else {
           delete node.items.required;
         }
-        Object.keys(node.items.properties).forEach(key =>
-          this._deepCheck(checked, node.items.properties[key])
-        );
+        Object.keys(node.items.properties).forEach((key) => this._deepCheck(checked, node.items.properties[key]));
       }
     },
     _checked(checked: boolean, parent: Schema) {
@@ -564,7 +423,7 @@ export default defineComponent({
     },
     parseCustomProps() {
       const ownProps = this.ownProps;
-      Object.keys(this.pickValue).forEach(key => {
+      Object.keys(this.pickValue).forEach((key) => {
         if (ownProps.indexOf(key) === -1) {
           this.confirmAddCustomNode({ key, value: this.pickValue[key] });
         }
@@ -575,7 +434,7 @@ export default defineComponent({
       this.customing = true;
     },
     removeCustomNode(key: string) {
-      const index = this.customProps.findIndex(item => item.key === key);
+      const index = this.customProps.findIndex((item) => item.key === key);
       if (index > -1) {
         this.customProps.splice(index, 1);
       }
@@ -583,7 +442,7 @@ export default defineComponent({
     confirmAddCustomNode(prop: CustomProp | null) {
       const p = prop || this.addProp;
       if (!p?.key) return;
-      const existKey = this.customProps.some(item => item.key === p.key);
+      const existKey = this.customProps.some((item) => item.key === p.key);
       if (existKey) return;
       this.customProps.push(p as CustomProp);
       this.addProp = {};
@@ -627,16 +486,16 @@ export default defineComponent({
         }
       }
       const diffKey = this._pickDiffKey();
-      diffKey.forEach(key => delete this.pickValue[key]);
+      diffKey.forEach((key) => delete this.pickValue[key]);
       for (const item of this.customProps) {
         this.pickValue[item.key] = item.value;
       }
     },
     _pickDiffKey(): string[] {
       const keys = Object.keys(this.pickValue);
-      return keys.filter(item => this.ownProps.indexOf(item) === -1);
-    }
-  }
+      return keys.filter((item) => this.ownProps.indexOf(item) === -1);
+    },
+  },
 });
 </script>
 <style scoped>

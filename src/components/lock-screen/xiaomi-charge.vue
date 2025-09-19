@@ -3,15 +3,8 @@
 -->
 <template>
   <div class="xiaomi-charge">
-    <div
-      v-for="i in 3"
-      :key="i"
-      class="outer"
-    >
-      <div
-        class="circle"
-        :style="{ transform: `scale(${1.01 - 0.04 * (i - 1)})` }"
-      ></div>
+    <div v-for="i in 3" :key="i" class="outer">
+      <div class="circle" :style="{ transform: `scale(${1.01 - 0.04 * (i - 1)})` }"></div>
     </div>
     <div class="line-box">
       <div class="line-left"></div>
@@ -22,25 +15,15 @@
       <div class="line-center line-center-right-1"></div>
       <div class="line-center line-center-right-2"></div>
     </div>
-    <div
-      class="outer"
-      style="transform: scale(0.68)"
-    >
-      <div
-        class="circle circle-blur"
-        style="padding: 30px"
-      ></div>
+    <div class="outer" style="transform: scale(0.68)">
+      <div class="circle circle-blur" style="padding: 30px"></div>
     </div>
-    <div
-      v-for="i in 4"
-      :key="i"
-      class="outer"
-    >
+    <div v-for="i in 4" :key="i" class="outer">
       <div
         class="circle-white"
         :style="{
           transform: `scale(${1 - 0.02 * (i - 1)})`,
-          animationDuration: `${500 - 20 * (i - 1)}ms`
+          animationDuration: `${500 - 20 * (i - 1)}ms`,
         }"
       ></div>
     </div>
@@ -56,7 +39,7 @@
 
 <script lang="ts">
 export default {
-  name: 'XiaomiCharge'
+  name: 'XiaomiCharge',
 };
 </script>
 
@@ -75,12 +58,13 @@ interface Props {
  * 组件属性
  */
 const props = withDefaults(defineProps<Props>(), {
-  battery: () => ({
-    level: 0,
-    charging: false,
-    chargingTime: Infinity,
-    dischargingTime: Infinity
-  } as Battery)
+  battery: () =>
+    ({
+      level: 0,
+      charging: false,
+      chargingTime: Infinity,
+      dischargingTime: Infinity,
+    }) as Battery,
 });
 </script>
 

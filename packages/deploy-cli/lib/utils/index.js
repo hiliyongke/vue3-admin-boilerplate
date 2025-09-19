@@ -9,7 +9,7 @@ module.exports = {
     return fs.existsSync(deployConfigPath);
   },
   // 日志信息
-  log: message => {
+  log: (message) => {
     console.log(message);
   },
   // 成功信息
@@ -25,7 +25,7 @@ module.exports = {
     ora().fail(chalk.redBright.bold(message));
   },
   // 下划线重点信息
-  underline: message => {
+  underline: (message) => {
     return chalk.underline.blueBright.bold(message);
-  }
+  },
 };

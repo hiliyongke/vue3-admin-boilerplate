@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable no-throw-literal */
 import itools from '../itools';
 
@@ -20,7 +19,7 @@ const waiReject = (time = 500) => {
  * @param {any} n 第N次必成功返回
  */
 const createProbabilityWait = (n, isAsync = true, totalTime = 200) => {
-  let time = totalTime / n;
+  const time = totalTime / n;
   return () => {
     if (n-- > 1) {
       console.log('reject');
@@ -41,7 +40,7 @@ const createProbabilityWait = (n, isAsync = true, totalTime = 200) => {
 };
 
 describe('retry ', () => {
-  it('retry 1 (50ms)', done => {
+  it('retry 1 (50ms)', (done) => {
     itools.retry(createProbabilityWait(1, true, 50)).then(
       () => {
         done();
@@ -52,7 +51,7 @@ describe('retry ', () => {
     );
   });
 
-  it('retry 1', done => {
+  it('retry 1', (done) => {
     itools.retry(createProbabilityWait(1)).then(
       () => {
         done();
@@ -63,7 +62,7 @@ describe('retry ', () => {
     );
   });
 
-  it('retry 2', done => {
+  it('retry 2', (done) => {
     itools.retry(createProbabilityWait(2), { interval: 50 }).then(
       () => {
         done();
@@ -74,7 +73,7 @@ describe('retry ', () => {
     );
   });
 
-  it('retry 3', done => {
+  it('retry 3', (done) => {
     itools.retry(createProbabilityWait(3), { retries: 4, interval: 50 }).then(
       () => {
         done();
@@ -85,11 +84,11 @@ describe('retry ', () => {
     );
   });
 
-  it('retry 3 sync', done => {
+  it('retry 3 sync', (done) => {
     itools
       .retry(createProbabilityWait(3, false), {
         retries: 4,
-        interval: 50
+        interval: 50,
       })
       .then(
         () => {
@@ -127,7 +126,7 @@ describe('retry ', () => {
           expect(i).toBe(3);
           done();
         },
-        err => {
+        (err) => {
           console.log('--->', err);
           throw 'error';
         }

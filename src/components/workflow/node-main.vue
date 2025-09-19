@@ -1,17 +1,9 @@
 <template>
-  <div
-    v-if="node && node.nodeId && node.childNode && node.conditionNodes"
-    class="branch-and-node-wrap"
-  >
+  <div v-if="node && node.nodeId && node.childNode && node.conditionNodes" class="branch-and-node-wrap">
     <div class="branch-wrap">
       <div class="branch-wrap-box">
         <div class="branch-box">
-          <button
-            class="add-branch"
-            @click="addBranch(node)"
-          >
-            添加条件
-          </button>
+          <button class="add-branch" @click="addBranch(node)">添加条件</button>
           <col-box
             v-for="(branch, idx) in node.conditionNodes"
             :key="branch.nodeId"
@@ -23,33 +15,15 @@
             @del-branch="delBranch(node, $event)"
           />
         </div>
-        <add-node-btn
-          :node="node"
-          :add-node="addNode"
-          :delete-node="deleteNode"
-        />
+        <add-node-btn :node="node" :add-node="addNode" :delete-node="deleteNode" />
       </div>
     </div>
     <div v-if="node.childNode.type === 'branch'">
-      <node-main
-        :node="node.childNode"
-        :add-node="addNode"
-        :delete-node="deleteNode"
-      />
+      <node-main :node="node.childNode" :add-node="addNode" :delete-node="deleteNode" />
     </div>
-    <div
-      v-else
-      class="node-wrap"
-    >
-      <node-wrap-box
-        :node="node.childNode"
-        :delete-node="deleteNode"
-      />
-      <add-node-btn
-        :node="node.childNode"
-        :add-node="addNode"
-        :delete-node="deleteNode"
-      />
+    <div v-else class="node-wrap">
+      <node-wrap-box :node="node.childNode" :delete-node="deleteNode" />
+      <add-node-btn :node="node.childNode" :add-node="addNode" :delete-node="deleteNode" />
       <node-main
         v-if="node.childNode.childNode"
         :node="node.childNode.childNode"
@@ -58,22 +32,11 @@
       />
     </div>
   </div>
-  <div
-    v-else-if="node && node.nodeId"
-    :class="[node.type === 'branch' ? 'branch-wrap' : 'node-wrap']"
-  >
-    <div
-      v-if="node.type === 'branch'"
-      class="branch-wrap-box"
-    >
+  <div v-else-if="node && node.nodeId" :class="[node.type === 'branch' ? 'branch-wrap' : 'node-wrap']">
+    <div v-if="node.type === 'branch'" class="branch-wrap-box">
       <div class="branch-wrap-box">
         <div class="branch-box">
-          <button
-            class="add-branch"
-            @click="addBranch(node)"
-          >
-            添加条件
-          </button>
+          <button class="add-branch" @click="addBranch(node)">添加条件</button>
           <col-box
             v-for="(branch, idx) in node.conditionNodes"
             :key="branch.nodeId"
@@ -86,30 +49,12 @@
           />
         </div>
 
-        <add-node-btn
-          :node="node"
-          :add-node="addNode"
-          :delete-node="deleteNode"
-        />
+        <add-node-btn :node="node" :add-node="addNode" :delete-node="deleteNode" />
       </div>
     </div>
-    <node-wrap-box
-      v-else
-      :node="node"
-      :delete-node="deleteNode"
-    />
-    <add-node-btn
-      v-if="node.type !== 'branch'"
-      :node="node"
-      :add-node="addNode"
-      :delete-node="deleteNode"
-    />
-    <node-main
-      v-if="node.childNode"
-      :node="node.childNode"
-      :add-node="addNode"
-      :delete-node="deleteNode"
-    />
+    <node-wrap-box v-else :node="node" :delete-node="deleteNode" />
+    <add-node-btn v-if="node.type !== 'branch'" :node="node" :add-node="addNode" :delete-node="deleteNode" />
+    <node-main v-if="node.childNode" :node="node.childNode" :add-node="addNode" :delete-node="deleteNode" />
   </div>
 </template>
 <script setup lang="ts">
@@ -117,32 +62,30 @@ import addNodeBtn from './add-node-btn.vue';
 import colBox from './col-box.vue';
 import nodeWrapBox from './node-wrap-box.vue';
 const getRandom = () => {
-  return Math.floor(
-    (Math.random() + Math.floor(Math.random() * 9 + 1)) * Math.pow(10, 9)
-  );
+  return Math.floor((Math.random() + Math.floor(Math.random() * 9 + 1)) * Math.pow(10, 9));
 };
 
 const props = defineProps({
   node: {
     type: Object,
-    default: () => null
+    default: () => null,
   },
   addNode: {
     type: Function,
-    default: () => null
+    default: () => null,
   },
   deleteNode: {
     type: Function,
-    default: () => null
-  }
+    default: () => null,
+  },
 });
 
-const addBranch = childNode => {
+const addBranch = (childNode) => {
   childNode.conditionNodes.push({
     name: `条件${childNode.conditionNodes.length + 1}`,
     type: 'condition',
     prevId: childNode.nodeId,
-    nodeId: getRandom()
+    nodeId: getRandom(),
   });
 };
 const delBranch = (node, idx) => {

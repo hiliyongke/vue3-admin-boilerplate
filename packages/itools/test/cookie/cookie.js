@@ -6,14 +6,14 @@ describe('itools.cookie()', () => {
   const object = {
     c: 'v1',
     c1: 'v',
-    name: '{"foo":"bar"}'
+    name: '{"foo":"bar"}',
   };
   const objectJson = {
     c: 'v1',
     c1: 'v',
     name: {
-      foo: 'bar'
-    }
+      foo: 'bar',
+    },
   };
 
   test('itools.cookie() is a Function', () => {
@@ -82,7 +82,7 @@ describe('itools.cookie()', () => {
       expires: 7,
       path: '/',
       domain: '.github.com',
-      secure: true
+      secure: true,
     });
     expect(document.cookie).toBe(`c1=v1; ${cookieName}; c2=v2`);
   });
@@ -91,10 +91,10 @@ describe('itools.cookie()', () => {
     itools
       .cookie()
       .withConverter({
-        write: function (value) {
-          let encoded = value.replace('a', 'A');
+        write(value) {
+          const encoded = value.replace('a', 'A');
           return itools.cookie().withConverter(encoded);
-        }
+        },
       })
       .set('c', 'a;');
     expect(document.cookie).toBe(`c1=v1; ${cookieName}; c2=v2`);
@@ -105,7 +105,7 @@ describe('itools.cookie()', () => {
       return value.toUpperCase();
     };
     const api = itools.cookie().withConverter({
-      read: readConverter
+      read: readConverter,
     });
 
     itools.cookie().withConverter(api).set('c2', 'a2;');

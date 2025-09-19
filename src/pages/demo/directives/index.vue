@@ -46,12 +46,7 @@
     <hr />
     <span class="text">拖拽指令</span>
     <div class="content-box">
-      <div
-        v-draggable
-        class="drag-box"
-      >
-        我可以拖拽哦~
-      </div>
+      <div v-draggable class="drag-box">我可以拖拽哦~</div>
     </div>
   </div>
 </template>
@@ -64,7 +59,7 @@ const writeTxt = () => {
   console.log('666');
 };
 const userStore = useUserStore();
-const changeRole = values => {
+const changeRole = (values) => {
   const user = userStore.userInfo;
   user.roles = values;
 };

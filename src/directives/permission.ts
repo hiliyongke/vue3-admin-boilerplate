@@ -9,7 +9,7 @@ import { usePermission } from '@/hooks/use-permission';
 function isAuth(el: HTMLElement, binding: DirectiveBinding) {
   const { hasPermission } = usePermission();
 
-  const value = binding.value;
+  const { value } = binding;
   if (!value) return;
   if (!hasPermission(value)) {
     el.parentNode?.removeChild(el);
@@ -25,6 +25,6 @@ export function permissionDirective(app: App) {
     updated(el, binding) {
       // 实时更新最新的目标内容
       isAuth(el, binding);
-    }
+    },
   });
 }

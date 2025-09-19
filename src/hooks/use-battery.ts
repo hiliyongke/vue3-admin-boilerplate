@@ -17,7 +17,7 @@ export const useBattery = () => {
     charging: false,
     chargingTime: 0,
     dischargingTime: 0,
-    level: 100
+    level: 100,
   });
 
   // 当前浏览器是否支持Battery API
@@ -56,8 +56,7 @@ export const useBattery = () => {
   });
 
   onMounted(async () => {
-    const BatteryManager: Battery =
-      (await (window.navigator as any).getBattery?.()) || {};
+    const BatteryManager: Battery = (await (window.navigator as any).getBattery?.()) || {};
     updateBattery(BatteryManager);
     console.log(BatteryManager, '电池');
 
@@ -87,6 +86,6 @@ export const useBattery = () => {
     battery,
     isSupported,
     batteryStatus,
-    calcDischargingTime
+    calcDischargingTime,
   } as const;
 };

@@ -24,9 +24,9 @@ describe('capitalize', function () {
     expect(itools.capitalize(['grape'])).toBe('Grape');
     expect(
       itools.capitalize({
-        toString: function () {
+        toString() {
           return 'oRaNgE';
-        }
+        },
       })
     ).toBe('Orange');
   });

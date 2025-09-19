@@ -44,7 +44,7 @@ const langs: Langs = {
     format: 'Format',
     nothing: 'Nothing',
     preview: 'Preview',
-    add_custom: 'Add Custom Prop'
+    add_custom: 'Add Custom Prop',
   },
   zh_CN: {
     title: '标题',
@@ -86,8 +86,8 @@ const langs: Langs = {
     format: '格式化',
     nothing: '无',
     preview: '预览',
-    add_custom: '添加自定义属性'
-  }
+    add_custom: '添加自定义属性',
+  },
 };
 
 export default (lang: 'zh_CN' | 'en_US'): LangContent => {

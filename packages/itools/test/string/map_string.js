@@ -8,9 +8,7 @@ describe('mapString', function () {
       })
     ).toEqual('a0 1b2 3c4 5d6');
 
-    expect(
-      itools.mapString('Using our timing function', c => c.toUpperCase())
-    ).toEqual('USING OUR TIMING FUNCTION');
+    expect(itools.mapString('Using our timing function', (c) => c.toUpperCase())).toEqual('USING OUR TIMING FUNCTION');
     done();
   });
 });

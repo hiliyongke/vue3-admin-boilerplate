@@ -12,7 +12,7 @@ export const useSelection = () => {
   // 当前选中的所有ids(数组)
   const selectedListIds = computed((): string[] => {
     const ids: string[] = [];
-    selectedList.value.forEach(item => {
+    selectedList.value.forEach((item) => {
       ids.push(item['id']);
     });
     return ids;
@@ -29,9 +29,7 @@ export const useSelection = () => {
    * @return void
    */
   const selectionChange = (rowArr: any) => {
-    rowArr.length === 0
-      ? (isSelected.value = false)
-      : (isSelected.value = true);
+    rowArr.length === 0 ? (isSelected.value = false) : (isSelected.value = true);
     selectedList.value = rowArr;
   };
 
@@ -40,6 +38,6 @@ export const useSelection = () => {
     selectedList,
     selectedListIds,
     selectionChange,
-    getRowKeys
+    getRowKeys,
   };
 };

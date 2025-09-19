@@ -22,14 +22,10 @@ export function useTime() {
     day.value = date.getDate();
     hour.value =
       `${date.getHours()}`?.padStart(2, '0') ||
-      new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(
-        date.getHours()
-      );
+      new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(date.getHours());
     minute.value =
       `${date.getMinutes()}`?.padStart(2, '0') ||
-      new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(
-        date.getMinutes()
-      );
+      new Intl.NumberFormat(undefined, { minimumIntegerDigits: 2 }).format(date.getMinutes());
     second.value = date.getSeconds();
   };
 

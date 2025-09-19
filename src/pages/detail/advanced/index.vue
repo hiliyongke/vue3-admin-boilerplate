@@ -2,16 +2,12 @@
   <div class="detail-advanced">
     <t-card title="基本信息">
       <div class="info-block">
-        <div
-          v-for="(item, index) in BASE_INFO_DATA"
-          :key="index"
-          class="info-item"
-        >
+        <div v-for="(item, index) in BASE_INFO_DATA" :key="index" class="info-item">
           <h1>{{ item.name }}</h1>
           <span
             :class="{
               ['inProgress']: item.type && item.type.value === 'inProgress',
-              ['pdf']: item.type && item.type.value === 'pdf'
+              ['pdf']: item.type && item.type.value === 'pdf',
             }"
           >
             <i v-if="item.type && item.type.key === 'contractStatus'"></i>
@@ -22,73 +18,42 @@
     </t-card>
 
     <!-- 发票进度 -->
-    <t-card
-      title="发票进度"
-      class="container-base-margin-top"
-    >
+    <t-card title="发票进度" class="container-base-margin-top">
       <t-row justify="space-between">
         <t-steps :current="updateCurrent">
-          <t-step-item
-            title="申请提交"
-            content="已于12月21日提交"
-          />
-          <t-step-item
-            title="电子发票"
-            content="预计1～3个工作日"
-          />
-          <t-step-item
-            title="发票已邮寄"
-            content="电子发票开出后7个工作日联系"
-          />
-          <t-step-item
-            title="完成"
-            content=""
-          />
+          <t-step-item title="申请提交" content="已于12月21日提交" />
+          <t-step-item title="电子发票" content="预计1～3个工作日" />
+          <t-step-item title="发票已邮寄" content="电子发票开出后7个工作日联系" />
+          <t-step-item title="完成" content="" />
         </t-steps>
       </t-row>
     </t-card>
 
     <!-- 产品目录 -->
-    <t-card
-      title="产品目录"
-      class="container-base-margin-top"
-    >
+    <t-card title="产品目录" class="container-base-margin-top">
       <template #option>
         <t-radio-group default-value="dateVal">
           <t-radio-button value="dateVal">季度</t-radio-button>
           <t-radio-button value="monthVal">月份</t-radio-button>
         </t-radio-group>
       </template>
-      <t-row
-        :gutter="16"
-        class="product-block-container"
-      >
+      <t-row :gutter="16" class="product-block-container">
         <t-col :xl="4">
           <div class="product-add">
             <div class="product-sub">
-              <t-icon
-                name="add"
-                class="product-sub-icon"
-              />
+              <t-icon name="add" class="product-sub-icon" />
               <span>新增产品</span>
             </div>
           </div>
         </t-col>
-        <t-col
-          v-for="(item, index) in PRODUCT_LIST"
-          :key="index"
-          :xl="4"
-        >
+        <t-col v-for="(item, index) in PRODUCT_LIST" :key="index" :xl="4">
           <product :data="item" />
         </t-col>
       </t-row>
     </t-card>
 
     <!-- 产品采购明细 -->
-    <t-card
-      title="产品采购明细"
-      class="container-base-margin-top"
-    >
+    <t-card title="产品采购明细" class="container-base-margin-top">
       <t-table
         :columns="columns"
         :data="data"
@@ -102,10 +67,7 @@
         <template #pdName="{ row }">
           <span>
             {{ row.pdName }}
-            <t-tag
-              v-if="row.pdType"
-              size="small"
-            >
+            <t-tag v-if="row.pdType" size="small">
               {{ row.pdType }}
             </t-tag>
           </span>
@@ -114,30 +76,13 @@
         <template #purchaseNum="{ row }">
           <span>
             {{ row.purchaseNum }}
-            <t-tag
-              v-if="row.purchaseNum > 50"
-              theme="danger"
-              variant="light"
-              size="small"
-            >
-              超预算
-            </t-tag>
+            <t-tag v-if="row.purchaseNum > 50" theme="danger" variant="light" size="small"> 超预算 </t-tag>
           </span>
         </template>
 
         <template #op="slotProps">
-          <a
-            :class="prefix + '-link'"
-            @click="listClick()"
-          >
-            管理
-          </a>
-          <a
-            :class="prefix + '-link'"
-            @click="deleteClickOp(slotProps)"
-          >
-            删除
-          </a>
+          <a :class="prefix + '-link'" @click="listClick()"> 管理 </a>
+          <a :class="prefix + '-link'" @click="deleteClickOp(slotProps)"> 删除 </a>
         </template>
 
         <template #op-column>
@@ -146,23 +91,15 @@
       </t-table>
     </t-card>
 
-    <t-dialog
-      v-model:visible="visible"
-      header="基本信息"
-      @confirm="onConfirm"
-    >
+    <t-dialog v-model:visible="visible" header="基本信息" @confirm="onConfirm">
       <template #body>
         <div class="dialog-info-block">
-          <div
-            v-for="(item, index) in BASE_INFO_DATA"
-            :key="index"
-            class="info-item"
-          >
+          <div v-for="(item, index) in BASE_INFO_DATA" :key="index" class="info-item">
             <h1>{{ item.name }}</h1>
             <span
               :class="{
                 ['inProgress']: item.type && item.type.value === 'inProgress',
-                ['pdf']: item.type && item.type.value === 'pdf'
+                ['pdf']: item.type && item.type.value === 'pdf',
               }"
             >
               <i v-if="item.type && item.type.key === 'contractStatus'"></i>
@@ -177,18 +114,14 @@
 
 <script lang="ts">
 export default {
-  name: 'DetailAdvanced'
+  name: 'DetailAdvanced',
 };
 </script>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { prefix } from '@/config/global';
-import {
-  BASE_INFO_DATA,
-  TABLE_COLUMNS_DATA as columns,
-  PRODUCT_LIST
-} from './constants';
+import { BASE_INFO_DATA, TABLE_COLUMNS_DATA as columns, PRODUCT_LIST } from './constants';
 import { getPurchaseList } from '@/api/detail';
 
 import Product from './components/product.vue';
@@ -197,7 +130,7 @@ const data = ref([]);
 const pagination = ref({
   defaultPageSize: 10,
   total: 100,
-  defaultCurrent: 1
+  defaultCurrent: 1,
 });
 
 const updateCurrent = ref(0);
@@ -217,7 +150,7 @@ const fetchData = async () => {
     data.value = list;
     pagination.value = {
       ...pagination.value,
-      total: list.length
+      total: list.length,
     };
   } catch (e) {
     console.log(e);
@@ -230,7 +163,7 @@ onMounted(() => {
 });
 
 const visible = ref(false);
-const sortChange = val => {
+const sortChange = (val) => {
   console.log(val);
 };
 const rehandleChange = (changeParams, triggerAndData) => {
@@ -239,7 +172,7 @@ const rehandleChange = (changeParams, triggerAndData) => {
 const listClick = () => {
   visible.value = true;
 };
-const deleteClickOp = columns => {
+const deleteClickOp = (columns) => {
   data.value.splice(columns.rowIndex, 1);
 };
 const onConfirm = () => {

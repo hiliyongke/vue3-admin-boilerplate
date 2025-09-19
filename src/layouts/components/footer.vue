@@ -1,7 +1,6 @@
 <template>
   <div :class="prefix + '-footer'">
-    Copyright @ 2021-{{ new Date().getFullYear() }} {{ COMPANY_NAME }}. All
-    Rights Reserved
+    Copyright @ 2021-{{ new Date().getFullYear() }} {{ COMPANY_NAME }}. All Rights Reserved
   </div>
 </template>
 

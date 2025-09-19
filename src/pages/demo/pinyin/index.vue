@@ -1,9 +1,6 @@
 <template>
   <div>
-    <t-input
-      v-model="inputTxt"
-      @change="change"
-    ></t-input>
+    <t-input v-model="inputTxt" @change="change"></t-input>
     {{ pinyin(inputTxt).join(' ') }}
   </div>
 </template>

@@ -1,4 +1,4 @@
-const toString = Object.prototype.toString;
+const { toString } = Object.prototype;
 
 export function is(val: unknown, type: string) {
   return toString.call(val) === `[object ${type}]`;
@@ -53,12 +53,7 @@ export function isNumber(val: unknown): val is number {
 }
 
 export function isPromise<T = any>(val: unknown): val is Promise<T> {
-  return (
-    is(val, 'Promise') &&
-    isObject(val) &&
-    isFunction(val.then) &&
-    isFunction(val.catch)
-  );
+  return is(val, 'Promise') && isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
 export function isString(val: unknown): val is string {

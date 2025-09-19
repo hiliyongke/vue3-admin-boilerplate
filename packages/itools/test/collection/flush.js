@@ -3,18 +3,13 @@ import itools from '../itools';
 describe('flush', () => {
   test('removes null/undefined from array', function () {
     expect(itools.flush([1, undefined, 2, null, 3, 0])).toEqual([1, 2, 3, 0]);
-    expect(itools.flush([true, null, false, true, [null], undefined])).toEqual([
-      true,
-      false,
-      true,
-      [null]
-    ]);
+    expect(itools.flush([true, null, false, true, [null], undefined])).toEqual([true, false, true, [null]]);
   });
 
   test('removes null/undefined from object', function () {
     expect(itools.flush({ a: 2, b: null, c: 4, d: undefined })).toEqual({
       a: 2,
-      c: 4
+      c: 4,
     });
   });
 

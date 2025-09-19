@@ -1,5 +1,4 @@
 /* eslint-disable eqeqeq */
-/* eslint-disable no-param-reassign */
 
 /**
  * set value at property, create intermediate properties if necessary
@@ -15,7 +14,7 @@ export default function set(obj, props, value) {
   if (isSymbol(props)) {
     props = [props];
   }
-  let lastProp = props.pop();
+  const lastProp = props.pop();
   if (!lastProp) {
     return false;
   }

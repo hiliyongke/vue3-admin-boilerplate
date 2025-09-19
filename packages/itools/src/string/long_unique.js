@@ -2,7 +2,7 @@
  * Long string unique
  */
 export default function longUnique(target) {
-  let json = {};
+  const json = {};
   for (let index = 0; index < target.length; index++) {
     if (!json[target[index]]) {
       json[target[index]] = -1;

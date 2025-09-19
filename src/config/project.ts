@@ -197,7 +197,7 @@ export const FEATURE_CONFIG = {
 } as const;
 
 export const deprecatedDirs = {
-  app: true // 标记为待删除
+  app: true, // 标记为待删除
 };
 
 /**

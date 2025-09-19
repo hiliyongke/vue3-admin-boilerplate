@@ -17,7 +17,7 @@ export enum ServiceLifetime {
   /** 瞬态模式 - 每次请求创建新实例 */
   Transient = 'transient',
   /** 作用域模式 - 在特定作用域内单例 */
-  Scoped = 'scoped'
+  Scoped = 'scoped',
 }
 
 /**
@@ -56,7 +56,7 @@ export class DIContainer {
       identifier,
       implementation,
       lifetime: ServiceLifetime.Singleton,
-      dependencies
+      dependencies,
     });
     return this;
   }
@@ -73,7 +73,7 @@ export class DIContainer {
       identifier,
       implementation,
       lifetime: ServiceLifetime.Transient,
-      dependencies
+      dependencies,
     });
     return this;
   }
@@ -90,7 +90,7 @@ export class DIContainer {
       identifier,
       implementation,
       lifetime: ServiceLifetime.Scoped,
-      dependencies
+      dependencies,
     });
     return this;
   }
@@ -109,7 +109,7 @@ export class DIContainer {
       implementation: null as any,
       lifetime,
       dependencies,
-      factory
+      factory,
     });
     return this;
   }
@@ -196,7 +196,7 @@ export class DIContainer {
    * 解析依赖项
    */
   private resolveDependencies(dependencies: ServiceIdentifier[]): any[] {
-    return dependencies.map(dep => this.resolve(dep));
+    return dependencies.map((dep) => this.resolve(dep));
   }
 
   /**
@@ -264,7 +264,7 @@ export function Inject<T>(identifier: ServiceIdentifier<T>) {
         return container.resolve(identifier);
       },
       enumerable: true,
-      configurable: true
+      configurable: true,
     });
   };
 }

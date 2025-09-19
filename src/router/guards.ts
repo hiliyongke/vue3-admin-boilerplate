@@ -3,7 +3,7 @@ import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import { getPermissionStore, getUserStore, useSettingStore } from '@/store';
 import { AxiosCanceler } from '@/utils/request/cancel';
-import { Router, RouteLocationNormalized } from 'vue-router';
+import type { Router, RouteLocationNormalized } from 'vue-router';
 
 /**
  * 路由切换回顶部的守卫
@@ -12,10 +12,9 @@ import { Router, RouteLocationNormalized } from 'vue-router';
 function createScrollGuard(router: Router) {
   const isHash = (href: string) => /^#/.test(href);
   const { body } = document;
-  router.afterEach(async to => {
+  router.afterEach(async (to) => {
     // scroll top
-    isHash((to as RouteLocationNormalized & { href: string })?.href) &&
-      body.scrollTo(0, 0);
+    isHash((to as RouteLocationNormalized & { href: string })?.href) && body.scrollTo(0, 0);
     return true;
   });
 }
@@ -89,10 +88,10 @@ function createPermissionGuard(router: Router) {
           /(javascript:|vbscript:|view-source:)+/gim,
           /<("[^"]*"|'[^']*'|[^'">])*>/gim,
           /(window\.location|window\.|\.location|document\.cookie|document\.|alert\(.*?\)|window\.open\()+/gim,
-          /<+\s*\w*\s*(oncontrolselect|oncopy|oncut|ondataavailable|ondatasetchanged|ondatasetcomplete|ondblclick|ondeactivate|ondrag|ondragend|ondragenter|ondragleave|ondragover|ondragstart|ondrop|οnerrοr=|onerroupdate|onfilterchange|onfinish|onfocus|onfocusin|onfocusout|onhelp|onkeydown|onkeypress|onkeyup|onlayoutcomplete|onload|onlosecapture|onmousedown|onmouseenter|onmouseleave|onmousemove|onmousout|onmouseover|onmouseup|onmousewheel|onmove|onmoveend|onmovestart|onabort|onactivate|onafterprint|onafterupdate|onbefore|onbeforeactivate|onbeforecopy|onbeforecut|onbeforedeactivate|onbeforeeditocus|onbeforepaste|onbeforeprint|onbeforeunload|onbeforeupdate|onblur|onbounce|oncellchange|onchange|onclick|oncontextmenu|onpaste|onpropertychange|onreadystatechange|onreset|onresize|onresizend|onresizestart|onrowenter|onrowexit|onrowsdelete|onrowsinserted|onscroll|onselect|onselectionchange|onselectstart|onstart|onstop|onsubmit|onunload)+\s*=+/gim
+          /<+\s*\w*\s*(oncontrolselect|oncopy|oncut|ondataavailable|ondatasetchanged|ondatasetcomplete|ondblclick|ondeactivate|ondrag|ondragend|ondragenter|ondragleave|ondragover|ondragstart|ondrop|οnerrοr=|onerroupdate|onfilterchange|onfinish|onfocus|onfocusin|onfocusout|onhelp|onkeydown|onkeypress|onkeyup|onlayoutcomplete|onload|onlosecapture|onmousedown|onmouseenter|onmouseleave|onmousemove|onmousout|onmouseover|onmouseup|onmousewheel|onmove|onmoveend|onmovestart|onabort|onactivate|onafterprint|onafterupdate|onbefore|onbeforeactivate|onbeforecopy|onbeforecut|onbeforedeactivate|onbeforeeditocus|onbeforepaste|onbeforeprint|onbeforeunload|onbeforeupdate|onblur|onbounce|oncellchange|onchange|onclick|oncontextmenu|onpaste|onpropertychange|onreadystatechange|onreset|onresize|onresizend|onresizestart|onrowenter|onrowexit|onrowsdelete|onrowsinserted|onscroll|onselect|onselectionchange|onselectstart|onstart|onstop|onsubmit|onunload)+\s*=+/gim,
         ];
         for (const reg of illegal) {
-          const paramStr = Array.isArray(param) ? param.join('') : (param || '');
+          const paramStr = Array.isArray(param) ? param.join('') : param || '';
           if (reg.test(paramStr.toLowerCase())) {
             MessagePlugin.error('路由参数不合法！');
             // 取消导航

@@ -3,7 +3,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'ListFilter'
+  name: 'ListFilter',
 };
 </script>
 <script setup lang="ts">

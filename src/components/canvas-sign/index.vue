@@ -12,16 +12,13 @@
       @touchend="touchend"
       @mouseup="mouseup"
     ></canvas>
-    <slot
-      :save="save"
-      :clear="clear"
-    ></slot>
+    <slot :save="save" :clear="clear"></slot>
   </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'CanvasSign'
+  name: 'CanvasSign',
 };
 </script>
 
@@ -74,7 +71,7 @@ const props = withDefaults(defineProps<Props>(), {
   borderWidth: 1,
   borderColor: '#333',
   imageType: 'image/png',
-  imageQual: 0.92
+  imageQual: 0.92,
 });
 
 /**
@@ -274,6 +271,6 @@ onMounted(() => {
 defineExpose({
   save,
   clear,
-  reset
+  reset,
 });
 </script>

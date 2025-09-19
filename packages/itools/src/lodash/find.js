@@ -5,7 +5,6 @@ import is from './is';
 import isShallowEqual from './is_shallow_equal';
 
 export default function find(src, func) {
-  // eslint-disable-next-line no-undef-init
   let rst = undefined;
   forEach(src, (item, key, obj) => {
     if (isFunction(func)) {

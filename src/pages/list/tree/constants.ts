@@ -5,7 +5,7 @@ export const TREE_DATA = [
     children: [
       {
         label: '总办',
-        value: '0-0'
+        value: '0-0',
       },
       {
         label: '市场部',
@@ -13,19 +13,19 @@ export const TREE_DATA = [
         children: [
           {
             label: '采购1组',
-            value: '0-1-0'
+            value: '0-1-0',
           },
           {
             label: '采购2组',
-            value: '0-1-1'
-          }
-        ]
+            value: '0-1-1',
+          },
+        ],
       },
       {
         label: '技术部',
-        value: '0-2'
-      }
-    ]
+        value: '0-2',
+      },
+    ],
   },
   {
     label: '北京总部',
@@ -33,7 +33,7 @@ export const TREE_DATA = [
     children: [
       {
         label: '总办',
-        value: '1-0'
+        value: '1-0',
       },
       {
         label: '市场部',
@@ -41,15 +41,15 @@ export const TREE_DATA = [
         children: [
           {
             label: '采购1组',
-            value: '1-1-0'
+            value: '1-1-0',
           },
           {
             label: '采购2组',
-            value: '1-1-1'
-          }
-        ]
-      }
-    ]
+            value: '1-1-1',
+          },
+        ],
+      },
+    ],
   },
   {
     label: '上海总部',
@@ -57,7 +57,7 @@ export const TREE_DATA = [
     children: [
       {
         label: '市场部',
-        value: '2-0'
+        value: '2-0',
       },
       {
         label: '财务部',
@@ -65,22 +65,22 @@ export const TREE_DATA = [
         children: [
           {
             label: '财务1组',
-            value: '2-1-0'
+            value: '2-1-0',
           },
           {
             label: '财务2组',
-            value: '2-1-1'
-          }
-        ]
-      }
-    ]
+            value: '2-1-1',
+          },
+        ],
+      },
+    ],
   },
   {
     label: '湖南',
-    value: 3
+    value: 3,
   },
   {
     label: '湖北',
-    value: 4
-  }
+    value: 4,
+  },
 ];

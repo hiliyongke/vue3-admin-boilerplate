@@ -3,13 +3,13 @@ import itools from '../itools';
 describe('clone', () => {
   test('copies entire tree', function () {
     let arr = [1, 2, 3];
-    let subObj = { aa: 1 };
-    let obj = { a: 3, b: 5, c: arr, d: subObj };
-    let objClone = itools.clone(obj);
+    const subObj = { aa: 1 };
+    const obj = { a: 3, b: 5, c: arr, d: subObj };
+    const objClone = itools.clone(obj);
     expect(objClone).toEqual(obj);
 
     arr = [1, 2, ['a', 'b', { dd: [1, 2, 3] }]];
-    let arrClone = itools.clone(arr);
+    const arrClone = itools.clone(arr);
     expect(arrClone).toEqual(arr);
   });
 

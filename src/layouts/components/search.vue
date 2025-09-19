@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="layout === 'side'"
-    class="header-menu-search"
-  >
+  <div v-if="layout === 'side'" class="header-menu-search">
     <t-input
       :class="['header-search', { 'hover-active': isSearchFocus }]"
       placeholder="请输入搜索内容"
@@ -10,19 +7,12 @@
       @focus="changeSearchFocus(true)"
     >
       <template #prefix-icon>
-        <t-icon
-          class="icon"
-          name="search"
-          size="16"
-        />
+        <t-icon class="icon" name="search" size="16" />
       </template>
     </t-input>
   </div>
 
-  <div
-    v-else
-    class="header-menu-search-left"
-  >
+  <div v-else class="header-menu-search-left">
     <t-button
       :class="{ 'search-icon-hide': isSearchFocus }"
       theme="default"
@@ -40,10 +30,7 @@
       @blur="changeSearchFocus(false)"
     >
       <template #prefix-icon>
-        <t-icon
-          name="search"
-          size="16"
-        />
+        <t-icon name="search" size="16" />
       </template>
     </t-input>
   </div>
@@ -53,7 +40,7 @@
 import { ref } from 'vue';
 
 defineProps({
-  layout: String
+  layout: String,
 });
 
 const isSearchFocus = ref(false);

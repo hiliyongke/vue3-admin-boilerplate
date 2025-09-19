@@ -1,4 +1,3 @@
-/* eslint-disable guard-for-in */
 import isArray from './is_array';
 import isObject from './is_object';
 import isDate from './is_date';
@@ -32,7 +31,7 @@ export default function isShallowEqual(...objs) {
 }
 
 function compare(obj, obj1) {
-  for (let i in obj) {
+  for (const i in obj) {
     if (obj1[i] === undefined) {
       return false;
     }
@@ -60,18 +59,18 @@ function compare(obj, obj1) {
 function compareArrays(obj, obj1) {
   if (!isArray(obj1)) return false;
   if (obj.length !== obj1.length) return false;
-  let equal = compare(obj, obj1);
+  const equal = compare(obj, obj1);
   return equal;
 }
 
 function compareObjects(obj, obj1) {
   if (!isObject(obj1)) return false;
-  for (let key in obj1) {
+  for (const key in obj1) {
     if (obj[key] === undefined) {
       return false;
     }
   }
-  let equal = compare(obj, obj1);
+  const equal = compare(obj, obj1);
   return equal;
 }
 

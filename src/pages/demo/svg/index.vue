@@ -2,10 +2,7 @@
   <div>
     <span>Svg Icon图标</span>
     <ul class="icon-list">
-      <li
-        v-for="icon in icons"
-        :key="icon"
-      >
+      <li v-for="icon in icons" :key="icon">
         <span>
           <SvgIcons :name="icon" />
           <span class="icon-name">{{ icon }}</span>
@@ -17,7 +14,7 @@
 
 <script lang="ts">
 export default {
-  name: 'SvgDemo'
+  name: 'SvgDemo',
 };
 </script>
 
@@ -36,7 +33,7 @@ const icons: readonly string[] = [
   'pdf',
   'ppt',
   'settings',
-  'word'
+  'word',
 ] as const;
 </script>
 

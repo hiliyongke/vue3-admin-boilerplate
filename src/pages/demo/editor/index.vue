@@ -5,47 +5,23 @@
         <pre class="state">{{ state }}</pre>
         <div class="config">
           <p>
-            <button @click="state.disabled = !state.disabled">
-              toggle disabled
-            </button>
+            <button @click="state.disabled = !state.disabled">toggle disabled</button>
           </p>
           <p>
-            <button @click="state.autofocus = !state.autofocus">
-              toggle autofocus
-            </button>
+            <button @click="state.autofocus = !state.autofocus">toggle autofocus</button>
           </p>
           <p>
-            <button @click="state.indentWithTab = !state.indentWithTab">
-              toggle indentWithTab
-            </button>
+            <button @click="state.indentWithTab = !state.indentWithTab">toggle indentWithTab</button>
           </p>
           <p>
             <label for="tabSize">tabSize:</label>
-            <input
-              id="tabSize"
-              v-model.number="state.tabSize"
-              type="range"
-              min="2"
-              max="10"
-              step="1"
-            />
+            <input id="tabSize" v-model.number="state.tabSize" type="range" min="2" max="10" step="1" />
           </p>
           <p>
             <label for="backgroundColor">backgroundColor:</label>
-            <select
-              id="backgroundColor"
-              v-model="state.backgroundColor"
-              name="backgroundColor"
-            >
+            <select id="backgroundColor" v-model="state.backgroundColor" name="backgroundColor">
               <option
-                v-for="option in [
-                  'white',
-                  'red',
-                  'black',
-                  'yellow',
-                  'lawngreen',
-                  'blue'
-                ]"
+                v-for="option in ['white', 'red', 'black', 'yellow', 'lawngreen', 'blue']"
                 :key="option"
                 :value="option"
               >
@@ -55,11 +31,7 @@
           </p>
           <p>
             <label for="language">language:</label>
-            <select
-              id="language"
-              v-model="state.language"
-              name="language"
-            >
+            <select id="language" v-model="state.language" name="language">
               <option
                 v-for="option in [
                   'javascript',
@@ -71,7 +43,7 @@
                   'php',
                   'python',
                   'rust',
-                  'sql'
+                  'sql',
                 ]"
                 :key="option"
                 :value="option"
@@ -82,16 +54,8 @@
           </p>
           <p>
             <label for="theme">theme:</label>
-            <select
-              id="theme"
-              v-model="state.theme"
-              name="theme"
-            >
-              <option
-                v-for="option in ['default', 'oneDark']"
-                :key="option"
-                :value="option"
-              >
+            <select id="theme" v-model="state.theme" name="theme">
+              <option v-for="option in ['default', 'oneDark']" :key="option" :value="option">
                 {{ option }}
               </option>
             </select>
@@ -147,7 +111,7 @@ const languages: Record<string, any> = {
   php: php(),
   python: python(),
   rust: rust(),
-  sql: sql()
+  sql: sql(),
 };
 
 const consoleLog = console.log;
@@ -164,7 +128,7 @@ const state = reactive({
   placeholder: 'code...',
   backgroundColor: 'white',
   language: 'javascript',
-  theme: 'oneDark'
+  theme: 'oneDark',
 });
 
 const extensions = computed(() => {

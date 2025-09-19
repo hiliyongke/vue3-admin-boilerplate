@@ -1,8 +1,6 @@
-const stopPropagation = event => {
+const stopPropagation = (event) => {
   const e = event || window.event;
-  const stop = e.stopPropagation
-    ? e.stopPropagation()
-    : (e.cancelBubble = true);
+  const stop = e.stopPropagation ? e.stopPropagation() : (e.cancelBubble = true);
   return stop;
 };
 

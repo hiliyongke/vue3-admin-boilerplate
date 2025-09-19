@@ -6,7 +6,7 @@
 
 <script lang="ts">
 export default {
-  name: 'RichEditor'
+  name: 'RichEditor',
 };
 </script>
 
@@ -35,11 +35,11 @@ interface Emits {
   /** 内容更新事件 */
   'update:modelValue': [value: string];
   /** 内容变化事件 */
-  'change': [value: string];
+  change: [value: string];
   /** 获得焦点事件 */
-  'focus': [];
+  focus: [];
   /** 失去焦点事件 */
-  'blur': [];
+  blur: [];
 }
 
 /**
@@ -49,7 +49,7 @@ const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
   height: 300,
   disabled: false,
-  placeholder: '请输入内容...'
+  placeholder: '请输入内容...',
 });
 
 /**
@@ -174,15 +174,18 @@ watch(modelValue, (newValue) => {
 /**
  * 监听禁用状态变化
  */
-watch(() => props.disabled, (newDisabled) => {
-  if (editor) {
-    if (newDisabled && editor.disable) {
-      editor.disable();
-    } else if (!newDisabled && editor.enable) {
-      editor.enable();
+watch(
+  () => props.disabled,
+  (newDisabled) => {
+    if (editor) {
+      if (newDisabled && editor.disable) {
+        editor.disable();
+      } else if (!newDisabled && editor.enable) {
+        editor.enable();
+      }
     }
   }
-});
+);
 
 /**
  * 组件卸载前销毁编辑器
@@ -199,7 +202,7 @@ defineExpose({
   setHTML,
   getText,
   clear,
-  destroyEditor
+  destroyEditor,
 });
 </script>
 

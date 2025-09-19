@@ -7,7 +7,7 @@ import axios, {
   type AxiosInstance,
   type AxiosRequestConfig,
   type AxiosResponse,
-  type InternalAxiosRequestConfig
+  type InternalAxiosRequestConfig,
 } from 'axios';
 import { envConfig } from '@/config/env';
 import { STORAGE_KEYS } from '@/constants';
@@ -55,9 +55,9 @@ export class HttpRequest {
       baseURL: this.baseURL,
       timeout: this.timeout,
       headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8',
       },
-      ...config
+      ...config,
     });
 
     this.setupInterceptors();
@@ -81,7 +81,7 @@ export class HttpRequest {
         if (config.method === 'get') {
           config.params = {
             ...config.params,
-            _t: Date.now()
+            _t: Date.now(),
           };
         }
 

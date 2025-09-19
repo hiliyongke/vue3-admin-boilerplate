@@ -1,13 +1,6 @@
 <template>
-  <t-breadcrumb
-    :max-item-width="'150'"
-    class="tdesign-breadcrumb"
-  >
-    <t-breadcrumbItem
-      v-for="item in crumbs"
-      :key="item.to"
-      :to="item.to"
-    >
+  <t-breadcrumb :max-item-width="'150'" class="tdesign-breadcrumb">
+    <t-breadcrumbItem v-for="item in crumbs" :key="item.to" :to="item.to">
       {{ item.title }}
     </t-breadcrumbItem>
   </t-breadcrumb>
@@ -31,19 +24,14 @@ const crumbs = computed(() => {
 
   const breadcrumbs = pathArray.reduce((breadcrumbArray: BreadcrumbItem[], path, idx) => {
     // 如果路由下有hiddenBreadcrumb或当前遍历到参数则隐藏
-    if (
-      route.matched[idx]?.meta?.hiddenBreadcrumb ||
-      Object.values(route.params).includes(path)
-    ) {
+    if (route.matched[idx]?.meta?.hiddenBreadcrumb || Object.values(route.params).includes(path)) {
       return breadcrumbArray;
     }
 
     breadcrumbArray.push({
       path,
-      to: breadcrumbArray[idx - 1]
-        ? `/${breadcrumbArray[idx - 1].path}/${path}`
-        : `/${path}`,
-      title: (route.matched[idx]?.meta?.title as string) ?? path
+      to: breadcrumbArray[idx - 1] ? `/${breadcrumbArray[idx - 1].path}/${path}` : `/${path}`,
+      title: (route.matched[idx]?.meta?.title as string) ?? path,
     });
     return breadcrumbArray;
   }, [] as BreadcrumbItem[]);

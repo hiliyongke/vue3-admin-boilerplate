@@ -31,5 +31,5 @@ export const base64ToBlob = (code: string) => {
 
 export default {
   base64ToBlob,
-  urlToBlob
+  urlToBlob,
 };

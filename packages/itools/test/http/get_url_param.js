@@ -15,8 +15,7 @@ describe('getUrlParam', () => {
     expect(parsedUrl.searchParams.has('a')).toBe(false);
     expect(url).toBe(null);
 
-    const urlset =
-      'https://ww.abc.com/c/a.htm?id=2f&y=1.21&a=b&foo=lorem&bar=&baz';
+    const urlset = 'https://ww.abc.com/c/a.htm?id=2f&y=1.21&a=b&foo=lorem&bar=&baz';
     expect(itools.getUrlParam('a', urlset)).toBe('b');
     expect(itools.getUrlParam('', urlset)).toBe(null);
     expect(itools.getUrlParam('foo', urlset)).toBe('lorem');

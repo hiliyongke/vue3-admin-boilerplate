@@ -18,11 +18,7 @@ describe('setUrlParam', () => {
   });
 
   test('set a key value and url', () => {
-    const url = itools.setUrlParam(
-      'a',
-      'b',
-      'https://ww.abc.com/c/a.htm?id=2f&y=1.21'
-    );
+    const url = itools.setUrlParam('a', 'b', 'https://ww.abc.com/c/a.htm?id=2f&y=1.21');
     const parsedUrl = new URL(url);
     expect(parsedUrl.searchParams.has('a')).toBe(true);
     expect(parsedUrl.searchParams.has('b')).toBe(false);
@@ -32,11 +28,7 @@ describe('setUrlParam', () => {
   });
 
   test('update key value', () => {
-    const url = itools.setUrlParam(
-      'a',
-      'c',
-      'https://ww.abc.com/c/a.htm?a=2f&y=1.21'
-    );
+    const url = itools.setUrlParam('a', 'c', 'https://ww.abc.com/c/a.htm?a=2f&y=1.21');
     const parsedUrl = new URL(url);
     expect(parsedUrl.searchParams.has('a')).toBe(true);
     expect(parsedUrl.searchParams.has('b')).toBe(false);

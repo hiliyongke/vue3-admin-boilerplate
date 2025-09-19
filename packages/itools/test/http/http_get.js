@@ -8,11 +8,11 @@ describe('httpGet', () => {
   test('httpGet', () => {
     itools.httpGet(
       'https://api.github.com/',
-      res => {
+      (res) => {
         const cb = JSON.parse(res); // {message: "API...", documentation_url: "https://developer.github.com/v3/#rate-limiting"}
         expect(itools.isObject(cb)).toBe(true);
       },
-      error => {
+      (error) => {
         console.log(error);
       }
     );

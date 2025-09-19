@@ -12,9 +12,9 @@ describe('isSymbol', function () {
   });
 
   it('should return `false` for non-symbols', function () {
-    let expected = lodashStable.map(falsey, stubFalse);
+    const expected = lodashStable.map(falsey, stubFalse);
 
-    let actual = lodashStable.map(falsey, function (value, index) {
+    const actual = lodashStable.map(falsey, function (value, index) {
       return index ? itools.isSymbol(value) : itools.isSymbol();
     });
 

@@ -22,7 +22,7 @@ import {
   setupGlobalProperties,
   setupLogger,
   setupConsole,
-  setupCustomComponents
+  setupCustomComponents,
 } from '@/plugins';
 import MiniMonitor from '@/utils/mini-monitor/index';
 
@@ -86,18 +86,14 @@ function bootstrap(app: App<Element>): void {
       url: import.meta.env.VITE_MONITOR_URL || '', // 监控数据收集接口
       baseParams: {
         appName: import.meta.env.VITE_APP_TITLE || 'Vue3-Admin',
-        version: import.meta.env.VITE_APP_VERSION || '1.0.0'
+        version: import.meta.env.VITE_APP_VERSION || '1.0.0',
       },
       // 监控域名白名单
-      whiteName: [
-        location.hostname,
-        'localhost',
-        '127.0.0.1'
-      ],
+      whiteName: [location.hostname, 'localhost', '127.0.0.1'],
       // 首屏渲染时间阈值，超过此值不进行数据收集
       fpLimit: 4000,
       // 生产环境关闭控制台输出
-      showConsole: import.meta.env.DEV
+      showConsole: import.meta.env.DEV,
     });
   }
 

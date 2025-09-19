@@ -29,12 +29,12 @@ pinia.use(
     // 数据序列化配置
     serializer: {
       serialize: JSON.stringify,
-      deserialize: JSON.parse
+      deserialize: JSON.parse,
     },
     // 可以通过key函数自定义存储键名
     key: (id: string) => `__persisted__${id}`,
     // 默认持久化所有状态，可在具体store中配置
-    auto: true
+    auto: true,
   })
 );
 

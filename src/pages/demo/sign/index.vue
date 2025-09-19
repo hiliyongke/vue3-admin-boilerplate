@@ -15,12 +15,7 @@
     </div>
     <hr />
     使用方法二
-    <CanvasSign
-      ref="canvasSign2"
-      :height="400"
-      :width="width"
-      :line-width="lineWidth"
-    >
+    <CanvasSign ref="canvasSign2" :height="400" :width="width" :line-width="lineWidth">
       <template #default="{ save, clear }">
         <t-button @click="() => save(saveCallback)">save</t-button>
         <t-button @click="() => clearWithSlotHandle(clear)">clear</t-button>
@@ -28,15 +23,12 @@
     </CanvasSign>
     <hr />
     生成图片展示
-    <img
-      :src="imgSrc"
-      alt="生成的图片"
-    />
+    <img :src="imgSrc" alt="生成的图片" />
   </div>
 </template>
 <script lang="ts">
 export default {
-  name: 'SignDemo'
+  name: 'SignDemo',
 };
 </script>
 
@@ -47,7 +39,8 @@ import CanvasSign from '@/components/canvas-sign/index.vue';
 /**
  * 空白图片 Base64
  */
-const BLANK_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=';
+const BLANK_IMAGE =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQYV2NgAAIAAAUAAarVyFEAAAAASUVORK5CYII=';
 
 /**
  * 画布签名组件实例类型
@@ -76,9 +69,7 @@ const canvasSign2 = ref<CanvasSignInstance>();
 /**
  * 画布宽度
  */
-const width = ref<number>(
-  document.documentElement.clientWidth || document.body.clientWidth
-);
+const width = ref<number>(document.documentElement.clientWidth || document.body.clientWidth);
 
 /**
  * 线条宽度

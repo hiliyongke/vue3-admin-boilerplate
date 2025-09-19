@@ -1,10 +1,7 @@
 <template>
   <div>
     <template v-if="setting.layout.value === 'side'">
-      <t-layout
-        key="side"
-        :class="mainLayoutCls"
-      >
+      <t-layout key="side" :class="mainLayoutCls">
         <t-aside><layout-side-nav /></t-aside>
         <t-layout>
           <t-header><layout-header /></t-header>
@@ -48,8 +45,8 @@ const setting = storeToRefs(settingStore);
 
 const mainLayoutCls = computed(() => [
   {
-    't-layout--with-sider': settingStore.showSidebar
-  }
+    't-layout--with-sider': settingStore.showSidebar,
+  },
 ]);
 
 const appendNewRoute = () => {
@@ -57,14 +54,14 @@ const appendNewRoute = () => {
     path,
     query,
     meta: { title },
-    name
+    name,
   } = route;
   tabsRouterStore.appendTabRouterList({
     path,
     query,
     title: title as string,
     name,
-    isAlive: true
+    isAlive: true,
   });
 };
 

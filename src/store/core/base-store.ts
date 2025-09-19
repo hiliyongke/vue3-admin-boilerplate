@@ -31,78 +31,84 @@ export interface BaseStoreOptions {
 /**
  * 创建基础Store
  */
-export function createBaseStore<T extends Record<string, any>>(
-  options: BaseStoreOptions,
-  initialState: T
-): any {
-  return defineStore(options.id, () => {
-    // 状态定义
-    const state = ref<T & BaseState>({
-      ...initialState,
-      loading: false,
-      error: null,
-      lastUpdated: 0
-    });
-
-    // 计算属性
-    const isLoading = computed(() => state.value.loading);
-    const hasError = computed(() => !!state.value.error);
-
-    // 方法
-    const setLoading = (loading: boolean) => {
-      state.value.loading = loading;
-    };
-
-    const setError = (error: string | null) => {
-      state.value.error = error;
-      state.value.loading = false;
-    };
-
-    const clearError = () => {
-      state.value.error = null;
-    };
-
-    const updateTimestamp = () => {
-      state.value.lastUpdated = Date.now();
-    };
-
-    const reset = () => {
-      Object.assign(state.value, {
+export function createBaseStore<T extends Record<string, any>>(options: BaseStoreOptions, initialState: T): any {
+  return defineStore(
+    options.id,
+    () => {
+      // 状态定义
+      const state = ref<T & BaseState>({
         ...initialState,
         loading: false,
         error: null,
-        lastUpdated: 0
+        lastUpdated: 0,
       });
-    };
-
-    return {
-      // 状态
-      state,
-      loading: computed(() => state.value.loading),
-      error: computed(() => state.value.error),
-      lastUpdated: computed(() => state.value.lastUpdated),
 
       // 计算属性
-      isLoading,
-      hasError,
+      const isLoading = computed(() => state.value.loading);
+      const hasError = computed(() => !!state.value.error);
 
       // 方法
-      setLoading,
-      setError,
-      clearError,
-      updateTimestamp,
-      reset
-    };
-  }, {
-    persist: options.persist
-  });
+      const setLoading = (loading: boolean) => {
+        state.value.loading = loading;
+      };
+
+      const setError = (error: string | null) => {
+        state.value.error = error;
+        state.value.loading = false;
+      };
+
+      const clearError = () => {
+        state.value.error = null;
+      };
+
+      const updateTimestamp = () => {
+        state.value.lastUpdated = Date.now();
+      };
+
+      const reset = () => {
+        Object.assign(state.value, {
+          ...initialState,
+          loading: false,
+          error: null,
+          lastUpdated: 0,
+        });
+      };
+
+      return {
+        // 状态
+        state,
+        loading: computed(() => state.value.loading),
+        error: computed(() => state.value.error),
+        lastUpdated: computed(() => state.value.lastUpdated),
+
+        // 计算属性
+        isLoading,
+        hasError,
+
+        // 方法
+        setLoading,
+        setError,
+        clearError,
+        updateTimestamp,
+        reset,
+      };
+    },
+    {
+      persist: options.persist,
+    }
+  );
 }
 
 /**
  * 异步操作包装器
  */
 export async function withAsyncAction<T>(
-  store: { setLoading: (loading: boolean) => void; setError: (error: string | null) => void; clearError: () => void; updateTimestamp: () => void },
+  store: {
+    setLoading: (loading: boolean) => void;
+    setError: (error: string | null) => void;
+    clearError: () => void;
+    updateTimestamp: () => void;
+  },
   action: () => Promise<T>
 ): Promise<T> {
   try {

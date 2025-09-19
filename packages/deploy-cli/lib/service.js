@@ -25,7 +25,7 @@ const setupDefaultCommands = () => {
 const registerCommands = () => {
   const commandsPath = `${__dirname}/commands`;
 
-  const idToPlugin = id => {
+  const idToPlugin = (id) => {
     const command = require(`${commandsPath}/${id}`);
     const commandName = id.split('.')[0];
     const alias = id.charAt(0);
@@ -36,7 +36,7 @@ const registerCommands = () => {
         .description(command.description)
         .alias(alias)
         .option('-m, --mode <mode>', 'setup deploy mode')
-        .action(options => {
+        .action((options) => {
           command.apply(options.mode);
         });
     } else {

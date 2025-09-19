@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'WebWorkerDemo'
+  name: 'WebWorkerDemo',
 };
 </script>
 
@@ -61,7 +61,7 @@ const workerCode: WorkerFunction = () => {
 const changeFuncToUrl = (func: WorkerFunction): Worker => {
   // 把函数转成一个自执行函数
   const workBlob = new Blob([`(${func.toString()})()`], {
-    type: 'application/javascript'
+    type: 'application/javascript',
   });
   const url = URL.createObjectURL(workBlob);
   return new Worker(url);

@@ -1,14 +1,10 @@
-import {
-  EditorState,
-  EditorStateConfig,
-  Compartment,
-  Extension,
-  StateEffect
-} from '@codemirror/state';
-import { EditorView, ViewUpdate, keymap, placeholder } from '@codemirror/view';
+import type { EditorStateConfig, Extension } from '@codemirror/state';
+import { EditorState, Compartment, StateEffect } from '@codemirror/state';
+import type { ViewUpdate } from '@codemirror/view';
+import { EditorView, keymap, placeholder } from '@codemirror/view';
 import { indentWithTab } from '@codemirror/commands';
 import { indentUnit } from '@codemirror/language';
-import * as CSS from 'csstype';
+import type * as CSS from 'csstype';
 
 // state
 export interface EditorStateCreatorOptions {
@@ -18,31 +14,24 @@ export interface EditorStateCreatorOptions {
   onFocus(viewUpdate: ViewUpdate): void;
   onBlur(viewUpdate: ViewUpdate): void;
 }
-export const createState = ({
-  config,
-  ...events
-}: EditorStateCreatorOptions): EditorState => {
-  const extensions = Array.isArray(config.extensions)
-    ? config.extensions
-    : [config.extensions];
+export const createState = ({ config, ...events }: EditorStateCreatorOptions): EditorState => {
+  const extensions = Array.isArray(config.extensions) ? config.extensions : [config.extensions];
   return EditorState.create({
     doc: config.doc,
     selection: config.selection,
     extensions: [
       ...extensions,
-      EditorView.updateListener.of(viewUpdate => {
+      EditorView.updateListener.of((viewUpdate) => {
         // https://discuss.codemirror.net/t/codemirror-6-proper-way-to-listen-for-changes/2395/11
         events.onUpdate(viewUpdate);
         if (viewUpdate.docChanged) {
           events.onChange(viewUpdate.state.doc.toString(), viewUpdate);
         }
         if (viewUpdate.focusChanged) {
-          viewUpdate.view.hasFocus
-            ? events.onFocus(viewUpdate)
-            : events.onBlur(viewUpdate);
+          viewUpdate.view.hasFocus ? events.onFocus(viewUpdate) : events.onBlur(viewUpdate);
         }
-      })
-    ]
+      }),
+    ],
   });
 };
 
@@ -53,8 +42,8 @@ export const setDoc = (view: EditorView, newDoc: string) => {
     changes: {
       from: 0,
       to: view.state.doc.length,
-      insert: newDoc
-    }
+      insert: newDoc,
+    },
   });
 };
 
@@ -74,7 +63,7 @@ const rerunCompartment = () => {
     } else {
       // inject
       view.dispatch({
-        effects: StateEffect.appendConfig.of(compartment.of(extension))
+        effects: StateEffect.appendConfig.of(compartment.of(extension)),
       });
     }
   };
@@ -99,10 +88,7 @@ export const extensions = {
   enable: () => [EditorView.editable.of(true), EditorState.readOnly.of(false)],
   // https://codemirror.net/examples/tab/
   indentWithTab: () => keymap.of([indentWithTab]),
-  tabSize: (tabSize: number) => [
-    EditorState.tabSize.of(tabSize),
-    indentUnit.of(' '.repeat(tabSize))
-  ],
+  tabSize: (tabSize: number) => [EditorState.tabSize.of(tabSize), indentUnit.of(' '.repeat(tabSize))],
   // https://codemirror.net/examples/styling/
-  style: (style: CSS.Properties) => EditorView.theme({ '&': { ...style } })
+  style: (style: CSS.Properties) => EditorView.theme({ '&': { ...style } }),
 };

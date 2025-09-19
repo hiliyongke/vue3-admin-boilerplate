@@ -11,17 +11,17 @@ const wsAxios = new WsAxios({
     source: 'h5',
     userid: sessionStorage.getItem('yzkf_userid'),
     ts: new Date().getTime(),
-    data: { upcmd: 'ping' }
-  })
+    data: { upcmd: 'ping' },
+  }),
 });
 // websocket请求拦截
 
-wsAxios.intercepts.request(params => {
+wsAxios.intercepts.request((params) => {
   console.log(params, '请求拦截：params');
   return params;
 });
 // websocket响应拦截
-wsAxios.intercepts.response(response => {
+wsAxios.intercepts.response((response) => {
   console.log('响应拦截：', response);
   return response;
 });

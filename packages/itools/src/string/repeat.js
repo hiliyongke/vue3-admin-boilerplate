@@ -12,7 +12,7 @@ export default function repeat(item, times) {
       break;
     }
     s += s;
-    // eslint-disable-next-line no-param-reassign
+
     times = times >> 1;
   }
   return target;

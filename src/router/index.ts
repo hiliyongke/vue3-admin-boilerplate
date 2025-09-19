@@ -9,13 +9,7 @@
  * 4. 提供路由工具函数
  */
 
-import {
-  useRoute,
-  createRouter,
-  createWebHashHistory,
-  type RouteRecordRaw,
-  type Router
-} from 'vue-router';
+import { useRoute, createRouter, createWebHashHistory, type RouteRecordRaw, type Router } from 'vue-router';
 import { uniq } from 'lodash-es';
 import type { App } from 'vue';
 
@@ -26,10 +20,9 @@ import staticModules from './static-modules';
  * 异步路由列表（需要权限验证的路由）
  * 按照meta.order字段进行排序
  */
-export const asyncRouterList: RouteRecordRaw[] = [
-  ...asyncModules,
-  ...staticModules
-].sort((a, b) => (a.meta?.order || 0) - (b.meta?.order || 0));
+export const asyncRouterList: RouteRecordRaw[] = [...asyncModules, ...staticModules].sort(
+  (a, b) => (a.meta?.order || 0) - (b.meta?.order || 0)
+);
 
 /**
  * 基础路由列表（无需权限验证的路由）
@@ -41,18 +34,18 @@ const defaultRouterList: RouteRecordRaw[] = [
     component: () => import('@/pages/login/index.vue'),
     meta: {
       title: '登录',
-      hidden: true
-    }
+      hidden: true,
+    },
   },
   {
     path: '/',
-    redirect: '/dashboard/base'
+    redirect: '/dashboard/base',
   },
   {
     path: '/:pathMatch(.*)*',
     name: '404Page',
-    redirect: '/result/404'
-  }
+    redirect: '/result/404',
+  },
 ];
 
 /**
@@ -111,9 +104,9 @@ const router: Router = createRouter({
     return {
       el: '#app',
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     };
-  }
+  },
 });
 
 /**

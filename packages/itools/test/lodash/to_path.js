@@ -10,16 +10,13 @@ describe('toPath', function () {
   });
 
   it('should coerce array elements to strings', function () {
-    let array = ['a', 'b', 'c'];
+    const array = ['a', 'b', 'c'];
 
-    lodashStable.each(
-      [array, lodashStable.map(array, Object)],
-      function (value) {
-        let actual = itools.toPath(value);
-        expect(actual).toStrictEqual(array);
-        assert.notStrictEqual(actual, array);
-      }
-    );
+    lodashStable.each([array, lodashStable.map(array, Object)], function (value) {
+      const actual = itools.toPath(value);
+      expect(actual).toStrictEqual(array);
+      assert.notStrictEqual(actual, array);
+    });
   });
 
   it('should return new path array', function () {
@@ -28,28 +25,17 @@ describe('toPath', function () {
 
   it('should not coerce symbols to strings', function () {
     if (Symbol) {
-      let object = Object(symbol);
+      const object = Object(symbol);
       lodashStable.each([symbol, object, [symbol], [object]], function (value) {
-        let actual = itools.toPath(value);
+        const actual = itools.toPath(value);
         assert.ok(lodashStable.isSymbol(actual[0]));
       });
     }
   });
 
   it('should handle complex paths', function () {
-    let actual = itools.toPath(
-      'a[-1.23]["[\\"b\\"]"].c[\'[\\\'d\\\']\'][\ne\n][f].g'
-    );
-    assert.deepStrictEqual(actual, [
-      'a',
-      '-1.23',
-      '["b"]',
-      'c',
-      "['d']",
-      '\ne\n',
-      'f',
-      'g'
-    ]);
+    const actual = itools.toPath('a[-1.23]["[\\"b\\"]"].c[\'[\\\'d\\\']\'][\ne\n][f].g');
+    assert.deepStrictEqual(actual, ['a', '-1.23', '["b"]', 'c', "['d']", '\ne\n', 'f', 'g']);
   });
 
   it('should handle consecutive empty brackets and dots', function () {

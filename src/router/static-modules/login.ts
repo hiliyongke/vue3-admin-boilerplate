@@ -1,5 +1,5 @@
 import LogoutIcon from '@/assets/svg/assets-slide-logout.svg';
-import { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'loginRedirect',
     meta: { title: '登录页', icon: LogoutIcon, single: true, order: 6 },
     redirect: '/login',
-    children: []
-  }
+    children: [],
+  },
 ];
 export default routes;

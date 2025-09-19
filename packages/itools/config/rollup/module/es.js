@@ -11,6 +11,6 @@ export default {
     format: 'es',
     name: 'itools',
     sourcemap: false,
-    banner: banner
-  }
+    banner,
+  },
 };

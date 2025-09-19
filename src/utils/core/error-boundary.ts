@@ -18,7 +18,7 @@ export enum ErrorType {
   /** 业务逻辑错误 */
   BUSINESS_ERROR = 'business_error',
   /** 用户操作错误 */
-  USER_ERROR = 'user_error'
+  USER_ERROR = 'user_error',
 }
 
 /**
@@ -96,15 +96,15 @@ export class RemoteErrorHandler implements ErrorHandler {
         await fetch(this.reportUrl, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(error)
+          body: JSON.stringify(error),
         });
         break;
       } catch (err) {
         retries++;
         if (retries < this.maxRetries) {
-          await new Promise(resolve => setTimeout(resolve, this.retryDelay));
+          await new Promise((resolve) => setTimeout(resolve, this.retryDelay));
         } else {
           console.error('错误上报失败:', err);
         }
@@ -140,28 +140,32 @@ export class ErrorBoundary {
         column: event.colno,
         timestamp: Date.now(),
         userAgent: navigator.userAgent,
-        pageUrl: window.location.href
+        pageUrl: window.location.href,
       });
     });
 
     // 监听资源加载错误
-    window.addEventListener('error', (event) => {
-      const target = event.target;
-      if (target && target instanceof HTMLElement) {
-        this.captureError({
-          type: ErrorType.RESOURCE_ERROR,
-          message: `资源加载失败: ${(target as any).src || (target as any).href}`,
-          timestamp: Date.now(),
-          userAgent: navigator.userAgent,
-          pageUrl: window.location.href,
-          extra: {
-            tagName: target.tagName,
-            src: (target as any).src,
-            href: (target as any).href
-          }
-        });
-      }
-    }, true);
+    window.addEventListener(
+      'error',
+      (event) => {
+        const { target } = event;
+        if (target && target instanceof HTMLElement) {
+          this.captureError({
+            type: ErrorType.RESOURCE_ERROR,
+            message: `资源加载失败: ${(target as any).src || (target as any).href}`,
+            timestamp: Date.now(),
+            userAgent: navigator.userAgent,
+            pageUrl: window.location.href,
+            extra: {
+              tagName: target.tagName,
+              src: (target as any).src,
+              href: (target as any).href,
+            },
+          });
+        }
+      },
+      true
+    );
 
     // 监听Promise未捕获错误
     window.addEventListener('unhandledrejection', (event) => {
@@ -171,7 +175,7 @@ export class ErrorBoundary {
         stack: event.reason?.stack,
         timestamp: Date.now(),
         userAgent: navigator.userAgent,
-        pageUrl: window.location.href
+        pageUrl: window.location.href,
       });
     });
   }
@@ -203,7 +207,7 @@ export class ErrorBoundary {
       timestamp: Date.now(),
       userAgent: navigator.userAgent,
       pageUrl: window.location.href,
-      ...error
+      ...error,
     };
 
     this.errorQueue.push(errorInfo);
@@ -238,18 +242,14 @@ export class ErrorBoundary {
   /**
    * 手动报告错误
    */
-  reportError(
-    message: string,
-    type: ErrorType = ErrorType.BUSINESS_ERROR,
-    extra?: Record<string, any>
-  ): void {
+  reportError(message: string, type: ErrorType = ErrorType.BUSINESS_ERROR, extra?: Record<string, any>): void {
     this.captureError({
       type,
       message,
       extra,
       timestamp: Date.now(),
       userAgent: navigator.userAgent,
-      pageUrl: window.location.href
+      pageUrl: window.location.href,
     });
   }
 }

@@ -33,10 +33,7 @@ function requestHandle(
   if (statusCode !== 200) {
     error = new Error(`请求失败\n状态码: ${statusCode}`);
   } else if (!contentType || !/^application\/json/.test(contentType)) {
-    error = new Error(
-      '无效的 content-type.\n' +
-        `期望的是 application/json 但接收到的是 ${contentType}`
-    );
+    error = new Error('无效的 content-type.\n' + `期望的是 application/json 但接收到的是 ${contentType}`);
   }
   if (error) {
     if (errorCb) {
@@ -50,7 +47,7 @@ function requestHandle(
   }
 
   res.setEncoding('utf8');
-  res.on('data', chunk => {
+  res.on('data', (chunk) => {
     rawData += chunk;
   });
   res.on('end', () => {
@@ -66,16 +63,12 @@ function requestHandle(
 }
 
 // 发起请求
-function httpGet(
-  url: string,
-  sussCb: (result: SuccessCallbackResult) => void,
-  errorCb?: () => void
-): void {
+function httpGet(url: string, sussCb: (result: SuccessCallbackResult) => void, errorCb?: () => void): void {
   const isHttpsRes = isHttps(url);
   const requestModule = isHttpsRes ? https : http;
 
   requestModule
-    .get(url, res => {
+    .get(url, (res) => {
       requestHandle(url, res, sussCb, errorCb);
     })
     .on('error', (e: Error) => {
@@ -88,12 +81,7 @@ const { ips, excludes, includes } = checkArgv(argv);
 
 // 计算入口
 function calculatePaths(parsedData: any, url: string, i: number): void {
-  const allInfo = calculateObj.calcUrl(
-    parsedData.paths,
-    parsedData.definitions,
-    excludes || [],
-    includes || []
-  );
+  const allInfo = calculateObj.calcUrl(parsedData.paths, parsedData.definitions, excludes || [], includes || []);
   let infoTitle = '';
 
   if (parsedData.info && parsedData.info.title) {
@@ -110,7 +98,7 @@ function calculatePaths(parsedData: any, url: string, i: number): void {
 function getResources(url: string, i: number, errorCallback?: () => void): void {
   httpGet(
     url,
-    res => {
+    (res) => {
       const { parsedData: data } = res;
       if (typeof data === 'object' && data !== null) {
         calculatePaths(data, url, i);

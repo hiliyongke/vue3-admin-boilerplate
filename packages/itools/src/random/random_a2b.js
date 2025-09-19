@@ -1,6 +1,6 @@
 // itools.randomFromA2B = itools.randomA2B
 const randomA2B = (a, b, int) => {
-  let result = Math.random() * (b - a) + a;
+  const result = Math.random() * (b - a) + a;
   return int ? Math.floor(result) : result;
 };
 

@@ -8,10 +8,10 @@ export default function compact(arr) {
   if (!isArray(arr)) {
     throw new Error('expected an array');
   }
-  let result = [];
-  let len = arr.length;
+  const result = [];
+  const len = arr.length;
   for (let i = 0; i < len; i++) {
-    let elem = arr[i];
+    const elem = arr[i];
     if (elem) {
       result.push(elem);
     }

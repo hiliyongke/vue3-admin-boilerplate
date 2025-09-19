@@ -8,7 +8,7 @@ export interface SharedUserState {
 export const useSharedUserStore = defineStore('sharedUser', {
   state: (): SharedUserState => ({
     profile: null,
-    preferences: {}
+    preferences: {},
   }),
 
   actions: {
@@ -18,6 +18,6 @@ export const useSharedUserStore = defineStore('sharedUser', {
 
     setPreferences(preferences: any) {
       this.preferences = preferences;
-    }
-  }
+    },
+  },
 });

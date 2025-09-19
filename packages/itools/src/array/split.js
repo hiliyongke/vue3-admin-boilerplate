@@ -8,10 +8,10 @@ export default function split(arr, n) {
   if (n !== null && !isNumber(n)) {
     throw new Error('expected a number or null for the second argument');
   }
-  // eslint-disable-next-line no-param-reassign
+
   n = n !== null ? n : arr.length;
-  let len = arr.length;
-  let groups = [];
+  const len = arr.length;
+  const groups = [];
   for (let i = 0; i < len; i += n) {
     groups.push(arr.slice(i, i + n));
   }

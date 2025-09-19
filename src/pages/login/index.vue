@@ -3,16 +3,8 @@
   <div class="wrapper">
     <div class="login-wrapper">
       <div class="login-container">
-        <img
-          class="login-one-ball"
-          src="../../assets/images/material1.png"
-          alt="装饰球1"
-        />
-        <img
-          class="login-two-ball"
-          src="../../assets/images/material2.png"
-          alt="装饰球2"
-        />
+        <img class="login-one-ball" src="../../assets/images/material1.png" alt="装饰球1" />
+        <img class="login-two-ball" src="../../assets/images/material2.png" alt="装饰球2" />
         <div class="title-container">
           <h1 class="title margin-no">
             {{ type === 'register' ? '注册' : '登录' }}
@@ -21,26 +13,19 @@
             <p class="tip">
               {{ type === 'register' ? '已有账号?' : '没有账号吗?' }}
             </p>
-            <p
-              class="tip"
-              @click="handleSwitchType(type === 'register' ? 'login' : 'register')"
-            >
+            <p class="tip" @click="handleSwitchType(type === 'register' ? 'login' : 'register')">
               {{ type === 'register' ? '登录' : '注册新账号' }}
             </p>
           </div>
         </div>
 
         <Login v-if="type === 'login'" />
-        <Register
-          v-else
-          @register-success="handleRegisterSuccess"
-        />
+        <Register v-else @register-success="handleRegisterSuccess" />
         <Setting />
       </div>
 
       <footer class="copyright">
-        Copyright @ 2021-{{ new Date().getFullYear() }} {{ COMPANY_NAME }}. All
-        Rights Reserved
+        Copyright @ 2021-{{ new Date().getFullYear() }} {{ COMPANY_NAME }}. All Rights Reserved
       </footer>
     </div>
   </div>
@@ -48,7 +33,7 @@
 
 <script lang="ts">
 export default {
-  name: 'LoginIndex'
+  name: 'LoginIndex',
 };
 </script>
 

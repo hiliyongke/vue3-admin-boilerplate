@@ -14,7 +14,7 @@ export function encrypt(word: string) {
   const srcs = CryptoES.enc.Utf8.parse(word);
   const encrypted = CryptoES.AES.encrypt(srcs, key, {
     mode: CryptoES.mode.ECB,
-    padding: CryptoES.pad.Pkcs7
+    padding: CryptoES.pad.Pkcs7,
   });
   return encrypted.toString();
 }
@@ -24,7 +24,7 @@ export function decrypt(word: string) {
   const key = CryptoES.enc.Utf8.parse(keyStr);
   const decryptStr = CryptoES.AES.decrypt(word, key, {
     mode: CryptoES.mode.ECB,
-    padding: CryptoES.pad.Pkcs7
+    padding: CryptoES.pad.Pkcs7,
   });
   return CryptoES.enc.Utf8.stringify(decryptStr).toString();
 }

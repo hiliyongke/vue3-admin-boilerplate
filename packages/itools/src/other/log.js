@@ -18,7 +18,7 @@ export default function log(msg, styles) {
   }
 
   if (styles) {
-    for (let style in styles) {
+    for (const style in styles) {
       if (Object.prototype.hasOwnProperty.call(styles, style)) {
         ele.style[style] = styles[style];
       }

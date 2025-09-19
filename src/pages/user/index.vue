@@ -12,32 +12,14 @@
         /> -->
       </div>
 
-      <t-card
-        class="user-info-list"
-        title="个人信息"
-      >
+      <t-card class="user-info-list" title="个人信息">
         <template #actions>
-          <t-button
-            theme="default"
-            shape="square"
-            variant="text"
-          >
-            <t-icon
-              name="edit"
-              size="18"
-            />
+          <t-button theme="default" shape="square" variant="text">
+            <t-icon name="edit" size="18" />
           </t-button>
         </template>
-        <t-row
-          class="content"
-          justify="space-between"
-        >
-          <t-col
-            v-for="(item, index) in USER_INFO_LIST"
-            :key="index"
-            class="contract"
-            :span="item.span || 3"
-          >
+        <t-row class="content" justify="space-between">
+          <t-col v-for="(item, index) in USER_INFO_LIST" :key="index" class="contract" :span="item.span || 3">
             <div class="contract-title">
               {{ item.title }}
             </div>
@@ -50,22 +32,11 @@
 
       <t-card class="content-container">
         <t-tabs value="second">
-          <t-tab-panel
-            value="first"
-            label="内容列表"
-          >
+          <t-tab-panel value="first" label="内容列表">
             <p>内容列表</p>
           </t-tab-panel>
-          <t-tab-panel
-            value="second"
-            label="内容列表"
-          >
-            <t-card
-              :bordered="false"
-              class="card-padding-no"
-              title="主页访问数据"
-              describe="（次）"
-            >
+          <t-tab-panel value="second" label="内容列表">
+            <t-card :bordered="false" class="card-padding-no" title="主页访问数据" describe="（次）">
               <template #actions>
                 <t-date-range-picker
                   class="card-date-picker-container"
@@ -75,16 +46,10 @@
                   @change="onLineChange"
                 />
               </template>
-              <div
-                id="lineContainer"
-                style="width: 100%; height: 330px"
-              ></div>
+              <div id="lineContainer" style="width: 100%; height: 330px"></div>
             </t-card>
           </t-tab-panel>
-          <t-tab-panel
-            value="third"
-            label="内容列表"
-          >
+          <t-tab-panel value="third" label="内容列表">
             <p>内容列表</p>
           </t-tab-panel>
         </t-tabs>
@@ -98,61 +63,27 @@
         <div class="position">XXG 港澳业务拓展组员工 直客销售</div>
       </t-card>
 
-      <t-card
-        title="团队成员"
-        class="user-team"
-      >
+      <t-card title="团队成员" class="user-team">
         <template #actions>
-          <t-button
-            theme="default"
-            shape="square"
-            variant="text"
-          >
-            <t-icon
-              name="edit"
-              size="18"
-            />
+          <t-button theme="default" shape="square" variant="text">
+            <t-icon name="edit" size="18" />
           </t-button>
         </template>
         <t-list :split="false">
-          <t-list-item
-            v-for="(item, index) in TEAM_MEMBERS"
-            :key="index"
-          >
-            <t-list-item-meta
-              :image="item.avatar"
-              :title="item.title"
-              :description="item.description"
-            />
+          <t-list-item v-for="(item, index) in TEAM_MEMBERS" :key="index">
+            <t-list-item-meta :image="item.avatar" :title="item.title" :description="item.description" />
           </t-list-item>
         </t-list>
       </t-card>
 
-      <t-card
-        title="服务产品"
-        class="product-container"
-      >
+      <t-card title="服务产品" class="product-container">
         <template #actions>
-          <t-button
-            theme="default"
-            shape="square"
-            variant="text"
-          >
-            <t-icon
-              name="edit"
-              size="18"
-            />
+          <t-button theme="default" shape="square" variant="text">
+            <t-icon name="edit" size="18" />
           </t-button>
         </template>
-        <t-row
-          class="content"
-          :getters="16"
-        >
-          <t-col
-            v-for="(item, index) in PRODUCT_LIST"
-            :key="index"
-            :span="3"
-          >
+        <t-row class="content" :getters="16">
+          <t-col v-for="(item, index) in PRODUCT_LIST" :key="index" :span="3">
             <component :is="getIcon(item)" />
           </t-col>
         </t-row>
@@ -162,17 +93,13 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'UserIndex'
+  name: 'UserIndex',
 };
 </script>
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import * as echarts from 'echarts/core';
-import {
-  GridComponent,
-  TooltipComponent,
-  LegendComponent
-} from 'echarts/components';
+import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import { LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import type { DateRangeValue } from 'tdesign-vue-next';
@@ -211,13 +138,7 @@ interface ChartOption {
 }
 
 // 注册 ECharts 组件
-echarts.use([
-  GridComponent,
-  TooltipComponent,
-  LineChart,
-  CanvasRenderer,
-  LegendComponent
-]);
+echarts.use([GridComponent, TooltipComponent, LineChart, CanvasRenderer, LegendComponent]);
 
 /**
  * 图表容器元素
@@ -274,7 +195,7 @@ const updateContainer = (): void => {
   if (lineChart && lineContainer) {
     lineChart.resize({
       width: lineContainer.clientWidth,
-      height: lineContainer.clientHeight
+      height: lineContainer.clientHeight,
     });
   }
 };

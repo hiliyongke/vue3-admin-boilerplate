@@ -14,10 +14,10 @@ JsonpErr.prototype.probe = function () {
 
 // jsonp错误或者seajs/requirejs错误
 JsonpErr.prototype.addListener = function (dom) {
-  dom.onerror = e => {
+  dom.onerror = (e) => {
     this.forms.add({
       msg: `script tag error${e}`,
-      url: dom.getAttribute('src')
+      url: dom.getAttribute('src'),
     });
   };
 };

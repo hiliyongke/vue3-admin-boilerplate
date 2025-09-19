@@ -15,11 +15,7 @@ describe('stripTags', function () {
     expect(itools.stripTags('<ab/><ab/>')).toEqual('');
     expect(itools.stripTags('<!-- test -->')).toEqual('');
     expect(itools.stripTags('<script>tst</srcipt>')).toEqual('tst');
-    expect(
-      itools.stripTags(
-        '<script type="text/javascript"><!--document.write("!"); //--></script>'
-      )
-    ).toEqual('');
+    expect(itools.stripTags('<script type="text/javascript"><!--document.write("!"); //--></script>')).toEqual('');
 
     expect(itools.stripTags('<!DOCTYPE html>')).toEqual('');
     expect(itools.stripTags('   ')).toEqual('   ');

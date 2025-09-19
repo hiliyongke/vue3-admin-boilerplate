@@ -15,8 +15,7 @@ const importScript = (src, callback, arg) => {
 
   if (/msie/.test(window.navigator.userAgent.toLowerCase())) {
     script.onreadystatechange = () => {
-      if (script.readyState === 'loaded' || script.readyState === 'complete')
-        callback && callback.call(null, arg);
+      if (script.readyState === 'loaded' || script.readyState === 'complete') callback && callback.call(null, arg);
     };
   } else if (/gecko/.test(window.navigator.userAgent.toLowerCase())) {
     script.onload = () => {
@@ -27,7 +26,7 @@ const importScript = (src, callback, arg) => {
   }
 };
 
-const hash = str => {
+const hash = (str) => {
   let hash = 0;
   if (str.length === 0) return hash;
   for (let i = 0; i < str.length; i++) {

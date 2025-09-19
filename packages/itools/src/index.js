@@ -7,7 +7,7 @@ function itools(subject) {
 }
 
 Object.assign(itools, functions, {
-  chain
+  chain,
 });
 
 export default itools;

@@ -19,7 +19,7 @@ describe('sleep', function () {
     Promise.resolve()
       .then(() => 'test')
       .then(itools.sleep(20))
-      .then(value => {
+      .then((value) => {
         expect(value).toEqual('test');
       }));
 
@@ -74,7 +74,7 @@ describe('sleep', function () {
       .sleep(0)
       .then(() => 'test')
       .then(sleepPromise)
-      .then(value => {
+      .then((value) => {
         expect(value).toEqual('test');
       });
   });
@@ -92,7 +92,7 @@ describe('sleep', function () {
     jest.useFakeTimers();
 
     await itools.sleep(0, {
-      useCachedSetTimeout: true
+      useCachedSetTimeout: true,
     });
 
     expect(setTimeout).toHaveBeenCalledTimes(0);

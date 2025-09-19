@@ -49,15 +49,13 @@ exports.floatPoint = /^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$/;
 exports.positiveFloatingPoint = /^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/;
 
 // 非正浮点数（负浮点数 + 0）
-exports.nonPositiveFloatingPoint =
-  /^(-([1-9]\d*\.\d*|0\.\d*[1-9]\d*))|0?\.0+|0$/;
+exports.nonPositiveFloatingPoint = /^(-([1-9]\d*\.\d*|0\.\d*[1-9]\d*))|0?\.0+|0$/;
 
 // 负浮点数
 exports.negativeFloatingPointNumber = /^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)$/;
 
 // 非负浮点数（正浮点数 + 0）
-exports.nonNegativeFloatingPointNumber =
-  /^[1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0$/;
+exports.nonNegativeFloatingPointNumber = /^[1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0$/;
 
 // 非零开头的最多带两位小数的数字
 exports.birth = /^([1-9][0-9]*)+(.[0-9]{1,2})?$/;

@@ -1,4 +1,4 @@
-import { TChartColor } from '@/config/color';
+import type { TChartColor } from '@/config/color';
 import { getChartListColor } from '@/utils/color';
 import { getRandomArray, getDateArray } from '@/utils/charts';
 
@@ -6,7 +6,7 @@ import { getRandomArray, getDateArray } from '@/utils/charts';
 export function getSmoothLineDataSet({
   dateTime = [],
   placeholderColor,
-  borderColor
+  borderColor,
 }: { dateTime?: Array<string> } & TChartColor) {
   let dateArray: Array<string> = ['00:00', '02:00', '04:00', '06:00'];
   if (dateTime.length > 0) {
@@ -17,39 +17,39 @@ export function getSmoothLineDataSet({
   return {
     color: getChartListColor(),
     tooltip: {
-      trigger: 'item'
+      trigger: 'item',
     },
     grid: {
       top: '10px',
       left: '0',
       right: '20px',
       bottom: '36px',
-      containLabel: true
+      containLabel: true,
     },
     xAxis: {
       type: 'category',
       data: dateArray,
       boundaryGap: false,
       axisLabel: {
-        color: placeholderColor
+        color: placeholderColor,
       },
       axisLine: {
         lineStyle: {
           color: borderColor,
-          width: 1
-        }
-      }
+          width: 1,
+        },
+      },
     },
     yAxis: {
       type: 'value',
       axisLabel: {
-        color: placeholderColor
+        color: placeholderColor,
       },
       splitLine: {
         lineStyle: {
-          color: borderColor
-        }
-      }
+          color: borderColor,
+        },
+      },
     },
     legend: {
       data: ['本月', '上月'],
@@ -60,8 +60,8 @@ export function getSmoothLineDataSet({
       itemWidth: 8,
       textStyle: {
         fontSize: 12,
-        color: placeholderColor
-      }
+        color: placeholderColor,
+      },
     },
     series: [
       {
@@ -73,14 +73,14 @@ export function getSmoothLineDataSet({
           getRandomArray(),
           getRandomArray(),
           getRandomArray(),
-          getRandomArray()
+          getRandomArray(),
         ],
         type: 'line',
         smooth: true,
         color: getChartListColor()[0],
         showSymbol: true,
         symbol: 'circle',
-        symbolSize: 8
+        symbolSize: 8,
       },
       {
         name: '本月',
@@ -91,16 +91,16 @@ export function getSmoothLineDataSet({
           getRandomArray(),
           getRandomArray(),
           getRandomArray(),
-          getRandomArray()
+          getRandomArray(),
         ],
         type: 'line',
         smooth: true,
         showSymbol: true,
         symbol: 'circle',
         symbolSize: 8,
-        color: getChartListColor()[1]
-      }
-    ]
+        color: getChartListColor()[1],
+      },
+    ],
   };
 }
 
@@ -116,7 +116,7 @@ export const lastYearList: Array<any> = [100, 120, 140, 160, 180, 200, 210];
 export function get2ColBarChartDataSet({
   isMonth = false,
   placeholderColor,
-  borderColor
+  borderColor,
 }: { isMonth?: boolean } & TChartColor) {
   let lastYearListCopy = lastYearList.concat([]);
   let thisYearListCopy = lastYearList.concat([]);
@@ -129,45 +129,45 @@ export function get2ColBarChartDataSet({
   return {
     color: getChartListColor(),
     tooltip: {
-      trigger: 'item'
+      trigger: 'item',
     },
     grid: {
       top: '10px',
       left: '0',
       right: '0',
       bottom: '36px',
-      containLabel: true
+      containLabel: true,
     },
     xAxis: [
       {
         type: 'category',
         data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
         axisTick: {
-          alignWithLabel: true
+          alignWithLabel: true,
         },
         axisLabel: {
-          color: placeholderColor
+          color: placeholderColor,
         },
         axisLine: {
           lineStyle: {
             color: borderColor,
-            width: 1
-          }
-        }
-      }
+            width: 1,
+          },
+        },
+      },
     ],
     yAxis: [
       {
         type: 'value',
         axisLabel: {
-          color: placeholderColor
+          color: placeholderColor,
         },
         splitLine: {
           lineStyle: {
-            color: borderColor
-          }
-        }
-      }
+            color: borderColor,
+          },
+        },
+      },
     ],
     legend: {
       data: ['去年', '今年'],
@@ -178,22 +178,22 @@ export function get2ColBarChartDataSet({
       itemWidth: 12,
       textStyle: {
         fontSize: 12,
-        color: placeholderColor
-      }
+        color: placeholderColor,
+      },
     },
     series: [
       {
         name: '去年',
         type: 'bar',
         barWidth: '30%',
-        data: lastYearListCopy
+        data: lastYearListCopy,
       },
       {
         name: '今年',
         type: 'bar',
         barWidth: '30%',
-        data: thisYearListCopy
-      }
-    ]
+        data: thisYearListCopy,
+      },
+    ],
   };
 }

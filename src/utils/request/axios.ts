@@ -1,20 +1,11 @@
-import axios, {
-  AxiosRequestConfig,
-  AxiosInstance,
-  AxiosResponse,
-  AxiosError,
-  InternalAxiosRequestConfig
-} from 'axios';
+import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { stringify } from 'qs';
 import isFunction from 'lodash-es/isFunction';
 import cloneDeep from 'lodash-es/cloneDeep';
-import { CreateAxiosOptions } from './transform';
+import type { CreateAxiosOptions } from './transform';
 import { AxiosCanceler } from './cancel';
-import {
-  AxiosRequestConfigRetry,
-  RequestOptions,
-  Result
-} from '../../../types/axios';
+import type { AxiosRequestConfigRetry, RequestOptions, Result } from '../../../types/axios';
 // Axios模块
 export class VAxios {
   // axios句柄
@@ -67,20 +58,15 @@ export class VAxios {
     if (!transform) {
       return;
     }
-    const {
-      requestInterceptors,
-      requestInterceptorsCatch,
-      responseInterceptors,
-      responseInterceptorsCatch
-    } = transform;
+    const { requestInterceptors, requestInterceptorsCatch, responseInterceptors, responseInterceptorsCatch } =
+      transform;
     const axiosCanceler = new AxiosCanceler();
 
     // 请求配置处理
     this.instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
       const headers = config.headers as any;
       const ignoreRepeatRequest = headers?.ignoreRepeatRequest;
-      const ignoreRepeat =
-        ignoreRepeatRequest ?? this.options.requestOptions?.ignoreRepeatRequest;
+      const ignoreRepeat = ignoreRepeatRequest ?? this.options.requestOptions?.ignoreRepeatRequest;
       if (!ignoreRepeat) axiosCanceler.addPending(config);
 
       if (requestInterceptors && isFunction(requestInterceptors)) {
@@ -91,10 +77,7 @@ export class VAxios {
 
     // 请求错误处理
     if (requestInterceptorsCatch && isFunction(requestInterceptorsCatch)) {
-      this.instance.interceptors.request.use(
-        undefined,
-        requestInterceptorsCatch
-      );
+      this.instance.interceptors.request.use(undefined, requestInterceptorsCatch);
     }
 
     // 响应结果处理
@@ -108,10 +91,7 @@ export class VAxios {
 
     // 响应错误处理
     if (responseInterceptorsCatch && isFunction(responseInterceptorsCatch)) {
-      this.instance.interceptors.response.use(
-        undefined,
-        responseInterceptorsCatch
-      );
+      this.instance.interceptors.response.use(undefined, responseInterceptorsCatch);
     }
   }
 
@@ -130,50 +110,32 @@ export class VAxios {
 
     return {
       ...config,
-      data: stringify(config.data, { arrayFormat: 'brackets' })
+      data: stringify(config.data, { arrayFormat: 'brackets' }),
     };
   }
 
-  get<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: 'GET' }, options);
   }
 
-  post<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: 'POST' }, options);
   }
 
-  put<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: 'PUT' }, options);
   }
 
-  delete<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: 'DELETE' }, options);
   }
 
-  patch<T = any>(
-    config: AxiosRequestConfig,
-    options?: RequestOptions
-  ): Promise<T> {
+  patch<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     return this.request({ ...config, method: 'PATCH' }, options);
   }
 
   // 请求
-  async request<T = any>(
-    config: AxiosRequestConfigRetry,
-    options?: RequestOptions
-  ): Promise<T> {
+  async request<T = any>(config: AxiosRequestConfigRetry, options?: RequestOptions): Promise<T> {
     let conf: CreateAxiosOptions = cloneDeep(config);
     const transform = this.getTransform();
 
@@ -181,8 +143,7 @@ export class VAxios {
 
     const opt: RequestOptions = { ...requestOptions, ...options };
 
-    const { beforeRequestHook, requestCatchHook, transformRequestHook } =
-      transform || {};
+    const { beforeRequestHook, requestCatchHook, transformRequestHook } = transform || {};
     if (beforeRequestHook && isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt);
     }

@@ -1,12 +1,6 @@
 <template>
-  <router-view
-    v-if="!isRefreshing"
-    v-slot="{ Component }"
-  >
-    <transition
-      name="fade"
-      mode="out-in"
-    >
+  <router-view v-if="!isRefreshing" v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
       <keep-alive :include="aliveViews">
         <component :is="Component" />
       </keep-alive>
@@ -37,7 +31,7 @@ const aliveViews = computed(() => {
   const tabsRouterStore = useTabsRouterStore();
   const { tabRouters } = tabsRouterStore;
 
-  return tabRouters.filter(route => route.isAlive).map(route => route.name);
+  return tabRouters.filter((route) => route.isAlive).map((route) => route.name);
 }) as ComputedRef<string[]>;
 
 const isRefreshing = computed(() => {

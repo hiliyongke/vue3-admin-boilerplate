@@ -12,11 +12,7 @@
     <template v-if="!state.isShowLogin">
       <div class="lock-box">
         <div class="lock">
-          <span
-            class="lock-icon"
-            title="解锁屏幕"
-            @click="unLockLogin(true)"
-          >
+          <span class="lock-icon" title="解锁屏幕" @click="unLockLogin(true)">
             <LockOffIcon />
           </span>
         </div>
@@ -51,14 +47,7 @@
             <ChevronRightIcon v-else />
           </template>
         </t-input>
-        <t-button
-          theme="default"
-          style="margin-top: 10px"
-          block
-          @click="nav2login"
-        >
-          重新登录
-        </t-button>
+        <t-button theme="default" style="margin-top: 10px" block @click="nav2login"> 重新登录 </t-button>
       </div>
     </template>
     <template v-if="!state.isShowLogin">
@@ -67,14 +56,8 @@
         <div class="date">{{ month }}月{{ day }}号，星期{{ week }}</div>
       </div>
       <div class="computer-status">
-        <span
-          :class="{ offline: !online }"
-          class="network"
-        >
-          <t-icon
-            name="wifi"
-            class="network"
-          />
+        <span :class="{ offline: !online }" class="network">
+          <t-icon name="wifi" class="network" />
         </span>
       </div>
     </template>
@@ -110,8 +93,8 @@ const state = reactive({
   loginLoading: false, // 正在登录
   loginForm: {
     username: userStore.userInfo.user_name || '用户',
-    password: ''
-  }
+    password: '',
+  },
 });
 
 // 解锁登录
@@ -133,7 +116,7 @@ const onLogin = async () => {
       password: params.password,
       phone: '',
       verifyCode: '',
-      checked: false
+      checked: false,
     });
 
     MessagePlugin.success('解锁成功');
@@ -152,8 +135,8 @@ const nav2login = () => {
   router.replace({
     name: LOGIN_NAME,
     query: {
-      redirect: route.fullPath
-    }
+      redirect: route.fullPath,
+    },
   });
 };
 </script>

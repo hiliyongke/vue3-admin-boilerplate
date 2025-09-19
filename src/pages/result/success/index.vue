@@ -1,26 +1,18 @@
 <template>
   <div class="result-success">
-    <t-icon
-      class="result-success-icon"
-      name="check-circle"
-    />
+    <t-icon class="result-success-icon" name="check-circle" />
     <div class="result-success-title">项目已创建成功</div>
     <div class="result-success-describe">可以联系负责人分发应用</div>
     <div class="result-success-actions">
       <t-button @click="handleGoHome">返回首页</t-button>
-      <t-button
-        theme="default"
-        @click="handleViewProgress"
-      >
-        查看进度
-      </t-button>
+      <t-button theme="default" @click="handleViewProgress"> 查看进度 </t-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'ResultSuccess'
+  name: 'ResultSuccess',
 };
 </script>
 

@@ -18,14 +18,14 @@
 const props = defineProps({
   node: {
     type: Object,
-    default: () => {}
+    default: () => {},
   },
   addNode: {
     type: Function,
-    default: () => null
-  }
+    default: () => null,
+  },
 });
-const add = type => {
+const add = (type) => {
   props.addNode({ nodeId: props.node.nodeId, type });
 };
 </script>

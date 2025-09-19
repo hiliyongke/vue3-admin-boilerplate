@@ -1,17 +1,14 @@
 import { defineStore } from 'pinia';
-import { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 import router, { asyncRouterList } from '@/router';
 import pinia from '@/store';
 
-function filterPermissionsRouters(
-  routes: Array<RouteRecordRaw>,
-  roles: Array<unknown>
-) {
+function filterPermissionsRouters(routes: Array<RouteRecordRaw>, roles: Array<unknown>) {
   const res: RouteRecordRaw[] = [];
   const removeRoutes: RouteRecordRaw[] = [];
-  routes.forEach(route => {
+  routes.forEach((route) => {
     const children: RouteRecordRaw[] = [];
-    route.children?.forEach(childRouter => {
+    route.children?.forEach((childRouter) => {
       const roleCode = childRouter.meta?.roleCode || childRouter.name;
       if (roles.indexOf(roleCode) !== -1) {
         children.push(childRouter);
@@ -32,7 +29,7 @@ export const usePermissionStore = defineStore({
   state: () => ({
     whiteListRouters: ['/login'],
     routers: [] as RouteRecordRaw[],
-    removeRoutes: [] as RouteRecordRaw[]
+    removeRoutes: [] as RouteRecordRaw[],
   }),
   actions: {
     async initRoutes(roles: Array<unknown>) {
@@ -61,8 +58,8 @@ export const usePermissionStore = defineStore({
       this.removeRoutes.forEach((item: RouteRecordRaw) => {
         router.addRoute(item);
       });
-    }
-  }
+    },
+  },
 });
 
 export function getPermissionStore() {

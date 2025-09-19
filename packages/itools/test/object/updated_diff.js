@@ -13,13 +13,10 @@ describe('updatedDiff', () => {
         ['array', [1]],
         ['function', () => ({})],
         ['date', new Date()],
-        ['date with milliseconds', new Date('2017-01-01T00:00:00.637Z')]
-      ])(
-        'returns empty object when given values of type %s are equal',
-        (type, value) => {
-          expect(itools.updatedDiff(value, value)).toEqual({});
-        }
-      );
+        ['date with milliseconds', new Date('2017-01-01T00:00:00.637Z')],
+      ])('returns empty object when given values of type %s are equal', (type, value) => {
+        expect(itools.updatedDiff(value, value)).toEqual({});
+      });
     });
 
     describe('not equal and not object', () => {
@@ -36,16 +33,10 @@ describe('updatedDiff', () => {
         [100, () => ({})],
         [() => ({}), 100],
         [new Date('2017-01-01'), new Date('2017-01-02')],
-        [
-          new Date('2017-01-01T00:00:00.636Z'),
-          new Date('2017-01-01T00:00:00.637Z')
-        ]
-      ])(
-        'returns right hand side value when different to left hand side value (%s, %s)',
-        (lhs, rhs) => {
-          expect(itools.updatedDiff(lhs, rhs)).toEqual(rhs);
-        }
-      );
+        [new Date('2017-01-01T00:00:00.636Z'), new Date('2017-01-01T00:00:00.637Z')],
+      ])('returns right hand side value when different to left hand side value (%s, %s)', (lhs, rhs) => {
+        expect(itools.updatedDiff(lhs, rhs)).toEqual(rhs);
+      });
     });
   });
 
@@ -60,26 +51,19 @@ describe('updatedDiff', () => {
       });
 
       test('returns subset of right hand side value when sibling objects differ', () => {
-        expect(
-          itools.updatedDiff({ a: { b: 1 }, c: 2 }, { a: { b: 1 }, c: 3 })
-        ).toEqual({ c: 3 });
+        expect(itools.updatedDiff({ a: { b: 1 }, c: 2 }, { a: { b: 1 }, c: 3 })).toEqual({ c: 3 });
       });
 
       test('returns subset of right hand side value when nested values differ', () => {
-        expect(
-          itools.updatedDiff({ a: { b: 1, c: 2 } }, { a: { b: 1, c: 3 } })
-        ).toEqual({
-          a: { c: 3 }
+        expect(itools.updatedDiff({ a: { b: 1, c: 2 } }, { a: { b: 1, c: 3 } })).toEqual({
+          a: { c: 3 },
         });
       });
 
       test('returns subset of right hand side value when nested values differ at multiple paths', () => {
-        expect(
-          itools.updatedDiff(
-            { a: { b: 1 }, c: 2, d: { e: 100 } },
-            { a: { b: 99 }, c: 3, d: { e: 100 } }
-          )
-        ).toEqual({ a: { b: 99 }, c: 3 });
+        expect(itools.updatedDiff({ a: { b: 1 }, c: 2, d: { e: 100 } }, { a: { b: 99 }, c: 3, d: { e: 100 } })).toEqual(
+          { a: { b: 99 }, c: 3 }
+        );
       });
 
       test('returns empty object when deleted from right hand side', () => {
@@ -91,13 +75,8 @@ describe('updatedDiff', () => {
       });
 
       test('returns subset of right hand side with updated date', () => {
-        expect(
-          itools.updatedDiff(
-            { date: new Date('2016') },
-            { date: new Date('2017') }
-          )
-        ).toEqual({
-          date: new Date('2017')
+        expect(itools.updatedDiff({ date: new Date('2016') }, { date: new Date('2017') })).toEqual({
+          date: new Date('2017'),
         });
       });
     });
@@ -110,7 +89,7 @@ describe('updatedDiff', () => {
       test('returns subset of right hand side array as object of indices to value when arrays differs at multiple indicies', () => {
         expect(itools.updatedDiff([1, 2, 3], [9, 8, 3])).toEqual({
           0: 9,
-          1: 8
+          1: 8,
         });
       });
 
@@ -123,19 +102,15 @@ describe('updatedDiff', () => {
       });
 
       test('returns subset of right hand side with updated date', () => {
-        expect(
-          itools.updatedDiff([new Date('2016')], [new Date('2017')])
-        ).toEqual({
-          0: new Date('2017')
+        expect(itools.updatedDiff([new Date('2016')], [new Date('2017')])).toEqual({
+          0: new Date('2017'),
         });
       });
     });
 
     describe('date', () => {
       test('returns empty object when dates are equal', () => {
-        expect(itools.updatedDiff(new Date('2016'), new Date('2016'))).toEqual(
-          {}
-        );
+        expect(itools.updatedDiff(new Date('2016'), new Date('2016'))).toEqual({});
       });
     });
 
@@ -172,7 +147,7 @@ describe('updatedDiff', () => {
         const rhs = Object.create(null);
         rhs.date = new Date('2017');
         expect(itools.updatedDiff(lhs, rhs)).toEqual({
-          date: new Date('2017')
+          date: new Date('2017'),
         });
       });
     });

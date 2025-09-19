@@ -1,15 +1,6 @@
 import assert from 'assert';
 import lodashStable from 'lodash';
-import {
-  args,
-  slice,
-  document,
-  body,
-  symbol,
-  falsey,
-  stubFalse,
-  realm
-} from '../const';
+import { args, slice, document, body, symbol, falsey, stubFalse, realm } from '../const';
 import itools from '../itools';
 
 describe('isObject', function () {
@@ -34,10 +25,10 @@ describe('isObject', function () {
   });
 
   it('should return `false` for non-objects', function () {
-    let values = falsey.concat(true, 1, 'a', symbol);
-    let expected = lodashStable.map(values, stubFalse);
+    const values = falsey.concat(true, 1, 'a', symbol);
+    const expected = lodashStable.map(values, stubFalse);
 
-    let actual = lodashStable.map(values, function (value, index) {
+    const actual = lodashStable.map(values, function (value, index) {
       return index ? itools.isObject(value) : itools.isObject();
     });
 

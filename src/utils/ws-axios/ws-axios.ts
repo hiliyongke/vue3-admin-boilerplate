@@ -16,7 +16,7 @@ export class WsAxios {
     // 配置
     url: '', // 地址
     time: 3000, // 心跳间隔(毫秒)
-    ping: () => ({}) // ping code,
+    ping: () => ({}), // ping code,
   };
   #ws: WebSocket | null = null; // websocket示例对象
   #requestId = 0; // callbacks对象key
@@ -45,7 +45,7 @@ export class WsAxios {
       } else {
         (WsAxios as any)[requestAfter] = (response: any) => response;
       }
-    }
+    },
   };
 
   static [requestBefore](config: any) {
@@ -67,16 +67,13 @@ export class WsAxios {
     };
     this.#ws.onmessage = (message: MessageEvent) => {
       // console.log(message, 'onmessage')
-      const data = message.data;
+      const { data } = message;
       let resObj: any = null;
       try {
         const parseData = JSON.parse(data);
-        resObj =
-          typeof parseData == 'string' ? JSON.parse(parseData) : parseData;
+        resObj = typeof parseData === 'string' ? JSON.parse(parseData) : parseData;
       } catch (error: any) {
-        console.error(
-          `onmessage parse error: message:${data}, ${error.message}`
-        );
+        console.error(`onmessage parse error: message:${data}, ${error.message}`);
         return;
       }
       // 根据请求时传给后端的requestId，取出相应的回调函数
@@ -89,9 +86,7 @@ export class WsAxios {
       } catch (error: any) {
         // 被动接收后端数据
         (WsAxios as any)[requestAfter](resObj);
-        console.error(
-          `onmessage have some error: ${error.message}, message:${message}`
-        );
+        console.error(`onmessage have some error: ${error.message}, message:${message}`);
       } finally {
         delete this.#callbacks[resObj.requestId];
       }
@@ -114,7 +109,7 @@ export class WsAxios {
     //请求前调用拦截钩子
     params = { ...params, ...(WsAxios as any)[requestBefore](params) };
     const reqMsg = JSON.stringify(params);
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.#callbacks[requestId] = (resObj: any) => {
         //响应后调用拦截钩子
         resolve((WsAxios as any)[requestAfter](resObj));

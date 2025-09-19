@@ -1,11 +1,7 @@
 import { defineStore } from 'pinia';
 import keys from 'lodash-es/keys';
-import {
-  COLOR_TOKEN,
-  LIGHT_CHART_COLORS,
-  DARK_CHART_COLORS,
-  TColorSeries
-} from '@/config/color';
+import type { TColorSeries } from '@/config/color';
+import { COLOR_TOKEN, LIGHT_CHART_COLORS, DARK_CHART_COLORS } from '@/config/color';
 import STYLE_CONFIG from '@/config/style';
 import pinia from '@/store';
 
@@ -13,7 +9,7 @@ const state = {
   ...STYLE_CONFIG,
   showSettingPanel: false,
   colorList: COLOR_TOKEN,
-  chartColors: LIGHT_CHART_COLORS
+  chartColors: LIGHT_CHART_COLORS,
 };
 
 export type TState = typeof state;
@@ -34,7 +30,7 @@ export const useSettingStore = defineStore({
         return 'light';
       }
       return state.mode;
-    }
+    },
   },
   actions: {
     async changeMode(mode: 'dark' | 'light' | 'auto') {
@@ -50,10 +46,7 @@ export const useSettingStore = defineStore({
       }
       const isDarkMode = theme === 'dark';
 
-      document.documentElement.setAttribute(
-        'theme-mode',
-        isDarkMode ? 'dark' : ''
-      );
+      document.documentElement.setAttribute('theme-mode', isDarkMode ? 'dark' : '');
 
       this.chartColors = isDarkMode ? DARK_CHART_COLORS : LIGHT_CHART_COLORS;
     },
@@ -79,11 +72,11 @@ export const useSettingStore = defineStore({
           }
         }
       });
-    }
+    },
   },
   persist: {
-    paths: [...keys(STYLE_CONFIG), 'colorList', 'chartColors']
-  }
+    paths: [...keys(STYLE_CONFIG), 'colorList', 'chartColors'],
+  },
 });
 
 export function getSettingStore() {

@@ -4,13 +4,8 @@ import glob from 'glob';
 import { DIST_MODULE_CJS, SRC } from '../../const';
 
 function modulesPaths() {
-  const paths = glob.sync(SRC + '/*/*.js', {
-    ignore: [
-      SRC + '/chain/*.js',
-      SRC + '/util/**/*.js',
-      SRC + '/functions.js',
-      SRC + '/index.js'
-    ]
+  const paths = glob.sync(`${SRC}/*/*.js`, {
+    ignore: [`${SRC}/chain/*.js`, `${SRC}/util/**/*.js`, `${SRC}/functions.js`, `${SRC}/index.js`],
   });
   return paths;
 }
@@ -21,6 +16,6 @@ export default {
   output: {
     dir: DIST_MODULE_CJS,
     format: 'cjs',
-    chunkFileNames: 'internal/[name].js'
-  }
+    chunkFileNames: 'internal/[name].js',
+  },
 };

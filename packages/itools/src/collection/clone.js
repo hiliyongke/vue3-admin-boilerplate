@@ -1,5 +1,4 @@
 /* eslint-disable eqeqeq */
-/* eslint-disable guard-for-in */
 
 /**
  * deep copies objects and arrays
@@ -21,11 +20,11 @@ export default function clone(obj) {
   if (isFunction(obj)) {
     return obj;
   }
-  let result = isArray(obj) ? [] : {};
-  for (let key in obj) {
+  const result = isArray(obj) ? [] : {};
+  for (const key in obj) {
     // include prototype properties
-    let value = obj[key];
-    let type = {}.toString.call(value).slice(8, -1);
+    const value = obj[key];
+    const type = {}.toString.call(value).slice(8, -1);
     if (type == 'Array' || type == 'Object') {
       result[key] = clone(value);
     } else if (type == 'Date') {
@@ -43,7 +42,7 @@ function getRegExpFlags(regExp) {
   if (typeof regExp.source.flags == 'string') {
     return regExp.source.flags;
   } else {
-    let flags = [];
+    const flags = [];
     regExp.global && flags.push('g');
     regExp.ignoreCase && flags.push('i');
     regExp.multiline && flags.push('m');

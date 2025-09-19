@@ -2,24 +2,24 @@ import itools from '../itools';
 
 describe('search', () => {
   it('should pass example 1', () => {
-    let expected = 'surname';
-    let result = itools.search('zonneveld', {
+    const expected = 'surname';
+    const result = itools.search('zonneveld', {
       firstname: 'kevin',
       middle: 'van',
-      surname: 'zonneveld'
+      surname: 'zonneveld',
     });
     expect(result).toEqual(expected);
   });
 
   it('should pass example 2', () => {
-    let expected = 'a';
-    let result = itools.search('3', { a: 3, b: 5, c: 7 });
+    const expected = 'a';
+    const result = itools.search('3', { a: 3, b: 5, c: 7 });
     expect(result).toEqual(expected);
   });
 
   it('should pass example 3', () => {
-    let expected = 'a';
-    let result = itools.search('3', { a: 3, b: 5, c: 7 });
+    const expected = 'a';
+    const result = itools.search('3', { a: 3, b: 5, c: 7 });
     expect(result).toEqual(expected);
     expect(itools.search('3', { a: 3, b: 5, c: 7 }, 0)).toEqual(expected);
   });

@@ -4,7 +4,7 @@ import { qqBrowser, weixin, qq, qqNews, ipad, android, iphone } from '../const';
 describe('isQQbrowser', () => {
   // jest jsdom ua = "Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/11.12.0"
 
-  const isQQbrowser = ua => {
+  const isQQbrowser = (ua) => {
     return /mqqbrowser/i.test(ua.toLowerCase());
   };
 

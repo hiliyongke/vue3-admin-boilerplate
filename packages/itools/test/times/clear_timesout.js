@@ -8,7 +8,7 @@ describe('clearTimesout', function () {
   test('base example', () => {
     let i = 0;
     const less = 6;
-    let interval = setInterval(function () {
+    const interval = setInterval(function () {
       console.log(i++);
       if (i > less) {
         itools.clearTimesout(interval);
@@ -16,8 +16,6 @@ describe('clearTimesout', function () {
       }
     }, 1);
 
-    expect(itools.clearTimesout(interval)).toEqual(
-      window.clearInterval(interval)
-    );
+    expect(itools.clearTimesout(interval)).toEqual(window.clearInterval(interval));
   });
 });

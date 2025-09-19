@@ -53,7 +53,7 @@ ShowPage.prototype.createPage = function () {
       top: '0',
       left: '0',
       width: '100%',
-      height: '100%'
+      height: '100%',
     });
 
   this.blackBg =
@@ -63,7 +63,7 @@ ShowPage.prototype.createPage = function () {
       position: 'absolute',
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(0,0,0,0.6)'
+      backgroundColor: 'rgba(0,0,0,0.6)',
     });
 
   this.title =
@@ -77,7 +77,7 @@ ShowPage.prototype.createPage = function () {
       fontSize: '26px',
       color: '#000',
       textAlign: 'center',
-      marginLeft: '-200px'
+      marginLeft: '-200px',
     });
 
   this.container =
@@ -89,7 +89,7 @@ ShowPage.prototype.createPage = function () {
       height: '60vh',
       left: '50%',
       top: '30px',
-      marginLeft: '-500px'
+      marginLeft: '-500px',
     });
 
   this.tableCon =
@@ -99,7 +99,7 @@ ShowPage.prototype.createPage = function () {
       height: '100%',
       border: '12px solid #0064CD',
       backgroundColor: '#fff',
-      overflow: 'scroll'
+      overflow: 'scroll',
       // overflowX: "hidden"
     });
 
@@ -108,7 +108,7 @@ ShowPage.prototype.createPage = function () {
     addElement('table', {
       color: '#333333',
       width: '100%',
-      borderCollapse: 'collapse'
+      borderCollapse: 'collapse',
     });
 
   this.btnCon =
@@ -117,7 +117,7 @@ ShowPage.prototype.createPage = function () {
       margin: '20px auto',
       width: '400px',
       display: 'block',
-      overflow: 'hidden'
+      overflow: 'hidden',
     });
 
   if (!this.btn1) {
@@ -182,7 +182,7 @@ ShowPage.prototype.fillContent = function () {
       position: 'absolute',
       top: '100px',
       textAlign: 'center',
-      fontSize: '24px'
+      fontSize: '24px',
     });
     info.innerText = '暂时没有错误信息';
     this.table.append(info);
@@ -194,7 +194,7 @@ ShowPage.prototype.fillContent = function () {
 
       // 添加内容
       const tr = addElement('tr', {
-        border: '1px solid #0064CD'
+        border: '1px solid #0064CD',
       });
       const td1 = addTD(formatTime(line.time));
       const td2 = addTD(line.etype);
@@ -219,7 +219,7 @@ ShowPage.prototype.addTitle = function () {
   const tr = addElement('tr', {
     height: '35px',
     textAlign: 'center',
-    backgroundColor: '#ccc'
+    backgroundColor: '#ccc',
   });
 
   const td1 = document.createElement('td');

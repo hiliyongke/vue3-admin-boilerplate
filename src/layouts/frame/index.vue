@@ -1,9 +1,6 @@
 <template>
   <div v-if="showFrame">
-    <template
-      v-for="frame in getFramePages"
-      :key="frame.path"
-    >
+    <template v-for="frame in getFramePages" :key="frame.path">
       <frame-content
         v-if="frame.name && hasRenderFrame(frame.name)"
         v-show="showIframe(frame)"
@@ -14,7 +11,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'FrameLayout'
+  name: 'FrameLayout',
 };
 </script>
 

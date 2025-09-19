@@ -24,9 +24,9 @@ describe('construct', () => {
     }
   }
   test('base example', () => {
-    let classs = [Dog, Cat, Goose, Elephant];
-    let randomClass = itools.random(classs);
-    let animal = itools.construct(randomClass, 'animal', 300);
+    const classs = [Dog, Cat, Goose, Elephant];
+    const randomClass = itools.random(classs);
+    const animal = itools.construct(randomClass, 'animal', 300);
     expect(animal.name).toBe('animal');
   });
 });

@@ -16,7 +16,7 @@ function executeCommand(command, description) {
     const result = execSync(command, {
       encoding: 'utf8',
       stdio: 'inherit',
-      cwd: process.cwd()
+      cwd: process.cwd(),
     });
     console.log(`✅ ${description} 完成`);
     return result;
@@ -39,7 +39,7 @@ function readPackageJson() {
  */
 function writePackageJson(packageData) {
   const packagePath = path.join(process.cwd(), 'package.json');
-  fs.writeFileSync(packagePath, JSON.stringify(packageData, null, 2) + '\n');
+  fs.writeFileSync(packagePath, `${JSON.stringify(packageData, null, 2)}\n`);
 }
 
 /**
@@ -86,7 +86,7 @@ function upgradeCoreDependencies() {
   ];
 
   console.log('\n📦 升级核心依赖包...');
-  upgrades.forEach(pkg => {
+  upgrades.forEach((pkg) => {
     try {
       executeCommand(`npm install ${pkg}`, `升级 ${pkg.split('@')[0]}`);
     } catch (error) {
@@ -140,7 +140,7 @@ function upgradeDevDependencies() {
   ];
 
   console.log('\n🛠️  升级开发依赖包...');
-  devUpgrades.forEach(pkg => {
+  devUpgrades.forEach((pkg) => {
     try {
       executeCommand(`npm install -D ${pkg}`, `升级开发依赖 ${pkg.split('@')[0]}`);
     } catch (error) {
@@ -190,7 +190,6 @@ function cleanAndReinstall() {
 
     // 审计安全性
     executeCommand('npm audit fix', '修复安全漏洞');
-
   } catch (error) {
     console.warn('⚠️  清理过程中出现问题，但可以继续');
   }
@@ -208,27 +207,26 @@ function updateConfigCompatibility() {
     // 更新脚本命令
     packageJson.scripts = {
       ...packageJson.scripts,
-      "dev": "vite --host",
-      "build": "vue-tsc && vite build",
-      "preview": "vite preview",
-      "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
-      "lint:css": "stylelint **/*.{css,scss,vue} --fix",
-      "format": "prettier --write .",
-      "type-check": "vue-tsc --noEmit",
-      "test": "jest",
-      "test:coverage": "jest --coverage",
-      "upgrade": "node scripts/upgrade-dependencies.js"
+      dev: 'vite --host',
+      build: 'vue-tsc && vite build',
+      preview: 'vite preview',
+      lint: 'eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix',
+      'lint:css': 'stylelint **/*.{css,scss,vue} --fix',
+      format: 'prettier --write .',
+      'type-check': 'vue-tsc --noEmit',
+      test: 'jest',
+      'test:coverage': 'jest --coverage',
+      upgrade: 'node scripts/upgrade-dependencies.js',
     };
 
     // 更新引擎要求
     packageJson.engines = {
-      "node": ">=18.0.0",
-      "npm": ">=9.0.0"
+      node: '>=18.0.0',
+      npm: '>=9.0.0',
     };
 
     writePackageJson(packageJson);
     console.log('✅ package.json 更新完成');
-
   } catch (error) {
     console.error('❌ 配置文件更新失败:', error.message);
   }
@@ -251,7 +249,6 @@ function verifyUpgrade() {
     executeCommand('npm run lint', '运行ESLint检查');
 
     console.log('\n✅ 升级验证完成！');
-
   } catch (error) {
     console.warn('⚠️  验证过程中发现问题，请手动检查');
   }
@@ -290,7 +287,6 @@ async function main() {
     console.log('  2. 运行 npm run build 测试构建');
     console.log('  3. 检查并更新可能的配置文件');
     console.log('  4. 运行测试确保功能正常');
-
   } catch (error) {
     console.error('\n❌ 升级过程中出现错误:', error.message);
     console.log('\n🔄 可以尝试：');

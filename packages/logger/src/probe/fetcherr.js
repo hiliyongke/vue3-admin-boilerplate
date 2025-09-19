@@ -15,18 +15,18 @@ FetchErr.prototype.probe = function () {
     }
 
     return originFetch(input, initObject)
-      .then(resp => {
+      .then((resp) => {
         const status = `${resp.status}`;
         if (!/^2[0-9]{1,3}/gi.test(status) && +status !== 0) {
           this.forms.addLine('ERROR', {
             etype: 'fetch error',
             msg: `status:${resp.status}`,
-            js: `${method} :${url}`
+            js: `${method} :${url}`,
           });
         }
         return resp;
       })
-      .catch(err => {
+      .catch((err) => {
         let msg;
         try {
           msg = err && err.message ? err.message : JSON.stringify(err);
@@ -36,7 +36,7 @@ FetchErr.prototype.probe = function () {
         this.forms.addLine('ERROR', {
           etype: 'fetch error',
           msg,
-          js: `${method} :${url}`
+          js: `${method} :${url}`,
         });
         throw err;
       });

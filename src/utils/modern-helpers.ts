@@ -104,13 +104,7 @@ export async function retry<T>(
     onRetry?: (error: Error, attempt: number) => void;
   } = {}
 ): Promise<T> {
-  const {
-    retries = 3,
-    delay = 1000,
-    backoff = 'linear',
-    signal,
-    onRetry
-  } = options;
+  const { retries = 3, delay = 1000, backoff = 'linear', signal, onRetry } = options;
 
   let lastError: Error;
 
@@ -134,12 +128,10 @@ export async function retry<T>(
       onRetry?.(lastError, attempt + 1);
 
       // 计算延迟时间
-      const currentDelay = backoff === 'exponential'
-        ? delay * Math.pow(2, attempt)
-        : delay * (attempt + 1);
+      const currentDelay = backoff === 'exponential' ? delay * Math.pow(2, attempt) : delay * (attempt + 1);
 
       // 等待延迟
-      await new Promise(resolve => setTimeout(resolve, currentDelay));
+      await new Promise((resolve) => setTimeout(resolve, currentDelay));
     }
   }
 
@@ -157,11 +149,7 @@ export function memoize<T extends (...args: any[]) => any>(
     keyGenerator?: (...args: Parameters<T>) => string;
   } = {}
 ): T & { cache: Map<string, any>; clear: () => void } {
-  const {
-    maxSize = 100,
-    ttl,
-    keyGenerator = (...args) => JSON.stringify(args)
-  } = options;
+  const { maxSize = 100, ttl, keyGenerator = (...args) => JSON.stringify(args) } = options;
 
   const cache = new Map<string, { value: ReturnType<T>; timestamp: number }>();
 
@@ -174,7 +162,7 @@ export function memoize<T extends (...args: any[]) => any>(
       const cached = cache.get(key)!;
 
       // 检查是否过期
-      if (!ttl || (now - cached.timestamp) < ttl) {
+      if (!ttl || now - cached.timestamp < ttl) {
         return cached.value;
       } else {
         cache.delete(key);
@@ -209,24 +197,21 @@ export function memoize<T extends (...args: any[]) => any>(
  */
 export const isType = {
   string: (value: unknown): value is string => typeof value === 'string',
-  number: (value: unknown): value is number =>
-    typeof value === 'number' && !Number.isNaN(value),
+  number: (value: unknown): value is number => typeof value === 'number' && !Number.isNaN(value),
   boolean: (value: unknown): value is boolean => typeof value === 'boolean',
   function: (value: unknown): value is Function => typeof value === 'function',
   object: (value: unknown): value is Record<string, any> =>
     value !== null && typeof value === 'object' && !Array.isArray(value),
   array: (value: unknown): value is any[] => Array.isArray(value),
   promise: (value: unknown): value is Promise<any> =>
-    value instanceof Promise ||
-    (isType.object(value) && isType.function((value as any).then)),
-  nullish: (value: unknown): value is null | undefined =>
-    value === null || value === undefined,
+    value instanceof Promise || (isType.object(value) && isType.function((value as any).then)),
+  nullish: (value: unknown): value is null | undefined => value === null || value === undefined,
   empty: (value: unknown): boolean => {
     if (isType.nullish(value)) return true;
     if (isType.string(value) || isType.array(value)) return value.length === 0;
     if (isType.object(value)) return Object.keys(value).length === 0;
     return false;
-  }
+  },
 };
 
 // 导出别名以保持向后兼容

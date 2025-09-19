@@ -1,4 +1,4 @@
-import { Ref } from 'vue';
+import type { Ref } from 'vue';
 
 /**
  * counter utils
@@ -24,6 +24,6 @@ export const useCounter = (duration = 60): [Ref<number>, () => void] => {
           countDown.value = 0;
         }
       }, 1000);
-    }
+    },
   ];
 };

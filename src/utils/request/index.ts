@@ -69,14 +69,7 @@ const transform: AxiosTransform = {
 
   // 请求前处理配置
   beforeRequestHook: (config, options) => {
-    const {
-      apiUrl,
-      isJoinPrefix,
-      urlPrefix,
-      joinParamsToUrl,
-      formatDate,
-      joinTime = true
-    } = options;
+    const { apiUrl, isJoinPrefix, urlPrefix, joinParamsToUrl, formatDate, joinTime = true } = options;
 
     // 添加接口前缀
     if (isJoinPrefix && urlPrefix && isString(urlPrefix)) {
@@ -96,10 +89,7 @@ const transform: AxiosTransform = {
     if (config.method?.toUpperCase() === 'GET') {
       if (!isString(params)) {
         // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
-        config.params = Object.assign(
-          params || {},
-          joinTimestamp(joinTime, false)
-        );
+        config.params = Object.assign(params || {}, joinTimestamp(joinTime, false));
       } else {
         // 兼容restful风格
         config.url = `${config.url + params}${joinTimestamp(joinTime, true)}`;
@@ -124,7 +114,7 @@ const transform: AxiosTransform = {
       if (joinParamsToUrl) {
         config.url = setObjToUrlParams(config.url as string, {
           ...config.params,
-          ...config.data
+          ...config.data,
         });
       }
     } else {
@@ -141,16 +131,15 @@ const transform: AxiosTransform = {
     const token = localStorage.getItem(TOKEN_NAME);
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
-      (config as Recordable).headers.Authorization =
-        options.authenticationScheme
-          ? `${options.authenticationScheme} ${token}`
-          : token;
+      (config as Recordable).headers.Authorization = options.authenticationScheme
+        ? `${options.authenticationScheme} ${token}`
+        : token;
     }
     return config;
   },
 
   // 响应拦截器处理
-  responseInterceptors: res => {
+  responseInterceptors: (res) => {
     return res;
   },
 
@@ -170,14 +159,14 @@ const transform: AxiosTransform = {
 
     config.retryCount += 1;
 
-    const backoff = new Promise(resolve => {
+    const backoff = new Promise((resolve) => {
       setTimeout(() => {
         resolve(config);
       }, config.requestOptions.retry.delay || 1);
     });
 
-    return backoff.then(config => request.request(config as any));
-  }
+    return backoff.then((config) => request.request(config as any));
+  },
 };
 
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
@@ -220,11 +209,11 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 重试
           retry: {
             count: 3,
-            delay: 1000
+            delay: 1000,
           },
           // 显示错误信息
-          showErrorMessage: true
-        }
+          showErrorMessage: true,
+        },
       },
       opt || {}
     )

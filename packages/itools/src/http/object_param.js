@@ -1,10 +1,10 @@
 import isArray from '../lodash/is_array';
-const objectParam = arr => {
+const objectParam = (arr) => {
   let str = '';
   if (isArray(arr)) {
     str = arr
-      .map(item => {
-        return item.name + '=' + item.value;
+      .map((item) => {
+        return `${item.name}=${item.value}`;
       })
       .join('&');
   } else {
@@ -13,22 +13,22 @@ const objectParam = arr => {
   return str;
 };
 
-const objectBigParam = obj => {
+const objectBigParam = (obj) => {
   let arr = [];
-  Object.keys(obj).forEach(k => {
+  Object.keys(obj).forEach((k) => {
     if (isArray(obj[k])) {
       arr = arr.concat(
-        obj[k].map(v => {
+        obj[k].map((v) => {
           return {
             name: k,
-            value: v
+            value: v,
           };
         })
       );
     } else {
       arr.push({
         name: k,
-        value: obj[k]
+        value: obj[k],
       });
     }
   });

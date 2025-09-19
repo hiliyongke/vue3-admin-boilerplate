@@ -18,7 +18,7 @@ function executeCommand(command, description) {
     const result = execSync(command, {
       encoding: 'utf8',
       stdio: 'inherit',
-      cwd: process.cwd()
+      cwd: process.cwd(),
     });
     console.log(chalk.green(`✅ ${description} 完成`));
     return result;
@@ -41,7 +41,7 @@ function readPackageJson() {
  */
 function writePackageJson(packageData) {
   const packagePath = path.join(process.cwd(), 'package.json');
-  fs.writeFileSync(packagePath, JSON.stringify(packageData, null, 2) + '\n');
+  fs.writeFileSync(packagePath, `${JSON.stringify(packageData, null, 2)}\n`);
 }
 
 /**
@@ -68,7 +68,6 @@ function upgradeWithTaze() {
 
     // 重新安装依赖
     executeCommand('pnpm install', '重新安装依赖');
-
   } catch (error) {
     console.error(chalk.red('❌ 自动升级失败，尝试手动升级'));
     manualUpgrade();
@@ -90,10 +89,10 @@ function manualUpgrade() {
     'vue-tsc',
     '@vitejs/plugin-vue',
     'eslint',
-    'prettier'
+    'prettier',
   ];
 
-  criticalDeps.forEach(dep => {
+  criticalDeps.forEach((dep) => {
     try {
       executeCommand(`pnpm update ${dep}`, `升级 ${dep}`);
     } catch (error) {
@@ -111,7 +110,7 @@ function verifyUpgrade() {
   const checks = [
     { cmd: 'pnpm run typecheck', desc: 'TypeScript 类型检查' },
     { cmd: 'pnpm run lint', desc: 'ESLint 代码检查' },
-    { cmd: 'pnpm run build', desc: '构建测试' }
+    { cmd: 'pnpm run build', desc: '构建测试' },
   ];
 
   let passedChecks = 0;
@@ -162,7 +161,6 @@ async function main() {
     console.log('  - ✅ 依赖已升级到最新兼容版本');
     console.log('  - ✅ 项目构建和类型检查正常');
     console.log('  - 📄 原始配置已备份为 package.json.backup');
-
   } catch (error) {
     console.error(chalk.red('\n❌ 升级过程中出现错误:'), error.message);
     console.log(chalk.yellow('\n🔄 可以尝试：'));

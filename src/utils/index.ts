@@ -56,10 +56,4 @@ export * from './request';
 export * from './common';
 
 // 现代化工具函数（使用别名避免冲突）
-export {
-  deepClone as modernDeepClone,
-  modernDebounce,
-  retry as modernRetry,
-  memoize,
-  isType
-} from './modern-helpers';
+export { deepClone as modernDeepClone, modernDebounce, retry as modernRetry, memoize, isType } from './modern-helpers';

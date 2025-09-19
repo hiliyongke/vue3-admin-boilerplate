@@ -1,18 +1,9 @@
 import itools from '../itools';
-import {
-  weixin,
-  weishi,
-  qqLiveBrowser,
-  qq,
-  qqNews,
-  ipad,
-  android,
-  iphone
-} from '../const';
+import { weixin, weishi, qqLiveBrowser, qq, qqNews, ipad, android, iphone } from '../const';
 describe('isWeixin', () => {
   // jest jsdom ua = "Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/11.12.0"
 
-  const isWeixin = ua => {
+  const isWeixin = (ua) => {
     return /MicroMessenger/i.test(ua.toLowerCase());
   };
 

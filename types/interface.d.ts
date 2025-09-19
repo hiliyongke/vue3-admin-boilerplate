@@ -1,5 +1,5 @@
-import { RouteRecordName, LocationQueryRaw } from 'vue-router';
-import STYLE_CONFIG from '@/config/style';
+import type { RouteRecordName, LocationQueryRaw } from 'vue-router';
+import type STYLE_CONFIG from '@/config/style';
 
 export interface MenuRoute {
   path: string;

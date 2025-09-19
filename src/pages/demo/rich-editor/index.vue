@@ -1,15 +1,12 @@
 <template>
   <div>
     <t-divider content-position="left">富文本编辑器</t-divider>
-    <Editor
-      :model-value="editorValue"
-      @update:model-value="handleUpdateValue"
-    ></Editor>
+    <Editor :model-value="editorValue" @update:model-value="handleUpdateValue"></Editor>
   </div>
 </template>
 <script lang="ts">
 export default {
-  name: 'RichEditorDemo'
+  name: 'RichEditorDemo',
 };
 </script>
 
@@ -20,7 +17,9 @@ import Editor from '@/components/rich-editor/index.vue';
 /**
  * 编辑器内容
  */
-const editorValue = ref<string>('欢迎使用富文本编辑器！\n\n这是一个功能强大的富文本编辑器演示。您可以在这里编辑各种格式的文本内容。');
+const editorValue = ref<string>(
+  '欢迎使用富文本编辑器！\n\n这是一个功能强大的富文本编辑器演示。您可以在这里编辑各种格式的文本内容。'
+);
 
 /**
  * 富文本 HTML 内容

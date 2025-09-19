@@ -1,22 +1,14 @@
 <template>
   <t-row justify="center">
     <t-button @click="handleClick">新手引导</t-button>
-    <t-drawer
-      v-model:visible="visible"
-      header="演示新手引导"
-      size="60%"
-      :show-overlay="false"
-      destroy-on-close
-    >
+    <t-drawer v-model:visible="visible" header="演示新手引导" size="60%" :show-overlay="false" destroy-on-close>
       <template #footer>
         <t-button @click="visible = false">关闭抽屉</t-button>
       </template>
       <div class="guide-container">
         <div class="main-title">
           <div class="title-major">Guide 用户引导</div>
-          <div class="title-sub">
-            按钮用于开启一个闭环的操作任务，如“删除”对象、“购买”商品等。
-          </div>
+          <div class="title-sub">按钮用于开启一个闭环的操作任务，如“删除”对象、“购买”商品等。</div>
         </div>
         <div class="field label-field">
           <div class="label">Label</div>
@@ -28,12 +20,7 @@
         </div>
         <t-row class="action">
           <t-button>确定</t-button>
-          <t-button
-            theme="default"
-            variant="base"
-          >
-            取消
-          </t-button>
+          <t-button theme="default" variant="base"> 取消 </t-button>
         </t-row>
       </div>
 
@@ -52,7 +39,7 @@
 
 <script lang="ts">
 export default {
-  name: 'GuideDemo'
+  name: 'GuideDemo',
 };
 </script>
 
@@ -98,20 +85,20 @@ const steps: GuideStep[] = [
     element: '.main-title',
     title: '新手引导标题',
     body: '新手引导的说明文案',
-    placement: 'bottom-right'
+    placement: 'bottom-right',
   },
   {
     element: '.label-field',
     title: '新手引导标题',
     body: '新手引导的说明文案',
-    placement: 'bottom'
+    placement: 'bottom',
   },
   {
     element: '.action',
     title: '新手引导标题',
     body: '新手引导的说明文案',
-    placement: 'right'
-  }
+    placement: 'right',
+  },
 ];
 
 /**
@@ -129,7 +116,7 @@ const handleClick = (): void => {
  * @param current 当前步骤
  * @param context 事件上下文
  */
-const handleChange = (current: number, context?: { e: MouseEvent; total: number; }): void => {
+const handleChange = (current: number, context?: { e: MouseEvent; total: number }): void => {
   console.log('引导步骤变化:', current, context);
 };
 

@@ -14,7 +14,7 @@ export function copyAttr(source: Record<string, any>, target: Record<string, any
   if (!source || typeof source !== 'object') {
     return;
   }
-  Object.keys(target).forEach(key => {
+  Object.keys(target).forEach((key) => {
     target[key] = source[key];
   });
 }

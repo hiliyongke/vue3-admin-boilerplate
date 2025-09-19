@@ -1,5 +1,6 @@
-import { App, inject } from 'vue';
-import { Props } from './component';
+import type { App } from 'vue';
+import { inject } from 'vue';
+import type { Props } from './component';
 
 const CONFIG_SYMBOL = Symbol('vue-codemirror-global-config');
 export const injectGlobalConfig = (app: App, config?: Props) => {

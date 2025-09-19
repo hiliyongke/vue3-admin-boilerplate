@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-/* eslint-disable no-eq-null */
+
 import isObject from '../lodash/is_object';
 import isArray from '../lodash/is_array';
 
@@ -14,7 +14,7 @@ export default function flush(collection) {
     result = [];
     len = collection.length;
     for (i = 0; i < len; i++) {
-      let elem = collection[i];
+      const elem = collection[i];
       if (elem != null) {
         result.push(elem);
       }
@@ -23,11 +23,11 @@ export default function flush(collection) {
   }
   if (isObject(collection)) {
     result = {};
-    let keys = Object.keys(collection);
+    const keys = Object.keys(collection);
     len = keys.length;
     for (i = 0; i < len; i++) {
-      let key = keys[i];
-      let value = collection[key];
+      const key = keys[i];
+      const value = collection[key];
       if (value != null) {
         result[key] = value;
       }

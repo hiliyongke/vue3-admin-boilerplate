@@ -21,15 +21,11 @@ export async function setupPerformanceMonitor(app: App): Promise<void> {
       url: import.meta.env.VITE_MONITOR_URL || '',
       baseParams: {
         appName: import.meta.env.VITE_APP_TITLE || 'Vue3-Admin',
-        version: import.meta.env.VITE_APP_VERSION || '1.0.0'
+        version: import.meta.env.VITE_APP_VERSION || '1.0.0',
       },
-      whiteName: [
-        location.hostname,
-        'localhost',
-        '127.0.0.1'
-      ],
+      whiteName: [location.hostname, 'localhost', '127.0.0.1'],
       fpLimit: 4000,
-      showConsole: import.meta.env.DEV
+      showConsole: import.meta.env.DEV,
     });
   }
 

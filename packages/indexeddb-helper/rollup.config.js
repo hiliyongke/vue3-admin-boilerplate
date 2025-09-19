@@ -10,37 +10,37 @@ import serve from 'rollup-plugin-serve';
 
 const config = {
   input: {
-    index: path.resolve(__dirname, 'src/index.js')
+    index: path.resolve(__dirname, 'src/index.js'),
   },
   output: {
     dir: path.resolve(__dirname, 'dist/'),
-    format: 'es'
+    format: 'es',
   },
   treeshake: {
     moduleSideEffects: 'no-external',
     propertyReadSideEffects: false,
-    tryCatchDeoptimization: false
+    tryCatchDeoptimization: false,
   },
   plugins: [
     nodeResolve({
-      preferBuiltins: true
+      preferBuiltins: true,
     }),
     babel({
       babelHelpers: 'bundled',
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
     }),
     commonjs({
       extensions: ['.js'],
-      ignoreDynamicRequires: true
+      ignoreDynamicRequires: true,
     }),
     terser(),
     process.argv.indexOf('-w') !== -1 &&
       serve({
         open: true,
         port: 8888,
-        openPage: '/demo/demo.html'
-      })
-  ]
+        openPage: '/demo/demo.html',
+      }),
+  ],
 };
 
 export default config;

@@ -23,22 +23,22 @@ interface Wrapper {
 const value: Value = {
   description: null,
   maxProperties: null,
-  minProperties: null
+  minProperties: null,
 };
 
 const attr: Attr = {
   description: {
     name: '描述',
-    type: 'string'
+    type: 'string',
   },
   maxProperties: {
     name: '最大元素个数',
-    type: 'integer'
+    type: 'integer',
   },
   minProperties: {
     name: '最小元素个数',
-    type: 'integer'
-  }
+    type: 'integer',
+  },
 };
 
 const wrapper: Wrapper = { value, attr };

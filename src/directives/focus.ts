@@ -11,6 +11,6 @@ export function focusDirective(app: App) {
     mounted(el) {
       // Focus the element
       el.focus();
-    }
+    },
   });
 }

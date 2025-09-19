@@ -11,5 +11,5 @@ export default {
   money,
   network,
   number,
-  other
+  other,
 };

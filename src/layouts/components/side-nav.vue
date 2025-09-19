@@ -1,30 +1,10 @@
 <template>
   <div :class="sideNavCls">
-    <t-menu
-      :class="menuCls"
-      :theme="theme"
-      :value="active"
-      :collapsed="collapsed"
-      :default-expanded="defaultExpanded"
-    >
+    <t-menu :class="menuCls" :theme="theme" :value="active" :collapsed="collapsed" :default-expanded="defaultExpanded">
       <template #logo>
-        <span
-          v-if="showLogo"
-          :class="`${prefix}-side-nav-logo-wrapper`"
-          @click="goHome"
-        >
-          <span
-            v-if="collapsed"
-            style="margin-left: 20px; font-size: 20px"
-          >
-            Admin
-          </span>
-          <span
-            v-else
-            style="margin-left: 20px; font-size: 20px"
-          >
-            Vue3 Admin Starter
-          </span>
+        <span v-if="showLogo" :class="`${prefix}-side-nav-logo-wrapper`" @click="goHome">
+          <span v-if="collapsed" style="margin-left: 20px; font-size: 20px"> Admin </span>
+          <span v-else style="margin-left: 20px; font-size: 20px"> Vue3 Admin Starter </span>
 
           <!-- <component
             :is="getLogo()"
@@ -36,14 +16,10 @@
       </template>
       <menu-content :nav-data="menu" />
       <template #operations>
-        <span class="version-container">
-          {{ !collapsed ? 'v' : 'v' }} {{ pgk.version }}
-        </span>
+        <span class="version-container"> {{ !collapsed ? 'v' : 'v' }} {{ pgk.version }} </span>
       </template>
     </t-menu>
-    <div
-      :class="`${prefix}-side-nav-placeholder${collapsed ? '-hidden' : ''}`"
-    ></div>
+    <div :class="`${prefix}-side-nav-placeholder${collapsed ? '-hidden' : ''}`"></div>
   </div>
 </template>
 
@@ -67,32 +43,32 @@ const MIN_POINT = 992 - 1;
 const props = defineProps({
   menu: {
     type: Array as PropType<MenuRoute[]>,
-    default: () => []
+    default: () => [],
   },
   showLogo: {
     type: Boolean as PropType<boolean>,
-    default: true
+    default: true,
   },
   isFixed: {
     type: Boolean as PropType<boolean>,
-    default: true
+    default: true,
   },
   layout: {
     type: String as PropType<string>,
-    default: ''
+    default: '',
   },
   headerHeight: {
     type: String as PropType<string>,
-    default: '64px'
+    default: '64px',
   },
   theme: {
     type: String as PropType<'light' | 'dark'>,
-    default: 'light'
+    default: 'light',
   },
   isCompact: {
     type: Boolean as PropType<boolean>,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const route = useRoute();
@@ -112,8 +88,8 @@ const sideNavCls = computed(() => {
   return [
     `${prefix}-sidebar-layout`,
     {
-      [`${prefix}-sidebar-compact`]: isCompact
-    }
+      [`${prefix}-sidebar-compact`]: isCompact,
+    },
   ];
 });
 
@@ -124,8 +100,8 @@ const menuCls = computed(() => {
     {
       [`${prefix}-side-nav-no-logo`]: !showLogo,
       [`${prefix}-side-nav-no-fixed`]: !isFixed,
-      [`${prefix}-side-nav-mix-fixed`]: layout === 'mix' && isFixed
-    }
+      [`${prefix}-side-nav-mix-fixed`]: layout === 'mix' && isFixed,
+    },
   ];
 });
 
@@ -135,7 +111,7 @@ const settingStore = useSettingStore();
 const autoCollapsed = () => {
   const isCompact = window.innerWidth <= MIN_POINT;
   settingStore.updateConfig({
-    isSidebarCompact: isCompact
+    isSidebarCompact: isCompact,
   });
 };
 

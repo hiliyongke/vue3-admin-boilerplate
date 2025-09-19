@@ -67,22 +67,14 @@ export function useRequest<T = any>(
   requestFn: (...args: any[]) => Promise<T>,
   options: UseRequestOptions<T> = {}
 ): UseRequestReturn<T> {
-  const {
-    immediate = false,
-    defaultData = null,
-    onSuccess,
-    onError,
-    onFinally,
-    transform,
-    ...requestConfig
-  } = options;
+  const { immediate = false, defaultData = null, onSuccess, onError, onFinally, transform, ...requestConfig } = options;
 
   // 状态管理
   const state = reactive<RequestState<T>>({
     data: defaultData,
     loading: false,
     error: null,
-    finished: false
+    finished: false,
   });
 
   // 请求参数缓存
@@ -186,58 +178,34 @@ export function useRequest<T = any>(
     execute,
     refresh,
     reset,
-    cancel
+    cancel,
   };
 }
 
 /**
  * GET请求组合式API
  */
-export function useGet<T = any>(
-  url: string,
-  options: UseRequestOptions<T> = {}
-): UseRequestReturn<T> {
-  return useRequest<T>(
-    () => httpRequest.get<T>(url, options),
-    options
-  );
+export function useGet<T = any>(url: string, options: UseRequestOptions<T> = {}): UseRequestReturn<T> {
+  return useRequest<T>(() => httpRequest.get<T>(url, options), options);
 }
 
 /**
  * POST请求组合式API
  */
-export function usePost<T = any>(
-  url: string,
-  options: UseRequestOptions<T> = {}
-): UseRequestReturn<T> {
-  return useRequest<T>(
-    (data?: any) => httpRequest.post<T>(url, data, options),
-    options
-  );
+export function usePost<T = any>(url: string, options: UseRequestOptions<T> = {}): UseRequestReturn<T> {
+  return useRequest<T>((data?: any) => httpRequest.post<T>(url, data, options), options);
 }
 
 /**
  * PUT请求组合式API
  */
-export function usePut<T = any>(
-  url: string,
-  options: UseRequestOptions<T> = {}
-): UseRequestReturn<T> {
-  return useRequest<T>(
-    (data?: any) => httpRequest.put<T>(url, data, options),
-    options
-  );
+export function usePut<T = any>(url: string, options: UseRequestOptions<T> = {}): UseRequestReturn<T> {
+  return useRequest<T>((data?: any) => httpRequest.put<T>(url, data, options), options);
 }
 
 /**
  * DELETE请求组合式API
  */
-export function useDelete<T = any>(
-  url: string,
-  options: UseRequestOptions<T> = {}
-): UseRequestReturn<T> {
-  return useRequest<T>(
-    () => httpRequest.delete<T>(url, options),
-    options
-  );
+export function useDelete<T = any>(url: string, options: UseRequestOptions<T> = {}): UseRequestReturn<T> {
+  return useRequest<T>(() => httpRequest.delete<T>(url, options), options);
 }

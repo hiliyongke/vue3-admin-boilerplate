@@ -29,8 +29,7 @@ exports.englishNumber = /^[A-Za-z0-9]+$/;
 exports.englishNumberSymbol = /^\w+$/;
 
 // URL
-exports.url =
-  /^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\?)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/i;
+exports.url = /^https?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\?)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/i;
 
 // URI
 exports.uri = /[a-zA-z]+:\/\/[^\s]*/;

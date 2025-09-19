@@ -2,10 +2,10 @@
  * @Description: 公共方法
  */
 export function makeKeyChain(path) {
-  let chain = path
+  const chain = path
     .toString()
     .split(/\.|\[|\]/)
-    .filter(item => !!item);
+    .filter((item) => !!item);
   return chain;
 }
 export function parse(obj, path) {
@@ -20,7 +20,7 @@ export function parse(obj, path) {
     return;
   }
 
-  let chain = makeKeyChain(path);
+  const chain = makeKeyChain(path);
 
   if (!chain.length) {
     return obj;
@@ -28,7 +28,7 @@ export function parse(obj, path) {
 
   let target = obj;
   for (let i = 0, len = chain.length; i < len; i++) {
-    let key = chain[i];
+    const key = chain[i];
     if (target[key] === undefined) {
       return;
     }
@@ -39,7 +39,6 @@ export function parse(obj, path) {
 
 export function modifyError(e) {
   const { message } = e;
-  e.message =
-    message.indexOf('[IndexedDB]') === -1 ? '[IndexedDB]: ' + message : message;
+  e.message = message.indexOf('[IndexedDB]') === -1 ? `[IndexedDB]: ${message}` : message;
   return e;
 }

@@ -27,11 +27,7 @@ function checkArrItem(arr: Record<string, any> | null, fnsName: string): string 
 
 // 计算相关
 const calculateObj = {
-  checkExcludesIncludes(
-    url: string,
-    excludes: string[],
-    includes: string[]
-  ): boolean {
+  checkExcludesIncludes(url: string, excludes: string[], includes: string[]): boolean {
     if (excludes.length) {
       for (const key of excludes) {
         if (url.startsWith(key)) {
@@ -62,31 +58,21 @@ const calculateObj = {
     const urlsObj: Record<string, UrlsInfo> = {};
     for (const key in paths) {
       if (Object.prototype.hasOwnProperty.call(paths, key)) {
-        const noNeedToDoNext = this.checkExcludesIncludes(
-          key,
-          excludes,
-          includes
-        );
+        const noNeedToDoNext = this.checkExcludesIncludes(key, excludes, includes);
         if (noNeedToDoNext) {
           continue;
         } else {
           const element = paths[key];
           const secKeys = Object.keys(element);
           if (secKeys.length) {
-            const prefix = key.split('/').filter(obj => obj);
+            const prefix = key.split('/').filter((obj) => obj);
             const firstPrefix = prefix[0];
 
             if (!urlsObj[firstPrefix]) {
               urlsObj[firstPrefix] = {};
             }
 
-            this.handleUrlNMethod(
-              secKeys,
-              key,
-              urlsObj[firstPrefix],
-              element,
-              definitions
-            );
+            this.handleUrlNMethod(secKeys, key, urlsObj[firstPrefix], element, definitions);
           }
         }
       }
@@ -106,14 +92,7 @@ const calculateObj = {
         if (Object.prototype.hasOwnProperty.call(element, key)) {
           const value = element[key];
           if (secKeys.length > 1) {
-            this.temFns(
-              `${url}:${key}`,
-              urlsObjInfo,
-              key,
-              url,
-              value,
-              definitions
-            );
+            this.temFns(`${url}:${key}`, urlsObjInfo, key, url, value, definitions);
           } else {
             this.temFns(url, urlsObjInfo, key, url, value, definitions);
           }
@@ -145,11 +124,7 @@ const calculateObj = {
   },
 
   // 处理每个请求的数据（参数、描述、url、请求方式…）
-  calcRequestParams(
-    obj: Record<string, any>,
-    method: string,
-    url: string
-  ): RequestElement {
+  calcRequestParams(obj: Record<string, any>, method: string, url: string): RequestElement {
     let param = {};
     if (obj.parameters) {
       param = this.calcParameters(obj.parameters, method);
@@ -158,22 +133,18 @@ const calculateObj = {
       desc: obj.summary || '',
       param,
       url,
-      method
+      method,
     };
     if (obj.consumes) {
       info.headers = {
-        'Content-Type':
-          obj.consumes.length === 1 ? obj.consumes.join('') : obj.consumes
+        'Content-Type': obj.consumes.length === 1 ? obj.consumes.join('') : obj.consumes,
       };
     }
     return info;
   },
 
   // 处理请求参数
-  calcParameters(
-    params: Record<string, any>[],
-    method: string
-  ): Record<string, any> {
+  calcParameters(params: Record<string, any>[], method: string): Record<string, any> {
     const tem: Record<string, any> = {};
     for (const item of params) {
       let prefix = '';
@@ -219,7 +190,7 @@ const calculateObj = {
       const obj = {
         paramType: objParamType,
         paramDesc: item.description || '',
-        definitions
+        definitions,
       };
 
       tem[`${prefix}${item.name}`] = obj;
@@ -228,11 +199,8 @@ const calculateObj = {
   },
 
   // 处理请求的特殊参数
-  calcDefinitions(
-    definitions: Record<string, any>,
-    element: RequestElement
-  ): void {
-    const param = element.param;
+  calcDefinitions(definitions: Record<string, any>, element: RequestElement): void {
+    const { param } = element;
 
     for (const p in param) {
       if (Object.prototype.hasOwnProperty.call(param, p)) {
@@ -261,25 +229,19 @@ const calculateObj = {
     myObj?: Record<string, any>
   ): Record<string, any> {
     const temObj = myObj || {};
-    const properties = info.properties;
+    const { properties } = info;
     if (properties) {
       for (const property in properties) {
         if (Object.prototype.hasOwnProperty.call(properties, property)) {
           const propertyInfo = properties[property];
-          const $ref = propertyInfo.$ref;
+          const { $ref } = propertyInfo;
           let type = propertyInfo.type || '';
           if ($ref) {
             const refName = $ref.split('/').pop() || '';
             const refVal = definitions[refName];
             if (refVal.properties) {
               const resTemObj = {};
-              const res = this.temFns2(
-                refVal,
-                definitions,
-                p,
-                required,
-                resTemObj
-              );
+              const res = this.temFns2(refVal, definitions, p, required, resTemObj);
               const afterRes = this.handleNestingParams(
                 property,
                 res,
@@ -291,7 +253,7 @@ const calculateObj = {
               temObj[property] = {
                 paramType: refVal.type,
                 paramDesc: propertyInfo.description || '',
-                required: required || false
+                required: required || false,
               };
             }
           } else if (type) {
@@ -301,7 +263,7 @@ const calculateObj = {
             temObj[property] = {
               paramType: type,
               paramDesc: propertyInfo.description || '',
-              required: required || false
+              required: required || false,
             };
           }
         }
@@ -330,11 +292,7 @@ const calculateObj = {
     return tem;
   },
 
-  concatParam(
-    element: RequestElement,
-    p: string,
-    res: Record<string, any>
-  ): void {
+  concatParam(element: RequestElement, p: string, res: Record<string, any>): void {
     const tem: Record<string, any> = {};
     for (const key in res) {
       if (Object.prototype.hasOwnProperty.call(res, key)) {
@@ -348,10 +306,7 @@ const calculateObj = {
   // ================
 
   // 按模块、模板生成js文件内容
-  calcText(
-    allInfo: Record<string, UrlsInfo>,
-    info: Record<string, any>
-  ): Record<string, string> {
+  calcText(allInfo: Record<string, UrlsInfo>, info: Record<string, any>): Record<string, string> {
     const fileInfo: Record<string, string> = {};
     for (const key in allInfo) {
       // key是模块，element是该模块下所有链接
@@ -386,9 +341,7 @@ export const ${nameStr} = (${fnsParamStr}) => request({
   },
 
   // 处理参数注释
-  checkParam(
-    param: Record<string, any>
-  ): { paramStr: string; paramTypeStr: string; fnsParamStr: string } {
+  checkParam(param: Record<string, any>): { paramStr: string; paramTypeStr: string; fnsParamStr: string } {
     let paramStr = '';
     let fnsParamStr: string;
     const paramType: string[] = [];
@@ -396,9 +349,7 @@ export const ${nameStr} = (${fnsParamStr}) => request({
 
     for (const key in param) {
       const element = param[key];
-      paramStr += `\n * @param {${element.paramType || 'unknown'}} ${key} ${
-        element.paramDesc
-      }`;
+      paramStr += `\n * @param {${element.paramType || 'unknown'}} ${key} ${element.paramDesc}`;
       const res = key.match(/(data|params)(?=\.)/);
       if (res) {
         const result = res[0];
@@ -423,7 +374,7 @@ export const ${nameStr} = (${fnsParamStr}) => request({
     return {
       paramStr,
       paramTypeStr,
-      fnsParamStr
+      fnsParamStr,
     };
   },
 
@@ -437,8 +388,8 @@ export const ${nameStr} = (${fnsParamStr}) => request({
       url = url.slice(0, index);
     }
 
-    const paramHasVal = param['params.' + pathParams];
-    const dataHasVal = param['data.' + pathParams];
+    const paramHasVal = param[`params.${pathParams}`];
+    const dataHasVal = param[`data.${pathParams}`];
     const from = paramHasVal ? 'params' : dataHasVal ? 'data' : '';
     const name = from ? `${from}['${pathParams}']` : `${pathParams}`;
 
@@ -492,13 +443,10 @@ export const ${nameStr} = (${fnsParamStr}) => request({
     return res;
   },
 
-  calcName(
-    url: string,
-    type?: number
-  ): { calcName: string; calcNameResult: string[] } {
+  calcName(url: string, type?: number): { calcName: string; calcNameResult: string[] } {
     const calcNameResult = url
       .split('/')
-      .filter(item => item)
+      .filter((item) => item)
       .reverse();
     let calcName = calcNameResult[0];
     const isParam = calcName.startsWith('{') && calcName.endsWith('}');
@@ -510,9 +458,7 @@ export const ${nameStr} = (${fnsParamStr}) => request({
       if (specialWords.includes(calcName) || isParam) {
         if (calcNameResult.length >= 2) {
           const lastName = calcNameResult[1];
-          calcName += `${lastName.slice(0, 1).toUpperCase()}${lastName.slice(
-            1
-          )}`;
+          calcName += `${lastName.slice(0, 1).toUpperCase()}${lastName.slice(1)}`;
         } else {
           calcName += Date.now() + ++fnsErrorTime;
         }
@@ -523,7 +469,7 @@ export const ${nameStr} = (${fnsParamStr}) => request({
       const afterNameEnd = `${calcName.slice(1)}`;
       return {
         calcName: afterNameStart + afterNameEnd,
-        calcNameResult
+        calcNameResult,
       };
     }
   },
@@ -552,7 +498,7 @@ export const ${nameStr} = (${fnsParamStr}) => request({
     }
 
     return restStr;
-  }
+  },
 };
 
 export default calculateObj;

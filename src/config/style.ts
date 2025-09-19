@@ -29,5 +29,5 @@ export default {
   /** 页面加载动画 */
   showPageLoading: true,
   // 默认语言
-  language: DEFAULT_LANGUAGE
+  language: DEFAULT_LANGUAGE,
 };

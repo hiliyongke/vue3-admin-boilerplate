@@ -165,7 +165,7 @@ export class PerformanceMonitor {
    * 销毁监控器
    */
   destroy(): void {
-    this.observers.forEach(observer => observer.disconnect());
+    this.observers.forEach((observer) => observer.disconnect());
     this.observers = [];
   }
 }
@@ -180,10 +180,7 @@ export function createPerformanceMonitor(): PerformanceMonitor {
 /**
  * 测量函数执行时间
  */
-export function measureTime<T>(
-  fn: () => T | Promise<T>,
-  label?: string
-): T | Promise<T> {
+export function measureTime<T>(fn: () => T | Promise<T>, label?: string): T | Promise<T> {
   const start = performance.now();
   const result = fn();
 
@@ -202,10 +199,7 @@ export function measureTime<T>(
 /**
  * 防抖函数
  */
-export function debounce<T extends (...args: any[]) => any>(
-  fn: T,
-  delay: number
-): (...args: Parameters<T>) => void {
+export function debounce<T extends (...args: any[]) => any>(fn: T, delay: number): (...args: Parameters<T>) => void {
   let timeoutId: NodeJS.Timeout;
 
   return (...args: Parameters<T>) => {
@@ -217,10 +211,7 @@ export function debounce<T extends (...args: any[]) => any>(
 /**
  * 节流函数
  */
-export function throttle<T extends (...args: any[]) => any>(
-  fn: T,
-  delay: number
-): (...args: Parameters<T>) => void {
+export function throttle<T extends (...args: any[]) => any>(fn: T, delay: number): (...args: Parameters<T>) => void {
   let lastCall = 0;
 
   return (...args: Parameters<T>) => {

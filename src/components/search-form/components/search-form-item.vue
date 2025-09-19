@@ -1,11 +1,7 @@
 <template>
   <!-- 文本框 -->
   <template v-if="item.searchType == undefined || item.searchType == 'text'">
-    <t-input
-      v-model="searchParam[item.prop!]"
-      placeholder="请输入"
-      :clearable="clearable(item)"
-    />
+    <t-input v-model="searchParam[item.prop!]" placeholder="请输入" :clearable="clearable(item)" />
   </template>
   <!-- 下拉选择框 -->
   <!-- <template

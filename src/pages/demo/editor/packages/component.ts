@@ -1,33 +1,25 @@
-import {
-  defineComponent,
-  ref,
-  computed,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  h,
-  PropType,
-  ExtractPropTypes
-} from 'vue';
-import * as CSS from 'csstype';
+import type { PropType, ExtractPropTypes } from 'vue';
+import { defineComponent, ref, computed, watch, onMounted, onBeforeUnmount, h } from 'vue';
+import type * as CSS from 'csstype';
 import { basicSetup } from 'codemirror';
-import { EditorState, EditorStateConfig } from '@codemirror/state';
-import { EditorView, ViewUpdate } from '@codemirror/view';
+import type { EditorState, EditorStateConfig } from '@codemirror/state';
+import type { ViewUpdate } from '@codemirror/view';
+import { EditorView } from '@codemirror/view';
 import { useGlobalConfig } from './config';
 import * as cm from './codemirror';
 
 const globalProps = {
   autofocus: {
     type: Boolean,
-    default: undefined
+    default: undefined,
   },
   disabled: {
     type: Boolean,
-    default: undefined
+    default: undefined,
   },
   indentWithTab: {
     type: Boolean,
-    default: undefined
+    default: undefined,
   },
   tabSize: Number,
   placeholder: String,
@@ -35,7 +27,7 @@ const globalProps = {
   // codemirror options
   root: Object as PropType<ShadowRoot | Document>,
   extensions: Array as PropType<EditorStateConfig['extensions']>,
-  selection: Object as PropType<EditorStateConfig['selection']>
+  selection: Object as PropType<EditorStateConfig['selection']>,
 };
 
 export type Props = ExtractPropTypes<typeof globalProps>;
@@ -45,7 +37,7 @@ export const DEFAULT_CONFIG: Readonly<Partial<Props>> = Object.freeze({
   indentWithTab: true,
   tabSize: 2,
   placeholder: '',
-  extensions: [basicSetup]
+  extensions: [basicSetup],
 });
 
 export default defineComponent({
@@ -54,9 +46,9 @@ export default defineComponent({
     modelValue: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
-    ...globalProps
+    ...globalProps,
   },
   emits: {
     // when content(doc) change only
@@ -82,24 +74,20 @@ export default defineComponent({
       return true;
     },
     // when component mounted
-    ready: (payload: {
-      view: EditorView;
-      state: EditorState;
-      container: HTMLDivElement;
-    }) => {
+    ready: (payload: { view: EditorView; state: EditorState; container: HTMLDivElement }) => {
       console.log(payload);
       return true;
-    }
+    },
   },
   setup(props, context) {
     const container = ref<HTMLDivElement>();
     const component = {
       view: null as any as EditorView,
-      state: null as any as EditorState
+      state: null as any as EditorState,
     };
     const defaultConfig = {
       ...DEFAULT_CONFIG,
-      ...useGlobalConfig()
+      ...useGlobalConfig(),
     };
 
     const config = computed(() => {
@@ -107,7 +95,7 @@ export default defineComponent({
         (result, key) => ({
           ...result,
           // @ts-ignore
-          [key]: props[key] ?? defaultConfig[key]
+          [key]: props[key] ?? defaultConfig[key],
         }),
         {} as Required<Props>
       );
@@ -122,30 +110,30 @@ export default defineComponent({
           // The extensions are split into two parts, global and component prop.
           // Only the global part is initialized here.
           // The prop part is dynamically reconfigured after the component is mounted.
-          extensions: defaultConfig.extensions
+          extensions: defaultConfig.extensions,
         },
-        onFocus: viewUpdate => context.emit('focus', viewUpdate),
-        onBlur: viewUpdate => context.emit('blur', viewUpdate),
-        onUpdate: viewUpdate => context.emit('update', viewUpdate),
+        onFocus: (viewUpdate) => context.emit('focus', viewUpdate),
+        onBlur: (viewUpdate) => context.emit('blur', viewUpdate),
+        onUpdate: (viewUpdate) => context.emit('update', viewUpdate),
         onChange: (doc, viewUpdate) => {
           if (doc !== props.modelValue) {
             context.emit('update:modelValue', doc, viewUpdate);
             context.emit('change', doc, viewUpdate);
           }
-        }
+        },
       });
 
       component.view = new EditorView({
         state: component.state,
         parent: container.value!,
-        root: config.value.root
+        root: config.value.root,
       });
 
       // watch prop.extensions
       const reExtensions = cm.rerunExtension();
       watch(
         () => props.extensions,
-        extensions => reExtensions(component.view, extensions || []),
+        (extensions) => reExtensions(component.view, extensions || []),
         { immediate: true }
       );
 
@@ -153,7 +141,7 @@ export default defineComponent({
       const toggleDisabled = cm.toggleExtension(cm.extensions.disable());
       watch(
         () => config.value.disabled,
-        disabled => toggleDisabled(component.view, disabled),
+        (disabled) => toggleDisabled(component.view, disabled),
         { immediate: true }
       );
 
@@ -161,7 +149,7 @@ export default defineComponent({
       const toggleIWT = cm.toggleExtension(cm.extensions.indentWithTab());
       watch(
         () => config.value.indentWithTab,
-        iwt => toggleIWT(component.view, iwt),
+        (iwt) => toggleIWT(component.view, iwt),
         { immediate: true }
       );
 
@@ -169,7 +157,7 @@ export default defineComponent({
       const reTabSize = cm.rerunExtension();
       watch(
         () => config.value.tabSize,
-        tabSize => reTabSize(component.view, cm.extensions.tabSize(tabSize)),
+        (tabSize) => reTabSize(component.view, cm.extensions.tabSize(tabSize)),
         { immediate: true }
       );
 
@@ -177,8 +165,7 @@ export default defineComponent({
       const rePlaceholder = cm.rerunExtension();
       watch(
         () => config.value.placeholder,
-        placeholder =>
-          rePlaceholder(component.view, cm.extensions.placeholder(placeholder)),
+        (placeholder) => rePlaceholder(component.view, cm.extensions.placeholder(placeholder)),
         { immediate: true }
       );
 
@@ -186,14 +173,14 @@ export default defineComponent({
       const reStyle = cm.rerunExtension();
       watch(
         () => config.value.style,
-        style => reStyle(component.view, cm.extensions.style(style)),
+        (style) => reStyle(component.view, cm.extensions.style(style)),
         { immediate: true }
       );
 
       // watch prop.modal value
       watch(
         () => props.modelValue,
-        newValue => {
+        (newValue) => {
           if (newValue !== cm.getDoc(component.view)) {
             cm.setDoc(component.view, newValue);
           }
@@ -208,7 +195,7 @@ export default defineComponent({
       // ready
       context.emit('ready', {
         ...component,
-        container: container.value!
+        container: container.value!,
       });
     });
 
@@ -221,8 +208,8 @@ export default defineComponent({
       return h('div', {
         class: 'v-codemirror',
         style: { display: 'contents' },
-        ref: container
+        ref: container,
       });
     };
-  }
+  },
 });

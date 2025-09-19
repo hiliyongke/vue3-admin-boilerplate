@@ -4,8 +4,8 @@
  */
 const getUrlParam = (name, url = window.location.href) => {
   name.replace(/[\[\]]/g, '\\$&');
-  let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-  let results = regex.exec(url);
+  const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
+  const results = regex.exec(url);
   if (!results) return null;
   if (!results[2]) return '';
 

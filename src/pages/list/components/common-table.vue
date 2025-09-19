@@ -13,10 +13,7 @@
         <t-col :span="10">
           <t-row :gutter="[16, 24]">
             <t-col :span="4">
-              <t-form-item
-                label="合同名称"
-                name="name"
-              >
+              <t-form-item label="合同名称" name="name">
                 <t-input
                   v-model="formData.name"
                   class="form-item-content"
@@ -27,10 +24,7 @@
               </t-form-item>
             </t-col>
             <t-col :span="4">
-              <t-form-item
-                label="合同状态"
-                name="status"
-              >
+              <t-form-item label="合同状态" name="status">
                 <t-select
                   v-model="formData.status"
                   class="form-item-content"
@@ -40,10 +34,7 @@
               </t-form-item>
             </t-col>
             <t-col :span="4">
-              <t-form-item
-                label="合同编号"
-                name="no"
-              >
+              <t-form-item label="合同编号" name="no">
                 <t-input
                   v-model="formData.no"
                   class="form-item-content"
@@ -53,10 +44,7 @@
               </t-form-item>
             </t-col>
             <t-col :span="4">
-              <t-form-item
-                label="合同类型"
-                name="type"
-              >
+              <t-form-item label="合同类型" name="type">
                 <t-select
                   v-model="formData.type"
                   style="display: inline-block"
@@ -69,24 +57,9 @@
           </t-row>
         </t-col>
 
-        <t-col
-          :span="2"
-          class="operation-container"
-        >
-          <t-button
-            theme="primary"
-            type="submit"
-            :style="{ marginLeft: '8px' }"
-          >
-            查询
-          </t-button>
-          <t-button
-            type="reset"
-            variant="base"
-            theme="default"
-          >
-            重置
-          </t-button>
+        <t-col :span="2" class="operation-container">
+          <t-button theme="primary" type="submit" :style="{ marginLeft: '8px' }"> 查询 </t-button>
+          <t-button type="reset" variant="base" theme="default"> 重置 </t-button>
         </t-col>
       </t-row>
     </t-form>
@@ -105,41 +78,11 @@
         @change="rehandleChange"
       >
         <template #status="{ row }">
-          <t-tag
-            v-if="row.status === CONTRACT_STATUS.FAIL"
-            theme="danger"
-            variant="light"
-          >
-            审核失败
-          </t-tag>
-          <t-tag
-            v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING"
-            theme="warning"
-            variant="light"
-          >
-            待审核
-          </t-tag>
-          <t-tag
-            v-if="row.status === CONTRACT_STATUS.EXEC_PENDING"
-            theme="warning"
-            variant="light"
-          >
-            待履行
-          </t-tag>
-          <t-tag
-            v-if="row.status === CONTRACT_STATUS.EXECUTING"
-            theme="success"
-            variant="light"
-          >
-            履行中
-          </t-tag>
-          <t-tag
-            v-if="row.status === CONTRACT_STATUS.FINISH"
-            theme="success"
-            variant="light"
-          >
-            已完成
-          </t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.FAIL" theme="danger" variant="light"> 审核失败 </t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.AUDIT_PENDING" theme="warning" variant="light"> 待审核 </t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.EXEC_PENDING" theme="warning" variant="light"> 待履行 </t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.EXECUTING" theme="success" variant="light"> 履行中 </t-tag>
+          <t-tag v-if="row.status === CONTRACT_STATUS.FINISH" theme="success" variant="light"> 已完成 </t-tag>
         </template>
         <template #contractType="{ row }">
           <p v-if="row.contractType === CONTRACT_TYPES.MAIN">审核失败</p>
@@ -147,40 +90,18 @@
           <p v-if="row.contractType === CONTRACT_TYPES.SUPPLEMENT">待履行</p>
         </template>
         <template #paymentType="{ row }">
-          <p
-            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT"
-            class="payment-col"
-          >
+          <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT" class="payment-col">
             付款
-            <trend
-              class="dashboard-item-trend"
-              type="up"
-            />
+            <trend class="dashboard-item-trend" type="up" />
           </p>
-          <p
-            v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECIPT"
-            class="payment-col"
-          >
+          <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECIPT" class="payment-col">
             收款
-            <trend
-              class="dashboard-item-trend"
-              type="down"
-            />
+            <trend class="dashboard-item-trend" type="down" />
           </p>
         </template>
         <template #op="slotProps">
-          <a
-            class="t-button-link"
-            @click="rehandleClickOp(slotProps)"
-          >
-            管理
-          </a>
-          <a
-            class="t-button-link"
-            @click="handleClickDelete(slotProps)"
-          >
-            删除
-          </a>
+          <a class="t-button-link" @click="rehandleClickOp(slotProps)"> 管理 </a>
+          <a class="t-button-link" @click="handleClickDelete(slotProps)"> 删除 </a>
         </template>
       </t-table>
       <t-dialog
@@ -206,7 +127,7 @@ import {
   CONTRACT_STATUS_OPTIONS,
   CONTRACT_TYPES,
   CONTRACT_TYPE_OPTIONS,
-  CONTRACT_PAYMENT_TYPES
+  CONTRACT_PAYMENT_TYPES,
 } from '@/enums';
 
 const store = useSettingStore();
@@ -218,47 +139,47 @@ const COLUMNS = [
     width: 200,
     ellipsis: true,
     align: 'left' as const,
-    colKey: 'name'
+    colKey: 'name',
   },
   { title: '合同状态', colKey: 'status', width: 200 },
   {
     title: '合同编号',
     width: 200,
     ellipsis: true,
-    colKey: 'no'
+    colKey: 'no',
   },
   {
     title: '合同类型',
     width: 200,
     ellipsis: true,
-    colKey: 'contractType'
+    colKey: 'contractType',
   },
   {
     title: '合同收付类型',
     width: 200,
     ellipsis: true,
-    colKey: 'paymentType'
+    colKey: 'paymentType',
   },
   {
     title: '合同金额 (元)',
     width: 200,
     ellipsis: true,
-    colKey: 'amount'
+    colKey: 'amount',
   },
   {
     align: 'left' as const,
     fixed: 'right' as const,
     width: 200,
     colKey: 'op',
-    title: '操作'
-  }
+    title: '操作',
+  },
 ];
 
 const searchForm = {
   name: '',
   no: undefined,
   status: undefined,
-  type: ''
+  type: '',
 };
 
 const formData = ref({ ...searchForm });
@@ -269,7 +190,7 @@ const hover = true;
 const pagination = ref({
   defaultPageSize: 20,
   total: 100,
-  defaultCurrent: 1
+  defaultCurrent: 1,
 });
 const confirmVisible = ref(false);
 
@@ -283,7 +204,7 @@ const fetchData = async () => {
     data.value = list;
     pagination.value = {
       ...pagination.value,
-      total: list.length
+      total: list.length,
     };
   } catch (e) {
     console.log(e);
@@ -326,10 +247,10 @@ const handleClickDelete = ({ row }) => {
   deleteIdx.value = row.rowIndex;
   confirmVisible.value = true;
 };
-const onReset = val => {
+const onReset = (val) => {
   console.log(val);
 };
-const onSubmit = val => {
+const onSubmit = (val) => {
   console.log(val);
 };
 const rehandlePageChange = (curr, pageInfo) => {

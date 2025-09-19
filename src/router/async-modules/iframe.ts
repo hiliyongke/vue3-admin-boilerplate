@@ -9,7 +9,7 @@ export default [
     redirect: '/frame/doc',
     meta: {
       icon: 'internet',
-      title: '外部页面'
+      title: '外部页面',
     },
 
     children: [
@@ -19,8 +19,8 @@ export default [
         component: IFrame,
         meta: {
           frameSrc: 'https://tdesign.tencent.com/vue-next/getting-started',
-          title: 'TDesign 文档（内嵌）'
-        }
+          title: 'TDesign 文档（内嵌）',
+        },
       },
       {
         path: 'TDesign2',
@@ -29,9 +29,9 @@ export default [
         meta: {
           frameSrc: 'https://tdesign.tencent.com/vue-next/getting-started',
           frameBlank: true,
-          title: 'TDesign 文档（外链）'
-        }
-      }
-    ]
-  }
+          title: 'TDesign 文档（外链）',
+        },
+      },
+    ],
+  },
 ];

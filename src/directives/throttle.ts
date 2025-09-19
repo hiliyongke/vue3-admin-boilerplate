@@ -26,6 +26,6 @@ export function throttleDirective(app: App) {
     // 当被绑定的元素插入到 DOM 中时……
     mounted(el, binding) {
       throttle(el, binding);
-    }
+    },
   });
 }

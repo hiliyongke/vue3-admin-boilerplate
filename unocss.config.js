@@ -6,17 +6,17 @@ export default defineConfig({
     pipeline: {
       include: [
         /\.(vue|svelte|[jt]sx?|mdx?|astro|elm|php|phtml|html)($|\?)/,
-        'src/**/*.{js,ts,jsx,tsx,vue,html,css,scss,less}'
+        'src/**/*.{js,ts,jsx,tsx,vue,html,css,scss,less}',
       ],
-      exclude: ['node_modules', 'dist', '.git', '.husky', '.vscode', 'build', 'mock']
-    }
+      exclude: ['node_modules', 'dist', '.git', '.husky', '.vscode', 'build', 'mock'],
+    },
   },
   /** 预设 */
   presets: [
     /** 属性化模式 & 无值的属性模式 - 临时禁用以解决栈溢出问题 */
     // presetAttributify(),
     /** 默认预设 */
-    presetUno()
+    presetUno(),
   ],
   /** 自定义规则 */
   rules: [['uno-padding-20', { padding: '20px' }]],
@@ -25,7 +25,7 @@ export default defineConfig({
     'uno-wh-full': 'w-full h-full',
     'uno-flex-center': 'flex justify-center items-center',
     'uno-flex-x-center': 'flex justify-center',
-    'uno-flex-y-center': 'flex items-center'
+    'uno-flex-y-center': 'flex items-center',
   },
   /** 主题配置 */
   theme: {
@@ -36,7 +36,7 @@ export default defineConfig({
       error: '#ff5252',
       info: '#2196f3',
       success: '#4caf50',
-      warning: '#fb8c00'
-    }
-  }
+      warning: '#fb8c00',
+    },
+  },
 });

@@ -10,11 +10,11 @@ export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     isAuthenticated: false,
     token: null,
-    user: null
+    user: null,
   }),
 
   getters: {
-    isLoggedIn: (state) => state.isAuthenticated
+    isLoggedIn: (state) => state.isAuthenticated,
   },
 
   actions: {
@@ -41,6 +41,6 @@ export const useAuthStore = defineStore('auth', {
       this.token = null;
       this.user = null;
       this.isAuthenticated = false;
-    }
-  }
+    },
+  },
 });

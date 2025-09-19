@@ -26,7 +26,7 @@ AjaxErr.prototype.addListener = function (xhr, args) {
       this.forms.addLine('ERROR', {
         etype: 'ajax error',
         msg: `status:${xhr.status}`,
-        js: args.join(' :')
+        js: args.join(' :'),
       });
 
       onloadend && onloadend.apply(this, params);
@@ -37,7 +37,7 @@ AjaxErr.prototype.addListener = function (xhr, args) {
     this.forms.addLine('ERROR', {
       etype: 'ajax error',
       msg: `timeout ${xhr.status}`,
-      js: args.join(' :')
+      js: args.join(' :'),
     });
 
     ontimeout && ontimeout.apply(this, params);

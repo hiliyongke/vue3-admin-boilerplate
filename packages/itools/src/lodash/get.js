@@ -25,7 +25,7 @@ export default function get(obj, propsArg, defaultValue) {
     if (!obj) {
       return defaultValue;
     }
-    // eslint-disable-next-line no-param-reassign
+
     obj = obj[prop];
     if (obj === undefined) {
       return defaultValue;

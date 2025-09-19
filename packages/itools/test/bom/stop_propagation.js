@@ -9,7 +9,7 @@ describe('stopPropagation', () => {
 
     expect(buttons[0].innerText).toBe('click me'); // true
 
-    buttons[0].addEventListener('touchmove', e => {
+    buttons[0].addEventListener('touchmove', (e) => {
       e.target.innerText = 'touchmoved';
     });
 

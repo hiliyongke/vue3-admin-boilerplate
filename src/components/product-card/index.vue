@@ -12,10 +12,7 @@
       </t-avatar>
     </template>
     <template #status>
-      <t-tag
-        :theme="product?.isSetup ? 'success' : 'default'"
-        :disabled="!product?.isSetup"
-      >
+      <t-tag :theme="product?.isSetup ? 'success' : 'default'" :disabled="!product?.isSetup">
         {{ product?.isSetup ? '已启用' : '已停用' }}
       </t-tag>
     </template>
@@ -24,10 +21,7 @@
       <p class="list-card-item_detail--desc">{{ product?.description }}</p>
     </template>
     <template #footer>
-      <t-avatar-group
-        cascading="left-up"
-        :max="2"
-      >
+      <t-avatar-group cascading="left-up" :max="2">
         <t-avatar>{{ typeMap[product?.type ? product.type - 1 : 0] }}</t-avatar>
         <t-avatar>
           <template #icon>
@@ -44,21 +38,16 @@
           {
             content: '管理',
             value: 'manage',
-            onClick: () => product && handleClickManage(product)
+            onClick: () => product && handleClickManage(product),
           },
           {
             content: '删除',
             value: 'delete',
-            onClick: () => product && handleClickDelete(product)
-          }
+            onClick: () => product && handleClickDelete(product),
+          },
         ]"
       >
-        <t-button
-          theme="default"
-          :disabled="!product?.isSetup"
-          shape="square"
-          variant="text"
-        >
+        <t-button theme="default" :disabled="!product?.isSetup" shape="square" variant="text">
           <more-icon />
         </t-button>
       </t-dropdown>
@@ -74,7 +63,7 @@ import {
   UserAvatarIcon,
   LaptopIcon,
   MoreIcon,
-  AddIcon
+  AddIcon,
 } from 'tdesign-icons-vue-next';
 
 /**
@@ -113,7 +102,7 @@ interface Emits {
  * 组件属性
  */
 const props = withDefaults(defineProps<Props>(), {
-  product: undefined
+  product: undefined,
 });
 
 /**

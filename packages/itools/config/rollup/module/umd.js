@@ -11,6 +11,6 @@ export default {
     format: 'umd',
     name: 'itools',
     sourcemap: false,
-    banner: banner
-  }
+    banner,
+  },
 };

@@ -6,10 +6,10 @@ export const TOKEN_NAME = 'tdesign-starter';
 export const globalConfigZh = {
   calendar: {},
   table: {},
-  pagination: {}
+  pagination: {},
 };
 export const globalConfigEn = {
   calendar: {},
   table: {},
-  pagination: {}
+  pagination: {},
 };

@@ -6,6 +6,6 @@ describe('call', () => {
   });
 
   test('calls function on given object', () => {
-    expect(itools.call('map', x => x * 2)([1, 2, 3])).toEqual([2, 4, 6]);
+    expect(itools.call('map', (x) => x * 2)([1, 2, 3])).toEqual([2, 4, 6]);
   });
 });

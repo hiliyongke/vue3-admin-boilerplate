@@ -4,12 +4,7 @@
  */
 import type { App } from 'vue';
 
-function addWaterMark(
-  str: string,
-  parentNode: HTMLElement,
-  font: string,
-  textColor: string
-) {
+function addWaterMark(str: string, parentNode: HTMLElement, font: string, textColor: string) {
   // 水印文字，父元素，字体，文字颜色
   const can = document.createElement('canvas');
   parentNode.appendChild(can);
@@ -24,19 +19,14 @@ function addWaterMark(
     cans.textAlign = 'left';
     cans.textBaseline = 'middle';
     cans.fillText(str || 'vue3-admin-plus', can.width / 10, can.height / 2);
-    parentNode.style.backgroundImage = 'url(' + can.toDataURL('image/png') + ')';
+    parentNode.style.backgroundImage = `url(${can.toDataURL('image/png')})`;
   }
 }
 export function watermarkDirective(app: App) {
   app.directive('watermark', {
     mounted(el, binding) {
       binding.value ? binding.value : (binding.value = {});
-      addWaterMark(
-        binding.value.text,
-        el,
-        binding.value.font,
-        binding.value.textColor
-      );
-    }
+      addWaterMark(binding.value.text, el, binding.value.font, binding.value.textColor);
+    },
   });
 }

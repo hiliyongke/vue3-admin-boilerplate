@@ -10,10 +10,7 @@ const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7;
  * @param {string=} prefixKey -
  * @param {Object} [storage=localStorage] - sessionStorage | localStorage
  */
-export const createStorage = ({
-  prefixKey = '',
-  storage = localStorage
-} = {}) => {
+export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) => {
   /**
    * 本地缓存类
    * @class Storage
@@ -35,7 +32,7 @@ export const createStorage = ({
     set(key: string, value: any, expire: number | null = DEFAULT_CACHE_TIME) {
       const stringData = JSON.stringify({
         value,
-        expire: expire !== null ? new Date().getTime() + expire * 1000 : null
+        expire: expire !== null ? new Date().getTime() + expire * 1000 : null,
       });
       this.storage.setItem(this.getKey(key), stringData);
     }
@@ -88,11 +85,7 @@ export const createStorage = ({
      * 如果过期时间为设置，默认关闭浏览器自动删除
      * @example
      */
-    setCookie(
-      name: string,
-      value: any,
-      expire: number | null = DEFAULT_CACHE_TIME
-    ) {
+    setCookie(name: string, value: any, expire: number | null = DEFAULT_CACHE_TIME) {
       document.cookie = `${this.getKey(name)}=${value}; Max-Age=${expire}`;
     }
 
@@ -102,7 +95,7 @@ export const createStorage = ({
      */
     getCookie(name: string): string {
       const cookieArr = document.cookie.split('; ');
-      for (let i = 0, length = cookieArr.length; i < length; i++) {
+      for (let i = 0, { length } = cookieArr; i < length; i++) {
         const kv = cookieArr[i].split('=');
         if (kv[0] === this.getKey(name)) {
           return kv[1];

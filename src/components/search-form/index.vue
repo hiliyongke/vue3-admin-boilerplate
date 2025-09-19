@@ -1,34 +1,14 @@
 <template>
-  <div
-    v-if="columns && columns.length"
-    class="table-search"
-  >
-    <t-form
-      ref="formRef"
-      :model="searchParam"
-      :inline="true"
-      label-width="100px"
-      :style="`max-width: ${maxWidth}px`"
-    >
-      <template
-        v-for="item in getSearchList"
-        :key="item.prop"
-      >
+  <div v-if="columns && columns.length" class="table-search">
+    <t-form ref="formRef" :model="searchParam" :inline="true" label-width="100px" :style="`max-width: ${maxWidth}px`">
+      <template v-for="item in getSearchList" :key="item.prop">
         <t-form-item :label="`${item.label} :`">
-          <SearchFormItem
-            :item="item"
-            :search-param="searchParam"
-          />
+          <SearchFormItem :item="item" :search-param="searchParam" />
         </t-form-item>
       </template>
     </t-form>
     <div class="search-operation">
-      <t-button
-        theme="primary"
-        @click="search"
-      >
-        搜索
-      </t-button>
+      <t-button theme="primary" @click="search"> 搜索 </t-button>
       <t-button @click="reset">重置</t-button>
       <t-button
         v-if="columns && columns.length > maxLength"
@@ -60,17 +40,20 @@ interface ProTableProps {
 }
 
 // 默认值
-const props = withDefaults(defineProps<{
-  columns?: Partial<ColumnProps>[];
-  searchParam?: any;
-  search?: (params: any) => void;
-  reset?: (params: any) => void;
-}>(), {
-  columns: () => [],
-  searchParam: () => ({}),
-  search: () => {},
-  reset: () => {}
-});
+const props = withDefaults(
+  defineProps<{
+    columns?: Partial<ColumnProps>[];
+    searchParam?: any;
+    search?: (params: any) => void;
+    reset?: (params: any) => void;
+  }>(),
+  {
+    columns: () => [],
+    searchParam: () => ({}),
+    search: () => {},
+    reset: () => {},
+  }
+);
 
 const maxLength = ref<number>(4);
 const maxWidth = ref<number>(1260);
@@ -78,11 +61,10 @@ const maxWidth = ref<number>(1260);
 onMounted(() => {
   // * 暂时只判断这两种情况（第四个搜索项为时间/日期范围 || 前三项存在时间/日期范围选择框）(后期通过css解决)
   if (props.columns && props.columns.length >= 4) {
-    props.columns[3]?.searchType === 'datetimerange' ||
-    props.columns[3]?.searchType === 'daterange'
+    props.columns[3]?.searchType === 'datetimerange' || props.columns[3]?.searchType === 'daterange'
       ? ((maxWidth.value = 945), (maxLength.value = 3))
       : null;
-    props.columns.slice(0, 3).forEach(item => {
+    props.columns.slice(0, 3).forEach((item) => {
       item?.searchType === 'datetimerange' || item?.searchType === 'daterange'
         ? ((maxWidth.value = 1135), (maxLength.value = 3))
         : null;

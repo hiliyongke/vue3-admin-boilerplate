@@ -15,8 +15,8 @@ const swagger: SwaggerConfig[] = [
   // },
   {
     moduleName: 'xx1',
-    input: './src/utils/api-gen/swagger1.json'
-  }
+    input: './src/utils/api-gen/swagger1.json',
+  },
 ];
 
 for (let i = 0; i < swagger.length; i++) {
@@ -37,7 +37,7 @@ for (let i = 0; i < swagger.length; i++) {
       printWidth: 80,
       tabWidth: 2,
       trailingComma: 'all',
-      parser: 'typescript'
+      parser: 'typescript',
     },
     defaultResponseType: 'void',
     singleHttpClient: true,
@@ -46,10 +46,7 @@ for (let i = 0; i < swagger.length; i++) {
     moduleNameFirstTag: true,
     generateUnionEnums: false,
     generateClient: true,
-    output: path.resolve(
-      process.cwd(),
-      `./src/api/modules/${item.moduleName}`
-    ) // 输出目录
+    output: path.resolve(process.cwd(), `./src/api/modules/${item.moduleName}`), // 输出目录
   };
 
   // url 跟 input只能出现其一

@@ -12,13 +12,10 @@ describe('deletedDiff', () => {
         ['object', { a: 1 }],
         ['array', [1]],
         ['function', () => ({})],
-        ['date', new Date()]
-      ])(
-        'returns empty object when given values of type %s are equal',
-        (type, value) => {
-          expect(itools.deletedDiff(value, value)).toEqual({});
-        }
-      );
+        ['date', new Date()],
+      ])('returns empty object when given values of type %s are equal', (type, value) => {
+        expect(itools.deletedDiff(value, value)).toEqual({});
+      });
     });
 
     describe('not equal and not object', () => {
@@ -34,13 +31,10 @@ describe('deletedDiff', () => {
         ['872983', { areaCode: '+44', number: '872983' }],
         [100, () => ({})],
         [() => ({}), 100],
-        [new Date('2017-01-01'), new Date('2017-01-02')]
-      ])(
-        'returns empty object when given values: %s %s are unequal',
-        (lhs, rhs) => {
-          expect(itools.deletedDiff(lhs, rhs)).toEqual({});
-        }
-      );
+        [new Date('2017-01-01'), new Date('2017-01-02')],
+      ])('returns empty object when given values: %s %s are unequal', (lhs, rhs) => {
+        expect(itools.deletedDiff(lhs, rhs)).toEqual({});
+      });
     });
   });
 
@@ -56,22 +50,19 @@ describe('deletedDiff', () => {
 
       test('returns keys as undefined when deleted from right hand side root', () => {
         expect(itools.deletedDiff({ a: 1, b: { c: 2 } }, { a: 1 })).toEqual({
-          b: undefined
+          b: undefined,
         });
       });
 
       test('returns keys as undefined when deeply deleted from right hand side', () => {
-        expect(
-          itools.deletedDiff(
-            { a: { b: 1 }, c: 2, d: { e: 100 } },
-            { a: { b: 1 }, c: 2, d: {} }
-          )
-        ).toEqual({ d: { e: undefined } });
+        expect(itools.deletedDiff({ a: { b: 1 }, c: 2, d: { e: 100 } }, { a: { b: 1 }, c: 2, d: {} })).toEqual({
+          d: { e: undefined },
+        });
       });
 
       test('returns subset of right hand side with deleted date', () => {
         expect(itools.deletedDiff({ date: new Date('2016') }, {})).toEqual({
-          date: undefined
+          date: undefined,
         });
       });
     });
@@ -91,7 +82,7 @@ describe('deletedDiff', () => {
 
       test('returns subset of right hand side with added date', () => {
         expect(itools.deletedDiff([new Date('2016')], [])).toEqual({
-          0: undefined
+          0: undefined,
         });
       });
     });
@@ -121,7 +112,7 @@ describe('deletedDiff', () => {
         const rhs = Object.create(null);
         lhs.date = new Date('2016');
         expect(itools.deletedDiff({ date: new Date('2016') }, rhs)).toEqual({
-          date: undefined
+          date: undefined,
         });
       });
     });

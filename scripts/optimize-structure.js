@@ -55,7 +55,7 @@ const createDirectories = () => {
     'docs/guide',
   ];
 
-  directories.forEach(dir => {
+  directories.forEach((dir) => {
     const fullPath = path.join(process.cwd(), dir);
     if (!fs.existsSync(fullPath)) {
       fs.mkdirSync(fullPath, { recursive: true });
@@ -153,22 +153,16 @@ indent_size = 2
 
   // VSCode设置
   const vscodeSettings = {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "source.fixAll.stylelint": true
+    'editor.formatOnSave': true,
+    'editor.codeActionsOnSave': {
+      'source.fixAll.eslint': true,
+      'source.fixAll.stylelint': true,
     },
-    "eslint.validate": [
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "vue"
-    ],
-    "typescript.preferences.importModuleSpecifier": "relative",
-    "vue.codeActions.enabled": true,
-    "vue.complete.casing.tags": "pascal",
-    "vue.complete.casing.props": "camel"
+    'eslint.validate': ['javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue'],
+    'typescript.preferences.importModuleSpecifier': 'relative',
+    'vue.codeActions.enabled': true,
+    'vue.complete.casing.tags': 'pascal',
+    'vue.complete.casing.props': 'camel',
   };
 
   // 创建文件
@@ -209,7 +203,6 @@ const main = () => {
     console.log('  - 添加README文档');
     console.log('  - 配置开发环境');
     console.log('  - 统一代码规范');
-
   } catch (error) {
     console.error('❌ 优化过程中出现错误:', error);
     process.exit(1);

@@ -3,25 +3,15 @@
     <div class="list-card-operation">
       <t-button @click="formDialogVisible = true">新建产品</t-button>
       <div class="search-input">
-        <t-input
-          v-model="searchValue"
-          placeholder="请输入你需要搜索的内容"
-          clearable
-        >
+        <t-input v-model="searchValue" placeholder="请输入你需要搜索的内容" clearable>
           <template #suffix-icon>
-            <search-icon
-              v-if="searchValue === ''"
-              size="20px"
-            />
+            <search-icon v-if="searchValue === ''" size="20px" />
           </template>
         </t-input>
       </div>
     </div>
 
-    <dialog-form
-      v-model:visible="formDialogVisible"
-      :data="formData"
-    />
+    <dialog-form v-model:visible="formDialogVisible" :data="formData" />
 
     <template v-if="pagination.total > 0 && !dataLoading">
       <div class="list-card-items">
@@ -57,14 +47,8 @@
       </div>
     </template>
 
-    <div
-      v-else-if="dataLoading"
-      class="list-card-loading"
-    >
-      <t-loading
-        size="large"
-        text="加载数据中..."
-      />
+    <div v-else-if="dataLoading" class="list-card-loading">
+      <t-loading size="large" text="加载数据中..." />
     </div>
 
     <t-dialog
@@ -79,7 +63,7 @@
 
 <script lang="ts">
 export default {
-  name: 'ListCard'
+  name: 'ListCard',
 };
 </script>
 
@@ -97,7 +81,7 @@ const INITIAL_DATA = {
   description: '',
   type: 1,
   mark: '',
-  amount: 0
+  amount: 0,
 };
 
 interface ProductData {
@@ -124,7 +108,7 @@ const fetchData = async () => {
     productList.value = list;
     pagination.value = {
       ...pagination.value,
-      total: list.length
+      total: list.length,
     };
   } catch (e) {
     console.log(e);
@@ -134,9 +118,7 @@ const fetchData = async () => {
 };
 
 const confirmBody = computed(() =>
-  deleteProduct.value
-    ? `确认删除后${deleteProduct.value.name}的所有产品信息将被清空, 且无法恢复`
-    : ''
+  deleteProduct.value ? `确认删除后${deleteProduct.value.name}的所有产品信息将被清空, 且无法恢复` : ''
 );
 
 onMounted(() => {
@@ -158,7 +140,7 @@ const onCurrentChange = (current: number) => {
 const handleDeleteItem = (product: any) => {
   confirmVisible.value = true;
   // 从完整的产品列表中找到对应的产品
-  const fullProduct = productList.value.find(p => p.name === product.name);
+  const fullProduct = productList.value.find((p) => p.name === product.name);
   deleteProduct.value = fullProduct;
 };
 const onConfirmDelete = () => {
@@ -176,12 +158,12 @@ const onCancel = () => {
 const handleManageProduct = (product: any) => {
   formDialogVisible.value = true;
   // 从完整的产品列表中找到对应的产品
-  const fullProduct = productList.value.find(p => p.name === product.name);
+  const fullProduct = productList.value.find((p) => p.name === product.name);
   if (fullProduct) {
     formData.value = {
       ...fullProduct,
       status: fullProduct?.isSetup ? '1' : '0',
-      type: fullProduct.type || 1
+      type: fullProduct.type || 1,
     };
   }
 };

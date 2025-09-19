@@ -6,9 +6,7 @@ describe('repeat', function () {
     done();
   });
   it('should pass base string example 1', function (done) {
-    expect(itools.repeat('TechOnTheNet', 3)).toEqual(
-      'TechOnTheNetTechOnTheNetTechOnTheNet'
-    );
+    expect(itools.repeat('TechOnTheNet', 3)).toEqual('TechOnTheNetTechOnTheNetTechOnTheNet');
     done();
   });
 });

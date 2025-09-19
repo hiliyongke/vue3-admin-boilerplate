@@ -3,7 +3,7 @@ const cachedSetTimeout = setTimeout;
 function createSleepPromise(timeout, { useCachedSetTimeout }) {
   const timeoutFunction = useCachedSetTimeout ? cachedSetTimeout : setTimeout;
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     timeoutFunction(resolve, timeout);
   });
 }

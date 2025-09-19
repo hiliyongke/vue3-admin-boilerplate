@@ -1,5 +1,6 @@
 import type { Plugin } from 'vue';
-import Component, { Props } from './component';
+import type { Props } from './component';
+import Component from './component';
 import { injectGlobalConfig } from './config';
 
 export type { Props } from './component';
@@ -15,5 +16,5 @@ export const install: Plugin = (app, defaultConfig?: Props) => {
 
 export default {
   Codemirror,
-  install
+  install,
 };

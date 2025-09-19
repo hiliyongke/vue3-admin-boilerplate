@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
   bgUrl: '',
   title: '',
   tip: '',
-  type: '403'
+  type: '403',
 });
 
 /**
@@ -54,9 +54,9 @@ const ICON_MAP: Record<ResultType, any> = {
   '403': Result403Icon,
   '404': Result404Icon,
   '500': Result500Icon,
-  'ie': ResultIeIcon,
-  'wifi': ResultWifiIcon,
-  'maintenance': ResultMaintenanceIcon
+  ie: ResultIeIcon,
+  wifi: ResultWifiIcon,
+  maintenance: ResultMaintenanceIcon,
 } as const;
 
 /**

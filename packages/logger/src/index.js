@@ -57,7 +57,7 @@ class Logger {
     if (letIE9()) return;
     this.forms.addLine('ERROR', {
       etype: 'custom error',
-      msg
+      msg,
     });
   }
 

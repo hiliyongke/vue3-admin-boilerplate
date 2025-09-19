@@ -11,9 +11,15 @@ describe('unique', () => {
     expect(itools.unique([1, 23, 53])).toEqual([1, 23, 53]);
   });
   test("itools.unique([true, 0, 1, false, false, undefined, null, '']) returns [true, 0, 1, false, false, undefined, null, '']", () => {
-    expect(
-      itools.unique([true, 0, 1, false, false, undefined, null, ''])
-    ).toEqual([true, 0, 1, false, undefined, null, '']);
+    expect(itools.unique([true, 0, 1, false, false, undefined, null, ''])).toEqual([
+      true,
+      0,
+      1,
+      false,
+      undefined,
+      null,
+      '',
+    ]);
   });
   test('itools.unique() returns []', () => {
     expect(itools.unique()).toEqual([]);
@@ -47,9 +53,9 @@ describe('unique', () => {
       itools.unique(false);
     }).toThrow();
   });
-  let start = new Date().getTime();
+  const start = new Date().getTime();
   itools.unique([true, 0, 1, false, false, undefined, null, '']);
-  let end = new Date().getTime();
+  const end = new Date().getTime();
   test('itools.unique([true, 0, 1, false, false, undefined, null]) takes less than 2s to run', () => {
     expect(end - start < 2000).toBeTruthy();
   });

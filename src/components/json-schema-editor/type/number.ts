@@ -32,34 +32,34 @@ const value: Value = {
   minimum: null,
   exclusiveMaximum: null,
   exclusiveMinimum: null,
-  enum: []
+  enum: [],
 };
 
 const attr: Attr = {
   description: {
     name: '描述',
-    type: 'string'
+    type: 'string',
   },
   maximum: {
     name: '最大值',
-    type: 'number'
+    type: 'number',
   },
   minimum: {
     name: '最小值',
-    type: 'number'
+    type: 'number',
   },
   exclusiveMaximum: {
     name: '不包含最大值',
-    type: 'boolean'
+    type: 'boolean',
   },
   exclusiveMinimum: {
     name: '不包含最小值',
-    type: 'boolean'
+    type: 'boolean',
   },
   enum: {
     name: '枚举',
-    type: 'array'
-  }
+    type: 'array',
+  },
 };
 
 const wrapper: Wrapper = { value, attr };

@@ -12,13 +12,10 @@ describe('addedDiff', () => {
         ['object', { a: 1 }],
         ['array', [1]],
         ['function', () => ({})],
-        ['date', new Date()]
-      ])(
-        'returns empty object when given values of type %s are equal',
-        (type, value) => {
-          expect(itools.addedDiff(value, value)).toEqual({});
-        }
-      );
+        ['date', new Date()],
+      ])('returns empty object when given values of type %s are equal', (type, value) => {
+        expect(itools.addedDiff(value, value)).toEqual({});
+      });
     });
 
     describe('not equal and not object', () => {
@@ -34,13 +31,10 @@ describe('addedDiff', () => {
         ['872983', { areaCode: '+44', number: '872983' }],
         [100, () => ({})],
         [() => ({}), 100],
-        [new Date('2017-01-01'), new Date('2017-01-02')]
-      ])(
-        'returns empty object when values are not equal (%s, %s)',
-        (lhs, rhs) => {
-          expect(itools.addedDiff(lhs, rhs)).toEqual({});
-        }
-      );
+        [new Date('2017-01-01'), new Date('2017-01-02')],
+      ])('returns empty object when values are not equal (%s, %s)', (lhs, rhs) => {
+        expect(itools.addedDiff(lhs, rhs)).toEqual({});
+      });
     });
   });
 
@@ -59,14 +53,12 @@ describe('addedDiff', () => {
       });
 
       test('returns subset of right hand side value when a key value has been added deeply', () => {
-        expect(
-          itools.addedDiff({ a: { b: 1 } }, { a: { b: 1, c: 2 } })
-        ).toEqual({ a: { c: 2 } });
+        expect(itools.addedDiff({ a: { b: 1 } }, { a: { b: 1, c: 2 } })).toEqual({ a: { c: 2 } });
       });
 
       test('returns subset of right hand side with added date', () => {
         expect(itools.addedDiff({}, { date: new Date('2016') })).toEqual({
-          date: new Date('2016')
+          date: new Date('2016'),
         });
       });
     });
@@ -86,7 +78,7 @@ describe('addedDiff', () => {
 
       test('returns subset of right hand side with added date', () => {
         expect(itools.addedDiff([], [new Date('2016')])).toEqual({
-          0: new Date('2016')
+          0: new Date('2016'),
         });
       });
     });

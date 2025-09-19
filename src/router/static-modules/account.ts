@@ -1,5 +1,5 @@
 import Layout from '@/layouts/index.vue';
-import { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,9 +13,9 @@ const routes: Array<RouteRecordRaw> = [
         path: 'index',
         name: 'UserIndex',
         component: () => import('@/pages/user/index.vue'),
-        meta: { title: '个人中心' }
-      }
-    ]
-  }
+        meta: { title: '个人中心' },
+      },
+    ],
+  },
 ];
 export default routes;

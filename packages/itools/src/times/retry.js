@@ -8,9 +8,9 @@
  */
 export default function (attempt, options) {
   const option = options || {};
-  let interval = option.interval || 400;
-  let retries = option.retries || 2;
-  let timeout = option.timeout || 8000;
+  const interval = option.interval || 400;
+  const retries = option.retries || 2;
+  const timeout = option.timeout || 8000;
 
   function rejectDelay(reason) {
     return new Promise(function (resolve, reject) {
@@ -36,7 +36,7 @@ function timeoutReject(task, timeout) {
         timer = setTimeout(function () {
           rj('timeout.');
         }, timeout || 8000);
-      })
+      }),
     ]).then(
       function (r) {
         clearTimeout(timer);

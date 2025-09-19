@@ -16,8 +16,8 @@ export class IndexedDbHelper {
       stores = [
         {
           name: '__IndexedDb__',
-          isKv: true
-        }
+          isKv: true,
+        },
       ];
     }
 
@@ -27,12 +27,12 @@ export class IndexedDbHelper {
 
     // update database structure
     const request = indexedDB.open(name, version);
-    request.onupgradeneeded = e => {
+    request.onupgradeneeded = (e) => {
       const db = e.target.result;
       const existStoreNames = Array.from(db.objectStoreNames);
       const passStoreNames = [];
 
-      stores.forEach(item => {
+      stores.forEach((item) => {
         let objectStore = null;
         if (existStoreNames.indexOf(item.name) > -1) {
           objectStore = e.target.transaction.objectStore(item.name);
@@ -41,22 +41,22 @@ export class IndexedDbHelper {
           const autoIncrement = item.isKv ? false : item.autoIncrement;
           objectStore = db.createObjectStore(item.name, {
             keyPath,
-            autoIncrement
+            autoIncrement,
           });
         }
 
         // delete old indexes
-        const indexNames = objectStore.indexNames;
+        const { indexNames } = objectStore;
         if (indexNames && indexNames.length) {
-          Array.from(indexNames).forEach(item => objectStore.deleteIndex(item));
+          Array.from(indexNames).forEach((item) => objectStore.deleteIndex(item));
         }
 
         // add new indexes
         if (item.indexes && item.indexes.length) {
-          item.indexes.forEach(item => {
+          item.indexes.forEach((item) => {
             objectStore.createIndex(item.name, item.keyPath || item.name, {
               unique: item.unique,
-              multiEntry: Array.isArray(item.keyPath)
+              multiEntry: Array.isArray(item.keyPath),
             });
           });
         }
@@ -66,17 +66,15 @@ export class IndexedDbHelper {
 
       // delete objectStores which is not in config information
       if (existStoreNames) {
-        existStoreNames.forEach(item => {
+        existStoreNames.forEach((item) => {
           if (passStoreNames.indexOf(item) === -1) {
             db.deleteObjectStore(item);
           }
         });
       }
     };
-    request.onblocked = e => {
-      console.error(
-        modifyError(new Error('indexedDB ' + name + ' is blocked'))
-      );
+    request.onblocked = (e) => {
+      console.error(modifyError(new Error(`indexedDB ${name} is blocked`)));
     };
 
     this.using = {};
@@ -91,16 +89,16 @@ export class IndexedDbHelper {
   connect() {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(this.name, this.version);
-      request.onerror = e => {
+      request.onerror = (e) => {
         reject(modifyError(e));
       };
-      request.onsuccess = e => {
+      request.onsuccess = (e) => {
         resolve(e.target.result);
       };
     });
   }
   use(name) {
-    const currentStore = this.stores.find(item => item.name === name);
+    const currentStore = this.stores.find((item) => item.name === name);
 
     if (!currentStore) {
       throw new Error(`[IndexedDbHelper]: store ${name} is not existing.`);
@@ -113,15 +111,15 @@ export class IndexedDbHelper {
 
     const store = new IndexedDbHelperStore({
       db: this,
-      store: currentStore
+      store: currentStore,
     });
 
     // if it is a key-value store, append special methods
     if (currentStore.isKv) {
-      store.key = i => store.keys().then(keys => keys && keys[i]);
-      store.getItem = key => store.get(key).then(obj => obj && obj.value);
+      store.key = (i) => store.keys().then((keys) => keys && keys[i]);
+      store.getItem = (key) => store.get(key).then((obj) => obj && obj.value);
       store.setItem = (key, value) => store.put({ key, value });
-      store.removeItem = key => store.delete(key);
+      store.removeItem = (key) => store.delete(key);
     }
 
     this.using[name] = store;
@@ -132,7 +130,7 @@ export class IndexedDbHelper {
     this.using = null;
     this.stores = null;
 
-    return this.connect().then(db => {
+    return this.connect().then((db) => {
       db.close();
     });
   }
@@ -144,7 +142,7 @@ IndexedDbHelper.deleteDatabase = function (name) {
     request.onsuccess = () => {
       resolve();
     };
-    request.onerror = e => {
+    request.onerror = (e) => {
       reject(e);
     };
   });
@@ -160,20 +158,12 @@ export class IndexedDbHelperStore {
   constructor(options = {}) {
     const { store, db } = options;
 
-    if (
-      typeof store !== 'object' ||
-      !store.name ||
-      typeof store.name !== 'string'
-    ) {
-      throw new Error(
-        `[IndexedDbHelperStore]: options.store should be a store config object.`
-      );
+    if (typeof store !== 'object' || !store.name || typeof store.name !== 'string') {
+      throw new Error(`[IndexedDbHelperStore]: options.store should be a store config object.`);
     }
 
     if (!(db instanceof IndexedDbHelper)) {
-      throw new Error(
-        `[IndexedDbHelperStore]: options.db should be an instanceof IndexedDbHelper.`
-      );
+      throw new Error(`[IndexedDbHelperStore]: options.db should be an instanceof IndexedDbHelper.`);
     }
 
     this.store = store;
@@ -186,15 +176,13 @@ export class IndexedDbHelperStore {
 
   transaction(writable = false) {
     const create = () => {
-      const name = this.name;
+      const { name } = this;
       const mode = writable ? 'readwrite' : 'readonly';
 
       // share the same connection
-      const connection = this.db.connection;
-      const deferer = connection
-        ? Promise.resolve(connection)
-        : this.db.connect();
-      return deferer.then(db => {
+      const { connection } = this.db;
+      const deferer = connection ? Promise.resolve(connection) : this.db.connect();
+      return deferer.then((db) => {
         this.db.connection = db;
         const tx = db.transaction(name, mode);
         const disconnect = () => {
@@ -214,23 +202,15 @@ export class IndexedDbHelperStore {
     return deferer;
   }
   objectStore(writable = false) {
-    const name = this.name;
-    return this.transaction(writable).then(tx => tx.objectStore(name));
+    const { name } = this;
+    return this.transaction(writable).then((tx) => tx.objectStore(name));
   }
   cursor(options) {
-    const {
-      index,
-      range,
-      direction,
-      onTouch,
-      onDone,
-      onError,
-      writable = false
-    } = options;
-    return this.objectStore(writable).then(objectStore => {
+    const { index, range, direction, onTouch, onDone, onError, writable = false } = options;
+    return this.objectStore(writable).then((objectStore) => {
       const owner = index ? objectStore.index(index) : objectStore;
       const request = owner.openCursor(range, direction);
-      request.onsuccess = e => {
+      request.onsuccess = (e) => {
         const cursor = e.target.result;
         if (cursor) {
           onTouch(cursor, owner);
@@ -238,7 +218,7 @@ export class IndexedDbHelperStore {
           onDone(cursor, owner);
         }
       };
-      request.onerror = e => {
+      request.onerror = (e) => {
         onError(modifyError(e));
       };
     });
@@ -246,13 +226,13 @@ export class IndexedDbHelperStore {
   request(fn, options = {}) {
     const { writable = false } = options;
     return new Promise((resolve, reject) => {
-      this.objectStore(writable).then(objectStore => {
+      this.objectStore(writable).then((objectStore) => {
         const request = fn(objectStore);
-        request.onsuccess = e => {
-          const result = e.target.result;
+        request.onsuccess = (e) => {
+          const { result } = e.target;
           resolve(result);
         };
-        request.onerror = e => {
+        request.onerror = (e) => {
           reject(modifyError(e));
         };
       });
@@ -278,26 +258,26 @@ export class IndexedDbHelperStore {
         onDone: () => {
           resolve();
         },
-        onError: e => {
+        onError: (e) => {
           reject(e);
-        }
+        },
       });
     });
   }
   batch(fns, options = {}) {
     const { writable = true } = options;
-    return this.transaction(writable).then(tx => {
-      const name = this.name;
+    return this.transaction(writable).then((tx) => {
+      const { name } = this;
       const promises = [];
       const objectStore = tx.objectStore(name);
-      fns.forEach(fn => {
+      fns.forEach((fn) => {
         const deferer = new Promise((resolve, reject) => {
           const request = fn(objectStore);
-          request.onsuccess = e => {
-            const result = e.target.result;
+          request.onsuccess = (e) => {
+            const { result } = e.target;
             resolve(result);
           };
-          request.onerror = e => {
+          request.onerror = (e) => {
             reject(modifyError(e));
           };
         });
@@ -312,18 +292,18 @@ export class IndexedDbHelperStore {
   get(key) {
     // single key
     if (!Array.isArray(key)) {
-      return this.request(objectStore => objectStore.get(key));
+      return this.request((objectStore) => objectStore.get(key));
     }
 
     // multiple keys
     const keys = key;
-    const fns = keys.map(key => objectStore => objectStore.get(key));
+    const fns = keys.map((key) => (objectStore) => objectStore.get(key));
     return this.batch(fns, { writable: false });
   }
   keys() {
     const keyPah = this.keyPath;
     const results = [];
-    return this.each(obj => {
+    return this.each((obj) => {
       const key = parse(obj, keyPah);
       results.push(key);
     }).then(() => {
@@ -332,14 +312,14 @@ export class IndexedDbHelperStore {
   }
   all() {
     const results = [];
-    return this.each(obj => {
+    return this.each((obj) => {
       results.push(obj);
     }).then(() => {
       return results;
     });
   }
   count() {
-    return this.request(objectStore => objectStore.count());
+    return this.request((objectStore) => objectStore.count());
   }
   // ==========================================
   each(fn) {
@@ -401,14 +381,14 @@ export class IndexedDbHelperStore {
     });
   }
   first() {
-    return this.some(1).then(items => items[0]);
+    return this.some(1).then((items) => items[0]);
   }
   last() {
-    return this.some(1, -1).then(items => items[0]);
+    return this.some(1, -1).then((items) => items[0]);
   }
   // =========================
   find(key, value) {
-    return this.request(objectStore => objectStore.index(key).get(value));
+    return this.request((objectStore) => objectStore.index(key).get(value));
   }
   query(key, value, compare) {
     const range = (function () {
@@ -437,7 +417,7 @@ export class IndexedDbHelperStore {
         range,
         onTouch: (cursor, owner) => {
           const targetObj = cursor.value;
-          const keyPath = owner.keyPath;
+          const { keyPath } = owner;
           const targetValue = parse(targetObj, keyPath);
 
           if (compare === '!=') {
@@ -445,10 +425,7 @@ export class IndexedDbHelperStore {
               results.push(targetObj);
             }
           } else if (compare === '%') {
-            if (
-              typeof targetValue == 'string' &&
-              targetValue.indexOf(value) > -1
-            ) {
+            if (typeof targetValue === 'string' && targetValue.indexOf(value) > -1) {
               results.push(targetObj);
             }
           } else if (compare === 'in') {
@@ -464,9 +441,9 @@ export class IndexedDbHelperStore {
         onDone: () => {
           resolve(results);
         },
-        onError: e => {
+        onError: (e) => {
           reject(e);
-        }
+        },
       });
     });
   }
@@ -474,7 +451,7 @@ export class IndexedDbHelperStore {
     const currentStore = this.store;
     const indexes = currentStore.indexes || [];
     const indexesMapping = {};
-    indexes.forEach(item => {
+    indexes.forEach((item) => {
       const { name, keyPath } = item;
       indexesMapping[name] = keyPath;
     });
@@ -532,7 +509,7 @@ export class IndexedDbHelperStore {
     };
 
     const groups = [];
-    rules.forEach(conditions => {
+    rules.forEach((conditions) => {
       const or_conditions = [];
       const and_conditions = [];
       for (let i = 0, len = conditions.length; i < len; i++) {
@@ -547,7 +524,7 @@ export class IndexedDbHelperStore {
       groups.push([and_conditions, or_conditions]);
     });
 
-    const isOk = obj => {
+    const isOk = (obj) => {
       for (let i = 0, len = groups.length; i < len; i++) {
         const [and_conditions, or_conditions] = groups[i];
         const res = determine(obj, and_conditions, or_conditions);
@@ -559,7 +536,7 @@ export class IndexedDbHelperStore {
     };
 
     const results = [];
-    return this.each(obj => {
+    return this.each((obj) => {
       if (isOk(obj)) {
         results.push(obj);
       }
@@ -577,7 +554,7 @@ export class IndexedDbHelperStore {
         return this.add(obj[0], key);
       }
 
-      const fns = objs.map(obj => objectStore => objectStore.add(obj, key));
+      const fns = objs.map((obj) => (objectStore) => objectStore.add(obj, key));
       return this.batch(fns);
     }
 
@@ -585,8 +562,8 @@ export class IndexedDbHelperStore {
       return Promise.resolve();
     }
 
-    return this.request(objectStore => objectStore.add(obj, key), {
-      writable: true
+    return this.request((objectStore) => objectStore.add(obj, key), {
+      writable: true,
     });
   }
   put(obj, key) {
@@ -596,7 +573,7 @@ export class IndexedDbHelperStore {
         return this.put(objs[0], key);
       }
 
-      const fns = objs.map(obj => objectStore => objectStore.put(obj, key));
+      const fns = objs.map((obj) => (objectStore) => objectStore.put(obj, key));
       return this.batch(fns);
     }
 
@@ -604,8 +581,8 @@ export class IndexedDbHelperStore {
       return Promise.resolve();
     }
 
-    return this.request(objectStore => objectStore.put(obj, key), {
-      writable: true
+    return this.request((objectStore) => objectStore.put(obj, key), {
+      writable: true,
     });
   }
   delete(key) {
@@ -615,7 +592,7 @@ export class IndexedDbHelperStore {
         return this.delete(keys[0]);
       }
 
-      const fns = keys.map(key => objectStore => objectStore.delete(key));
+      const fns = keys.map((key) => (objectStore) => objectStore.delete(key));
       return this.batch(fns);
     }
 
@@ -623,8 +600,8 @@ export class IndexedDbHelperStore {
       return Promise.resolve();
     }
 
-    return this.request(objectStore => objectStore.delete(key), {
-      writable: true
+    return this.request((objectStore) => objectStore.delete(key), {
+      writable: true,
     });
   }
   remove(obj) {
@@ -636,9 +613,9 @@ export class IndexedDbHelperStore {
         return this.remove(objs[0]);
       }
 
-      const fns = objs.map(obj => {
+      const fns = objs.map((obj) => {
         const key = parse(obj, keyPah);
-        return objectStore => objectStore.delete(key);
+        return (objectStore) => objectStore.delete(key);
       });
       return this.batch(fns);
     }
@@ -655,8 +632,8 @@ export class IndexedDbHelperStore {
     return this.delete(key);
   }
   clear() {
-    return this.request(objectStore => objectStore.clear(), {
-      writable: true
+    return this.request((objectStore) => objectStore.clear(), {
+      writable: true,
     });
   }
 }

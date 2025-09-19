@@ -33,35 +33,35 @@ const value: Value = {
   minLength: null,
   pattern: null,
   format: undefined,
-  enum: undefined
+  enum: undefined,
 };
 
 const attr: Attr = {
   description: {
     name: '描述',
-    type: 'string'
+    type: 'string',
   },
   maxLength: {
     name: '最大字符数',
-    type: 'integer'
+    type: 'integer',
   },
   minLength: {
     name: '最小字符数',
-    type: 'integer'
+    type: 'integer',
   },
   pattern: {
     name: '正则表达式',
-    type: 'string'
+    type: 'string',
   },
   format: {
     name: '格式',
     type: 'array',
-    enums: ['date', 'date-time', 'email', 'hostname', 'ipv4', 'ipv6', 'uri']
+    enums: ['date', 'date-time', 'email', 'hostname', 'ipv4', 'ipv6', 'uri'],
   },
   enum: {
     name: '枚举',
-    type: 'array'
-  }
+    type: 'array',
+  },
 };
 
 const wrapper: Wrapper = { value, attr };

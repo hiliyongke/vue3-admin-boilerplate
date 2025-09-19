@@ -1,15 +1,6 @@
 import assert from 'assert';
 import lodashStable from 'lodash';
-import {
-  map,
-  falsey,
-  stubFalse,
-  args,
-  slice,
-  symbol,
-  weakMap,
-  realm
-} from '../const';
+import { map, falsey, stubFalse, args, slice, symbol, weakMap, realm } from '../const';
 import itools from '../itools';
 
 describe('isMap', function () {
@@ -20,9 +11,9 @@ describe('isMap', function () {
   });
 
   it('should return `false` for non-maps', function () {
-    let expected = lodashStable.map(falsey, stubFalse);
+    const expected = lodashStable.map(falsey, stubFalse);
 
-    let actual = lodashStable.map(falsey, function (value, index) {
+    const actual = lodashStable.map(falsey, function (value, index) {
       return index ? itools.isMap(value) : itools.isMap();
     });
 
@@ -43,10 +34,10 @@ describe('isMap', function () {
   });
 
   it('should work for objects with a non-function `constructor` (test in IE 11)', function () {
-    let values = [false, true];
-    let expected = lodashStable.map(values, stubFalse);
+    const values = [false, true];
+    const expected = lodashStable.map(values, stubFalse);
 
-    let actual = lodashStable.map(values, function (value) {
+    const actual = lodashStable.map(values, function (value) {
       return itools.isMap({ constructor: value });
     });
 

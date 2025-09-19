@@ -10,11 +10,11 @@ describe('lockTouch', () => {
     expect(buttons).toHaveLength(1); // true
     expect(buttons[0].innerText).toBe('click me'); // true
 
-    buttons[0].addEventListener('touchmove', e => {
+    buttons[0].addEventListener('touchmove', (e) => {
       e.target.innerText = 'touchmoved';
     });
 
-    buttons[0].addEventListener('touchstart', e => {
+    buttons[0].addEventListener('touchstart', (e) => {
       e.target.innerText = 'touchstartd';
     });
     expect(buttons[0].innerText).not.toBe('touchmoved'); // true

@@ -1,9 +1,5 @@
 <template>
-  <t-popup
-    expand-animation
-    placement="bottom-right"
-    trigger="click"
-  >
+  <t-popup expand-animation placement="bottom-right" trigger="click">
     <template #content>
       <div class="header-msg">
         <div class="header-msg-top">
@@ -18,40 +14,21 @@
             清空
           </t-button>
         </div>
-        <t-list
-          v-if="unreadMsg.length > 0"
-          class="narrow-scrollbar"
-          :split="true"
-        >
-          <t-list-item
-            v-for="(item, index) in unreadMsg"
-            :key="index"
-          >
+        <t-list v-if="unreadMsg.length > 0" class="narrow-scrollbar" :split="true">
+          <t-list-item v-for="(item, index) in unreadMsg" :key="index">
             <div>
               <p class="msg-content">{{ item.content }}</p>
               <p class="msg-type">{{ item.type }}</p>
             </div>
             <p class="msg-time">{{ item.date }}</p>
             <template #action>
-              <t-button
-                size="small"
-                variant="outline"
-                @click="setRead('radio', item)"
-              >
-                设为已读
-              </t-button>
+              <t-button size="small" variant="outline" @click="setRead('radio', item)"> 设为已读 </t-button>
             </template>
           </t-list-item>
         </t-list>
 
-        <div
-          v-else
-          class="empty-list"
-        >
-          <img
-            src="https://tdesign.gtimg.com/pro-template/personal/nothing.png"
-            alt="空"
-          />
+        <div v-else class="empty-list">
+          <img src="https://tdesign.gtimg.com/pro-template/personal/nothing.png" alt="空" />
           <p>暂无通知</p>
         </div>
         <div class="header-msg-bottom">
@@ -67,15 +44,8 @@
         </div>
       </div>
     </template>
-    <t-badge
-      :count="unreadMsg.length"
-      :offset="[12, 8]"
-    >
-      <t-button
-        theme="default"
-        shape="square"
-        variant="text"
-      >
+    <t-badge :count="unreadMsg.length" :offset="[12, 8]">
+      <t-button theme="default" shape="square" variant="text">
         <t-icon name="mail" />
       </t-button>
     </t-badge>
@@ -95,11 +65,11 @@ const { msgData, unreadMsg } = storeToRefs(store);
 const setRead = (type: string, item?: NotificationItem) => {
   const changeMsg = msgData.value;
   if (type === 'all') {
-    changeMsg.forEach(e => {
+    changeMsg.forEach((e) => {
       e.status = false;
     });
   } else {
-    changeMsg.forEach(e => {
+    changeMsg.forEach((e) => {
       if (e.id === item?.id) {
         e.status = false;
       }

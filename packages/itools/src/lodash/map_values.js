@@ -4,11 +4,11 @@
 */
 
 export default function mapValues(obj, predicate) {
-  let result = {};
-  let keys = Object.keys(obj);
-  let len = keys.length;
+  const result = {};
+  const keys = Object.keys(obj);
+  const len = keys.length;
   for (let i = 0; i < len; i++) {
-    let key = keys[i];
+    const key = keys[i];
     result[key] = predicate(obj[key], key, obj);
   }
   return result;

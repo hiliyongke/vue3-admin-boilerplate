@@ -25,7 +25,7 @@ export const APP_CONFIG = {
   /** 默认语言 */
   DEFAULT_LANGUAGE: 'zh-cn',
   /** 默认主题 */
-  DEFAULT_THEME: 'light'
+  DEFAULT_THEME: 'light',
 } as const;
 
 /**
@@ -39,7 +39,7 @@ export const ROUTE_CONFIG = {
   /** 404页面路径 */
   NOT_FOUND_PATH: '/404',
   /** 403页面路径 */
-  FORBIDDEN_PATH: '/403'
+  FORBIDDEN_PATH: '/403',
 } as const;
 
 /**
@@ -57,5 +57,5 @@ export const STORAGE_KEYS = {
   /** 语言设置 */
   LANGUAGE_SETTING: 'language_setting',
   /** 标签页路由 */
-  TAB_ROUTER: 'tab_router'
+  TAB_ROUTER: 'tab_router',
 } as const;

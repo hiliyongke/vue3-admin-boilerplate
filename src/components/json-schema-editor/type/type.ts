@@ -7,7 +7,7 @@ import _number from './number';
 
 const TYPE_NAME = ['string', 'number', 'integer', 'object', 'array', 'boolean'] as const;
 
-type SchemaType = typeof TYPE_NAME[number];
+type SchemaType = (typeof TYPE_NAME)[number];
 
 interface AttrInfo {
   name: string;
@@ -34,7 +34,7 @@ const TYPE: Record<SchemaType, Wrapper> = {
   array: _array,
   boolean: _boolean,
   integer: _integer,
-  number: _number
+  number: _number,
 };
 
 export { TYPE, TYPE_NAME };

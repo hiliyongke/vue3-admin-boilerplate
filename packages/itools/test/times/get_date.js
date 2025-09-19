@@ -6,18 +6,18 @@ describe('getDate', function () {
   });
 
   test('number of milliseconds', () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    let yyyy = today.getFullYear();
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = today.getFullYear();
 
-    let hh = String(today.getHours()).padStart(2, '0');
-    let ms = String(today.getMinutes()).padStart(2, '0');
-    let ss = String(today.getSeconds()).padStart(2, '0');
-    let expectDefalut = `${yyyy}/${mm}/${dd} ${hh}:${ms}:${ss}`;
+    const hh = String(today.getHours()).padStart(2, '0');
+    const ms = String(today.getMinutes()).padStart(2, '0');
+    const ss = String(today.getSeconds()).padStart(2, '0');
+    const expectDefalut = `${yyyy}/${mm}/${dd} ${hh}:${ms}:${ss}`;
     expect(itools.getDate()).toBe(expectDefalut);
 
-    let expectNew = `${yyyy}-${mm}-${dd} ${hh}-${ms}-${ss}`;
+    const expectNew = `${yyyy}-${mm}-${dd} ${hh}-${ms}-${ss}`;
     expect(itools.getDate('-', '-')).toBe(expectNew);
   });
 });

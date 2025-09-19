@@ -16,7 +16,7 @@ const InitUserInfo: UserInfo = {
   user_name: '',
   avatar: '',
   email: '',
-  phone: ''
+  phone: '',
 };
 
 export const useUserStore = defineStore({
@@ -26,27 +26,21 @@ export const useUserStore = defineStore({
     userInfo: UserInfo;
   } => ({
     token: localStorage.getItem(TOKEN_NAME) || 'main_token', // 默认token不走权限
-    userInfo: InitUserInfo
+    userInfo: InitUserInfo,
   }),
   getters: {
-    roles: state => {
+    roles: (state) => {
       return state.userInfo.roles;
-    }
+    },
   },
   actions: {
-    async login(userInfo: {
-      phone: string;
-      account: string;
-      password: string;
-      verifyCode: string;
-      checked: boolean;
-    }) {
+    async login(userInfo: { phone: string; account: string; password: string; verifyCode: string; checked: boolean }) {
       const res = await login(userInfo);
       if (res && res.code === 200) {
         this.token = res.token;
         this.userInfo = {
           ...res.userInfo,
-          phone: (res.userInfo as any).phone || ''
+          phone: (res.userInfo as any).phone || '',
         };
         localStorage.setItem(TOKEN_NAME, res.token);
 
@@ -62,7 +56,7 @@ export const useUserStore = defineStore({
       if (res && res.code === 200) {
         this.userInfo = {
           ...res.userInfo,
-          phone: (res.userInfo as any).phone || ''
+          phone: (res.userInfo as any).phone || '',
         };
 
         // 获取用户信息后初始化路由权限
@@ -79,16 +73,16 @@ export const useUserStore = defineStore({
     },
     async removeToken() {
       this.token = '';
-    }
+    },
   },
   persist: {
-    afterRestore: ctx => {
+    afterRestore: (ctx) => {
       if (ctx.store.roles && ctx.store.roles.length > 0) {
         const permissionStore = usePermissionStore();
         permissionStore.initRoutes(ctx.store.roles);
       }
-    }
-  }
+    },
+  },
 });
 
 export function getUserStore() {

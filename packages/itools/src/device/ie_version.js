@@ -9,19 +9,19 @@ import ua from './ua';
  * Edge 13 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
  */
 export default function ieVersion() {
-  let uakit = ua();
-  let msie = uakit.indexOf('MSIE ');
+  const uakit = ua();
+  const msie = uakit.indexOf('MSIE ');
   if (msie > 0) {
     return parseInt(uakit.substring(msie + 5, uakit.indexOf('.', msie)), 10);
   }
 
-  let trident = uakit.indexOf('Trident/');
+  const trident = uakit.indexOf('Trident/');
   if (trident > 0) {
-    let rv = uakit.indexOf('rv:');
+    const rv = uakit.indexOf('rv:');
     return parseInt(uakit.substring(rv + 3, uakit.indexOf('.', rv)), 10);
   }
 
-  let edge = uakit.indexOf('Edge/');
+  const edge = uakit.indexOf('Edge/');
   if (edge > 0) {
     return parseInt(ua.substring(edge + 5, uakit.indexOf('.', edge)), 10);
   }

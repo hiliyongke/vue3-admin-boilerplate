@@ -13,8 +13,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, ResponseType } from 'axios';
 
 export type QueryParamsType = Record<string | number, any>;
 
-export interface FullRequestParams
-  extends Omit<AxiosRequestConfig, 'data' | 'params' | 'url' | 'responseType'> {
+export interface FullRequestParams extends Omit<AxiosRequestConfig, 'data' | 'params' | 'url' | 'responseType'> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -29,13 +28,9 @@ export interface FullRequestParams
   body?: unknown;
 }
 
-export type RequestParams = Omit<
-  FullRequestParams,
-  'body' | 'method' | 'query' | 'path'
->;
+export type RequestParams = Omit<FullRequestParams, 'body' | 'method' | 'query' | 'path'>;
 
-export interface ApiConfig<SecurityDataType = unknown>
-  extends Omit<AxiosRequestConfig, 'data' | 'cancelToken'> {
+export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, 'data' | 'cancelToken'> {
   securityWorker?: (
     securityData: SecurityDataType | null
   ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
@@ -46,7 +41,7 @@ export interface ApiConfig<SecurityDataType = unknown>
 export enum ContentType {
   Json = 'application/json',
   FormData = 'multipart/form-data',
-  UrlEncoded = 'application/x-www-form-urlencoded'
+  UrlEncoded = 'application/x-www-form-urlencoded',
 }
 
 export class HttpClient<SecurityDataType = unknown> {
@@ -56,15 +51,10 @@ export class HttpClient<SecurityDataType = unknown> {
   private secure?: boolean;
   private format?: ResponseType;
 
-  constructor({
-    securityWorker,
-    secure,
-    format,
-    ...axiosConfig
-  }: ApiConfig<SecurityDataType> = {}) {
+  constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
     this.instance = axios.create({
       ...axiosConfig,
-      baseURL: axiosConfig.baseURL || 'http://localhost:8080/api/v1'
+      baseURL: axiosConfig.baseURL || 'http://localhost:8080/api/v1',
     });
     this.secure = secure;
     this.format = format;
@@ -75,26 +65,23 @@ export class HttpClient<SecurityDataType = unknown> {
     this.securityData = data;
   };
 
-  private mergeRequestParams(
-    params1: AxiosRequestConfig,
-    params2?: AxiosRequestConfig
-  ): AxiosRequestConfig {
+  private mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
     const merged = {
       ...this.instance.defaults,
       ...params1,
-      ...(params2 || {})
+      ...(params2 || {}),
     };
 
     // 安全地合并 headers
     const headers = {
-      ...(this.instance.defaults.headers as any || {}),
-      ...(params1.headers as any || {}),
-      ...((params2 && params2.headers as any) || {})
+      ...((this.instance.defaults.headers as any) || {}),
+      ...((params1.headers as any) || {}),
+      ...((params2 && (params2.headers as any)) || {}),
     };
 
     return {
       ...merged,
-      headers
+      headers,
     };
   }
 
@@ -106,8 +93,8 @@ export class HttpClient<SecurityDataType = unknown> {
         property instanceof Blob
           ? property
           : typeof property === 'object' && property !== null
-          ? JSON.stringify(property)
-          : `${property}`
+            ? JSON.stringify(property)
+            : `${property}`
       );
       return formData;
     }, new FormData());
@@ -130,22 +117,15 @@ export class HttpClient<SecurityDataType = unknown> {
     const requestParams = this.mergeRequestParams(params, secureParams);
     const responseFormat = (format && this.format) || void 0;
 
-    if (
-      type === ContentType.FormData &&
-      body &&
-      body !== null &&
-      typeof body === 'object'
-    ) {
+    if (type === ContentType.FormData && body && body !== null && typeof body === 'object') {
       body = this.createFormData(body as Record<string, unknown>);
     }
 
     // 安全地构建请求头
     const finalHeaders = {
-      ...(requestParams.headers as any || {}),
-      ...(type && type !== ContentType.FormData
-        ? { 'Content-Type': type }
-        : {}),
-      ...(type === ContentType.FormData ? { Accept: '*/*' } : {})
+      ...((requestParams.headers as any) || {}),
+      ...(type && type !== ContentType.FormData ? { 'Content-Type': type } : {}),
+      ...(type === ContentType.FormData ? { Accept: '*/*' } : {}),
     };
 
     return this.instance
@@ -155,8 +135,8 @@ export class HttpClient<SecurityDataType = unknown> {
         params: query,
         responseType: responseFormat,
         data: body,
-        url: path
+        url: path,
       })
-      .then(response => response.data);
+      .then((response) => response.data);
   };
 }

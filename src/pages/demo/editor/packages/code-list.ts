@@ -72,6 +72,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]`,
-  sql: `SHOW DATABASES;`
+  sql: `SHOW DATABASES;`,
 };
 export default codeList;

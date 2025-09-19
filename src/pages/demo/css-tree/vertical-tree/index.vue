@@ -1,27 +1,17 @@
 <template>
   <div class="processDesign">
-    <div
-      v-for="(item, idx) in nodeList"
-      :key="idx"
-      class="process"
-    >
-      <div
-        v-if="item.type == 'root'"
-        class="rootNode"
-      >
+    <div v-for="(item, idx) in nodeList" :key="idx" class="process">
+      <div v-if="item.type == 'root'" class="rootNode">
         <div>根节点</div>
       </div>
-      <NodePort
-        v-if="item.children"
-        :node-list="item.children"
-      />
+      <NodePort v-if="item.children" :node-list="item.children" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'VerticalTreeDemo'
+  name: 'VerticalTreeDemo',
 };
 </script>
 
@@ -64,7 +54,7 @@ const nodeList: TreeNode[] = [
           {
             label: '子节点1-1',
             id: 4,
-            type: 'btn'
+            type: 'btn',
           },
           {
             label: '子节点1-2',
@@ -74,11 +64,11 @@ const nodeList: TreeNode[] = [
               {
                 label: '叶子节点1-2-1',
                 id: 7,
-                type: 'btn'
-              }
-            ]
-          }
-        ]
+                type: 'btn',
+              },
+            ],
+          },
+        ],
       },
       {
         label: '子节点3',
@@ -93,9 +83,9 @@ const nodeList: TreeNode[] = [
               {
                 label: '叶子节点1',
                 id: 108,
-                type: 'btn'
-              }
-            ]
+                type: 'btn',
+              },
+            ],
           },
           {
             label: '子节点3-2',
@@ -105,14 +95,14 @@ const nodeList: TreeNode[] = [
               {
                 label: '叶子节点2',
                 id: 132,
-                type: 'btn'
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+                type: 'btn',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ];
 </script>
 <style lang="less" scoped>

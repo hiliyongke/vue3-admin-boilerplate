@@ -55,10 +55,7 @@ watch(
     const isZhCN = newLanguage === 'zh-CN';
 
     // 合并语言包和全局配置
-    globalConfig.value = Object.assign(
-      isZhCN ? zhCn : enUs,
-      isZhCN ? globalConfigZh : globalConfigEn
-    );
+    globalConfig.value = Object.assign(isZhCN ? zhCn : enUs, isZhCN ? globalConfigZh : globalConfigEn);
   },
   { immediate: true } // 立即执行一次
 );

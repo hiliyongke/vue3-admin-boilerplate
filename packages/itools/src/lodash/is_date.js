@@ -1,3 +1,3 @@
-const isDate = d => d instanceof Date;
+const isDate = (d) => d instanceof Date;
 
 export default isDate;

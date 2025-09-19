@@ -6,23 +6,23 @@ describe('uniqueFrom', () => {
   });
 
   test('itools.uniqueFrom works for properties', () => {
-    let array = [
+    const array = [
       { name: 'n1', id: '1' },
       { name: 'n2', id: '11' },
       { name: 'n3', id: '12' },
-      { name: 'n2', id: '11' }
+      { name: 'n2', id: '11' },
     ];
 
     expect(itools.uniqueFrom(array, 'name')).toEqual([
       { name: 'n1', id: '1' },
       { name: 'n2', id: '11' },
-      { name: 'n3', id: '12' }
+      { name: 'n3', id: '12' },
     ]);
 
     expect(itools.uniqueFrom(array, 'id')).toEqual([
       { name: 'n1', id: '1' },
       { name: 'n2', id: '11' },
-      { name: 'n3', id: '12' }
+      { name: 'n3', id: '12' },
     ]);
   });
 });

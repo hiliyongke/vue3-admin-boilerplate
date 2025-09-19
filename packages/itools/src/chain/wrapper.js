@@ -1,4 +1,3 @@
-/* eslint-disable no-invalid-this */
 import isString from '../lodash/is_string';
 import isFunction from '../lodash/is_function';
 import functions from '../functions';

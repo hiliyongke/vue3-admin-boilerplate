@@ -12,10 +12,10 @@ export default function indexBy(arr, key) {
   if (!isString(key)) {
     throw new Error('expected a string for second argument');
   }
-  let result = {};
-  let len = arr.length;
+  const result = {};
+  const len = arr.length;
   for (let i = 0; i < len; i++) {
-    let index = arr[i] && arr[i][key];
+    const index = arr[i] && arr[i][key];
 
     if (index) {
       result[index] = arr[i];

@@ -1,50 +1,23 @@
 <template>
   <div :class="layoutCls">
-    <t-head-menu
-      :class="menuCls"
-      :theme="theme"
-      expand-type="popup"
-      :value="active"
-    >
+    <t-head-menu :class="menuCls" :theme="theme" expand-type="popup" :value="active">
       <template #logo>
-        <span
-          v-if="showLogo"
-          class="header-logo-container"
-          @click="handleNav('/dashboard/base')"
-        >
+        <span v-if="showLogo" class="header-logo-container" @click="handleNav('/dashboard/base')">
           <span class="t-logo">Vue3 Admin Starter</span>
           <!-- <logo-full class="t-logo" /> -->
         </span>
-        <div
-          v-else
-          class="header-operate-left"
-        >
-          <t-button
-            theme="default"
-            shape="square"
-            variant="text"
-            @click="changeCollapsed"
-          >
-            <t-icon
-              class="collapsed-icon"
-              name="view-list"
-            />
+        <div v-else class="header-operate-left">
+          <t-button theme="default" shape="square" variant="text" @click="changeCollapsed">
+            <t-icon class="collapsed-icon" name="view-list" />
           </t-button>
           <search :layout="layout" />
         </div>
       </template>
-      <menu-content
-        v-if="layout !== 'side'"
-        class="header-menu"
-        :nav-data="menu"
-      />
+      <menu-content v-if="layout !== 'side'" class="header-menu" :nav-data="menu" />
       <template #operations>
         <div class="operations-container">
           <!-- 搜索框 -->
-          <search
-            v-if="layout !== 'side'"
-            :layout="layout"
-          />
+          <search v-if="layout !== 'side'" :layout="layout" />
 
           <!-- 全局通知 -->
           <notice />
@@ -75,16 +48,8 @@
               <t-icon name="help-circle" />
             </t-button>
           </t-tooltip> -->
-          <t-tooltip
-            placement="bottom"
-            content="锁定屏幕"
-          >
-            <t-button
-              theme="default"
-              shape="square"
-              variant="text"
-              @click="lockScreenStore.setLock(true)"
-            >
+          <t-tooltip placement="bottom" content="锁定屏幕">
+            <t-button theme="default" shape="square" variant="text" @click="lockScreenStore.setLock(true)">
               <t-icon name="lock-on" />
             </t-button>
           </t-tooltip>
@@ -92,33 +57,20 @@
 
           <LanguageSelect />
 
-          <t-dropdown
-            :min-column-width="135"
-            trigger="click"
-          >
+          <t-dropdown :min-column-width="135" trigger="click">
             <template #dropdown>
               <t-dropdown-menu>
-                <t-dropdown-item
-                  class="operations-dropdown-container-item"
-                  @click="handleNav('/user/index')"
-                >
+                <t-dropdown-item class="operations-dropdown-container-item" @click="handleNav('/user/index')">
                   <t-icon name="user-circle" />
                   个人中心
                 </t-dropdown-item>
-                <t-dropdown-item
-                  class="operations-dropdown-container-item"
-                  @click="handleLogout"
-                >
+                <t-dropdown-item class="operations-dropdown-container-item" @click="handleLogout">
                   <t-icon name="poweroff" />
                   退出登录
                 </t-dropdown-item>
               </t-dropdown-menu>
             </template>
-            <t-button
-              class="header-user-btn"
-              theme="default"
-              variant="text"
-            >
+            <t-button class="header-user-btn" theme="default" variant="text">
               <template #icon>
                 <t-icon name="user-circle" />
               </template>
@@ -128,19 +80,9 @@
               </div>
             </t-button>
           </t-dropdown>
-          <t-tooltip
-            placement="bottom"
-            content="系统设置"
-          >
-            <t-button
-              theme="default"
-              shape="square"
-              variant="text"
-            >
-              <t-icon
-                name="setting"
-                @click="toggleSettingPanel"
-              />
+          <t-tooltip placement="bottom" content="系统设置">
+            <t-button theme="default" shape="square" variant="text">
+              <t-icon name="setting" @click="toggleSettingPanel" />
             </t-button>
           </t-tooltip>
         </div>
@@ -167,32 +109,32 @@ import ScreenFull from './screen-full.vue';
 const props = defineProps({
   theme: {
     type: String as PropType<'light' | 'dark'>,
-    default: 'light'
+    default: 'light',
   },
   layout: {
     type: String,
-    default: 'top'
+    default: 'top',
   },
   showLogo: {
     type: Boolean,
-    default: true
+    default: true,
   },
   menu: {
     type: Array as PropType<MenuRoute[]>,
-    default: () => []
+    default: () => [],
   },
   isFixed: {
     type: Boolean,
-    default: false
+    default: false,
   },
   isCompact: {
     type: Boolean,
-    default: false
+    default: false,
   },
   maxLevel: {
     type: Number,
-    default: 3
-  }
+    default: 3,
+  },
 });
 
 const router = useRouter();
@@ -201,7 +143,7 @@ const lockScreenStore = useLockScreenStore();
 
 const toggleSettingPanel = () => {
   settingStore.updateConfig({
-    showSettingPanel: true
+    showSettingPanel: true,
   });
 };
 
@@ -216,19 +158,18 @@ const menuCls = computed(() => {
       [`${prefix}-header-menu`]: !isFixed,
       [`${prefix}-header-menu-fixed`]: isFixed,
       [`${prefix}-header-menu-fixed-side`]: layout === 'side' && isFixed,
-      [`${prefix}-header-menu-fixed-side-compact`]:
-        layout === 'side' && isFixed && isCompact
-    }
+      [`${prefix}-header-menu-fixed-side-compact`]: layout === 'side' && isFixed && isCompact,
+    },
   ];
 });
 
 const changeCollapsed = () => {
   settingStore.updateConfig({
-    isSidebarCompact: !settingStore.isSidebarCompact
+    isSidebarCompact: !settingStore.isSidebarCompact,
   });
 };
 
-const handleNav = url => {
+const handleNav = (url) => {
   router.push(url);
 };
 

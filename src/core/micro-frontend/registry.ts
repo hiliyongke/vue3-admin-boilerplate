@@ -24,7 +24,7 @@ export enum MicroAppStatus {
   /** 加载失败 */
   LOAD_ERROR = 'LOAD_ERROR',
   /** 挂载失败 */
-  MOUNT_ERROR = 'MOUNT_ERROR'
+  MOUNT_ERROR = 'MOUNT_ERROR',
 }
 
 /**
@@ -89,7 +89,7 @@ export class MicroFrontendRegistry {
 
     const app: MicroAppInstance = {
       config,
-      status: MicroAppStatus.NOT_LOADED
+      status: MicroAppStatus.NOT_LOADED,
     };
 
     this.apps.set(config.name, app);
@@ -114,7 +114,7 @@ export class MicroFrontendRegistry {
    * 处理路由变化
    */
   private async handleRouteChange(): Promise<void> {
-    const location = window.location;
+    const { location } = window;
     const targetApp = this.getActiveApp(location);
 
     // 如果目标应用与当前应用相同，则不处理
@@ -278,7 +278,7 @@ export class MicroFrontendRegistry {
    * 获取所有应用
    */
   getApps(): MicroAppConfig[] {
-    return Array.from(this.apps.values()).map(app => app.config);
+    return Array.from(this.apps.values()).map((app) => app.config);
   }
 
   /**

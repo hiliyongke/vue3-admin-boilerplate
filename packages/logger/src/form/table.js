@@ -57,7 +57,7 @@ const Table = function (feID, type) {
     min: 0,
     max: 0,
     type,
-    length: 0
+    length: 0,
   };
 
   this.info = extend(new Info(), initInfo, read('info'));
@@ -71,7 +71,7 @@ Table.prototype = {
       pid: getID(6),
       index: parseInt(this.info.max, 10) + 1,
       time: Date.now(),
-      ua: getUserAgent()
+      ua: getUserAgent(),
     };
     reset(this.line);
     extend(this.line, initLine, data);
@@ -104,7 +104,7 @@ Table.prototype = {
     this.info.max = max;
 
     write('info', this.info);
-  }
+  },
 };
 
 export default Table;

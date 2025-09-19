@@ -1,11 +1,10 @@
-/* eslint-disable max-nested-callbacks */
 import itools from '../itools';
 import assert from 'assert';
 
 describe('throttle', function () {
   test('runs once after every n ms - part 1', function () {
     let callCounter = 0;
-    let fn = itools.throttle(function () {
+    const fn = itools.throttle(function () {
       callCounter++;
     }, 70);
 
@@ -26,7 +25,7 @@ describe('throttle', function () {
 
   test('runs once after every n ms - part 2', function () {
     let callCounter = 0;
-    let fn = itools.throttle(function () {
+    const fn = itools.throttle(function () {
       callCounter++;
     }, 70);
 
@@ -47,7 +46,7 @@ describe('throttle', function () {
 
   test('when callFirst is true, runs once at beginning of every n ms - part1', function () {
     let callCounter = 0;
-    let fn = itools.throttle(
+    const fn = itools.throttle(
       function () {
         callCounter++;
       },
@@ -72,7 +71,7 @@ describe('throttle', function () {
 
   test('when callFirst is true, runs once at beginning of every n ms - part2', function () {
     let callCounter = 0;
-    let fn = itools.throttle(
+    const fn = itools.throttle(
       function () {
         callCounter++;
       },
@@ -97,7 +96,7 @@ describe('throttle', function () {
 
   test('invokes repeatedly when wait is 0', function () {
     let callCounter = 0;
-    let fn = itools.throttle(
+    const fn = itools.throttle(
       function () {
         callCounter++;
       },
@@ -122,7 +121,7 @@ describe('throttle', function () {
 
   test('invokes repeatedly when call intervals > than wait time', function () {
     let callCounter = 0;
-    let fn = itools.throttle(
+    const fn = itools.throttle(
       function () {
         callCounter++;
       },
@@ -147,7 +146,7 @@ describe('throttle', function () {
 
   test('invokes repeatedly when wait is falsey', function () {
     let callCounter = 0;
-    let fn = itools.throttle(
+    const fn = itools.throttle(
       function () {
         callCounter++;
       },

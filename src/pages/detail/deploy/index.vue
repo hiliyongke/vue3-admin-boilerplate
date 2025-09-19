@@ -1,46 +1,28 @@
 <template>
   <div class="detail-deploy">
     <t-row :gutter="16">
-      <t-col
-        :lg="6"
-        :xs="12"
-      >
+      <t-col :lg="6" :xs="12">
         <t-card title="部署趋势">
           <div class="deploy-panel-left">
-            <div
-              id="monitorContainer"
-              style="width: 100%; height: 265px"
-            ></div>
+            <div id="monitorContainer" style="width: 100%; height: 265px"></div>
           </div>
         </t-card>
       </t-col>
-      <t-col
-        :lg="6"
-        :xs="12"
-      >
+      <t-col :lg="6" :xs="12">
         <t-card title="告警情况">
           <template #option>
-            <t-radio-group
-              default-value="dateVal"
-              @change="onAlertChange"
-            >
+            <t-radio-group default-value="dateVal" @change="onAlertChange">
               <t-radio-button value="dateVal">本周</t-radio-button>
               <t-radio-button value="monthVal">本月</t-radio-button>
             </t-radio-group>
           </template>
-          <div
-            id="dataContainer"
-            style="width: 100%; height: 265px"
-          ></div>
+          <div id="dataContainer" style="width: 100%; height: 265px"></div>
         </t-card>
       </t-col>
     </t-row>
 
     <!-- 项目列表 -->
-    <t-card
-      title="项目列表"
-      class="container-base-margin-top"
-    >
+    <t-card title="项目列表" class="container-base-margin-top">
       <t-table
         :columns="columns"
         :data="data"
@@ -53,27 +35,14 @@
         <template #adminName="{ row }">
           <span>
             {{ row.adminName }}
-            <t-tag
-              v-if="row.adminPhone"
-              size="small"
-            >
+            <t-tag v-if="row.adminPhone" size="small">
               {{ row.adminPhone }}
             </t-tag>
           </span>
         </template>
         <template #op="slotProps">
-          <a
-            :class="prefix + '-link'"
-            @click="listClick()"
-          >
-            管理
-          </a>
-          <a
-            :class="prefix + '-link'"
-            @click="deleteClickOp(slotProps)"
-          >
-            删除
-          </a>
+          <a :class="prefix + '-link'" @click="listClick()"> 管理 </a>
+          <a :class="prefix + '-link'" @click="deleteClickOp(slotProps)"> 删除 </a>
         </template>
         <template #op-column>
           <t-icon name="descending-order" />
@@ -81,24 +50,16 @@
       </t-table>
     </t-card>
 
-    <t-dialog
-      v-model:visible="visible"
-      header="基本信息"
-      @confirm="onConfirm"
-    >
+    <t-dialog v-model:visible="visible" header="基本信息" @confirm="onConfirm">
       <template #body>
         <div class="dialog-info-block">
           <div class="dialog-info-block">
-            <div
-              v-for="(item, index) in BASE_INFO_DATA"
-              :key="index"
-              class="info-item"
-            >
+            <div v-for="(item, index) in BASE_INFO_DATA" :key="index" class="info-item">
               <h1>{{ item.name }}</h1>
               <span
                 :class="{
                   ['green']: item.type && item.type.value === 'green',
-                  ['blue']: item.type && item.type.value === 'blue'
+                  ['blue']: item.type && item.type.value === 'blue',
                 }"
               >
                 {{ item.value }}
@@ -113,19 +74,13 @@
 
 <script lang="ts">
 export default {
-  name: 'DetailDeploy'
+  name: 'DetailDeploy',
 };
 </script>
 
 <script setup lang="ts">
 import * as echarts from 'echarts/core';
-import {
-  TitleComponent,
-  ToolboxComponent,
-  TooltipComponent,
-  GridComponent,
-  LegendComponent
-} from 'echarts/components';
+import { TitleComponent, ToolboxComponent, TooltipComponent, GridComponent, LegendComponent } from 'echarts/components';
 import { BarChart, LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { useSettingStore } from '@/store';
@@ -146,7 +101,7 @@ echarts.use([
   LegendComponent,
   BarChart,
   LineChart,
-  CanvasRenderer
+  CanvasRenderer,
 ]);
 
 const store = useSettingStore();
@@ -156,21 +111,21 @@ const data = ref([]);
 const pagination = ref({
   defaultPageSize: 10,
   total: 100,
-  defaultCurrent: 1
+  defaultCurrent: 1,
 });
 
 const fetchData = async () => {
   try {
     const res: ResDataType = await request.request({
       url: '/api/get-project-list',
-      method: 'GET'
+      method: 'GET',
     });
     if (res.code === 0) {
       const { list = [] } = res.data;
       data.value = list;
       pagination.value = {
         ...pagination.value,
-        total: list.length
+        total: list.length,
       };
     }
   } catch (e) {
@@ -213,11 +168,11 @@ const updateContainer = () => {
   if (monitorChart && dataChart) {
     monitorChart.resize({
       width: monitorContainer.clientWidth,
-      height: monitorContainer.clientHeight
+      height: monitorContainer.clientHeight,
     });
     dataChart.resize({
       width: dataContainer.clientWidth,
-      height: dataContainer.clientHeight
+      height: dataContainer.clientHeight,
     });
   }
 };
@@ -245,7 +200,7 @@ watch(
   }
 );
 
-const sortChange = val => {
+const sortChange = (val) => {
   console.log(val);
 };
 const rehandleChange = (changeParams, triggerAndData) => {
@@ -257,7 +212,7 @@ const listClick = () => {
 const onConfirm = () => {
   visible.value = false;
 };
-const deleteClickOp = e => {
+const deleteClickOp = (e) => {
   data.value.splice(e.rowIndex, 1);
 };
 </script>

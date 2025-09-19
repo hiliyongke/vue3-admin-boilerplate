@@ -10,9 +10,7 @@ export function useFrameKeepAlive() {
   const { isUseTabsRouter } = useSettingStore();
   const tabStore = useTabsRouterStore();
   const getFramePages = computed(() => {
-    const ret =
-      getAllFramePages(toRaw(router.getRoutes()) as unknown as MenuRoute[]) ||
-      [];
+    const ret = getAllFramePages(toRaw(router.getRoutes()) as unknown as MenuRoute[]) || [];
     return ret;
   });
 

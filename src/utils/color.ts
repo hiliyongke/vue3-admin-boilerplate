@@ -1,10 +1,6 @@
 import { Color } from 'tvision-color';
-import * as echarts from 'echarts/core';
-import {
-  getBrandColor,
-  defaultLightColor,
-  defaultDarkColor
-} from '@/config/color';
+import type * as echarts from 'echarts/core';
+import { getBrandColor, defaultLightColor, defaultDarkColor } from '@/config/color';
 import { getSettingStore } from '@/store';
 
 /**
@@ -27,15 +23,13 @@ export function getColorFromTheme(theme: string): string[] {
     const defaultGradients = !isDarkMode ? defaultLightColor : defaultDarkColor;
 
     const spliceThemeList = defaultGradients.slice(0, themIdx);
-    themeColorList = defaultGradients
-      .slice(themIdx, defaultGradients.length)
-      .concat(spliceThemeList);
+    themeColorList = defaultGradients.slice(themIdx, defaultGradients.length).concat(spliceThemeList);
   } else {
     theme = themeColor?.['--td-brand-color'];
     themeColorList = Color.getRandomPalette({
       color: theme,
       colorGamut: 'bright',
-      number: 8
+      number: 8,
     }) as string[];
   }
 

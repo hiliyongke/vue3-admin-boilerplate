@@ -37,8 +37,6 @@ describe('setCookie', () => {
 
   test('set option => raw ', function () {
     itools.setCookie('name', 'name-value-new', { raw: true });
-    expect(document.cookie).toBe(
-      `${cookie}; name=name-value-new; ${cookieNew2}`
-    );
+    expect(document.cookie).toBe(`${cookie}; name=name-value-new; ${cookieNew2}`);
   });
 });

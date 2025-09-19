@@ -4,7 +4,7 @@ export default function capwords(str) {
   //   example 2: capwords('HELLO WORLD')
   //   returns 2: 'HELLO WORLD'
 
-  let pattern = /^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g;
+  const pattern = /^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g;
   return String(str).replace(pattern, function ($1) {
     return $1.toUpperCase();
   });

@@ -1,5 +1,5 @@
 const hide = (...el) =>
-  [...el].forEach(e => {
+  [...el].forEach((e) => {
     e.style.display = 'none';
   });
 

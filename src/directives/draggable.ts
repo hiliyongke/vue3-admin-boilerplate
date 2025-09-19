@@ -24,12 +24,9 @@ function draggable(el: ElType) {
     document.onmousemove = function (e) {
       let x = e.pageX - disX;
       let y = e.pageY - disY;
-      const maxX =
-        parseInt(window.getComputedStyle(el.parentNode).width) -
-        parseInt(window.getComputedStyle(el).width);
+      const maxX = parseInt(window.getComputedStyle(el.parentNode).width) - parseInt(window.getComputedStyle(el).width);
       const maxY =
-        parseInt(window.getComputedStyle(el.parentNode).height) -
-        parseInt(window.getComputedStyle(el).height);
+        parseInt(window.getComputedStyle(el.parentNode).height) - parseInt(window.getComputedStyle(el).height);
       if (x < 0) {
         x = 0;
       } else if (x > maxX) {
@@ -41,8 +38,8 @@ function draggable(el: ElType) {
       } else if (y > maxY) {
         y = maxY;
       }
-      el.style.left = x + 'px';
-      el.style.top = y + 'px';
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
     };
     document.onmouseup = function () {
       document.onmousemove = document.onmouseup = null;
@@ -55,6 +52,6 @@ export function draggableDirective(app: App) {
     // 当被绑定的元素插入到 DOM 中时……
     mounted(el, binding) {
       draggable(el);
-    }
+    },
   });
 }

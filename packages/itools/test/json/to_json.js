@@ -11,12 +11,12 @@ describe('toJson', () => {
     const res = "{ code: 0 , msg: 'msg' , data: {} }";
 
     expect(itools.toJson(a)).toEqual({
-      a: '[Function function () {}]'
+      a: '[Function function () {}]',
     });
 
     expect(itools.toJson(b)).toEqual({
       a: 1,
-      b: '[Circular ~]'
+      b: '[Circular ~]',
     });
 
     expect(itools.toJson(res)).toEqual({ code: 0, msg: 'msg', data: {} });
@@ -26,11 +26,11 @@ describe('toJson', () => {
     expect(
       itools.toJson({
         a: 1,
-        b: 2
+        b: 2,
       })
     ).toEqual({
       a: 1,
-      b: 2
+      b: 2,
     });
   });
 });

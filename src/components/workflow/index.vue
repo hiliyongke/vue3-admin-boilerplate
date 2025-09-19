@@ -3,13 +3,7 @@
     <div class="container">
       <div style="position: absolute; right: 40px; z-index: 100">
         <button
-          style="
-            width: 50px;
-            height: 50px;
-            font-size: 30px;
-            background-color: grey;
-            border-radius: 25px;
-          "
+          style="width: 50px; height: 50px; font-size: 30px; background-color: grey; border-radius: 25px"
           @click="changeScale(+step)"
         >
           +
@@ -36,10 +30,7 @@
               <div class="content">所有人 ></div>
             </div>
           </div>
-          <add-node-btn
-            :node="modelValue"
-            :add-node="addNode"
-          />
+          <add-node-btn :node="modelValue" :add-node="addNode" />
         </div>
 
         <node-main
@@ -69,15 +60,13 @@ import nodeMain from './node-main.vue';
 import './index.less';
 
 const getRandom = () => {
-  return Math.floor(
-    (Math.random() + Math.floor(Math.random() * 9 + 1)) * Math.pow(10, 9)
-  );
+  return Math.floor((Math.random() + Math.floor(Math.random() * 9 + 1)) * Math.pow(10, 9));
 };
 const props = defineProps({
   modelValue: {
     type: Object,
-    default: () => {}
-  }
+    default: () => {},
+  },
 });
 
 const emit = defineEmits(['input']);
@@ -95,7 +84,7 @@ const preview = () => {
   validator(props.modelValue);
 };
 const addNode = (option: any) => {
-  getNode(props.modelValue, option.nodeId, node => {
+  getNode(props.modelValue, option.nodeId, (node) => {
     /* 新增分支 */
     if (option.type === 'branch') {
       const nodeId = getRandom();
@@ -105,14 +94,14 @@ const addNode = (option: any) => {
           name: `条件${i + 1}`,
           type: 'condition',
           prevId: nodeId,
-          nodeId: getRandom()
+          nodeId: getRandom(),
         });
       }
       node.childNode = {
         type: option.type,
         prevId: node.nodeId,
         nodeId,
-        conditionNodes
+        conditionNodes,
       };
       emit('input', JSON.parse(JSON.stringify(props.modelValue)));
     } else {
@@ -121,7 +110,7 @@ const addNode = (option: any) => {
         type: option.type,
         name: option.type === 'approver' ? '审批人' : '抄送人',
         prevId: node.nodeId,
-        nodeId: getRandom()
+        nodeId: getRandom(),
       };
       if (node.childNode) {
         nodeObj.childNode = Object.assign({}, node.childNode);

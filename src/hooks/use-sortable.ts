@@ -7,12 +7,9 @@ import { nextTick, unref } from 'vue';
  * @param el 拖拽容器元素
  * @param options 拖拽配置项
  */
-export function useSortable(
-  el: HTMLElement | Ref<HTMLElement> | null,
-  options?: Options
-) {
+export function useSortable(el: HTMLElement | Ref<HTMLElement> | null, options?: Options) {
   async function initSortable() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       nextTick(async () => {
         if (!el) return;
         const Sortable = (await import('sortablejs')).default;
@@ -20,7 +17,7 @@ export function useSortable(
           animation: 150,
           delay: 400,
           delayOnTouchOnly: true,
-          ...options
+          ...options,
         });
         resolve(Sortable);
       });

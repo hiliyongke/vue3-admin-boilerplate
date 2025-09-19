@@ -1,8 +1,5 @@
 <template>
-  <img
-    :class="className"
-    :src="url"
-  />
+  <img :class="className" :src="url" />
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';
@@ -27,7 +24,7 @@ interface Props {
  */
 const props = withDefaults(defineProps<Props>(), {
   url: '',
-  type: 'layout'
+  type: 'layout',
 });
 
 /**
@@ -39,8 +36,8 @@ const className = computed<(string | Record<string, boolean>)[]>(() => {
     'thumbnail-container',
     {
       'thumbnail-circle': type === 'circle',
-      'thumbnail-layout': type === 'layout'
-    }
+      'thumbnail-layout': type === 'layout',
+    },
   ];
 });
 </script>

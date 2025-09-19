@@ -68,13 +68,4 @@ declare interface ComponentProps {
   [key: string]: any;
 }
 
-export {
-  App,
-  ApiConfig,
-  BuildConfig,
-  DevConfig,
-  AppConfig,
-  EnvConfig,
-  RouteMeta,
-  ComponentProps
-};
+export { App, ApiConfig, BuildConfig, DevConfig, AppConfig, EnvConfig, RouteMeta, ComponentProps };

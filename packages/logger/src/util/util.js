@@ -1,4 +1,4 @@
-const obj2Str = obj => {
+const obj2Str = (obj) => {
   try {
     return JSON.stringify(obj);
   } catch (e) {
@@ -6,7 +6,7 @@ const obj2Str = obj => {
   }
 };
 
-const str2Obj = str => {
+const str2Obj = (str) => {
   try {
     return JSON.parse(str);
   } catch (e) {
@@ -59,7 +59,7 @@ const extend = (...params) => {
   return target;
 };
 
-const reset = obj => {
+const reset = (obj) => {
   for (const id in obj) {
     obj[id] = '';
   }
@@ -67,7 +67,7 @@ const reset = obj => {
   return obj;
 };
 
-const arrIsNull = arr => {
+const arrIsNull = (arr) => {
   if (!arr) return true;
   if (!arr.length) return true;
 
@@ -80,12 +80,10 @@ const arrIsNull = arr => {
   return index > arr.length - 1;
 };
 
-const formatTime = time => {
+const formatTime = (time) => {
   const date = new Date(parseInt(time, 10));
   const Y = `${date.getFullYear()}-`;
-  const M = `${
-    date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
-  }-`;
+  const M = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`;
   const D = `${date.getDate()} `;
   const h = `${date.getHours()}:`;
   const m = `${date.getMinutes()}:`;
@@ -95,9 +93,8 @@ const formatTime = time => {
   return Y + M + D + h + m + s + ms;
 };
 
-const getID = length => {
-  const alphaBet =
-    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const getID = (length) => {
+  const alphaBet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   length = length || 9;
 
   let id = '';
@@ -108,14 +105,4 @@ const getID = length => {
   return id;
 };
 
-export {
-  obj2Str,
-  str2Obj,
-  slice,
-  split,
-  extend,
-  reset,
-  arrIsNull,
-  formatTime,
-  getID
-};
+export { obj2Str, str2Obj, slice, split, extend, reset, arrIsNull, formatTime, getID };

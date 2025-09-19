@@ -1,25 +1,13 @@
 <template>
-  <div
-    :class="prefixCls"
-    :style="getWrapStyle"
-  >
-    <t-loading
-      :loading="loading"
-      size="large"
-      :style="getWrapStyle"
-    >
-      <iframe
-        ref="frameRef"
-        :src="frameSrc"
-        :class="`${prefixCls}__main`"
-        @load="hideLoading"
-      ></iframe>
+  <div :class="prefixCls" :style="getWrapStyle">
+    <t-loading :loading="loading" size="large" :style="getWrapStyle">
+      <iframe ref="frameRef" :src="frameSrc" :class="`${prefixCls}__main`" @load="hideLoading"></iframe>
     </t-loading>
   </div>
 </template>
 <script lang="ts">
 export default {
-  name: 'FrameContent'
+  name: 'FrameContent',
 };
 </script>
 
@@ -42,7 +30,7 @@ interface Props {
  * 组件属性
  */
 const props = withDefaults(defineProps<Props>(), {
-  frameSrc: ''
+  frameSrc: '',
 });
 
 /**
@@ -74,7 +62,7 @@ const settingStore = useSettingStore();
  * 包装样式
  */
 const getWrapStyle = computed<CSSProperties>(() => ({
-  height: `${unref(heightRef)}px`
+  height: `${unref(heightRef)}px`,
 }));
 
 /**
@@ -137,11 +125,7 @@ function hideLoading(): void {
 useWindowSizeFn(calcHeight as any, { immediate: true });
 
 watch(
-  [
-    () => settingStore.showFooter,
-    () => settingStore.isUseTabsRouter,
-    () => settingStore.showBreadcrumb
-  ],
+  [() => settingStore.showFooter, () => settingStore.isUseTabsRouter, () => settingStore.showBreadcrumb],
   debounce(calcHeight, 250)
 );
 </script>

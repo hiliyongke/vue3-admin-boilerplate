@@ -21,7 +21,7 @@ export enum ErrorType {
   /** Promise未捕获错误 */
   PROMISE_ERROR = 'PROMISE_ERROR',
   /** Vue错误 */
-  VUE_ERROR = 'VUE_ERROR'
+  VUE_ERROR = 'VUE_ERROR',
 }
 
 /**
@@ -69,18 +69,14 @@ class ErrorHandler {
    * @param options 其他选项
    * @returns 错误信息对象
    */
-  private createErrorInfo(
-    type: ErrorType,
-    message: string,
-    options: Partial<ErrorInfo> = {}
-  ): ErrorInfo {
+  private createErrorInfo(type: ErrorType, message: string, options: Partial<ErrorInfo> = {}): ErrorInfo {
     return {
       type,
       message,
       timestamp: Date.now(),
       userAgent: navigator.userAgent,
       url: window.location.href,
-      ...options
+      ...options,
     };
   }
 
@@ -124,9 +120,9 @@ class ErrorHandler {
       await fetch(this.reportUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(errorInfo)
+        body: JSON.stringify(errorInfo),
       });
     } catch (error) {
       console.error('错误上报失败:', error);
@@ -184,8 +180,8 @@ class ErrorHandler {
       details: {
         url: response?.config?.url,
         method: response?.config?.method,
-        data: response?.data
-      }
+        data: response?.data,
+      },
     });
 
     this.addToQueue(errorInfo);
@@ -200,7 +196,7 @@ class ErrorHandler {
 
     const errorInfo = this.createErrorInfo(ErrorType.BUSINESS_ERROR, message, {
       code,
-      details: error
+      details: error,
     });
 
     this.addToQueue(errorInfo);
@@ -213,7 +209,7 @@ class ErrorHandler {
   handleJavaScriptError(error: Error): void {
     const errorInfo = this.createErrorInfo(ErrorType.JAVASCRIPT_ERROR, error.message, {
       stack: error.stack,
-      details: error
+      details: error,
     });
 
     this.addToQueue(errorInfo);
@@ -228,17 +224,13 @@ class ErrorHandler {
     const tagName = target.tagName.toLowerCase();
     const src = (target as any).src || (target as any).href;
 
-    const errorInfo = this.createErrorInfo(
-      ErrorType.RESOURCE_ERROR,
-      `${tagName}资源加载失败: ${src}`,
-      {
-        details: {
-          tagName,
-          src,
-          outerHTML: target.outerHTML
-        }
-      }
-    );
+    const errorInfo = this.createErrorInfo(ErrorType.RESOURCE_ERROR, `${tagName}资源加载失败: ${src}`, {
+      details: {
+        tagName,
+        src,
+        outerHTML: target.outerHTML,
+      },
+    });
 
     this.addToQueue(errorInfo);
   }
@@ -248,14 +240,10 @@ class ErrorHandler {
    * @param event Promise错误事件
    */
   handlePromiseError(event: PromiseRejectionEvent): void {
-    const errorInfo = this.createErrorInfo(
-      ErrorType.PROMISE_ERROR,
-      event.reason?.message || '未捕获的Promise错误',
-      {
-        stack: event.reason?.stack,
-        details: event.reason
-      }
-    );
+    const errorInfo = this.createErrorInfo(ErrorType.PROMISE_ERROR, event.reason?.message || '未捕获的Promise错误', {
+      stack: event.reason?.stack,
+      details: event.reason,
+    });
 
     this.addToQueue(errorInfo);
   }
@@ -273,8 +261,8 @@ class ErrorHandler {
       details: {
         componentName: instance?.$options?.name || 'Unknown',
         errorInfo: info,
-        error
-      }
+        error,
+      },
     });
 
     this.addToQueue(errorInfo);
@@ -315,12 +303,16 @@ export function setupErrorHandle(app: App): void {
   });
 
   // 监听资源加载错误
-  window.addEventListener('error', (event: Event) => {
-    const target = event.target;
-    if (target && target !== window) {
-      errorHandler.handleResourceError(event);
-    }
-  }, true);
+  window.addEventListener(
+    'error',
+    (event: Event) => {
+      const { target } = event;
+      if (target && target !== window) {
+        errorHandler.handleResourceError(event);
+      }
+    },
+    true
+  );
 
   // 监听未捕获的Promise错误
   window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {

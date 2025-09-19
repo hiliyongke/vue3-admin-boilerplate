@@ -1,8 +1,8 @@
 import setCookie from './set_cookie';
 
-const deleteCookie = name => {
+const deleteCookie = (name) => {
   setCookie(name, '', {
-    hour: -1
+    hour: -1,
   });
 };
 

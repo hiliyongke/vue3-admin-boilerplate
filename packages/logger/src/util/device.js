@@ -6,9 +6,8 @@ let composeUserAgent;
 // ////////////////////////////////////////////////////////////////
 const BROWSER = {
   qq: /\bm?qqbrowser\/([0-9.]+)/,
-  360: ua => {
-    if (ua.indexOf('360 aphone browser') !== -1)
-      return /\b360 aphone browser \(([^\)]+)\)/;
+  360: (ua) => {
+    if (ua.indexOf('360 aphone browser') !== -1) return /\b360 aphone browser \(([^\)]+)\)/;
     return /\b360(?:se|ee|chrome|browser)\b/;
   },
   aoyou: /\baoyou/,
@@ -17,7 +16,7 @@ const BROWSER = {
   chrome: / (?:chrome|crios|crmo)\/([0-9.]+)/,
   ie: /\b(?:msie |ie |trident\/[0-9].*rv[ :])([0-9.]+)/,
   // Android 默认浏览器。该规则需要在 safari 之前。
-  android: ua => {
+  android: (ua) => {
     if (ua.indexOf('android') === -1) {
       return '';
     }
@@ -25,7 +24,7 @@ const BROWSER = {
   },
   safari: /\bversion\/([0-9.]+(?: beta)?)(?: mobile(?:\/[a-z0-9]+)?)? safari\//,
   opera: /\bopera/,
-  unknow: 'unknow'
+  unknow: 'unknow',
 };
 
 // ////////////////////////////////////////////////////////////////
@@ -38,7 +37,7 @@ const OS = {
   macosx: /\bmac os x ([0-9._]+)/,
   linux: 'linux',
 
-  wphone: ua => {
+  wphone: (ua) => {
     if (ua.indexOf('windows phone ') !== -1) {
       return /\bwindows phone (?:os )?([0-9.]+)/;
     }
@@ -51,7 +50,7 @@ const OS = {
     return 'windows phone';
   },
 
-  ios: ua => {
+  ios: (ua) => {
     if (/\bcpu(?: iphone)? os /.test(ua)) {
       return /\bcpu(?: iphone)? os ([0-9._]+)/;
     }
@@ -61,7 +60,7 @@ const OS = {
     return /\bios\b/;
   },
 
-  android: ua => {
+  android: (ua) => {
     if (ua.indexOf('android') >= 0) {
       return /\bandroid[ \/-]?([0-9.x]+)?/;
     }
@@ -75,7 +74,7 @@ const OS = {
     return 'android';
   },
 
-  unknow: 'unknow'
+  unknow: 'unknow',
 };
 
 // ////////////////////////////////////////////////////////////////
@@ -90,7 +89,7 @@ const PLATFORM = {
   shouqq: /qq\//gi,
   qqnews: /qqnews/gi,
   qzone: /qzone\//gi,
-  unknow: 'unknow'
+  unknow: 'unknow',
 };
 
 // ////////////////////////////////////////////////////////////////
@@ -98,8 +97,7 @@ const PLATFORM = {
 //      类型检测
 //
 // ////////////////////////////////////////////////////////////////
-const typeIs = (obj, type) =>
-  Object.prototype.toString.call(obj) === `[object ${type}]`;
+const typeIs = (obj, type) => Object.prototype.toString.call(obj) === `[object ${type}]`;
 
 const detect = (type, expression) => {
   const info = Device[type.toLowerCase()];
@@ -146,8 +144,7 @@ const getLocalUserAgent = () => {
     const platform = navigator.platform || '';
     const appVersion = navigator.appVersion || '';
     const vendor = navigator.vendor || '';
-    composeUserAgent =
-      userAgent + gap + platform + gap + appVersion + gap + vendor;
+    composeUserAgent = userAgent + gap + platform + gap + appVersion + gap + vendor;
     composeUserAgent = composeUserAgent.toLowerCase();
   }
 
@@ -166,7 +163,7 @@ export const testOnce = () => {
   }
 };
 
-export const getUserAgent = type => {
+export const getUserAgent = (type) => {
   testOnce();
 
   const gap = '  ';
@@ -178,14 +175,14 @@ export const getUserAgent = type => {
 export const Device = {
   os: {
     name: 'unknow',
-    version: '0.0.0'
+    version: '0.0.0',
   },
   platform: {
     name: 'unknow',
-    version: '0.0.0'
+    version: '0.0.0',
   },
   browser: {
     name: 'unknow',
-    version: '0.0.0'
-  }
+    version: '0.0.0',
+  },
 };

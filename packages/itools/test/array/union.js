@@ -57,10 +57,10 @@ describe('union', () => {
     }).toThrow();
   });
 
-  let start = new Date().getTime();
+  const start = new Date().getTime();
   itools.union([1, 2, 3], [4, 3, 2]);
 
-  let end = new Date().getTime();
+  const end = new Date().getTime();
 
   test('itools.union([1, 2, 3], [4, 3, 2]) takes less than 2s to run', () => {
     expect(end - start < 2000).toBeTruthy();

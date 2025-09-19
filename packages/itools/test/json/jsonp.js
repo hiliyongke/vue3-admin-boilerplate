@@ -20,7 +20,7 @@ describe('jsonp', () => {
     itools.jsonp(
       url,
       {
-        name: 'callback'
+        name: 'callback',
       },
       (err, data) => {
         expect(itools.has(data, 'data')).toBe(true);
@@ -35,7 +35,7 @@ describe('jsonp', () => {
         expect(itools.has(data, 'data')).toBe(true);
       },
       {
-        name: 'callback'
+        name: 'callback',
       }
     );
   }, 9999);
@@ -52,8 +52,8 @@ describe('jsonp', () => {
         prefix: 'itools',
         param: {
           a: 1,
-          b: 2
-        }
+          b: 2,
+        },
       }
     );
   }, 9999);

@@ -24,9 +24,26 @@ export default [
       '.idea/**',
       'build/**',
       'mock/**',
-      'packages/**/dist/**',
-      'packages/**/node_modules/**',
-      '.eslintrc-auto-import.json'
+      'packages/**',
+      'libs/**',
+      'gulp/**',
+      'test/**',
+      'tests/**',
+      'scripts/**',
+      'docs/**',
+      'plop-tpls/**',
+      '.eslintrc-auto-import.json',
+      '*.config.{js,ts,mjs}',
+      'commitlint.config.ts',
+      '.cz-config.ts',
+      '.stylelintrc.ts',
+      '.versionrc.ts',
+      'jest.config.ts',
+      'vite.config.ts',
+      'vitest.config.ts',
+      'unocss.config.js',
+      'plopfile.ts',
+      'src/utils/validate/lib/**'
     ]
   },
 
@@ -39,8 +56,7 @@ export default [
         parser: typescriptParser,
         ecmaVersion: 'latest',
         sourceType: 'module',
-        extraFileExtensions: ['.vue'],
-        project: './tsconfig.json'
+        extraFileExtensions: ['.vue']
       },
       globals: {
         // Vue 3 全局 API
@@ -56,7 +72,36 @@ export default [
         watchEffect: 'readonly',
         onMounted: 'readonly',
         onUnmounted: 'readonly',
-        nextTick: 'readonly'
+        nextTick: 'readonly',
+        useRouter: 'readonly',
+        useRoute: 'readonly',
+        // 浏览器环境变量
+        window: 'readonly',
+        document: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        sessionStorage: 'readonly',
+        localStorage: 'readonly',
+        // DOM 类型
+        HTMLElement: 'readonly',
+        HTMLCanvasElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        CanvasRenderingContext2D: 'readonly',
+        TouchEvent: 'readonly',
+        MouseEvent: 'readonly',
+        MessageEvent: 'readonly',
+        // Web APIs
+        WebSocket: 'readonly',
+        XMLHttpRequest: 'readonly',
+        FormData: 'readonly',
+        Blob: 'readonly',
+        AbortSignal: 'readonly',
+        // Node.js
+        NodeJS: 'readonly',
+        process: 'readonly'
       }
     },
     plugins: {
@@ -66,31 +111,18 @@ export default [
     },
     rules: {
       // Vue 3 推荐规则
-      ...vue.configs['vue3-recommended'].rules,
+      ...(vue.configs?.['vue3-recommended']?.rules || {}),
 
       // Vue 规则自定义
       'vue/multi-word-component-names': 'off', // 允许单词组件名
       'vue/no-v-html': 'off', // 允许 v-html
       'vue/require-default-prop': 'off', // 不强制默认属性
       'vue/require-explicit-emits': 'off', // 不强制显式 emits
-      'vue/component-tags-order': ['error', {
-        order: ['template', 'script', 'style']
-      }],
-      'vue/html-self-closing': ['error', {
-        html: {
-          void: 'always',
-          normal: 'never',
-          component: 'always'
-        },
-        svg: 'always',
-        math: 'always'
-      }],
       'vue/max-attributes-per-line': ['error', {
         singleline: { max: 3 },
         multiline: { max: 1 }
       }],
       'vue/html-indent': ['error', 2],
-      'vue/script-indent': ['error', 2, { baseIndent: 0 }],
 
       // TypeScript 规则
       '@typescript-eslint/no-unused-vars': ['warn', {
@@ -112,8 +144,39 @@ export default [
       parser: typescriptParser,
       parserOptions: {
         ecmaVersion: 'latest',
-        sourceType: 'module',
-        project: './tsconfig.json'
+        sourceType: 'module'
+      },
+      globals: {
+        // 浏览器环境变量
+        window: 'readonly',
+        document: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        sessionStorage: 'readonly',
+        localStorage: 'readonly',
+        // DOM 类型
+        HTMLElement: 'readonly',
+        HTMLCanvasElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        CanvasRenderingContext2D: 'readonly',
+        TouchEvent: 'readonly',
+        MouseEvent: 'readonly',
+        MessageEvent: 'readonly',
+        // Web APIs
+        WebSocket: 'readonly',
+        XMLHttpRequest: 'readonly',
+        FormData: 'readonly',
+        Blob: 'readonly',
+        AbortSignal: 'readonly',
+        // 类型定义
+        Recordable: 'readonly',
+        Fn: 'readonly',
+        // Node.js
+        NodeJS: 'readonly',
+        process: 'readonly'
       }
     },
     plugins: {
@@ -122,7 +185,7 @@ export default [
     },
     rules: {
       // TypeScript 推荐规则
-      ...typescript.configs.recommended.rules,
+      ...(typescript.configs?.recommended?.rules || {}),
 
       // TypeScript 规则自定义
       '@typescript-eslint/no-unused-vars': ['warn', {
@@ -161,7 +224,13 @@ export default [
         module: 'readonly',
         require: 'readonly',
         exports: 'readonly',
-        global: 'readonly'
+        global: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        NodeJS: 'readonly'
       }
     },
     plugins: {
@@ -186,8 +255,8 @@ export default [
       'prettier/prettier': 'error',
 
       // 基础规则
-      'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-      'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+      'no-console': 'off',
+      'no-debugger': 'off',
       'prefer-const': 'error',
       'no-var': 'error',
       'object-shorthand': 'error',

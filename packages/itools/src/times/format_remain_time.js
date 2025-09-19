@@ -3,10 +3,10 @@
  * @param  {Date} endTime
  * @return {String}
  */
-const formatRemainTime = endTime => {
-  let startDate = new Date(); // startDate
-  let endDate = new Date(endTime); // endDate
-  let t = endDate.getTime() - startDate.getTime();
+const formatRemainTime = (endTime) => {
+  const startDate = new Date(); // startDate
+  const endDate = new Date(endTime); // endDate
+  const t = endDate.getTime() - startDate.getTime();
   let d = 0;
   let h = 0;
   let m = 0;
@@ -17,7 +17,7 @@ const formatRemainTime = endTime => {
     m = Math.floor((t / 1000 / 60) % 60);
     s = Math.floor((t / 1000) % 60);
   }
-  return d + 'day ' + h + 'hour ' + m + 'minute ' + s + 'second';
+  return `${d}day ${h}hour ${m}minute ${s}second`;
 };
 
 export default formatRemainTime;

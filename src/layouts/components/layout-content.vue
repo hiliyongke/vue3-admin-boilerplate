@@ -20,28 +20,22 @@
             trigger="context-menu"
             :min-column-width="128"
             :popup-props="{
-            overlayClassName: 'route-tabs-dropdown',
-            onVisibleChange: (visible: boolean, ctx) => handleTabMenuClick(visible, ctx, routeItem.path),
-            visible: activeTabPath === routeItem.path,
-          }"
+              overlayClassName: 'route-tabs-dropdown',
+              onVisibleChange: (visible: boolean, ctx) => handleTabMenuClick(visible, ctx, routeItem.path),
+              visible: activeTabPath === routeItem.path,
+            }"
           >
             <template v-if="!routeItem.isHome">
               {{ routeItem.title }}
             </template>
-            <t-icon
-              v-else
-              name="home"
-            />
+            <t-icon v-else name="home" />
             <template #dropdown>
               <t-dropdown-menu>
                 <t-dropdown-item @click="() => handleRefresh(routeItem, index)">
                   <t-icon name="refresh" />
                   刷新
                 </t-dropdown-item>
-                <t-dropdown-item
-                  v-if="index > 1"
-                  @click="() => handleCloseAhead(routeItem.path, index)"
-                >
+                <t-dropdown-item v-if="index > 1" @click="() => handleCloseAhead(routeItem.path, index)">
                   <t-icon name="arrow-left" />
                   关闭左侧
                 </t-dropdown-item>
@@ -52,10 +46,7 @@
                   <t-icon name="arrow-right" />
                   关闭右侧
                 </t-dropdown-item>
-                <t-dropdown-item
-                  v-if="tabRouters.length > 2"
-                  @click="() => handleCloseOther(routeItem.path, index)"
-                >
+                <t-dropdown-item v-if="tabRouters.length > 2" @click="() => handleCloseOther(routeItem.path, index)">
                   <t-icon name="close-circle" />
                   关闭其它
                 </t-dropdown-item>
@@ -69,10 +60,7 @@
       <l-breadcrumb v-if="settingStore.showBreadcrumb" />
       <l-content />
     </t-content>
-    <t-footer
-      v-if="settingStore.showFooter"
-      :class="`${prefix}-footer-layout`"
-    >
+    <t-footer v-if="settingStore.showFooter" :class="`${prefix}-footer-layout`">
       <l-footer />
     </t-footer>
   </t-layout>
@@ -95,15 +83,13 @@ const router = useRouter();
 
 const settingStore = useSettingStore();
 const tabsRouterStore = useTabsRouterStore();
-const tabRouters = computed(() =>
-  tabsRouterStore.tabRouters.filter(route => route.isAlive || route.isHome)
-);
+const tabRouters = computed(() => tabsRouterStore.tabRouters.filter((route) => route.isAlive || route.isHome));
 const activeTabPath = ref('');
 
 const handleChangeCurrentTab = (value: string | number) => {
   const path = String(value);
   const { tabRouters } = tabsRouterStore;
-  const route = tabRouters.find(i => i.path === path);
+  const route = tabRouters.find((i) => i.path === path);
   router.push({ path, query: route?.query });
 };
 
@@ -112,8 +98,7 @@ const handleRemove = ({ value: path, index }) => {
   const nextRouter = tabRouters[index + 1] || tabRouters[index - 1];
 
   tabsRouterStore.subtractCurrentTabRouter({ path, routeIdx: index });
-  if (path === route.path)
-    router.push({ path: nextRouter.path, query: nextRouter.query });
+  if (path === route.path) router.push({ path: nextRouter.path, query: nextRouter.query });
 };
 
 const handleRefresh = (route: TRouterInfo, routeIdx: number) => {
@@ -141,14 +126,11 @@ const handleCloseOther = (path: string, routeIdx: number) => {
 };
 
 // 处理非当前路由操作的副作用
-const handleOperationEffect = (
-  type: 'other' | 'ahead' | 'behind',
-  routeIndex: number
-) => {
+const handleOperationEffect = (type: 'other' | 'ahead' | 'behind', routeIndex: number) => {
   const currentPath = router.currentRoute.value.path;
   const { tabRouters } = tabsRouterStore;
 
-  const currentIdx = tabRouters.findIndex(i => i.path === currentPath);
+  const currentIdx = tabRouters.findIndex((i) => i.path === currentPath);
   // 存在三种情况需要刷新当前路由
   // 点击非当前路由的关闭其他、点击非当前路由的关闭左侧且当前路由小于触发路由、点击非当前路由的关闭右侧且当前路由大于触发路由
   const needRefreshRouter =

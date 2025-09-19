@@ -9,35 +9,12 @@
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
-          d="M11.5 8L8 11.5L4.5 8"
-          stroke="currentColor"
-          stroke-width="1.5"
-        />
-        <path
-          d="M8 11L8 4"
-          stroke="currentColor"
-          stroke-width="1.5"
-        />
+        <path d="M11.5 8L8 11.5L4.5 8" stroke="currentColor" stroke-width="1.5" />
+        <path d="M8 11L8 4" stroke="currentColor" stroke-width="1.5" />
       </svg>
-      <svg
-        v-else
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M4.5 8L8 4.5L11.5 8"
-          stroke="currentColor"
-          stroke-width="1.5"
-        />
-        <path
-          d="M8 5V12"
-          stroke="currentColor"
-          stroke-width="1.5"
-        />
+      <svg v-else width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.5 8L8 4.5L11.5 8" stroke="currentColor" stroke-width="1.5" />
+        <path d="M8 5V12" stroke="currentColor" stroke-width="1.5" />
       </svg>
     </span>
     <span>{{ describe }}</span>
@@ -69,7 +46,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   type: 'up',
   describe: '',
-  isReverseColor: false
+  isReverseColor: false,
 });
 
 /**
@@ -82,8 +59,8 @@ const containerCls = computed<(string | Record<string, boolean>)[]>(() => {
     {
       'trend-container__reverse': isReverseColor,
       'trend-container__up': !isReverseColor && type === 'up',
-      'trend-container__down': !isReverseColor && type === 'down'
-    }
+      'trend-container__down': !isReverseColor && type === 'down',
+    },
   ];
 });
 

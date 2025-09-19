@@ -6,11 +6,11 @@ describe('randomColor', () => {
   });
 
   test('should pass example', () => {
-    const isColor = strColor => {
-      let s = new Option().style;
+    const isColor = (strColor) => {
+      const s = new Option().style;
       s.color = strColor;
-      let test1 = s.color === strColor;
-      let test2 = /^#[0-9A-F]{6}$/i.test(strColor);
+      const test1 = s.color === strColor;
+      const test2 = /^#[0-9A-F]{6}$/i.test(strColor);
       if (test1 === true || test2 === true) {
         return true;
       } else {

@@ -1,11 +1,9 @@
 /* eslint-disable */
-/* eslint-disable no-invalid-this */
+
 /* eslint-disable no-unreachable */
-/* eslint-disable no-param-reassign */
-/* eslint-disable strict */
+
 /* eslint-disable no-sparse-arrays */
-/* eslint-disable spaced-comment */
-/* eslint-disable one-var */
+
 /* eslint-disable no-var */
 
 /**
@@ -102,11 +100,9 @@ var ArrayBuffer = root.ArrayBuffer,
   Buffer = root.Buffer,
   Map = root.Map,
   Promise = root.Promise,
-  // eslint-disable-next-line no-unused-vars
   Proxy = root.Proxy,
   Set = root.Set,
   Symbol = root.Symbol,
-  // eslint-disable-next-line no-unused-vars
   Uint8Array = root.Uint8Array,
   WeakMap = root.WeakMap,
   WeakSet = root.WeakSet;
@@ -127,7 +123,6 @@ var add = function (x, y) {
     return n * 2;
   },
   isEven = function (n) {
-    // eslint-disable-next-line eqeqeq
     return n % 2 == 0;
   },
   square = function (n) {
@@ -378,7 +373,7 @@ var burredLetters = [
   '\u017c',
   '\u017d',
   '\u017e',
-  '\u017f'
+  '\u017f',
 ];
 
 /** List of combining diacritical marks. */
@@ -498,7 +493,7 @@ var comboMarks = [
   '\ufe20',
   '\ufe21',
   '\ufe22',
-  '\ufe23'
+  '\ufe23',
 ];
 
 /** List of converted Latin Unicode letters. */
@@ -694,7 +689,7 @@ var deburredLetters = [
   'z',
   'Z',
   'z',
-  's'
+  's',
 ];
 
 /** Used to provide falsey values to methods. */
@@ -714,17 +709,11 @@ var errors = [
   new ReferenceError(),
   new SyntaxError(),
   new TypeError(),
-  new URIError()
+  new URIError(),
 ];
 
 /** List of fitzpatrick modifiers. */
-var fitzModifiers = [
-  '\ud83c\udffb',
-  '\ud83c\udffc',
-  '\ud83c\udffd',
-  '\ud83c\udffe',
-  '\ud83c\udfff'
-];
+var fitzModifiers = ['\ud83c\udffb', '\ud83c\udffc', '\ud83c\udffd', '\ud83c\udffe', '\ud83c\udfff'];
 
 /** Used to provide primitive values to methods. */
 var primitives = [null, undefined, false, true, 1, NaN, 'a'];
@@ -739,7 +728,7 @@ var typedArrays = [
   'Uint8Array',
   'Uint8ClampedArray',
   'Uint16Array',
-  'Uint32Array'
+  'Uint32Array',
 ];
 
 /** Used to check whether methods support array views. */
@@ -755,10 +744,7 @@ var filePath = (function () {
     result = params = phantom.args || require('system').args;
   }
   var last = result[result.length - 1];
-  result =
-    result.length > min && !/test(?:\.js)?$/.test(last)
-      ? last
-      : '../node_modules/lodash/lodash.js';
+  result = result.length > min && !/test(?:\.js)?$/.test(last) ? last : '../node_modules/lodash/lodash.js';
 
   if (!amd) {
     try {
@@ -778,11 +764,9 @@ var ui =
   (root.ui = {
     buildPath: filePath,
     loaderPath: '',
-    isModularize: /\b(?:amd|commonjs|es|node|npm|(index|main)\.js)\b/.test(
-      filePath
-    ),
+    isModularize: /\b(?:amd|commonjs|es|node|npm|(index|main)\.js)\b/.test(filePath),
     isStrict: /\bes\b/.test(filePath) || 'default' in require(filePath),
-    urlParams: {}
+    urlParams: {},
   });
 
 /** The basename of the lodash file to test. */
@@ -811,11 +795,7 @@ setProperty(root, 'setTimeout', setTimeout);
 /*--------------------------------------------------------------------------*/
 
 /** Used to test Web Workers. */
-var Worker =
-  !(ui.isForeign || ui.isSauceLabs || isModularize) &&
-  document &&
-  document.origin != 'null' &&
-  root.Worker;
+var Worker = !(ui.isForeign || ui.isSauceLabs || isModularize) && document && document.origin != 'null' && root.Worker;
 
 /** Poison the free variable `root` in Node.js */
 try {
@@ -824,7 +804,7 @@ try {
     enumerable: false,
     get: function () {
       throw new ReferenceError();
-    }
+    },
   });
 } catch (e) {}
 
@@ -834,9 +814,7 @@ if (!lodashStable) {
   try {
     lodashStable = interopRequire('../node_modules/lodash/lodash.js');
   } catch (e) {
-    console.log(
-      'Error: The stable lodash dev dependency should be at least a version behind master branch.'
-    );
+    console.log('Error: The stable lodash dev dependency should be at least a version behind master branch.');
   }
   lodashStable = lodashStable.noConflict();
 }
@@ -849,7 +827,7 @@ var mapCaches = (function () {
   var MapCache = _.memoize.Cache;
   var result = {
     Hash: new MapCache().__data__.hash.constructor,
-    MapCache: MapCache
+    MapCache: MapCache,
   };
   _.isMatchWith({ a: 1 }, { a: 1 }, function () {
     var stack = lodashStable.last(arguments);
@@ -918,7 +896,7 @@ var whitespace = lodashStable
       '\u200a',
       '\u202f',
       '\u205f',
-      '\u3000'
+      '\u3000',
     ],
     function (chr) {
       return /\s/.exec(chr);
@@ -939,7 +917,7 @@ function CustomError(message) {
 }
 
 CustomError.prototype = lodashStable.create(Error.prototype, {
-  constructor: CustomError
+  constructor: CustomError,
 });
 
 /**
@@ -1008,7 +986,7 @@ function setProperty(object, key, value) {
       configurable: true,
       enumerable: false,
       writable: true,
-      value: value
+      value: value,
     });
   } catch (e) {
     object[key] = value;
@@ -1061,9 +1039,7 @@ function toArgs(array) {
   // Allow bypassing native checks.
   setProperty(funcProto, 'toString', function wrapper() {
     setProperty(funcProto, 'toString', fnToString);
-    var result = lodashStable.has(this, 'toString')
-      ? this.toString()
-      : fnToString.call(this);
+    var result = lodashStable.has(this, 'toString') ? this.toString() : fnToString.call(this);
     setProperty(funcProto, 'toString', wrapper);
     return result;
   });
@@ -1077,11 +1053,7 @@ function toArgs(array) {
 
   var _propertyIsEnumerable = objectProto.propertyIsEnumerable;
   setProperty(objectProto, 'propertyIsEnumerable', function (key) {
-    return (
-      // eslint-disable-next-line eqeqeq
-      !(key == 'valueOf' && this && this.valueOf === 1) &&
-      _propertyIsEnumerable.call(this, key)
-    );
+    return !(key == 'valueOf' && this && this.valueOf === 1) && _propertyIsEnumerable.call(this, key);
   });
 
   if (Buffer) {
@@ -1092,17 +1064,10 @@ function toArgs(array) {
         var caller = get.caller,
           name = caller ? caller.name : '';
 
-        // eslint-disable-next-line eqeqeq
-        if (
-          !(
-            name == 'runInContext' ||
-            name.length == 1 ||
-            /\b_\.isBuffer\b/.test(caller)
-          )
-        ) {
+        if (!(name == 'runInContext' || name.length == 1 || /\b_\.isBuffer\b/.test(caller))) {
           return Buffer;
         }
-      }
+      },
     });
   }
   if (Map) {
@@ -1218,7 +1183,7 @@ lodashStable.attempt(function () {
         '  });',
         '',
         '  return object;',
-        '}());'
+        '}());',
       ].join('\n')
     )
   );
@@ -1232,9 +1197,7 @@ lodashStable.attempt(function () {
   iframe.frameBorder = iframe.height = iframe.width = 0;
   body.appendChild(iframe);
 
-  // eslint-disable-next-line no-use-before-define
-  var idoc =
-    (idoc = iframe.contentDocument || iframe.contentWindow).document || idoc;
+  var idoc = (idoc = iframe.contentDocument || iframe.contentWindow).document || idoc;
   idoc.write(
     [
       '<html>',
@@ -1278,7 +1241,7 @@ lodashStable.attempt(function () {
       '_.assign(_._realm, object);',
       '</script>',
       '</body>',
-      '</html>'
+      '</html>',
     ].join('\n')
   );
 
@@ -1288,7 +1251,6 @@ lodashStable.attempt(function () {
 
 // Add a web worker.
 lodashStable.attempt(function () {
-  // eslint-disable-next-line no-implicit-coercion
   var worker = new Worker('./asset/worker.js?t=' + +new Date());
   worker.addEventListener(
     'message',
@@ -1307,20 +1269,16 @@ lodashStable.attempt(function () {
     basePath = path.dirname(filePath);
 
   if (isModularize && !(amd || isNpm)) {
-    lodashStable.each(
-      ['baseEach', 'isIndex', 'isIterateeCall', 'memoizeCapped'],
-      function (funcName) {
-        _['_' + funcName] = interopRequire(path.join(basePath, '_' + funcName));
-      }
-    );
+    lodashStable.each(['baseEach', 'isIndex', 'isIterateeCall', 'memoizeCapped'], function (funcName) {
+      _['_' + funcName] = interopRequire(path.join(basePath, '_' + funcName));
+    });
   }
 });
 const chrome =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36';
 const edge =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240';
-const firefox =
-  'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0';
+const firefox = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0';
 const safari =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/601.6.17 (KHTML, like Gecko) Version/9.1.1 Safari/601.6.17';
 const ios =
@@ -1477,5 +1435,5 @@ export {
   qqLiveBrowser,
   weishi,
   weixin,
-  qqBrowser
+  qqBrowser,
 };

@@ -9,23 +9,12 @@
     @close-btn-click="handleCloseDrawer"
   >
     <div class="setting-container">
-      <t-form
-        ref="form"
-        :data="formData"
-        label-align="left"
-      >
+      <t-form ref="form" :data="formData" label-align="left">
         <div class="setting-group-title">主题模式</div>
         <t-radio-group v-model="formData.mode">
-          <div
-            v-for="(item, index) in MODE_OPTIONS"
-            :key="index"
-            class="setting-layout-drawer"
-          >
+          <div v-for="(item, index) in MODE_OPTIONS" :key="index" class="setting-layout-drawer">
             <div>
-              <t-radio-button
-                :key="index"
-                :value="item.type"
-              >
+              <t-radio-button :key="index" :value="item.type">
                 <component :is="getModeIcon(item.type)" />
               </t-radio-button>
               <p :style="{ textAlign: 'center', marginTop: '8px' }">
@@ -37,18 +26,11 @@
         <div class="setting-group-title">主题色</div>
         <t-radio-group v-model="formData.brandTheme">
           <div
-            v-for="(item, index) in COLOR_OPTIONS.slice(
-              0,
-              COLOR_OPTIONS.length - 1
-            )"
+            v-for="(item, index) in COLOR_OPTIONS.slice(0, COLOR_OPTIONS.length - 1)"
             :key="index"
             class="setting-layout-drawer"
           >
-            <t-radio-button
-              :key="index"
-              :value="item"
-              class="setting-layout-color-group"
-            >
+            <t-radio-button :key="index" :value="item" class="setting-layout-color-group">
               <color-container :value="item" />
             </t-radio-button>
           </div>
@@ -74,9 +56,7 @@
                 :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]"
                 class="setting-layout-color-group dynamic-color-btn"
               >
-                <color-container
-                  :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]"
-                />
+                <color-container :value="COLOR_OPTIONS[COLOR_OPTIONS.length - 1]" />
               </t-radio-button>
             </t-popup>
           </div>
@@ -84,78 +64,41 @@
 
         <div class="setting-group-title">导航布局</div>
         <t-radio-group v-model="formData.layout">
-          <div
-            v-for="(item, index) in LAYOUT_OPTION"
-            :key="index"
-            class="setting-layout-drawer"
-          >
-            <t-radio-button
-              :key="index"
-              :value="item"
-            >
+          <div v-for="(item, index) in LAYOUT_OPTION" :key="index" class="setting-layout-drawer">
+            <t-radio-button :key="index" :value="item">
               <thumbnail :src="getThumbnailUrl(item)" />
             </t-radio-button>
           </div>
         </t-radio-group>
 
-        <t-form-item
-          v-show="formData.layout === 'mix'"
-          label="分割菜单（混合模式下有效）"
-          name="splitMenu"
-        >
+        <t-form-item v-show="formData.layout === 'mix'" label="分割菜单（混合模式下有效）" name="splitMenu">
           <t-switch v-model="formData.splitMenu" />
         </t-form-item>
 
-        <t-form-item
-          v-show="formData.layout === 'mix'"
-          label="固定 Sidebar"
-          name="isSidebarFixed"
-        >
+        <t-form-item v-show="formData.layout === 'mix'" label="固定 Sidebar" name="isSidebarFixed">
           <t-switch v-model="formData.isSidebarFixed" />
         </t-form-item>
 
         <div class="setting-group-title">元素开关</div>
-        <t-form-item
-          label="显示 pageLoading"
-          name="showPageLoading"
-        >
+        <t-form-item label="显示 pageLoading" name="showPageLoading">
           <t-switch v-model="formData.showPageLoading" />
         </t-form-item>
-        <t-form-item
-          v-show="formData.layout === 'side'"
-          label="显示 Header"
-          name="showHeader"
-        >
+        <t-form-item v-show="formData.layout === 'side'" label="显示 Header" name="showHeader">
           <t-switch v-model="formData.showHeader" />
         </t-form-item>
-        <t-form-item
-          label="显示 Breadcrumbs"
-          name="showBreadcrumb"
-        >
+        <t-form-item label="显示 Breadcrumbs" name="showBreadcrumb">
           <t-switch v-model="formData.showBreadcrumb" />
         </t-form-item>
-        <t-form-item
-          label="显示 Footer"
-          name="showFooter"
-        >
+        <t-form-item label="显示 Footer" name="showFooter">
           <t-switch v-model="formData.showFooter" />
         </t-form-item>
-        <t-form-item
-          label="使用 多标签Tab页"
-          name="isUseTabsRouter"
-        >
+        <t-form-item label="使用 多标签Tab页" name="isUseTabsRouter">
           <t-switch v-model="formData.isUseTabsRouter" />
         </t-form-item>
       </t-form>
       <div class="setting-info">
         <p>请复制后手动修改配置文件: /src/config/style.ts</p>
-        <t-button
-          theme="primary"
-          variant="text"
-          @click="handleCopy"
-        >
-          复制配置项
-        </t-button>
+        <t-button theme="primary" variant="text" @click="handleCopy"> 复制配置项 </t-button>
       </div>
     </div>
   </t-drawer>
@@ -180,21 +123,11 @@ import SettingAutoIcon from '@/assets/svg/assets-setting-auto.svg';
 const settingStore = useSettingStore();
 
 const LAYOUT_OPTION = ['side', 'top', 'mix'];
-const COLOR_OPTIONS = [
-  'default',
-  'cyan',
-  'green',
-  'yellow',
-  'orange',
-  'red',
-  'pink',
-  'purple',
-  'dynamic'
-];
+const COLOR_OPTIONS = ['default', 'cyan', 'green', 'yellow', 'orange', 'red', 'pink', 'purple', 'dynamic'];
 const MODE_OPTIONS = [
   { type: 'light', text: '明亮' },
   { type: 'dark', text: '暗黑' },
-  { type: 'auto', text: '跟随系统' }
+  { type: 'auto', text: '跟随系统' },
 ];
 const initStyleConfig = () => {
   const styleConfig = STYLE_CONFIG;
@@ -216,15 +149,15 @@ const showSettingPanel = computed({
   },
   set(newVal: boolean) {
     settingStore.updateConfig({
-      showSettingPanel: newVal
+      showSettingPanel: newVal,
     });
-  }
+  },
 });
 
 const changeColor = (hex: string) => {
   const newPalette = Color.getPaletteByGradation({
     colors: [hex],
-    step: 10
+    step: 10,
   })[0];
   const { mode } = settingStore;
   const colorMap = generateColorMap(hex, newPalette, mode as 'light' | 'dark');
@@ -243,10 +176,7 @@ onMounted(() => {
   }
 });
 
-const onPopupVisibleChange = (
-  visible: boolean,
-  context: PopupVisibleChangeContext
-) => {
+const onPopupVisibleChange = (visible: boolean, context: PopupVisibleChangeContext) => {
   if (!visible && context.trigger === 'document') {
     isColoPickerDisplay.value = visible;
   }
@@ -277,7 +207,7 @@ const getModeIcon = (mode: string) => {
 
 const handleCloseDrawer = () => {
   settingStore.updateConfig({
-    showSettingPanel: false
+    showSettingPanel: false,
   });
 };
 
@@ -298,7 +228,8 @@ watchEffect(() => {
   width: 40px;
   height: 40px;
   border-radius: 20px 0 0 20px;
-  transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
+  transition:
+    transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
     visibility 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
   transition: all 0.3s;
   .t-icon {

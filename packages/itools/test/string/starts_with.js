@@ -22,35 +22,18 @@ describe('startsWith', function () {
   });
 
   it('should return false for an invalid starting string', function () {
-    expect(
-      itools.startsWith(
-        'The shadows betray you, because they belong to me!',
-        'belong to me!'
-      )
-    ).toBe(false);
-    expect(
-      itools.startsWith(
-        'The shadows betray you, because they belong to me!',
-        'he shadows'
-      )
-    ).toBe(false);
-    expect(itools.startsWith('They belong to me!', 'hey belong to me!')).toBe(
-      false
-    );
+    expect(itools.startsWith('The shadows betray you, because they belong to me!', 'belong to me!')).toBe(false);
+    expect(itools.startsWith('The shadows betray you, because they belong to me!', 'he shadows')).toBe(false);
+    expect(itools.startsWith('They belong to me!', 'hey belong to me!')).toBe(false);
     expect(itools.startsWith('They belong to me!', 'belong')).toBe(false);
     expect(itools.startsWith('', 'The shadows')).toBe(false);
   });
 
   it('should return false for an invalid starting string and position', function () {
-    expect(
-      itools.startsWith(
-        'The shadows betray you, because they belong to me!',
-        'The shadows betray you'
-      )
-    ).toBe(true);
-    expect(
-      itools.startsWith('They belong to me', 'They belong to me!', '!')
-    ).toBe(false);
+    expect(itools.startsWith('The shadows betray you, because they belong to me!', 'The shadows betray you')).toBe(
+      true
+    );
+    expect(itools.startsWith('They belong to me', 'They belong to me!', '!')).toBe(false);
   });
 
   it('should return false for an invalid starting number', function () {

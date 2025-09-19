@@ -1,15 +1,8 @@
 <template>
   <transition name="fade">
-    <div
-      v-if="backtopShow"
-      :class="['backtop-box', customClass]"
-      @click="backtop"
-    >
+    <div v-if="backtopShow" :class="['backtop-box', customClass]" @click="backtop">
       <slot v-if="slot['default']"></slot>
-      <div
-        v-else
-        class="backtop-default-box"
-      >
+      <div v-else class="backtop-default-box">
         <span class="default-backtop-icon">
           <ArrowUpIcon size="25px" />
         </span>
@@ -44,7 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
   visibilityHeight: 240,
   right: 20,
   bottom: 40,
-  customClass: ''
+  customClass: '',
 });
 
 /**

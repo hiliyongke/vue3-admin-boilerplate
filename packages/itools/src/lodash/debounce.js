@@ -1,13 +1,12 @@
-/* eslint-disable no-invalid-this */
 export default function debounce(fn, wait, callFirst) {
   let timeout;
   return function () {
     if (!wait) {
       return fn.apply(this, arguments);
     }
-    let self = this;
-    let args = arguments;
-    let callNow = callFirst && !timeout;
+    const self = this;
+    const args = arguments;
+    const callNow = callFirst && !timeout;
     clearTimeout(timeout);
     timeout = setTimeout(function () {
       timeout = null;

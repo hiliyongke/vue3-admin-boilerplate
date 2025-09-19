@@ -5,8 +5,7 @@ import isFunction from 'lodash-es/isFunction';
 // 存储请求与取消令牌的键值对列表
 let pendingMap = new Map<string, Canceler>();
 
-export const getPendingUrl = (config: AxiosRequestConfig) =>
-  [config.method, config.url].join('&');
+export const getPendingUrl = (config: AxiosRequestConfig) => [config.method, config.url].join('&');
 
 export class AxiosCanceler {
   // 添加请求到列表
@@ -15,7 +14,7 @@ export class AxiosCanceler {
     const url = getPendingUrl(config);
     config.cancelToken =
       config.cancelToken ||
-      new axios.CancelToken(cancel => {
+      new axios.CancelToken((cancel) => {
         if (!pendingMap.has(url)) {
           // 如果当前没有相同请求就添加
           pendingMap.set(url, cancel);
@@ -25,7 +24,7 @@ export class AxiosCanceler {
 
   // 清空所有请求
   removeAllPending() {
-    pendingMap.forEach(cancel => {
+    pendingMap.forEach((cancel) => {
       if (cancel && isFunction(cancel)) cancel();
     });
     pendingMap.clear();

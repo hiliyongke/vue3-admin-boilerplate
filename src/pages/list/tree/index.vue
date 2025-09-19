@@ -2,22 +2,12 @@
   <div class="table-tree-container">
     <div class="list-tree-wrapper">
       <div class="list-tree-operator">
-        <t-input
-          v-model="filterText"
-          placeholder="请输入关键词"
-          @input="onInput"
-        >
+        <t-input v-model="filterText" placeholder="请输入关键词" @input="onInput">
           <template #suffix-icon>
             <search-icon size="20px" />
           </template>
         </t-input>
-        <t-tree
-          :data="TREE_DATA"
-          hover
-          expand-on-click-node
-          :default-expanded="expanded"
-          :filter="filterByText"
-        />
+        <t-tree :data="TREE_DATA" hover expand-on-click-node :default-expanded="expanded" :filter="filterByText" />
       </div>
       <div class="list-tree-content">
         <common-table />
@@ -28,7 +18,7 @@
 
 <script lang="ts">
 export default {
-  name: 'ListTree'
+  name: 'ListTree',
 };
 </script>
 
@@ -44,7 +34,7 @@ const filterText = ref();
 const expanded = ['0', '0-0', '0-1', '0-2', '0-3', '0-4'];
 
 const onInput = () => {
-  filterByText.value = node => {
+  filterByText.value = (node) => {
     const rs = node.label.indexOf(filterText.value) >= 0;
     return rs;
   };

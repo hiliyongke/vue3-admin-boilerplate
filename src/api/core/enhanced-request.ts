@@ -35,7 +35,7 @@ class RequestCache {
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
-      ttl
+      ttl,
     });
   }
 
@@ -85,7 +85,7 @@ export class EnhancedHttpRequest {
         retries: config.autoRetry.times,
         delay: config.autoRetry.delay,
         backoff: config.autoRetry.backoff,
-        signal: config.signal
+        signal: config.signal,
       });
     } else {
       result = await requestFn();
@@ -111,7 +111,7 @@ export class EnhancedHttpRequest {
         retries: config.autoRetry.times,
         delay: config.autoRetry.delay,
         backoff: config.autoRetry.backoff,
-        signal: config.signal
+        signal: config.signal,
       });
     }
 
@@ -129,7 +129,7 @@ export class EnhancedHttpRequest {
         retries: config.autoRetry.times,
         delay: config.autoRetry.delay,
         backoff: config.autoRetry.backoff,
-        signal: config.signal
+        signal: config.signal,
       });
     }
 
@@ -147,7 +147,7 @@ export class EnhancedHttpRequest {
         retries: config.autoRetry.times,
         delay: config.autoRetry.delay,
         backoff: config.autoRetry.backoff,
-        signal: config.signal
+        signal: config.signal,
       });
     }
 
@@ -170,5 +170,5 @@ export const enhancedRequest = {
   post: EnhancedHttpRequest.post,
   put: EnhancedHttpRequest.put,
   delete: EnhancedHttpRequest.delete,
-  clearCache: EnhancedHttpRequest.clearCache
+  clearCache: EnhancedHttpRequest.clearCache,
 };

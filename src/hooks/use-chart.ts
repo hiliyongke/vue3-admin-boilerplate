@@ -1,5 +1,6 @@
 import * as echarts from 'echarts';
-import { Ref, ref, onMounted, onUnmounted } from 'vue';
+import type { Ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 /**
  * eChart hook
@@ -13,7 +14,7 @@ export const useChart = (domId: string): Ref<echarts.ECharts> => {
     // TODO resize 报错，响应式的问题，待处理
     selfChart.value.resize({
       width: chartContainer.clientWidth,
-      height: chartContainer.clientHeight
+      height: chartContainer.clientHeight,
     });
   };
 

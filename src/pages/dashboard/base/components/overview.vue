@@ -1,10 +1,7 @@
 <template>
   <t-card>
     <t-row>
-      <t-col
-        :xs="12"
-        :xl="9"
-      >
+      <t-col :xs="12" :xl="9">
         <t-card
           :bordered="false"
           title="出入库概览"
@@ -28,60 +25,30 @@
           ></div>
         </t-card>
       </t-col>
-      <t-col
-        :xs="12"
-        :xl="3"
-      >
-        <t-card
-          :bordered="false"
-          :class="{ 'dashboard-overview-card': true, 'export-panel': true }"
-        >
+      <t-col :xs="12" :xl="3">
+        <t-card :bordered="false" :class="{ 'dashboard-overview-card': true, 'export-panel': true }">
           <template #actions>
             <t-button>导出数据</t-button>
           </template>
           <t-row>
-            <t-col
-              :xs="6"
-              :xl="12"
-            >
-              <t-card
-                :bordered="false"
-                subtitle="本月出库总计（件）"
-                class="inner-card"
-              >
+            <t-col :xs="6" :xl="12">
+              <t-card :bordered="false" subtitle="本月出库总计（件）" class="inner-card">
                 <div class="inner-card__content">
                   <div class="inner-card__content-title">1726</div>
                   <div class="inner-card__content-footer">
                     自从上周以来
-                    <trend
-                      class="trend-tag"
-                      type="down"
-                      :is-reverse-color="false"
-                      describe="20.3%"
-                    />
+                    <trend class="trend-tag" type="down" :is-reverse-color="false" describe="20.3%" />
                   </div>
                 </div>
               </t-card>
             </t-col>
-            <t-col
-              :xs="6"
-              :xl="12"
-            >
-              <t-card
-                :bordered="false"
-                subtitle="本月入库总计（件）"
-                class="inner-card"
-              >
+            <t-col :xs="6" :xl="12">
+              <t-card :bordered="false" subtitle="本月入库总计（件）" class="inner-card">
                 <div class="inner-card__content">
                   <div class="inner-card__content-title">226</div>
                   <div class="inner-card__content-footer">
                     自从上周以来
-                    <trend
-                      class="trend-tag"
-                      type="down"
-                      :is-reverse-color="false"
-                      describe="20.3%"
-                    />
+                    <trend class="trend-tag" type="down" :is-reverse-color="false" describe="20.3%" />
                   </div>
                 </div>
               </t-card>
@@ -95,17 +62,13 @@
 
 <script lang="ts">
 export default {
-  name: 'DashboardBase'
+  name: 'DashboardBase',
 };
 </script>
 
 <script setup lang="ts">
 import * as echarts from 'echarts/core';
-import {
-  TooltipComponent,
-  LegendComponent,
-  GridComponent
-} from 'echarts/components';
+import { TooltipComponent, LegendComponent, GridComponent } from 'echarts/components';
 import { LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { useSettingStore } from '@/store';
@@ -117,13 +80,7 @@ import type { DateRangeValue } from 'tdesign-vue-next';
 import Trend from '@/components/trend/index.vue';
 import { constructInitDataset } from '../index';
 
-echarts.use([
-  TooltipComponent,
-  LegendComponent,
-  GridComponent,
-  LineChart,
-  CanvasRenderer
-]);
+echarts.use([TooltipComponent, LegendComponent, GridComponent, LineChart, CanvasRenderer]);
 
 const store = useSettingStore();
 const resizeTime = ref(1);
@@ -140,9 +97,7 @@ const renderStokeChart = () => {
     stokeContainer = element;
   }
   stokeChart = echarts.init(stokeContainer);
-  stokeChart.setOption(
-    constructInitDataset({ dateTime: LAST_7_DAYS, ...chartColors.value })
-  );
+  stokeChart.setOption(constructInitDataset({ dateTime: LAST_7_DAYS, ...chartColors.value }));
 };
 
 const renderCharts = () => {
@@ -151,24 +106,17 @@ const renderCharts = () => {
 
 // chartSize update
 const updateContainer = () => {
-  if (
-    document.documentElement.clientWidth >= 1400 &&
-    document.documentElement.clientWidth < 1920
-  ) {
-    resizeTime.value = Number(
-      (document.documentElement.clientWidth / 2080).toFixed(2)
-    );
+  if (document.documentElement.clientWidth >= 1400 && document.documentElement.clientWidth < 1920) {
+    resizeTime.value = Number((document.documentElement.clientWidth / 2080).toFixed(2));
   } else if (document.documentElement.clientWidth < 1080) {
-    resizeTime.value = Number(
-      (document.documentElement.clientWidth / 1080).toFixed(2)
-    );
+    resizeTime.value = Number((document.documentElement.clientWidth / 1080).toFixed(2));
   } else {
     resizeTime.value = 1;
   }
 
   stokeChart.resize({
     width: stokeContainer.clientWidth,
-    height: stokeContainer.clientHeight
+    height: stokeContainer.clientHeight,
   });
 };
 
@@ -194,7 +142,7 @@ watch(
 watch(
   () => store.mode,
   () => {
-    [stokeChart].forEach(item => {
+    [stokeChart].forEach((item) => {
       item.dispose();
     });
 
@@ -203,10 +151,8 @@ watch(
 );
 
 const onStokeDataChange = (value: DateRangeValue) => {
-  const checkedValues = Array.isArray(value) ? value.map(v => String(v)) : [];
-  stokeChart.setOption(
-    constructInitDataset({ dateTime: checkedValues, ...chartColors.value })
-  );
+  const checkedValues = Array.isArray(value) ? value.map((v) => String(v)) : [];
+  stokeChart.setOption(constructInitDataset({ dateTime: checkedValues, ...chartColors.value }));
 };
 </script>
 

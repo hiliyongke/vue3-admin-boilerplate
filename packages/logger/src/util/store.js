@@ -1,15 +1,11 @@
 import { obj2Str, str2Obj } from './util';
-import {
-  read as storageRead,
-  remove as storageRemove,
-  write as storageWrite
-} from './storage';
+import { read as storageRead, remove as storageRemove, write as storageWrite } from './storage';
 
 const MAX_LENGTH = 60;
 
 const preName = 'logger_';
 
-const prefix = keyName => {
+const prefix = (keyName) => {
   if (keyName.indexOf(preName) === 0) return keyName;
   return preName + keyName;
 };
@@ -31,12 +27,12 @@ const read = (keyName, pure) => {
   return null;
 };
 
-const remove = keyName => {
+const remove = (keyName) => {
   storageRemove(prefix(keyName));
 };
 
 // 限制字符长度
-const limit = keyValue => {
+const limit = (keyValue) => {
   for (const id in keyValue) {
     let key = keyValue[id];
     if (typeof key !== 'string') {

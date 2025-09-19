@@ -11,11 +11,11 @@ describe('isNumber', function () {
   });
 
   it('should return `false` for non-numbers', function () {
-    let expected = lodashStable.map(falsey, function (value) {
+    const expected = lodashStable.map(falsey, function (value) {
       return typeof value === 'number';
     });
 
-    let actual = lodashStable.map(falsey, function (value, index) {
+    const actual = lodashStable.map(falsey, function (value, index) {
       return index ? itools.isNumber(value) : itools.isNumber();
     });
 

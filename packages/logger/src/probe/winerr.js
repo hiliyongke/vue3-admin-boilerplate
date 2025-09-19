@@ -5,7 +5,7 @@ const probe = (forms, message, url, line) => {
   forms.addLine('ERROR', {
     etype: 'win error',
     msg: message,
-    js: `${url} : ${line}`
+    js: `${url} : ${line}`,
   });
   return true;
 };

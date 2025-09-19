@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { TRouterInfo, TTabRouterType } from '@/interface';
+import type { TRouterInfo, TTabRouterType } from '@/interface';
 import pinia from '@/store';
 
 const homeRoute: Array<TRouterInfo> = [
@@ -8,13 +8,13 @@ const homeRoute: Array<TRouterInfo> = [
     routeIdx: 0,
     title: '仪表盘',
     name: 'DashboardBase',
-    isHome: true
-  }
+    isHome: true,
+  },
 ];
 
 const state = {
   tabRouterList: homeRoute,
-  isRefreshing: false
+  isRefreshing: false,
 };
 
 // 不需要做多标签tabs页缓存的列表 值为每个页面对应的name 如 DashboardDetail
@@ -26,7 +26,7 @@ export const useTabsRouterStore = defineStore({
   state: () => state,
   getters: {
     tabRouters: (state: TTabRouterType) => state.tabRouterList,
-    refreshing: (state: TTabRouterType) => state.isRefreshing
+    refreshing: (state: TTabRouterType) => state.isRefreshing,
   },
   actions: {
     // 处理刷新
@@ -37,14 +37,10 @@ export const useTabsRouterStore = defineStore({
     // 处理新增
     appendTabRouterList(newRoute: TRouterInfo) {
       const needAlive = !ignoreCacheRoutes.includes(newRoute.name as string);
-      if (
-        !this.tabRouters.find(
-          (route: TRouterInfo) => route.path === newRoute.path
-        )
-      ) {
+      if (!this.tabRouters.find((route: TRouterInfo) => route.path === newRoute.path)) {
         this.tabRouterList = this.tabRouterList.concat({
           ...newRoute,
-          isAlive: needAlive
+          isAlive: needAlive,
         });
       }
     },
@@ -53,9 +49,7 @@ export const useTabsRouterStore = defineStore({
     subtractCurrentTabRouter(newRoute: TRouterInfo) {
       const { routeIdx } = newRoute;
       if (routeIdx !== undefined) {
-        this.tabRouterList = this.tabRouterList
-          .slice(0, routeIdx)
-          .concat(this.tabRouterList.slice(routeIdx + 1));
+        this.tabRouterList = this.tabRouterList.slice(0, routeIdx).concat(this.tabRouterList.slice(routeIdx + 1));
       }
     },
     // 处理关闭右侧
@@ -76,22 +70,17 @@ export const useTabsRouterStore = defineStore({
     subtractTabRouterOther(newRoute: TRouterInfo) {
       const { routeIdx } = newRoute;
       if (routeIdx !== undefined) {
-        this.tabRouterList =
-          routeIdx === 0
-            ? homeRoute
-            : homeRoute.concat([this.tabRouterList?.[routeIdx]]);
+        this.tabRouterList = routeIdx === 0 ? homeRoute : homeRoute.concat([this.tabRouterList?.[routeIdx]]);
       }
     },
     removeTabRouterList() {
       this.tabRouterList = [];
     },
     initTabRouterList(newRoutes: TRouterInfo[]) {
-      newRoutes?.forEach((route: TRouterInfo) =>
-        this.appendTabRouterList(route)
-      );
-    }
+      newRoutes?.forEach((route: TRouterInfo) => this.appendTabRouterList(route));
+    },
   },
-  persist: true
+  persist: true,
 });
 
 export function getTabsRouterStore() {

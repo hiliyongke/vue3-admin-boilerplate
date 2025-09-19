@@ -8,7 +8,7 @@ const utils = {
   ...checkFns,
   ...constant,
   calculateObj,
-  folderObj
+  folderObj,
 };
 
 export default utils;

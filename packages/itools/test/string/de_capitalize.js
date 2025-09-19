@@ -17,9 +17,9 @@ describe('deCapitalize', function () {
     expect(
       itools.deCapitalize(
         {
-          toString: function () {
+          toString() {
             return 'CaRrOt';
-          }
+          },
         },
         false
       )

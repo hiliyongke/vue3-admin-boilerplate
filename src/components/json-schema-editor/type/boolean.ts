@@ -17,14 +17,14 @@ interface Wrapper {
 }
 
 const value: Value = {
-  description: null
+  description: null,
 };
 
 const attr: Attr = {
   description: {
     name: '描述',
-    type: 'string'
-  }
+    type: 'string',
+  },
 };
 
 const wrapper: Wrapper = { value, attr };

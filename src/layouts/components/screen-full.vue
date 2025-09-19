@@ -1,14 +1,6 @@
 <template>
-  <t-tooltip
-    placement="bottom"
-    :content="getTitle"
-  >
-    <t-button
-      theme="default"
-      shape="square"
-      variant="text"
-      @click="toggle"
-    >
+  <t-tooltip placement="bottom" :content="getTitle">
+    <t-button theme="default" shape="square" variant="text" @click="toggle">
       <t-icon :name="isFullscreen ? 'fullscreen-exit' : 'fullscreen'" />
     </t-button>
   </t-tooltip>

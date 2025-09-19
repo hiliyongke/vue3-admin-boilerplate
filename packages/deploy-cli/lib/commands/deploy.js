@@ -6,13 +6,7 @@ const archiver = require('archiver');
 const { NodeSSH } = require('node-ssh');
 const childProcess = require('child_process');
 const { deployConfigPath } = require('../config');
-const {
-  checkDeployConfigExists,
-  log,
-  succeed,
-  error,
-  underline
-} = require('../utils');
+const { checkDeployConfigExists, log, succeed, error, underline } = require('../utils');
 
 const ssh = new NodeSSH();
 const maxBuffer = 5000 * 1024;
@@ -21,13 +15,13 @@ const maxBuffer = 5000 * 1024;
 let taskList;
 
 // 是否确认部署
-const confirmDeploy = message => {
+const confirmDeploy = (message) => {
   return inquirer.prompt([
     {
       type: 'confirm',
       name: 'confirm',
-      message
-    }
+      message,
+    },
   ]);
 };
 
@@ -36,13 +30,9 @@ const checkEnvCorrect = (config, env) => {
   const keys = ['name', 'host', 'port', 'username', 'distPath', 'webDir'];
 
   if (config) {
-    keys.forEach(key => {
+    keys.forEach((key) => {
       if (!config[env][key] || config[env][key] === '/') {
-        error(
-          `配置错误: ${underline(`${env}环境`)} ${underline(
-            `${key}属性`
-          )} 配置不正确`
-        );
+        error(`配置错误: ${underline(`${env}环境`)} ${underline(`${key}属性`)} 配置不正确`);
         process.exit(1);
       }
     });
@@ -62,19 +52,15 @@ const execBuild = async (config, index) => {
     spinner.start();
 
     await new Promise((resolve, reject) => {
-      childProcess.exec(
-        script,
-        { cwd: process.cwd(), maxBuffer: maxBuffer },
-        e => {
-          spinner.stop();
-          if (e === null) {
-            succeed('打包成功');
-            resolve();
-          } else {
-            reject(e.message);
-          }
+      childProcess.exec(script, { cwd: process.cwd(), maxBuffer }, (e) => {
+        spinner.stop();
+        if (e === null) {
+          succeed('打包成功');
+          resolve();
+        } else {
+          reject(e.message);
         }
-      );
+      });
     });
   } catch (e) {
     error('打包失败');
@@ -88,23 +74,21 @@ const buildZip = async (config, index) => {
   await new Promise((resolve, reject) => {
     log(`(${index}) 打包 ${underline(config.distPath)} Zip`);
     const archive = archiver('zip', {
-      zlib: { level: 9 }
-    }).on('error', e => {
+      zlib: { level: 9 },
+    }).on('error', (e) => {
       error(e);
     });
 
-    const output = fs
-      .createWriteStream(`${process.cwd()}/${config.distPath}.zip`)
-      .on('close', e => {
-        if (e) {
-          error(`打包zip出错: ${e}`);
-          reject(e);
-          process.exit(1);
-        } else {
-          succeed(`${underline(`${config.distPath}.zip`)} 打包成功`);
-          resolve();
-        }
-      });
+    const output = fs.createWriteStream(`${process.cwd()}/${config.distPath}.zip`).on('close', (e) => {
+      if (e) {
+        error(`打包zip出错: ${e}`);
+        reject(e);
+        process.exit(1);
+      } else {
+        succeed(`${underline(`${config.distPath}.zip`)} 打包成功`);
+        resolve();
+      }
+    });
 
     archive.pipe(output);
     archive.directory(config.distPath, false);
@@ -123,8 +107,8 @@ const connectSSH = async (config, index) => {
         {
           type: 'password',
           name: 'password',
-          message: '请输入服务器密码'
-        }
+          message: '请输入服务器密码',
+        },
       ]);
 
       config.password = answers.password;
@@ -155,7 +139,7 @@ const uploadLocalFile = async (config, index) => {
     spinner.start();
 
     await ssh.putFile(localPath, remoteFileName, null, {
-      concurrency: 1
+      concurrency: 1,
     });
 
     spinner.stop();
@@ -171,9 +155,7 @@ const backupRemoteFile = async (config, index) => {
   try {
     const { webDir, bakDir } = config;
     const dirName = webDir.split('/')[webDir.split('/').length - 1];
-    const zipFileName = `${dirName}_${dayjs().format(
-      'YYYY-MM-DD_HH:mm:ss'
-    )}.zip`;
+    const zipFileName = `${dirName}_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.zip`;
 
     log(`(${index}) 备份远程文件 ${underline(webDir)}`);
 
@@ -212,9 +194,7 @@ const unzipRemoteFile = async (config, index) => {
 
     log(`(${index}) 解压远程文件 ${underline(remoteFileName)}`);
 
-    await ssh.execCommand(
-      `unzip -o ${remoteFileName} -d ${webDir} && rm -rf ${remoteFileName}`
-    );
+    await ssh.execCommand(`unzip -o ${remoteFileName} -d ${webDir} && rm -rf ${remoteFileName}`);
 
     succeed('解压成功');
   } catch (e) {
@@ -229,10 +209,10 @@ const removeLocalFile = (config, index) => {
 
   log(`(${index}) 删除本地打包目录 ${underline(localPath)}`);
 
-  const remove = path => {
+  const remove = (path) => {
     if (fs.existsSync(path)) {
-      fs.readdirSync(path).forEach(file => {
-        let currentPath = `${path}/${file}`;
+      fs.readdirSync(path).forEach((file) => {
+        const currentPath = `${path}/${file}`;
         if (fs.statSync(currentPath).isDirectory()) {
           remove(currentPath);
         } else {
@@ -254,13 +234,8 @@ const disconnectSSH = () => {
 };
 
 // 创建任务列表
-const createTaskList = config => {
-  const {
-    script,
-    bakDir,
-    isRemoveRemoteFile = true,
-    isRemoveLocalFile = true
-  } = config;
+const createTaskList = (config) => {
+  const { script, bakDir, isRemoveRemoteFile = true, isRemoveLocalFile = true } = config;
 
   taskList = [];
   script && taskList.push(execBuild);
@@ -275,40 +250,34 @@ const createTaskList = config => {
 };
 
 // 执行任务列表
-const executeTaskList = async config => {
-  for (const [index, execute] of new Map(
-    taskList.map((execute, index) => [index, execute])
-  )) {
+const executeTaskList = async (config) => {
+  for (const [index, execute] of new Map(taskList.map((execute, index) => [index, execute]))) {
     await execute(config, index + 1);
   }
 };
 
 module.exports = {
   description: '部署项目',
-  apply: async env => {
+  apply: async (env) => {
     if (checkDeployConfigExists()) {
       const config = require(deployConfigPath);
-      const cluster = config.cluster;
-      const projectName = config.projectName;
+      const { cluster } = config;
+      const { projectName } = config;
       const currentTime = new Date().getTime();
 
-      const createdEnvConfig = env => {
+      const createdEnvConfig = (env) => {
         checkEnvCorrect(config, env);
 
         return Object.assign(config[env], {
           privateKey: config.privateKey,
-          passphrase: config.passphrase
+          passphrase: config.passphrase,
         });
       };
 
       if (env) {
         const envConfig = createdEnvConfig(env);
 
-        const answers = await confirmDeploy(
-          `${underline(projectName)} 项目是否部署到 ${underline(
-            envConfig.name
-          )}?`
-        );
+        const answers = await confirmDeploy(`${underline(projectName)} 项目是否部署到 ${underline(envConfig.name)}?`);
 
         if (answers.confirm) {
           createTaskList(envConfig);
@@ -325,9 +294,7 @@ module.exports = {
           process.exit(1);
         }
       } else if (cluster && cluster.length > 0) {
-        const answers = await confirmDeploy(
-          `${underline(projectName)} 项目是否部署到 ${underline('集群环境')}?`
-        );
+        const answers = await confirmDeploy(`${underline(projectName)} 项目是否部署到 ${underline('集群环境')}?`);
 
         if (answers.confirm) {
           for (const env of cluster) {
@@ -337,11 +304,7 @@ module.exports = {
 
             await executeTaskList(envConfig);
 
-            succeed(
-              `恭喜您，${underline(projectName)}项目已在${underline(
-                envConfig.name
-              )}部署成功`
-            );
+            succeed(`恭喜您，${underline(projectName)}项目已在${underline(envConfig.name)}部署成功`);
           }
 
           succeed(
@@ -353,14 +316,12 @@ module.exports = {
           process.exit(1);
         }
       } else {
-        error(
-          '请使用 deploy-cli -mode 指定部署环境或在配置文件中指定 cluster（集群）地址'
-        );
+        error('请使用 deploy-cli -mode 指定部署环境或在配置文件中指定 cluster（集群）地址');
         process.exit(1);
       }
     } else {
       error('deploy.config.js 文件不存，请使用 deploy-cli init 命令创建');
       process.exit(1);
     }
-  }
+  },
 };

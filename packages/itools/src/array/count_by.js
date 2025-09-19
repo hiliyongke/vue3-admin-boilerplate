@@ -5,7 +5,7 @@
 import isFunction from '../lodash/is_function';
 
 const countBy = (arr, fn) => {
-  return arr.map(isFunction(fn) ? fn : val => val[fn]).reduce((acc, val) => {
+  return arr.map(isFunction(fn) ? fn : (val) => val[fn]).reduce((acc, val) => {
     acc[val] = (acc[val] || 0) + 1;
     return acc;
   }, {});

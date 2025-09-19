@@ -9,11 +9,11 @@ describe('httpPost', () => {
     itools.httpPost(
       'https://api.github.com/users',
       'hrout',
-      res => {
+      (res) => {
         const cb = JSON.parse(res);
         expect(itools.isObject(cb)).toBe(true);
       },
-      error => {
+      (error) => {
         console.log(error);
       }
     );

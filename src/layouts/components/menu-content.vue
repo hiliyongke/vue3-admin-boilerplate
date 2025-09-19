@@ -1,72 +1,28 @@
 <template>
   <div>
-    <template
-      v-for="item in list"
-      :key="item.path"
-    >
-      <template
-        v-if="!item.children || !item.children.length || item.meta?.single"
-      >
-        <t-menu-item
-          v-if="getHref(item)"
-          :name="item.path"
-          :value="getPath(item)"
-          @click="openHref(getHref(item)[0])"
-        >
+    <template v-for="item in list" :key="item.path">
+      <template v-if="!item.children || !item.children.length || item.meta?.single">
+        <t-menu-item v-if="getHref(item)" :name="item.path" :value="getPath(item)" @click="openHref(getHref(item)[0])">
           <template #icon>
-            <t-icon
-              v-if="beIcon(item)"
-              :name="item.icon"
-            />
-            <component
-              :is="beRender(item).render"
-              v-else-if="beRender(item).can"
-              class="t-icon"
-            />
+            <t-icon v-if="beIcon(item)" :name="item.icon" />
+            <component :is="beRender(item).render" v-else-if="beRender(item).can" class="t-icon" />
           </template>
           {{ item.title }}
         </t-menu-item>
-        <t-menu-item
-          v-else
-          :name="item.path"
-          :value="getPath(item)"
-          :to="item.path"
-        >
+        <t-menu-item v-else :name="item.path" :value="getPath(item)" :to="item.path">
           <template #icon>
-            <t-icon
-              v-if="beIcon(item)"
-              :name="item.icon"
-            />
-            <component
-              :is="beRender(item).render"
-              v-else-if="beRender(item).can"
-              class="t-icon"
-            />
+            <t-icon v-if="beIcon(item)" :name="item.icon" />
+            <component :is="beRender(item).render" v-else-if="beRender(item).can" class="t-icon" />
           </template>
           {{ item.title }}
         </t-menu-item>
       </template>
-      <t-submenu
-        v-else
-        :name="item.path"
-        :value="item.path"
-        :title="item.title"
-      >
+      <t-submenu v-else :name="item.path" :value="item.path" :title="item.title">
         <template #icon>
-          <t-icon
-            v-if="beIcon(item)"
-            :name="item.icon"
-          />
-          <component
-            :is="beRender(item).render"
-            v-else-if="beRender(item).can"
-            class="t-icon"
-          />
+          <t-icon v-if="beIcon(item)" :name="item.icon" />
+          <component :is="beRender(item).render" v-else-if="beRender(item).can" class="t-icon" />
         </template>
-        <menu-content
-          v-if="item.children"
-          :nav-data="item.children"
-        />
+        <menu-content v-if="item.children" :nav-data="item.children" />
       </t-submenu>
     </template>
   </div>
@@ -82,8 +38,8 @@ import type { MenuRoute } from '../../../types/interface';
 const props = defineProps({
   navData: {
     type: Array as PropType<MenuRoute[]>,
-    default: () => []
-  }
+    default: () => [],
+  },
 });
 
 const route = useRoute();
@@ -104,21 +60,18 @@ const getMenuList = (list: MenuRoute[], basePath?: string): ListItemType[] => {
     return (a.meta?.orderNo || 0) - (b.meta?.orderNo || 0);
   });
   return list
-    .map(item => {
-      const path =
-        basePath && !item.path.includes(basePath)
-          ? `${basePath}/${item.path}`
-          : item.path;
+    .map((item) => {
+      const path = basePath && !item.path.includes(basePath) ? `${basePath}/${item.path}` : item.path;
       return {
         path,
         title: item.meta?.title,
         icon: item.meta?.icon || '',
         children: getMenuList(item.children, path),
         meta: item.meta,
-        redirect: item.redirect
+        redirect: item.redirect,
       };
     })
-    .filter(item => item.meta && item.meta.hidden !== true);
+    .filter((item) => item.meta && item.meta.hidden !== true);
 };
 
 const getHref = (item: MenuRoute) => {
@@ -129,7 +82,7 @@ const getHref = (item: MenuRoute) => {
   return null;
 };
 
-const getPath = item => {
+const getPath = (item) => {
   // 如果当前路由匹配这个菜单项，返回当前路由路径
   if (active.value === item.path || active.value.startsWith(item.path + '/')) {
     return active.value;
@@ -146,12 +99,12 @@ const beRender = (item: MenuRoute) => {
   if (isObject(item.icon) && typeof item.icon.render === 'function') {
     return {
       can: true,
-      render: item.icon.render
+      render: item.icon.render,
     };
   }
   return {
     can: false,
-    render: null
+    render: null,
   };
 };
 

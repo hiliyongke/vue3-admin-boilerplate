@@ -48,13 +48,7 @@ export function useEnhancedRequest<T = any>(
   refresh: () => Promise<T | null>;
   reset: () => void;
 } {
-  const {
-    immediate = false,
-    initialData = null,
-    onSuccess,
-    onError,
-    ...requestConfig
-  } = options;
+  const { immediate = false, initialData = null, onSuccess, onError, ...requestConfig } = options;
 
   // 状态管理
   const data = ref<T | null>(initialData);
@@ -124,7 +118,7 @@ export function useEnhancedRequest<T = any>(
     // 方法
     execute,
     refresh,
-    reset
+    reset,
   };
 }
 
@@ -146,10 +140,7 @@ export function useGet<T = any>(
   refresh: () => Promise<T | null>;
   reset: () => void;
 } {
-  return useEnhancedRequest<T>(
-    () => enhancedRequest.get<T>(url, options),
-    options
-  );
+  return useEnhancedRequest<T>(() => enhancedRequest.get<T>(url, options), options);
 }
 
 /**
@@ -171,8 +162,5 @@ export function usePost<T = any>(
   refresh: () => Promise<T | null>;
   reset: () => void;
 } {
-  return useEnhancedRequest<T>(
-    () => enhancedRequest.post<T>(url, data, options),
-    options
-  );
+  return useEnhancedRequest<T>(() => enhancedRequest.post<T>(url, data, options), options);
 }

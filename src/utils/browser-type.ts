@@ -20,7 +20,7 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
       [testUa(/macintosh|macintel/g), 'macos'], // macos系统
       [testUa(/x11/g), 'linux'], // linux系统
       [testUa(/android|adr/g), 'android'], // android系统
-      [testUa(/ios|iphone|ipad|ipod|iwatch/g), 'ios'] // ios系统
+      [testUa(/ios|iphone|ipad|ipod|iwatch/g), 'ios'], // ios系统
     ]).get(true) || 'unknow';
 
   // 系统版本
@@ -36,12 +36,12 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
           [testUa(/windows nt 6.1|windows 7/g), '7'],
           [testUa(/windows nt 6.2|windows 8/g), '8'],
           [testUa(/windows nt 6.3|windows 8.1/g), '8.1'],
-          [testUa(/windows nt 10.0|windows 10/g), '10']
-        ]).get(true)
+          [testUa(/windows nt 10.0|windows 10/g), '10'],
+        ]).get(true),
       ],
       ['macos', testVs(/os x [\d._]+/g)],
       ['android', testVs(/android [\d._]+/g)],
-      ['ios', testVs(/os [\d._]+/g)]
+      ['ios', testVs(/os [\d._]+/g)],
     ]).get(system) || 'unknow';
 
   // 平台
@@ -79,7 +79,7 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
       ['webkit', testVs(/applewebkit\/[\d._]+/g)],
       ['gecko', testVs(/gecko\/[\d._]+/g)],
       ['presto', testVs(/presto\/[\d._]+/g)],
-      ['trident', testVs(/trident\/[\d._]+/g)]
+      ['trident', testVs(/trident\/[\d._]+/g)],
     ]).get(engine) || 'unknow';
 
   // 载体版本
@@ -90,7 +90,7 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
       ['iexplore', testVs(/(msie [\d._]+)|(rv:[\d._]+)/g)],
       ['edge', testVs(/edge\/[\d._]+/g)],
       ['safari', testVs(/version\/[\d._]+/g)],
-      ['chrome', testVs(/chrome\/[\d._]+/g)]
+      ['chrome', testVs(/chrome\/[\d._]+/g)],
     ]).get(supporter) || 'unknow';
 
   // 外壳和外壳版本
@@ -102,7 +102,7 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
     [testUa(/2345explorer/g), ['2345', testVs(/2345explorer\/[\d._]+/g)]], // [2345浏览器,]
     [testUa(/metasr/g), ['sougou', 'unknow']], // [搜狗浏览器(无版本),]
     [testUa(/lbbrowser/g), ['liebao', 'unknow']], // [猎豹浏览器(无版本),]
-    [testUa(/maxthon/g), ['maxthon', testVs(/maxthon\/[\d._]+/g)]] // [遨游浏览器,]
+    [testUa(/maxthon/g), ['maxthon', testVs(/maxthon\/[\d._]+/g)]], // [遨游浏览器,]
   ]).get(true) || ['none', 'unknow'];
 
   return {
@@ -114,13 +114,13 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
         载体: supporter, // 载体: chrome safari firefox opera iexplore edge
         载体版本: supporterVs, // 载体版本
         系统: system, // 系统: windows macos linux android ios
-        系统版本: systemVs // 系统版本
+        系统版本: systemVs, // 系统版本
       },
       shell === 'none'
         ? {}
         : {
             外壳: shell, // 外壳: wechat qq uc 360 2345 sougou liebao maxthon
-            外壳版本: shellVs // 外壳版本
+            外壳版本: shellVs, // 外壳版本
           }
     ),
     en: Object.assign(
@@ -131,14 +131,14 @@ export default function BrowserType(lang: 'zh-cn' | 'en' = 'en') {
         supporter, // 载体: chrome safari firefox opera iexplore edge
         supporterVs, // 载体版本
         system, // 系统: windows macos linux android ios
-        systemVs // 系统版本
+        systemVs, // 系统版本
       },
       shell === 'none'
         ? {}
         : {
             shell, // 外壳: wechat qq uc 360 2345 sougou liebao maxthon
-            shellVs // 外壳版本
+            shellVs, // 外壳版本
           }
-    )
+    ),
   }[lang];
 }

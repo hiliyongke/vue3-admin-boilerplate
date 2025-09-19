@@ -5,13 +5,12 @@ const write = (keyName, keyValue) => {
   } catch (e) {}
 };
 
-const read = keyName => {
-  if (localStorage && localStorage.getItem)
-    return localStorage.getItem(keyName);
+const read = (keyName) => {
+  if (localStorage && localStorage.getItem) return localStorage.getItem(keyName);
   return null;
 };
 
-const remove = keyName => {
+const remove = (keyName) => {
   try {
     localStorage && localStorage.removeItem(keyName);
   } catch (e) {}

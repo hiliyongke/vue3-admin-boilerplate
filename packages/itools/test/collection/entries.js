@@ -4,12 +4,12 @@ describe('entries', () => {
   test('regular objects return pairs of property/value', function () {
     expect(itools.entries({ c: 8, a: 4 })).toEqual([
       ['c', 8],
-      ['a', 4]
+      ['a', 4],
     ]);
 
     expect(itools.entries({ b: { bb: 4 }, a: { aa: 2 } })).toEqual([
       ['b', { bb: 4 }],
-      ['a', { aa: 2 }]
+      ['a', { aa: 2 }],
     ]);
 
     expect(itools.entries({})).toEqual([]);
@@ -18,7 +18,7 @@ describe('entries', () => {
   test('arrays return pairs of index/value', function () {
     expect(itools.entries([{ c: 8 }, { a: 4 }])).toEqual([
       ['0', { c: 8 }],
-      ['1', { a: 4 }]
+      ['1', { a: 4 }],
     ]);
 
     expect(itools.entries([])).toEqual([]);
@@ -30,7 +30,7 @@ describe('entries', () => {
       ['1', 'e'],
       ['2', 'l'],
       ['3', 'l'],
-      ['4', 'o']
+      ['4', 'o'],
     ]);
 
     expect(

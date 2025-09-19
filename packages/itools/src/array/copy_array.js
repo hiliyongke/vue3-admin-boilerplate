@@ -8,9 +8,8 @@
  */
 function copyArray(source, array) {
   let index = -1;
-  const length = source.length;
+  const { length } = source;
 
-  // eslint-disable-next-line no-param-reassign
   array || (array = new Array(length));
   while (++index < length) {
     array[index] = source[index];

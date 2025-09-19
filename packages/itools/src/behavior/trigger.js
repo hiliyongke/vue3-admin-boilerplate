@@ -4,7 +4,7 @@
  */
 const trigger = (element, event, eventType) => {
   // delete document.createEventObject of ie
-  let e = document.createEvent(eventType || 'HTMLEvents');
+  const e = document.createEvent(eventType || 'HTMLEvents');
   e.initEvent(event, true, true);
   element.dispatchEvent(e);
 };

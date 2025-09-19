@@ -6,8 +6,8 @@ export default function entries(obj) {
     throw new Error('argument to `entries` must be an object');
   }
 
-  let result = [];
-  for (let key in obj) {
+  const result = [];
+  for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
       result.push([key, obj[key]]);
     }

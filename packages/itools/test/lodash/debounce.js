@@ -1,4 +1,3 @@
-/* eslint-disable max-nested-callbacks */
 import assert from 'assert';
 import { identity } from '../const';
 import itools from '../itools';
@@ -7,7 +6,7 @@ describe('debounce', function () {
   it('waits for n ms then runs once', function (done) {
     let callCounter = 0;
 
-    let fn = itools.debounce(function () {
+    const fn = itools.debounce(function () {
       callCounter++;
     }, 100);
 
@@ -23,7 +22,7 @@ describe('debounce', function () {
 
   it('when callFirst is true, runs once, waits for n ms then runs again', function (done) {
     let callCounter = 0;
-    let fn = itools.debounce(
+    const fn = itools.debounce(
       function () {
         callCounter++;
       },
@@ -46,11 +45,11 @@ describe('debounce', function () {
 
   it('invokes repeatedly when call intervals > than wait time', function (done) {
     let callCounter = 0;
-    let fn = itools.debounce(function () {
+    const fn = itools.debounce(function () {
       callCounter++;
     }, 100);
 
-    let runAndTest = function (expectedCounter) {
+    const runAndTest = function (expectedCounter) {
       fn();
       assert.equal(callCounter, expectedCounter);
     };
@@ -73,7 +72,7 @@ describe('debounce', function () {
 
   it('invokes repeatedly when wait is 0', function (done) {
     let callCounter = 0;
-    let fn1 = itools.debounce(function () {
+    const fn1 = itools.debounce(function () {
       callCounter++;
     }, 0);
 
@@ -88,7 +87,7 @@ describe('debounce', function () {
 
   it('invokes repeatedly when wait is falsey', function (done) {
     let callCounter = 0;
-    let fn1 = itools.debounce(function () {
+    const fn1 = itools.debounce(function () {
       callCounter++;
     });
 
@@ -103,7 +102,7 @@ describe('debounce', function () {
   });
 
   it('subsequent debounced calls return the last `func` result', function (done) {
-    let debounced = itools.debounce(identity, 32);
+    const debounced = itools.debounce(identity, 32);
     debounced('a');
 
     setTimeout(function () {

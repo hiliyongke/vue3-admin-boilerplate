@@ -66,7 +66,7 @@
 
 <script lang="ts">
 export default {
-  name: 'HorizontalTreeDemo'
+  name: 'HorizontalTreeDemo',
 };
 </script>
 

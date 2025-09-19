@@ -52,10 +52,10 @@ const utils = {
     }
     // 毫秒转换成秒 返回
     if (time > 1000) {
-      return (time / 1000).toFixed(2) + 's';
+      return `${(time / 1000).toFixed(2)}s`;
     }
     // 默认返回毫秒
-    return Math.round(time) + 'ms';
+    return `${Math.round(time)}ms`;
   },
 
   isImg(param) {
@@ -138,9 +138,9 @@ const utils = {
       for (const key in data) {
         let keyValue = '';
         if (len > 0) {
-          keyValue = '&' + key + '=' + data[key];
+          keyValue = `&${key}=${data[key]}`;
         } else {
-          keyValue = key + '=' + data[key];
+          keyValue = `${key}=${data[key]}`;
         }
         params += keyValue;
         len++;
@@ -149,12 +149,12 @@ const utils = {
       params = objectToFormData(data);
     }
     xhr.send(params);
-  }
+  },
 };
 
-const formatMs = utils.formatMs;
-const isObject = utils.isObject;
-const checkResourceType = utils.checkResourceType;
+const { formatMs } = utils;
+const { isObject } = utils;
+const { checkResourceType } = utils;
 
 class MiniMonitor {
   constructor(options) {
@@ -175,14 +175,10 @@ class MiniMonitor {
         css: 0,
         image: 0,
         video: 0,
-        others: 0
-      }
+        others: 0,
+      },
     };
-    this.performance =
-      window.performance ||
-      window.msPerformance ||
-      window.webkitPerformance ||
-      {};
+    this.performance = window.performance || window.msPerformance || window.webkitPerformance || {};
     // 获取数据信息
     this.getPerformanceTiming();
   }
@@ -223,73 +219,73 @@ class MiniMonitor {
    * 计算出相关指标的准确时间
    */
   setTiming() {
-    const timing = this.timing;
+    const { timing } = this;
     // 对数据进行计算
     const data = {
       redirectTime: {
         des: '重定向耗时',
-        value: timing.redirectEnd - timing.redirectStart
+        value: timing.redirectEnd - timing.redirectStart,
       },
       appcacheTime: {
         des: 'Appcache耗时',
-        value: timing.domainLookupStart - timing.fetchStart
+        value: timing.domainLookupStart - timing.fetchStart,
       },
       ndsTime: {
         des: 'DNS查询耗时',
-        value: timing.domainLookupEnd - timing.domainLookupStart
+        value: timing.domainLookupEnd - timing.domainLookupStart,
       },
       tcpTime: {
         des: 'TCP链接耗时',
-        value: timing.connectEnd - timing.connectStart
+        value: timing.connectEnd - timing.connectStart,
       },
       httpTime: {
         des: 'HTTP请求耗时',
-        value: timing.responseEnd - timing.responseStart
+        value: timing.responseEnd - timing.responseStart,
       },
       reqToDOMLoadTime: {
         des: '请求完毕到DOM加载耗时',
-        value: timing.domInteractive - timing.responseEnd
+        value: timing.domInteractive - timing.responseEnd,
       },
       domCompleteTime: {
         des: '解析DOM树耗时',
-        value: timing.domComplete - timing.domInteractive
+        value: timing.domComplete - timing.domInteractive,
       },
       whiteTime: {
         des: '白屏时间耗时',
-        value: timing.responseStart - timing.navigationStart
+        value: timing.responseStart - timing.navigationStart,
       },
       loadTime: {
         des: 'load事件耗时',
-        value: timing.loadEventEnd - timing.loadEventStart
+        value: timing.loadEventEnd - timing.loadEventStart,
       },
       pageLoadCompleteTime: {
         des: '页面加载完成的时间',
-        value: timing.loadEventEnd - timing.navigationStart
+        value: timing.loadEventEnd - timing.navigationStart,
       },
       FP: {
         des: 'first-paint',
-        value: -1
+        value: -1,
       },
       FCP: {
         des: 'first-contentful-paint',
-        value: -1
-      }
+        value: -1,
+      },
     };
 
     // 获取FP和FCP
     const getEntries = this.performance.getEntries();
     getEntries &&
-      getEntries.forEach(item => {
+      getEntries.forEach((item) => {
         if (item.name === 'first-paint') {
           data.FP = {
             des: 'first-paint',
-            value: item.startTime + item.duration
+            value: item.startTime + item.duration,
           };
         }
         if (item.name === 'first-contentful-paint') {
           data.FCP = {
             des: 'first-contentful-paint',
-            value: item.startTime + item.duration
+            value: item.startTime + item.duration,
           };
         }
       });
@@ -300,30 +296,30 @@ class MiniMonitor {
    * 计算出相关资源加载的准确时间
    */
   setEnteries() {
-    const enteriesResouceData = this.enteriesResouceData;
+    const { enteriesResouceData } = this;
     const imageArrs = [];
     const jsArrs = [];
     const cssArrs = [];
     const videoArrs = [];
     const otherArrs = [];
-    enteriesResouceData.map(item => {
+    enteriesResouceData.map((item) => {
       const d = {
         resourceName: {
           des: '资源名称',
-          value: item.name
+          value: item.name,
         },
         httpProtocol: {
           des: 'HTTP协议类型',
-          value: item.nextHopProtocol
+          value: item.nextHopProtocol,
         },
         tcpTime: {
           des: 'TCP链接耗时',
-          value: item.connectEnd - item.connectStart
+          value: item.connectEnd - item.connectStart,
         },
         loadTime: {
           des: '加载时间',
-          value: item.duration
-        }
+          value: item.duration,
+        },
       };
       switch (checkResourceType(item.name)) {
         case 'image':
@@ -353,7 +349,7 @@ class MiniMonitor {
       css: cssArrs,
       image: imageArrs,
       video: videoArrs,
-      others: otherArrs
+      others: otherArrs,
     };
   }
   /**
@@ -364,23 +360,19 @@ class MiniMonitor {
     for (const i in this.afterDatas.timingFormat) {
       timing[i] = {
         des: this.afterDatas.timingFormat[i].des,
-        value: formatMs(this.afterDatas.timingFormat[i].value)
+        value: formatMs(this.afterDatas.timingFormat[i].value),
       };
     }
     console.table(timing);
     for (const key in this.afterDatas.enteriesResouceData) {
-      console.group(
-        key +
-          '共加载' +
-          formatMs(this.afterDatas.enteriesResouceDataTiming[key])
-      );
+      console.group(`${key}共加载${formatMs(this.afterDatas.enteriesResouceDataTiming[key])}`);
       const enteriesResouceData = [];
       for (const item of this.afterDatas.enteriesResouceData[key]) {
         enteriesResouceData.push({
           资源名称: item.resourceName.value,
           HTTP协议类型: item.httpProtocol.value,
           TCP链接耗时: formatMs(item.tcpTime.value),
-          加载时间: formatMs(item.loadTime.value)
+          加载时间: formatMs(item.loadTime.value),
         });
       }
       // console.table(this.afterDatas.enteriesResouceData[key]);
@@ -400,7 +392,7 @@ class MiniMonitor {
     if (whiteListHost.indexOf(location.hostname) === -1) {
       return;
     }
-    const enteriesResouceDataTiming = this.afterDatas.enteriesResouceDataTiming;
+    const { enteriesResouceDataTiming } = this.afterDatas;
 
     const content = {
       path: location.pathname,
@@ -408,55 +400,55 @@ class MiniMonitor {
       ...this.afterDatas.timingFormat,
       imageTime: {
         des: '图片加载总时间',
-        value: enteriesResouceDataTiming.image
+        value: enteriesResouceDataTiming.image,
       },
       jsTime: {
         des: 'js加载总时间',
-        value: enteriesResouceDataTiming.js
+        value: enteriesResouceDataTiming.js,
       },
       cssTime: {
         des: 'css加载总时间',
-        value: enteriesResouceDataTiming.css
+        value: enteriesResouceDataTiming.css,
       },
       videoTime: {
         des: 'video加载总时间',
-        value: enteriesResouceDataTiming.video
+        value: enteriesResouceDataTiming.video,
       },
       othersTime: {
         des: '其他加载总时间',
-        value: enteriesResouceDataTiming.others
+        value: enteriesResouceDataTiming.others,
       },
       jsDetail: {
         count: 0,
-        content: []
+        content: [],
       },
       cssDetail: {
         count: 0,
-        content: []
+        content: [],
       },
       imageDetail: {
         count: 0,
-        content: []
+        content: [],
       },
       videoDetail: {
         count: 0,
-        content: []
+        content: [],
       },
       othersDetail: {
         count: 0,
-        content: []
-      }
+        content: [],
+      },
     };
 
     for (const key in this.afterDatas.enteriesResouceData) {
       const enteriesResouceDataItem = this.afterDatas.enteriesResouceData[key];
-      const contentItem = key + 'Detail';
+      const contentItem = `${key}Detail`;
       content[contentItem].count = enteriesResouceDataItem.length;
 
       for (const item of enteriesResouceDataItem) {
         content[contentItem].content.push({
           resource: item.resourceName.value,
-          time: item.loadTime.value
+          time: item.loadTime.value,
         });
       }
     }
@@ -468,7 +460,7 @@ class MiniMonitor {
 
     // 发送到服务端
     const params = {
-      content: JSON.stringify(content)
+      content: JSON.stringify(content),
     };
     this.baseParams && { ...this.baseParams, params };
     utils.post(

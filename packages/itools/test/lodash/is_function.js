@@ -1,15 +1,7 @@
 import assert from 'assert';
 import itools from '../itools';
 
-import {
-  slice,
-  asyncFunc,
-  genFunc,
-  args,
-  symbol,
-  document,
-  realm
-} from '../const';
+import { slice, asyncFunc, genFunc, args, symbol, document, realm } from '../const';
 
 describe('isFunction', function () {
   it('should return `true` for functions', function () {
@@ -18,17 +10,11 @@ describe('isFunction', function () {
   });
 
   it('should return `true` for async functions', function () {
-    assert.strictEqual(
-      itools.isFunction(asyncFunc),
-      typeof asyncFunc === 'function'
-    );
+    assert.strictEqual(itools.isFunction(asyncFunc), typeof asyncFunc === 'function');
   });
 
   it('should return `true` for generator functions', function () {
-    assert.strictEqual(
-      itools.isFunction(genFunc),
-      typeof genFunc === 'function'
-    );
+    assert.strictEqual(itools.isFunction(genFunc), typeof genFunc === 'function');
   });
 
   it('should return `true` for the `Proxy` constructor', function () {
@@ -50,10 +36,7 @@ describe('isFunction', function () {
     assert.strictEqual(itools.isFunction(symbol), false);
 
     if (document) {
-      assert.strictEqual(
-        itools.isFunction(document.getElementsByTagName('body')),
-        false
-      );
+      assert.strictEqual(itools.isFunction(document.getElementsByTagName('body')), false);
     }
   });
 

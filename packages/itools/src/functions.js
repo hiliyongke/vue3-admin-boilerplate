@@ -416,5 +416,5 @@ export default {
   column,
   split,
   unary,
-  indexBy
+  indexBy,
 };

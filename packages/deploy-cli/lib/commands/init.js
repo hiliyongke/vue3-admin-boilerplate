@@ -1,12 +1,7 @@
 const fs = require('fs');
 const childProcess = require('child_process');
 const inquirer = require('inquirer');
-const {
-  checkDeployConfigExists,
-  succeed,
-  error,
-  underline
-} = require('../utils');
+const { checkDeployConfigExists, succeed, error, underline } = require('../utils');
 const { inquirerConfig, deployConfigPath } = require('../config');
 
 // 获取用户输入信息
@@ -15,16 +10,16 @@ const getUserInputInfo = () => {
 };
 
 // 创建JSON对象
-const createJsonObj = userInputInfo => {
+const createJsonObj = (userInputInfo) => {
   const jsonObj = {
     projectName: userInputInfo.projectName,
     privateKey: userInputInfo.privateKey,
     passphrase: userInputInfo.passphrase,
-    cluster: []
+    cluster: [],
   };
   const { deployEnvList } = userInputInfo;
 
-  const createObj = env => {
+  const createObj = (env) => {
     return {
       name: userInputInfo[`${env}Name`],
       script: userInputInfo[`${env}Script`],
@@ -36,17 +31,17 @@ const createJsonObj = userInputInfo => {
       webDir: userInputInfo[`${env}WebDir`],
       bakDir: userInputInfo[`${env}BakDir`],
       isRemoveRemoteFile: userInputInfo[`${env}IsRemoveRemoteFile`],
-      isRemoveLocalFile: userInputInfo[`${env}IsRemoveLocalFile`]
+      isRemoveLocalFile: userInputInfo[`${env}IsRemoveLocalFile`],
     };
   };
 
-  deployEnvList.forEach(item => (jsonObj[item] = createObj(item)));
+  deployEnvList.forEach((item) => (jsonObj[item] = createObj(item)));
 
   return jsonObj;
 };
 
 // 创建配置文件
-const createConfigFile = jsonObj => {
+const createConfigFile = (jsonObj) => {
   const str = `module.exports = ${JSON.stringify(jsonObj, null, 2)}`;
   fs.writeFileSync(deployConfigPath, str);
 };
@@ -63,16 +58,12 @@ module.exports = {
       error('deploy.config.js 配置文件已存在');
       process.exit(1);
     } else {
-      getUserInputInfo().then(userInputInfo => {
+      getUserInputInfo().then((userInputInfo) => {
         createConfigFile(createJsonObj(userInputInfo));
         formatConfigFile();
-        succeed(
-          `配置文件生成成功，请查看项目目录下的 ${underline(
-            'deploy.config.js'
-          )} 文件确认配置是否正确`
-        );
+        succeed(`配置文件生成成功，请查看项目目录下的 ${underline('deploy.config.js')} 文件确认配置是否正确`);
         process.exit(0);
       });
     }
-  }
+  },
 };

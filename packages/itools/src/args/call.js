@@ -1,6 +1,6 @@
 const call =
   (key, ...args) =>
-  context =>
+  (context) =>
     context[key](...args);
 
 export default call;

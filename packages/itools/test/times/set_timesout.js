@@ -1,4 +1,3 @@
-/* eslint-disable no-invalid-this */
 import itools from '../itools';
 
 describe('setTimesout', function () {
@@ -12,7 +11,7 @@ describe('setTimesout', function () {
     const cb = () => {
       return 'abc';
     };
-    let id = itools.setTimesout(
+    const id = itools.setTimesout(
       function (word) {
         // console.log(this); // log {index: 3 ,times: 8, over: false}
         if (this.over) {

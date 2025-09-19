@@ -71,5 +71,5 @@ export const specialWords: string[] = [
   'volatile',
   'while',
   'with',
-  'yield'
+  'yield',
 ];

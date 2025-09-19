@@ -8,10 +8,10 @@ describe('detailedDiff', function () {
           a: ['a', 'b'],
           b: 2,
           c: ['x', 'y'],
-          e: 100 // deleted
-        }
+          e: 100, // deleted
+        },
       },
-      buzz: 'world'
+      buzz: 'world',
     };
 
     const rhs = {
@@ -20,10 +20,10 @@ describe('detailedDiff', function () {
           a: ['a'], // index 1 ('b')  deleted
           b: 2, // unchanged
           c: ['x', 'y', 'z'], // 'z' added
-          d: 'Hello, world!' // added
-        }
+          d: 'Hello, world!', // added
+        },
       },
-      buzz: 'fizz' // updated
+      buzz: 'fizz', // updated
     };
 
     const detailedDiffValue = itools.detailedDiff(lhs, rhs);

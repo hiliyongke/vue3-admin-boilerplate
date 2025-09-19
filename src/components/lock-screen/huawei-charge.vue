@@ -7,27 +7,15 @@
     <div class="contrast">
       <div class="circle"></div>
       <ul class="bubbles">
-        <li
-          v-for="i in 15"
-          :key="i"
-        ></li>
+        <li v-for="i in 15" :key="i"></li>
       </ul>
     </div>
     <div class="charging">
       <div>{{ batteryStatus }}</div>
-      <div
-        v-show="
-          Number.isFinite(battery.dischargingTime) &&
-          battery.dischargingTime != 0
-        "
-      >
+      <div v-show="Number.isFinite(battery.dischargingTime) && battery.dischargingTime != 0">
         剩余可使用时间：{{ calcDischargingTime }}
       </div>
-      <span
-        v-show="
-          Number.isFinite(battery.chargingTime) && battery.chargingTime != 0
-        "
-      >
+      <span v-show="Number.isFinite(battery.chargingTime) && battery.chargingTime != 0">
         距离电池充满需要：{{ calcDischargingTime }}
       </span>
     </div>
@@ -36,7 +24,7 @@
 
 <script lang="ts">
 export default {
-  name: 'HuaweiCharge'
+  name: 'HuaweiCharge',
 };
 </script>
 
@@ -64,14 +52,15 @@ interface Props {
  * 组件属性
  */
 const props = withDefaults(defineProps<Props>(), {
-  battery: () => ({
-    level: 0,
-    charging: false,
-    chargingTime: Infinity,
-    dischargingTime: Infinity
-  } as Battery),
+  battery: () =>
+    ({
+      level: 0,
+      charging: false,
+      chargingTime: Infinity,
+      dischargingTime: Infinity,
+    }) as Battery,
   calcDischargingTime: '',
-  batteryStatus: '已断开电源'
+  batteryStatus: '已断开电源',
 });
 </script>
 
@@ -126,8 +115,8 @@ const props = withDefaults(defineProps<Props>(), {
       width: @width;
       height: @width;
       transform: translate(-50%, -50%);
-      animation: moveToTop unit(~`(Math.round(Math.random() * 6) + 3) `, s)
-        ease-in-out unit(~`-(Math.random() * 5000 / 1000) `, s) infinite;
+      animation: moveToTop unit(~`(Math.round(Math.random() * 6) + 3) `, s) ease-in-out
+        unit(~`-(Math.random() * 5000 / 1000) `, s) infinite;
     }
   }
   .number {

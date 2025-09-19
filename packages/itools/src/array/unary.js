@@ -1,3 +1,3 @@
-const unary = fn => val => fn(val);
+const unary = (fn) => (val) => fn(val);
 
 export default unary;

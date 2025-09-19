@@ -19,9 +19,9 @@ export function usePermission() {
       return roles.includes(value);
     }
     // value是数组
-    return value.some(item => roles.includes(item));
+    return value.some((item) => roles.includes(item));
   }
   return {
-    hasPermission
+    hasPermission,
   };
 }

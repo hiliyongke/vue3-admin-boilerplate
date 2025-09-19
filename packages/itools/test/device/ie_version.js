@@ -4,20 +4,20 @@ import { chrome, edge, Edge12, Edge13, IE10, IE11 } from '../const';
 describe('ieVersion', () => {
   // ua = navigator.userAgent , isMobile = itools.isMobile
   // jest jsdom ua = "Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/11.12.0"
-  const ieVersion = ua => {
-    let uakit = ua;
-    let msie = uakit.indexOf('MSIE ');
+  const ieVersion = (ua) => {
+    const uakit = ua;
+    const msie = uakit.indexOf('MSIE ');
     if (msie > 0) {
       return parseInt(uakit.substring(msie + 5, uakit.indexOf('.', msie)), 10);
     }
 
-    let trident = uakit.indexOf('Trident/');
+    const trident = uakit.indexOf('Trident/');
     if (trident > 0) {
-      let rv = uakit.indexOf('rv:');
+      const rv = uakit.indexOf('rv:');
       return parseInt(uakit.substring(rv + 3, uakit.indexOf('.', rv)), 10);
     }
 
-    let edge = uakit.indexOf('Edge/');
+    const edge = uakit.indexOf('Edge/');
     if (edge > 0) {
       return parseInt(ua.substring(edge + 5, uakit.indexOf('.', edge)), 10);
     }

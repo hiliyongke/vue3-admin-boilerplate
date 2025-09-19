@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { TChartColor } from '@/config/color';
+import type { TChartColor } from '@/config/color';
 import { getChartListColor } from '@/utils/color';
 import { getRandomArray, getDateArray } from '@/utils/charts';
 
@@ -12,7 +12,7 @@ import { getRandomArray, getDateArray } from '@/utils/charts';
 export function getScatterDataSet({
   dateTime = [],
   placeholderColor,
-  borderColor
+  borderColor,
 }: { dateTime?: Array<string> } & TChartColor) {
   const divideNum = 40;
   const timeArray: string[] = [];
@@ -21,9 +21,7 @@ export function getScatterDataSet({
   for (let i = 0; i < divideNum; i++) {
     // const [timeArray, inArray, outArray] = dataset;
     if (dateTime.length > 0) {
-      const dateAbsTime: number =
-        (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) /
-        divideNum;
+      const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
       const endTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
       timeArray.push(dayjs(endTime).format('MM-DD'));
     } else {
@@ -43,48 +41,48 @@ export function getScatterDataSet({
     xAxis: {
       data: timeArray,
       axisLabel: {
-        color: placeholderColor
+        color: placeholderColor,
       },
       splitLine: { show: false },
       axisLine: {
         lineStyle: {
           color: borderColor,
-          width: 1
-        }
-      }
+          width: 1,
+        },
+      },
     },
     yAxis: {
       type: 'value',
       // splitLine: { show: false},
       axisLabel: {
-        color: placeholderColor
+        color: placeholderColor,
       },
       nameTextStyle: {
-        padding: [0, 0, 0, 60]
+        padding: [0, 0, 0, 60],
       },
       axisTick: {
         show: false,
         axisLine: {
-          show: false
-        }
+          show: false,
+        },
       },
       axisLine: {
-        show: false
+        show: false,
       },
       splitLine: {
         lineStyle: {
-          color: borderColor
-        }
-      }
+          color: borderColor,
+        },
+      },
     },
     tooltip: {
-      trigger: 'item'
+      trigger: 'item',
     },
     grid: {
       top: '5px',
       left: '25px',
       right: '5px',
-      bottom: '60px'
+      bottom: '60px',
     },
     legend: {
       left: 'center',
@@ -95,23 +93,23 @@ export function getScatterDataSet({
       itemWidth: 8,
       textStyle: {
         fontSize: 12,
-        color: placeholderColor
-      }
+        color: placeholderColor,
+      },
     },
     series: [
       {
         name: '按摩仪',
         symbolSize: 10,
         data: outArray.reverse(),
-        type: 'scatter'
+        type: 'scatter',
       },
       {
         name: '咖啡机',
         symbolSize: 10,
         data: inArray.concat(inArray.reverse()),
-        type: 'scatter'
-      }
-    ]
+        type: 'scatter',
+      },
+    ],
   };
 }
 
@@ -119,17 +117,9 @@ export function getScatterDataSet({
 export function getFolderLineDataSet({
   dateTime = [],
   placeholderColor,
-  borderColor
+  borderColor,
 }: { dateTime?: Array<string> } & TChartColor) {
-  let dateArray: Array<string> = [
-    '周一',
-    '周二',
-    '周三',
-    '周四',
-    '周五',
-    '周六',
-    '周日'
-  ];
+  let dateArray: Array<string> = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
   if (dateTime.length > 0) {
     const divideNum = 7;
     dateArray = getDateArray(dateTime, divideNum);
@@ -140,7 +130,7 @@ export function getFolderLineDataSet({
       top: '5%',
       right: '10px',
       left: '30px',
-      bottom: '60px'
+      bottom: '60px',
     },
     legend: {
       left: 'center',
@@ -149,36 +139,36 @@ export function getFolderLineDataSet({
       data: ['杯子', '茶叶', '蜂蜜', '面粉'],
       textStyle: {
         fontSize: 12,
-        color: placeholderColor
-      }
+        color: placeholderColor,
+      },
     },
     xAxis: {
       type: 'category',
       data: dateArray,
       boundaryGap: false,
       axisLabel: {
-        color: placeholderColor
+        color: placeholderColor,
       },
       axisLine: {
         lineStyle: {
           color: borderColor,
-          width: 1
-        }
-      }
+          width: 1,
+        },
+      },
     },
     yAxis: {
       type: 'value',
       axisLabel: {
-        color: placeholderColor
+        color: placeholderColor,
       },
       splitLine: {
         lineStyle: {
-          color: borderColor
-        }
-      }
+          color: borderColor,
+        },
+      },
     },
     tooltip: {
-      trigger: 'item'
+      trigger: 'item',
     },
     series: [
       {
@@ -194,9 +184,9 @@ export function getFolderLineDataSet({
           getRandomArray(),
           getRandomArray(),
           getRandomArray(),
-          getRandomArray()
+          getRandomArray(),
         ],
-        type: 'line'
+        type: 'line',
       },
       {
         showSymbol: true,
@@ -211,9 +201,9 @@ export function getFolderLineDataSet({
           getRandomArray(),
           getRandomArray(),
           getRandomArray(),
-          getRandomArray()
+          getRandomArray(),
         ],
-        type: 'line'
+        type: 'line',
       },
       {
         showSymbol: true,
@@ -228,9 +218,9 @@ export function getFolderLineDataSet({
           getRandomArray(),
           getRandomArray(),
           getRandomArray(),
-          getRandomArray()
+          getRandomArray(),
         ],
-        type: 'line'
+        type: 'line',
       },
       {
         showSymbol: true,
@@ -245,10 +235,10 @@ export function getFolderLineDataSet({
           getRandomArray(),
           getRandomArray(),
           getRandomArray(),
-          getRandomArray()
+          getRandomArray(),
         ],
-        type: 'line'
-      }
-    ]
+        type: 'line',
+      },
+    ],
   };
 }

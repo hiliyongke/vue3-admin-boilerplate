@@ -5,7 +5,7 @@
 import size from '../collection/size';
 
 export default function hash(str) {
-  let _str = String(str);
+  const _str = String(str);
   let hash = 0;
   let i;
   let chr;

@@ -4,7 +4,7 @@ import { falsey, stubZero, args, realm, MAX_SAFE_INTEGER } from '../const';
 import itools from '../itools';
 
 describe('size', function () {
-  let array = [1, 2, 3];
+  const array = [1, 2, 3];
 
   it('should return the number of own enumerable string keyed properties of an object', function () {
     assert.strictEqual(itools.size({ one: 1, two: 2, three: 3 }), 3);
@@ -15,9 +15,9 @@ describe('size', function () {
   });
 
   it('should accept a falsey `object`', function () {
-    let expected = lodashStable.map(falsey, stubZero);
+    const expected = lodashStable.map(falsey, stubZero);
 
-    let actual = lodashStable.map(falsey, function (object, index) {
+    const actual = lodashStable.map(falsey, function (object, index) {
       try {
         return index ? itools.size(object) : itools.size();
       } catch (e) {}

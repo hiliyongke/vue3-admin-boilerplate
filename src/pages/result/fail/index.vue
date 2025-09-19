@@ -1,28 +1,18 @@
 <template>
   <div class="result-fail">
-    <t-icon
-      class="result-fail-icon"
-      name="error-circle"
-    />
+    <t-icon class="result-fail-icon" name="error-circle" />
     <div class="result-fail-title">项目创建失败</div>
-    <div class="result-fail-describe">
-      企业微信联系检查创建者权限，或返回修改
-    </div>
+    <div class="result-fail-describe">企业微信联系检查创建者权限，或返回修改</div>
     <div class="result-fail-actions">
       <t-button @click="handleGoBack">返回修改</t-button>
-      <t-button
-        theme="default"
-        @click="handleGoHome"
-      >
-        返回首页
-      </t-button>
+      <t-button theme="default" @click="handleGoHome"> 返回首页 </t-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'ResultFail'
+  name: 'ResultFail',
 };
 </script>
 

@@ -17,7 +17,7 @@
 </route>
 <script lang="ts">
 export default {
-  name: 'DashboardBase'
+  name: 'DashboardBase',
 };
 </script>
 

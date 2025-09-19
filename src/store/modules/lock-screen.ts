@@ -17,7 +17,7 @@ export const useLockScreenStore = defineStore({
   id: 'lock-screen',
   state: (): LockScreenState => ({
     isLock: isLock === true, // 是否锁屏
-    lockTime: isLock == 'true' ? DEFAULT_LOCK_TIME : 0
+    lockTime: isLock == 'true' ? DEFAULT_LOCK_TIME : 0,
   }),
   actions: {
     setLock(isLock: boolean) {
@@ -26,6 +26,6 @@ export const useLockScreenStore = defineStore({
     },
     setLockTime(lockTime = DEFAULT_LOCK_TIME) {
       this.lockTime = lockTime;
-    }
-  }
+    },
+  },
 });

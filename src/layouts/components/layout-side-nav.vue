@@ -5,7 +5,7 @@
     :layout="settingStore.layout"
     :is-fixed="settingStore.isSidebarFixed"
     :menu="sideMenu"
-    :theme="(settingStore.displayMode as 'light' | 'dark')"
+    :theme="settingStore.displayMode as 'light' | 'dark'"
     :is-compact="settingStore.isSidebarCompact"
   />
 </template>
@@ -31,7 +31,7 @@ const sideMenu = computed(() => {
       if (menu && menu.path && route.path.indexOf(menu.path) === 0) {
         newMenuRouters = (menu.children || []).map((subMenu: MenuRoute) => ({
           ...subMenu,
-          path: `${menu.path}/${subMenu.path}`
+          path: `${menu.path}/${subMenu.path}`,
         }));
       }
     });

@@ -3,7 +3,7 @@ import { ios, ipad, android } from '../const';
 describe('isIPad', () => {
   // jest jsdom ua = "Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/11.12.0"
 
-  const isIPad = ua => {
+  const isIPad = (ua) => {
     return /iPad/.test(ua);
   };
 

@@ -15,8 +15,8 @@ describe('is', function () {
   });
 
   it('using is object', function () {
-    let foo = { a: 1 };
-    let bar = { a: 1 };
+    const foo = { a: 1 };
+    const bar = { a: 1 };
     assert.strictEqual(itools.is(foo, foo), true);
     assert.strictEqual(itools.is(foo, bar), false);
   });

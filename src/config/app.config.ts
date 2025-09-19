@@ -56,7 +56,7 @@ export const appConfig: AppConfig = {
     company: '冲向大佬',
     description: '基于Vue3 + TypeScript + Vite的现代化管理后台模板',
     defaultLanguage: 'zh-CN',
-    lockTime: 600
+    lockTime: 600,
   },
 
   api: {
@@ -65,7 +65,7 @@ export const appConfig: AppConfig = {
     targetUrl: 'http://localhost:3000',
     mockBaseUrl: '/mock/api',
     mockTargetUrl: 'http://localhost:3000',
-    mockEnabled: false
+    mockEnabled: false,
   },
 
   build: {
@@ -76,15 +76,15 @@ export const appConfig: AppConfig = {
     compression: true,
     compressionAlgorithm: 'gzip',
     analysis: true,
-    progress: true
+    progress: true,
   },
 
   dev: {
     port: 3000,
     open: false,
     https: false,
-    proxy: {}
-  }
+    proxy: {},
+  },
 };
 
 /**
@@ -94,6 +94,6 @@ export function getEnvConfig() {
   return {
     isDev: import.meta.env.DEV,
     isProd: import.meta.env.PROD,
-    mode: import.meta.env.MODE
+    mode: import.meta.env.MODE,
   };
 }
