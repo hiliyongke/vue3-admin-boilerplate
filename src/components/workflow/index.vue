@@ -74,7 +74,7 @@ const emit = defineEmits(['input']);
 const scaleVal = ref(100); // 流程图缩放比例 100%
 const step = ref('5');
 const changeScale = (val: number) => {
-  let v = scaleVal.value + val;
+  const v = scaleVal.value + val;
   if (v > 0 && v <= 200) {
     // 缩放介于0%~200%
     scaleVal.value = v;
@@ -150,12 +150,12 @@ const getNode = (data: any, nodeId: any, call: any) => {
 const del = (data: any, nodeId: any) => {
   if (data.childNode) {
     if (data.childNode.conditionNodes) {
-      for (let i in data.childNode.conditionNodes) {
+      for (const i in data.childNode.conditionNodes) {
         del(data.childNode.conditionNodes[i], nodeId);
       }
     }
     if (data.childNode.nodeId === nodeId) {
-      var copy = data.childNode.childNode || null;
+      const copy = data.childNode.childNode || null;
       delete data.childNode;
       copy && (data.childNode = copy);
     } else {
@@ -166,7 +166,7 @@ const del = (data: any, nodeId: any) => {
 const validator = (data: any) => {
   if (data.childNode) {
     if (data.childNode.conditionNodes) {
-      for (let i in data.childNode.conditionNodes) {
+      for (const i in data.childNode.conditionNodes) {
         console.log(data.childNode.conditionNodes[i].name);
         validator(data.childNode.conditionNodes[i]);
       }

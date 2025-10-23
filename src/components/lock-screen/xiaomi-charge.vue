@@ -44,6 +44,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { defineProps } from 'vue';
+
 import type { Battery } from '@/hooks/use-battery';
 
 /**

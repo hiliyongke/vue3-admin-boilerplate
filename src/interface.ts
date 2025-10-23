@@ -99,57 +99,6 @@ export interface NotificationItem {
 }
 
 /**
- * 路由标签信息类型
- */
-export interface TRouterInfo {
-  /** 路由路径 */
-  path: string;
-  /** 路由索引 */
-  routeIdx?: number;
-  /** 页面标题 */
-  title?: string;
-  /** 路由名称 */
-  name?: RouteRecordName;
-  /** 是否保持活跃状态 */
-  isAlive?: boolean;
-  /** 是否为首页 */
-  isHome?: boolean;
-  /** 路由查询参数 */
-  query?: Record<string, any>;
-  /** 路由元信息 */
-  meta?: {
-    /** 页面标题 */
-    title?: string;
-    /** 菜单图标 */
-    icon?: string;
-    /** 是否隐藏 */
-    hidden?: boolean;
-    /** 是否缓存 */
-    keepAlive?: boolean;
-    /** 权限标识 */
-    permission?: string;
-    /** 排序权重 */
-    order?: number;
-    /** 是否展开 */
-    expanded?: boolean;
-    /** 框架源地址 */
-    frameSrc?: string;
-    /** 是否在新窗口打开框架 */
-    frameBlank?: boolean;
-  };
-}
-
-/**
- * 标签路由管理类型
- */
-export interface TTabRouterType {
-  /** 是否正在刷新 */
-  isRefreshing: boolean;
-  /** 标签路由列表 */
-  tabRouterList: TRouterInfo[];
-}
-
-/**
  * 表格列配置类型
  */
 export interface TableColumn {

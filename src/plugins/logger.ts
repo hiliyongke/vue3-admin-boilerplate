@@ -1,11 +1,11 @@
-import Logger from '../../packages/logger/src/index.js';
+import { logger, LogLevel } from '@/shared/utils/logger';
+
 // 日志
 export function setupLogger() {
-  new Logger({
-    feID: 'logger',
-    report: (lines: any) => {
-      // 这里配置日志上传策略
-      console.log('### 自定义上报', lines);
-    },
+  logger.updateConfig({
+    enabled: true,
+    level: import.meta.env.DEV ? LogLevel.DEBUG : LogLevel.INFO,
+    enableInProduction: false,
+    reportToServer: Boolean(import.meta.env.VITE_LOG_REPORT_URL),
   });
 }

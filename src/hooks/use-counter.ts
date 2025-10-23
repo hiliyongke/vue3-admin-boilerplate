@@ -1,4 +1,4 @@
-import type { Ref } from 'vue';
+import { ref, onUnmounted, type Ref } from 'vue';
 
 /**
  * counter utils

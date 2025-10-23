@@ -25,6 +25,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+
 import AddNodeBtn from './add-node-btn.vue';
 import NodeMain from './node-main.vue';
 

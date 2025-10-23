@@ -52,6 +52,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import { useUserStore } from '@/store';
 
 const inputValue = ref('我是复制的内容');
@@ -63,7 +65,7 @@ const changeRole = (values) => {
   const user = userStore.userInfo;
   user.roles = values;
 };
-let data = ref('');
+const data = ref('');
 const setData = () => {
   data.value = '执行长按指令';
 };

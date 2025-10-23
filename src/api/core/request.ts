@@ -179,12 +179,8 @@ export class HttpRequest {
    * 通用请求方法
    */
   async request<T = any>(config: RequestConfig): Promise<T> {
-    try {
-      const response = await this.instance.request<ResponseData<T>>(config);
-      return response.data.data;
-    } catch (error) {
-      throw error;
-    }
+    const response = await this.instance.request<ResponseData<T>>(config);
+    return response.data.data;
   }
 
   /**

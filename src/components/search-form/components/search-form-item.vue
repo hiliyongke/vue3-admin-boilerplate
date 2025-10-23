@@ -83,6 +83,8 @@
 </template>
 
 <script setup lang="ts" name="SearchFormItem">
+import { defineProps } from 'vue';
+
 import { ColumnProps } from '@/components/pro-table/interface';
 
 interface ItemProps {

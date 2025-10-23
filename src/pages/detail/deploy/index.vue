@@ -79,6 +79,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
+
 import * as echarts from 'echarts/core';
 import { TitleComponent, ToolboxComponent, TooltipComponent, GridComponent, LegendComponent } from 'echarts/components';
 import { BarChart, LineChart } from 'echarts/charts';

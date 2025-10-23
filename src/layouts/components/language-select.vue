@@ -33,7 +33,7 @@ const handleSetLanguage = (dropdownItem: DropdownOption, context: { e: MouseEven
 };
 
 //导出属性到页面中使用
-let { langOptions } = toRefs(state);
+const { langOptions } = toRefs(state);
 </script>
 
 <style scoped lang="scss"></style>

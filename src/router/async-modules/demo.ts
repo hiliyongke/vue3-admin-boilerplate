@@ -6,15 +6,9 @@ export default [
     path: '/demo',
     name: 'demo',
     component: Layout,
-    redirect: '/demo/unocss',
+    redirect: '/demo/i18n',
     meta: { title: 'Demo', icon: DetailIcon, order: 8 },
     children: [
-      {
-        path: 'unocss',
-        name: 'demo-unocss',
-        component: () => import('@/pages/demo/unocss/index.vue'),
-        meta: { title: 'unocss' },
-      },
       {
         path: 'i18n',
         name: 'demo-i18n',
@@ -141,12 +135,12 @@ export default [
         path: 'secondePage',
         name: 'demo-secondePage',
         meta: { title: '二级菜单' },
-        redirect: '/demo/unocss',
+        redirect: '/demo/i18n',
         children: [
           {
-            path: 'unocss',
-            name: 'secondePage-demo-unocss',
-            component: () => import('@/pages/demo/unocss/index.vue'),
+            path: 'i18n',
+            name: 'secondePage-demo-i18n',
+            component: () => import('@/pages/demo/i18n/index.vue'),
             meta: { title: '三级菜单' },
           },
         ],

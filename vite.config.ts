@@ -2,13 +2,7 @@ import { defineConfig, ConfigEnv, UserConfigExport } from 'vite';
 import path from 'path';
 import { createVitePlugins } from './build/vite/plugins';
 import proxy from './build/vite/proxy';
-import {
-  DROP_CONSOLE,
-  DROP_DEBUGGER,
-  OUTPUT_DIR,
-  VITE_PORT,
-  PUBLIC_PATH
-} from './build/constant';
+import { DROP_CONSOLE, DROP_DEBUGGER, OUTPUT_DIR, VITE_PORT, PUBLIC_PATH } from './build/constant';
 
 function resolvePath(paths: string) {
   // 如果 __dirname 找不到 需要 npn install @types/node --save-dev
@@ -37,16 +31,17 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     '@layouts': resolvePath('./src/layouts'),
     '@pages': resolvePath('./src/pages'),
     '@services': resolvePath('./src/services'),
+    '@core': resolvePath('./src/core'),
     '@plugins': resolvePath('./src/plugins'),
     '@router': resolvePath('./src/router'),
     '@composables': resolvePath('./src/composables'),
     '@directives': resolvePath('./src/directives'),
-    '@enums': resolvePath('./src/enums')
+    '@enums': resolvePath('./src/enums'),
   };
 
   const esbuild = {
     jsxFactory: 'h',
-    jsxFragment: 'Fragment'
+    jsxFragment: 'Fragment',
   };
 
   const rollupOptions = {
@@ -56,7 +51,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     // 打包以后的js,css和img资源分别分门别类在js/css/img文件夹中
     // 如果要进行多页面开发，配置多入口，进行多页面开发
     input: {
-      index: path.resolve(__dirname, 'index.html')
+      index: path.resolve(__dirname, 'index.html'),
       // project: path.resolve(__dirname, 'project.html')
     },
     output: {
@@ -67,14 +62,10 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       // 静态资源分拆打包
       manualChunks(id) {
         if (id.includes('node_modules')) {
-          return id
-            .toString()
-            .split('node_modules/')[1]
-            .split('/')[0]
-            .toString();
+          return id.toString().split('node_modules/')[1].split('/')[0].toString();
         }
-      }
-    }
+      },
+    },
   };
 
   // 配置 Vite 依赖预编译，缩短项目冷启动时间
@@ -107,8 +98,8 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       '@codemirror/commands',
       '@codemirror/language',
       'generate-schema',
-      'splitpanes'
-    ]
+      'splitpanes',
+    ],
   };
 
   // 具体的的配置选项：https://vitejs.dev/config/#config-file
@@ -119,7 +110,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     root, // 项目根目录（index.html 文件所在的位置）。可以是一个绝对路径，或者一个相对于该配置文件本身的相对路径。
     // publicDir: 'src/assets/static', //要打包的静态资源，不配置的话，output打包出来的文件会没有
     resolve: {
-      alias
+      alias,
       // TODO: 这里会导致 tdesign 的全局配置导入异常 故注释
       // extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue'] // 使用路径别名时想要省略的后缀名，可以自己 增减
     },
@@ -134,17 +125,15 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       preprocessorOptions: {
         less: {
           // 这样就能全局使用 src/style/variables.less 定义的 变量
-          additionalData: `@import "${resolvePath(
-            'src/style/variables.less'
-          )}";`,
+          additionalData: `@import "${resolvePath('src/style/variables.less')}";`,
           // 支持内联 JavaScript
-          javascriptEnabled: true
-        }
-      }
+          javascriptEnabled: true,
+        },
+      },
     },
 
     define: {
-      'process.env.APP_IS_LOCAL': '"true"'
+      'process.env.APP_IS_LOCAL': '"true"',
     },
 
     // 开发服务器配置
@@ -154,7 +143,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       open: false, // 类型： boolean | string在服务器启动时自动在浏览器中打开应用程序；
       cors: false, // 类型： boolean | CorsOptions 为开发服务器配置 CORS。默认启用并允许任何源
       host: true, // 监听所有本地 IP
-      proxy
+      proxy,
     },
 
     // build
@@ -166,16 +155,16 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
           keep_infinity: true,
           // 清除console和debugger
           drop_console: DROP_CONSOLE,
-          drop_debugger: DROP_DEBUGGER
-        }
+          drop_debugger: DROP_DEBUGGER,
+        },
       },
       manifest: true, // 是否产出manifest.json
       outDir: OUTPUT_DIR || 'dist', // 产出目录
       assetsDir: 'static',
       chunkSizeWarningLimit: 2000, // 限制最大包的大小
       rollupOptions,
-      sourcemap: mode === 'development' // 是否产出sourcemap.json
+      sourcemap: mode === 'development', // 是否产出sourcemap.json
     },
-    esbuild
+    esbuild,
   });
 };

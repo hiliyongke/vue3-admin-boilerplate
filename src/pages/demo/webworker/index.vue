@@ -38,7 +38,7 @@ const workerCode: WorkerFunction = () => {
   // 在 Worker 中监听消息
   onmessage = (e: MessageEvent<number>) => {
     console.time('加载时间');
-    console.log('接收到主线程的信息: ' + e.data);
+    console.log(`接收到主线程的信息: ${e.data}`);
 
     // 处理复杂的 JS 逻辑
     let countNum = 0;

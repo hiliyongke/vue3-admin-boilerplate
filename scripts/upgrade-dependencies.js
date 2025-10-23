@@ -65,7 +65,6 @@ function upgradeCoreDependencies() {
     'vue-tsc@latest',
 
     // 构建工具
-    'unocss@latest',
     'unplugin-auto-import@latest',
     'unplugin-icons@latest',
     'unplugin-vue-components@latest',

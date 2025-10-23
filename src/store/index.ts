@@ -1,12 +1,5 @@
 /**
- * @description Pinia状态管理配置
- * @author 优化版本
- *
- * 主要功能：
- * 1. 创建Pinia实例
- * 2. 配置状态持久化插件
- * 3. 导出所有store模块
- * 4. 提供store安装函数
+ * @description Pinia 状态管理入口
  */
 
 import { createPinia, type Pinia } from 'pinia';
@@ -14,49 +7,59 @@ import { createPersistedState } from 'pinia-plugin-persistedstate';
 import type { App } from 'vue';
 
 /**
- * 创建Pinia实例
+ * 创建 Pinia 实例
  */
 const pinia: Pinia = createPinia();
 
 /**
  * 配置状态持久化插件
- * 支持将store状态自动保存到localStorage
+ * 支持将 store 状态自动保存到 localStorage
  */
 pinia.use(
   createPersistedState({
-    // 默认使用localStorage存储
-    storage: localStorage,
-    // 数据序列化配置
+    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
     serializer: {
       serialize: JSON.stringify,
       deserialize: JSON.parse,
     },
-    // 可以通过key函数自定义存储键名
     key: (id: string) => `__persisted__${id}`,
-    // 默认持久化所有状态，可在具体store中配置
     auto: true,
   })
 );
 
-// 导出所有store模块
-export * from './modules/lock-screen';
-export * from './modules/notification';
-export * from './modules/permission';
-export * from './modules/user';
-export * from './modules/setting';
-export * from './modules/tabs-router';
+// 导出所有 store 模块
+import { useUserStore } from './modules/user';
+import { usePermissionStore } from './modules/permission';
+import { useSettingStore } from './modules/setting';
+import { useLockScreenStore } from './modules/lock-screen';
+import { useNotificationStore } from './modules/notification';
 
-// 确保所有store都被正确导出
-export { useUserStore } from './modules/user';
-export { usePermissionStore } from './modules/permission';
-export { useSettingStore } from './modules/setting';
-export { useLockScreenStore } from './modules/lock-screen';
-export { useNotificationStore } from './modules/notification';
-export { useTabsRouterStore } from './modules/tabs-router';
+export { useUserStore, usePermissionStore, useSettingStore, useLockScreenStore, useNotificationStore };
+export { useNavigationTabStore } from '@/features/navigation/tabs';
+
+// 工具：在组件外使用时获取实例化的 store
+export function getUserStore() {
+  return useUserStore(pinia);
+}
+
+export function getPermissionStore() {
+  return usePermissionStore(pinia);
+}
+
+export function getSettingStore() {
+  return useSettingStore(pinia);
+}
+
+export function getLockScreenStore() {
+  return useLockScreenStore(pinia);
+}
+
+export function getNotificationStore() {
+  return useNotificationStore(pinia);
+}
 
 /**
- * 安装Pinia到Vue应用
- * @param app Vue应用实例
+ * 安装 Pinia 到 Vue 应用
  */
 export function setupPinia(app: App<Element>): void {
   app.use(pinia);

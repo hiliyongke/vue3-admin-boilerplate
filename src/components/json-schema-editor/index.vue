@@ -390,7 +390,7 @@ export default defineComponent({
       }
     },
     _checked(checked: boolean, parent: Schema) {
-      let required = parent.required;
+      let { required } = parent;
       if (checked) {
         if (!required) {
           parent.required = [];
@@ -422,7 +422,7 @@ export default defineComponent({
       props[name] = { type };
     },
     parseCustomProps() {
-      const ownProps = this.ownProps;
+      const { ownProps } = this;
       Object.keys(this.pickValue).forEach((key) => {
         if (ownProps.indexOf(key) === -1) {
           this.confirmAddCustomNode({ key, value: this.pickValue[key] });

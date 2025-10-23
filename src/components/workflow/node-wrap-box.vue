@@ -37,6 +37,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ref, defineProps } from 'vue';
+
 defineProps({
   node: {
     type: Object,

@@ -5,7 +5,7 @@ import type { Recordable } from 'vite-plugin-mock';
 const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 export function joinTimestamp<T extends boolean>(join: boolean, restful: T): T extends true ? string : object;
-
+// eslint-disable-next-line no-redeclare
 export function joinTimestamp(join: boolean, restful = false): string | object {
   if (!join) {
     return restful ? '' : {};

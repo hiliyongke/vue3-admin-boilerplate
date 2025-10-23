@@ -77,7 +77,7 @@ const collapsed = computed(() => useSettingStore().isSidebarCompact);
 const active = computed(() => route.path);
 
 const defaultExpanded = computed(() => {
-  const path = route.path;
+  const { path } = route;
   const parentPath = path.substring(0, path.lastIndexOf('/'));
   const expanded = getRoutesExpanded();
   return union(expanded, parentPath === '' ? [] : [parentPath]);

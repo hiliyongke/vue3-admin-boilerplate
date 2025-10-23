@@ -8,7 +8,7 @@ export default {
   // 显示页面路径
   showBreadcrumb: false,
   // 主题模式
-  mode: 'light',
+  mode: 'light' as 'light' | 'dark' | 'auto',
   // 布局方式
   layout: 'side',
   // 分割模式
@@ -20,7 +20,7 @@ export default {
   // 固定头部
   isHeaderFixed: true,
   // 是否使用tabs
-  isUseTabsRouter: false,
+  isUseTabsRouter: true,
   // 是否显示header
   showHeader: true,
   // 背景色

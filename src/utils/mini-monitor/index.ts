@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck - Performance monitoring utility with complex types
 /**
  * @file 性能监控
  * @des 通过performance来收集页面的性能指标，通过页面链接中拼接showPerformance=1，可在控制面板输出当前页面的性能指标信息
@@ -146,6 +146,7 @@ const utils = {
         len++;
       }
     } else if (type === 'form-data') {
+      // eslint-disable-next-line no-undef
       params = objectToFormData(data);
     }
     xhr.send(params);
@@ -153,7 +154,6 @@ const utils = {
 };
 
 const { formatMs } = utils;
-const { isObject } = utils;
 const { checkResourceType } = utils;
 
 class MiniMonitor {

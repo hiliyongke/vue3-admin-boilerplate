@@ -45,6 +45,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { defineProps } from 'vue';
+
 /**
  * 产品数据接口
  */

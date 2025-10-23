@@ -1,21 +1,22 @@
 import { computed, toRaw, unref } from 'vue';
 import uniqBy from 'lodash-es/uniqBy';
 import { useRouter } from 'vue-router';
-import { useSettingStore, useTabsRouterStore } from '@/store';
+import { useSettingStore } from '@/store';
+import { useNavigationTabStore } from '@/features/navigation/tabs';
 import type { MenuRoute } from '../../../types/interface';
 
 export function useFrameKeepAlive() {
   const router = useRouter();
   const { currentRoute } = router;
   const { isUseTabsRouter } = useSettingStore();
-  const tabStore = useTabsRouterStore();
+  const tabStore = useNavigationTabStore();
   const getFramePages = computed(() => {
     const ret = getAllFramePages(toRaw(router.getRoutes()) as unknown as MenuRoute[]) || [];
     return ret;
   });
 
   const getOpenTabList = computed((): string[] => {
-    return tabStore.tabRouters.reduce((prev: string[], next) => {
+    return tabStore.allTabs.reduce((prev: string[], next) => {
       if (next.meta && Reflect.has(next.meta, 'frameSrc')) {
         prev.push(next.name as string);
       }

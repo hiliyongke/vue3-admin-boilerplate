@@ -1,6 +1,5 @@
 /**
- * @description ESLint 配置文件 - 现代化配置
- * @author 优化版本
+ * @description ESLint 配置文件
  */
 import js from '@eslint/js';
 import typescript from '@typescript-eslint/eslint-plugin';
@@ -28,6 +27,8 @@ export default [
       'libs/**',
       'gulp/**',
       'test/**',
+      'coverage/**',
+      'build-reports/**',
       'tests/**',
       'scripts/**',
       'docs/**',
@@ -41,7 +42,6 @@ export default [
       'jest.config.ts',
       'vite.config.ts',
       'vitest.config.ts',
-      'unocss.config.js',
       'plopfile.ts',
       'src/utils/validate/lib/**'
     ]
@@ -79,6 +79,8 @@ export default [
         window: 'readonly',
         document: 'readonly',
         console: 'readonly',
+        navigator: 'readonly',
+        location: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
         setInterval: 'readonly',
@@ -99,6 +101,13 @@ export default [
         FormData: 'readonly',
         Blob: 'readonly',
         AbortSignal: 'readonly',
+        AbortController: 'readonly',
+        fetch: 'readonly',
+        performance: 'readonly',
+        PerformanceObserver: 'readonly',
+        PerformanceResourceTiming: 'readonly',
+        PerformanceNavigationTiming: 'readonly',
+        Location: 'readonly',
         // Node.js
         NodeJS: 'readonly',
         process: 'readonly'
@@ -151,6 +160,8 @@ export default [
         window: 'readonly',
         document: 'readonly',
         console: 'readonly',
+        navigator: 'readonly',
+        location: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
         setInterval: 'readonly',
@@ -171,12 +182,21 @@ export default [
         FormData: 'readonly',
         Blob: 'readonly',
         AbortSignal: 'readonly',
+        AbortController: 'readonly',
+        fetch: 'readonly',
+        performance: 'readonly',
+        PerformanceObserver: 'readonly',
+        PerformanceResourceTiming: 'readonly',
+        PerformanceNavigationTiming: 'readonly',
+        Location: 'readonly',
         // 类型定义
         Recordable: 'readonly',
         Fn: 'readonly',
         // Node.js
         NodeJS: 'readonly',
-        process: 'readonly'
+        process: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly'
       }
     },
     plugins: {
@@ -261,7 +281,7 @@ export default [
       'no-var': 'error',
       'object-shorthand': 'error',
       'prefer-template': 'error',
-      'no-duplicate-imports': 'error',
+      'no-duplicate-imports': 'off',
       'no-useless-rename': 'error',
       'prefer-destructuring': ['error', {
         VariableDeclarator: { array: false, object: true },
@@ -300,8 +320,7 @@ export default [
       'vitest.config.*',
       'jest.config.*',
       'postcss.config.*',
-      'tailwind.config.*',
-      'unocss.config.*'
+      'tailwind.config.*'
     ],
     rules: {
       'no-console': 'off',

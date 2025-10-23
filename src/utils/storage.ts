@@ -53,7 +53,7 @@ export const createStorage = ({ prefixKey = '', storage = localStorage } = {}) =
             return value;
           }
           this.remove(this.getKey(key));
-        } catch (e) {
+        } catch (_e) {
           return def;
         }
       }

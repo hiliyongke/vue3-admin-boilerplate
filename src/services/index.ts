@@ -3,6 +3,8 @@
  * @author 优化版本
  */
 
+import { logger } from '@/shared/utils/logger';
+
 // API服务
 export * from './api';
 
@@ -33,7 +35,7 @@ export abstract class BaseService {
    * 处理API错误
    */
   protected handleError(error: any): never {
-    console.error('API请求错误:', error);
+    logger.error('API请求错误:', error);
     throw error;
   }
 }

@@ -29,6 +29,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { defineProps } from 'vue';
+
 import type { Battery } from '@/hooks/use-battery';
 
 /**
@@ -51,7 +53,7 @@ interface Props {
 /**
  * 组件属性
  */
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   battery: () =>
     ({
       level: 0,

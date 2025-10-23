@@ -7,7 +7,11 @@
  */
 import CryptoES from 'crypto-es';
 
-const keyStr = 'xxxx';
+const keyStr = import.meta.env.VITE_CRYPTO_KEY || '';
+
+if (!keyStr) {
+  throw new Error('VITE_CRYPTO_KEY is not defined in environment variables');
+}
 // 加密
 export function encrypt(word: string) {
   const key = CryptoES.enc.Utf8.parse(keyStr);

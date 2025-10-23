@@ -65,6 +65,11 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter, useRoute } from 'vue-router';
+import { reactive } from 'vue';
+import { MessagePlugin } from 'tdesign-vue-next';
+import { LockOffIcon, UserIcon, LoadingIcon, ChevronRightIcon } from 'tdesign-icons-vue-next';
+
 import HuaweiCharge from './huawei-charge.vue';
 import XiaomiCharge from './xiaomi-charge.vue';
 import { useOnline } from '@/hooks/use-online';
@@ -72,7 +77,6 @@ import { useTime } from '@/hooks/use-time';
 import { useBattery } from '@/hooks/use-battery';
 import { useLockScreenStore } from '@/store/modules/lock-screen';
 import { useUserStore } from '@/store/modules/user';
-import { MessagePlugin } from 'tdesign-vue-next';
 import { login } from '@/api/user';
 const LOGIN_NAME = 'login';
 const lockScreenStore = useLockScreenStore();
@@ -98,11 +102,14 @@ const state = reactive({
 });
 
 // 解锁登录
-const unLockLogin = (val: boolean) => (state.isShowLogin = val);
+const unLockLogin = (val: boolean) => {
+  console.log('🔓 unLockLogin called with:', val);
+  state.isShowLogin = val;
+};
 
 // 登录
 const onLogin = async () => {
-  if (state.loginForm.password.trim() == '') {
+  if (state.loginForm.password.trim() === '') {
     return MessagePlugin.warning('请输入密码');
   }
 
@@ -148,11 +155,13 @@ const nav2login = () => {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 999;
+  z-index: 10000;
   display: flex;
   overflow: hidden;
   color: white;
   background: #000000;
+  pointer-events: auto;
+  user-select: none;
   &.unLockLogin {
     background-color: rgba(25, 28, 34, 0.78);
     backdrop-filter: blur(7px);

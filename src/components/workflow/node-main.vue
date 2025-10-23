@@ -58,6 +58,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { defineProps } from 'vue';
+
 import addNodeBtn from './add-node-btn.vue';
 import colBox from './col-box.vue';
 import nodeWrapBox from './node-wrap-box.vue';

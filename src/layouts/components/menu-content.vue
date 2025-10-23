@@ -84,7 +84,7 @@ const getHref = (item: MenuRoute) => {
 
 const getPath = (item) => {
   // 如果当前路由匹配这个菜单项，返回当前路由路径
-  if (active.value === item.path || active.value.startsWith(item.path + '/')) {
+  if (active.value === item.path || active.value.startsWith(`${item.path}/`)) {
     return active.value;
   }
   // 否则返回菜单项的路径

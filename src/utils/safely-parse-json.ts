@@ -6,7 +6,7 @@
 const safelyParseJson = <T = unknown>(parseString: string): T | null => {
   try {
     return JSON.parse(parseString);
-  } catch (e) {
+  } catch (_e) {
     return null;
   }
 };

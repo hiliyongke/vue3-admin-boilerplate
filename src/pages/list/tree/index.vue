@@ -23,6 +23,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import { SearchIcon } from 'tdesign-icons-vue-next';
 
 import { TREE_DATA } from './constants';

@@ -65,6 +65,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { computed, watch, onMounted, onUnmounted, nextTick } from 'vue';
+
 import * as echarts from 'echarts/core';
 import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import { LineChart, ScatterChart } from 'echarts/charts';

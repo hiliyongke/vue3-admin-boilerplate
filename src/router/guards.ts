@@ -1,4 +1,5 @@
 import { MessagePlugin } from 'tdesign-vue-next';
+import { logger } from '@/shared/utils';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import { getPermissionStore, getUserStore, useSettingStore } from '@/store';
@@ -41,7 +42,7 @@ function createMessageGuard(router: Router) {
     try {
       MessagePlugin?.closeAll();
     } catch (error) {
-      console.warn(`message guard error:${error}`);
+      logger.warn(`message guard error:${error}`);
     }
     return true;
   });

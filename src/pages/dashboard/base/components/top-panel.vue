@@ -144,7 +144,7 @@ const renderCharts = (): void => {
  * 更新容器尺寸
  */
 const updateContainer = (): void => {
-  const clientWidth = document.documentElement.clientWidth;
+  const { clientWidth } = document.documentElement;
 
   if (clientWidth >= 1400 && clientWidth < 1920) {
     resizeTime.value = Number((clientWidth / 2080).toFixed(2));

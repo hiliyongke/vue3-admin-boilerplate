@@ -1,5 +1,14 @@
 // 全局类型定义
 
+import 'pinia';
+import type { NavigationTabState } from '@/features/navigation/tabs/tab-route.types';
+
+declare module 'pinia' {
+  export interface PiniaCustomProperties {
+    // 扩展 Pinia Store 的自定义属性
+  }
+}
+
 declare global {
   // 通用函数类型
   type Fn<T = any, R = T> = (...arg: T[]) => R;
@@ -49,12 +58,12 @@ declare global {
   }
 
   // ActiveX 对象（IE 兼容）
-  declare class ActiveXObject {
+  class ActiveXObject {
     constructor(s: string);
   }
 
   // 表单数据转换函数
-  declare function objectToFormData(obj: any): FormData;
+  function objectToFormData(obj: any): FormData;
 
   // 性能导航时间接口扩展
   interface PerformanceNavigationTiming {

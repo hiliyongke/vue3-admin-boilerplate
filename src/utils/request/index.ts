@@ -10,8 +10,7 @@
  * 5. 支持请求取消和防重复请求
  */
 
-import { isString } from 'lodash-es';
-import { merge } from 'lodash-es';
+import { isString, merge } from 'lodash-es';
 import type { AxiosTransform, CreateAxiosOptions } from './transform';
 import { VAxios } from './axios';
 import { joinTimestamp, formatRequestDate, setObjToUrlParams } from './util';

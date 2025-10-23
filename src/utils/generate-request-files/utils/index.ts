@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck - Generated file, type checking not needed
 import * as checkFns from './check-fns';
 import * as constant from './constant';
 import calculateObj from './calculate-obj';

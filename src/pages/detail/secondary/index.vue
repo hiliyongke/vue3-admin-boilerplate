@@ -57,6 +57,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue';
+
 import { storeToRefs } from 'pinia';
 import { NOTIFICATION_TYPES } from '@/enums';
 import { NotificationItem } from '@/interface';

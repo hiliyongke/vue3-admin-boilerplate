@@ -302,22 +302,7 @@ Vite 配置文件 `vite.config.js` 位于项目根目录下，项目启动时会
 
 ### 按需引入
 
-使用 `unplugin-vue-components` 和 `unplugin-auto-import` 来实现自动导入：
-
-``` bash
-    npm install unplugin-vue-components unplugin-auto-import -D
-```
-
-在 Vite 对应的配置文件 `vite.config.js` 添加上述插件：
-
-``` js
-    import AutoImport from 'unplugin-auto-import/vite';
-    import Components from 'unplugin-vue-components/vite';
-    import { TDesignResolver } from 'unplugin-vue-components/resolvers';
-    
-    export default {
-      plugins: [
-        AutoImport({
+针对团队规范，我们仅保留官方推荐的组件库 `tdesign-vue-next`，不再额外引入原子化或自动按需插件。
           resolvers: [TDesignResolver({
             library: 'vue-next'
           })],

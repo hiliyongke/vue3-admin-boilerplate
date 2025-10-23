@@ -26,8 +26,9 @@
 <script setup lang="ts">
 import { computed, onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useRoute } from 'vue-router';
-import { useSettingStore, useTabsRouterStore } from '@/store';
+import { useRoute, useRouter } from 'vue-router';
+import { useSettingStore } from '@/store';
+import { createNavigationTabService, useNavigationTabStore } from '@/features/navigation/tabs';
 
 import SettingCom from './setting.vue';
 import LayoutHeader from './components/layout-header.vue';
@@ -39,8 +40,10 @@ import { prefix } from '@/config/global';
 import '@/style/layout.less';
 
 const route = useRoute();
+const router = useRouter();
 const settingStore = useSettingStore();
-const tabsRouterStore = useTabsRouterStore();
+const tabStore = useNavigationTabStore();
+const navigationService = createNavigationTabService(router);
 const setting = storeToRefs(settingStore);
 
 const mainLayoutCls = computed(() => [
@@ -49,30 +52,13 @@ const mainLayoutCls = computed(() => [
   },
 ]);
 
-const appendNewRoute = () => {
-  const {
-    path,
-    query,
-    meta: { title },
-    name,
-  } = route;
-  tabsRouterStore.appendTabRouterList({
-    path,
-    query,
-    title: title as string,
-    name,
-    isAlive: true,
-  });
-};
-
 onMounted(() => {
-  appendNewRoute();
+  navigationService.initialize();
 });
 
 watch(
   () => route.path,
   () => {
-    appendNewRoute();
     const layoutElement = document.querySelector(`.${prefix}-layout`);
     if (layoutElement) {
       layoutElement.scrollTo({ top: 0, behavior: 'smooth' });

@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
  * 初始化拖拽功能
  */
 const rowDrop = (): void => {
-  const element = document.querySelector('#' + props.headerText);
+  const element = document.querySelector(`#${props.headerText}`);
   if (element) {
     new SortableJsExample(element as HTMLElement, {
       group: {

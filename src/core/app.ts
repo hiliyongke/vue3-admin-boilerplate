@@ -16,6 +16,8 @@ import { setupComponents } from './modules/components';
 import { setupPlugins } from './modules/plugins';
 import { setupErrorHandler } from './modules/error-handler';
 import { setupPerformanceMonitor } from './modules/performance';
+import { setupSentry } from './modules/sentry';
+import { setupWebVitals, setupCustomPerformance } from './modules/web-vitals';
 
 /**
  * 应用启动器类
@@ -43,6 +45,12 @@ export class AppBootstrap {
 
       // 设置路由
       await this.setupRouter();
+
+      // 设置 Sentry（需要 router）
+      await this.setupSentry();
+
+      // 设置 Web Vitals
+      await this.setupWebVitals();
 
       // 设置国际化
       await this.setupI18n();
@@ -126,6 +134,24 @@ export class AppBootstrap {
    */
   private async setupPlugins(): Promise<void> {
     await setupPlugins(this.app);
+  }
+
+  /**
+   * 设置 Sentry
+   */
+  private async setupSentry(): Promise<void> {
+    const router = (this.app.config.globalProperties as any).$router;
+    if (router) {
+      await setupSentry(this.app, router);
+    }
+  }
+
+  /**
+   * 设置 Web Vitals
+   */
+  private async setupWebVitals(): Promise<void> {
+    setupWebVitals();
+    setupCustomPerformance();
   }
 }
 

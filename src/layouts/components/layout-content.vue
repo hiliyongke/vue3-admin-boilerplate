@@ -68,11 +68,13 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref, computed } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useSettingStore, useTabsRouterStore } from '@/store';
+import { useSettingStore } from '@/store';
+import { useNavigationTabStore } from '@/features/navigation/tabs';
+import { createNavigationTabService } from '@/features/navigation/tabs';
 import { prefix } from '@/config/global';
-import { TRouterInfo } from '@/interface';
+import type { NavigationTab } from '@/features/navigation/tabs';
 
 import LContent from './content.vue';
 import LBreadcrumb from './breadcrumb.vue';
@@ -82,71 +84,73 @@ const route = useRoute();
 const router = useRouter();
 
 const settingStore = useSettingStore();
-const tabsRouterStore = useTabsRouterStore();
-const tabRouters = computed(() => tabsRouterStore.tabRouters.filter((route) => route.isAlive || route.isHome));
+const tabStore = useNavigationTabStore();
+const navigationService = createNavigationTabService(router);
+const tabRouters = computed(() => tabStore.visibleTabs);
 const activeTabPath = ref('');
 
 const handleChangeCurrentTab = (value: string | number) => {
   const path = String(value);
-  const { tabRouters } = tabsRouterStore;
-  const route = tabRouters.find((i) => i.path === path);
-  router.push({ path, query: route?.query });
+  const target = tabStore.allTabs.find((tab) => tab.path === path);
+  if (target) {
+    router.push({ path: target.path, query: target.query, hash: target.hash });
+  }
 };
 
-const handleRemove = ({ value: path, index }) => {
-  const { tabRouters } = tabsRouterStore;
-  const nextRouter = tabRouters[index + 1] || tabRouters[index - 1];
-
-  tabsRouterStore.subtractCurrentTabRouter({ path, routeIdx: index });
-  if (path === route.path) router.push({ path: nextRouter.path, query: nextRouter.query });
+const handleRemove = ({ value: path }) => {
+  tabStore.close(String(path), 'self');
+  const active = tabStore.activePath;
+  if (active && active !== route.path) {
+    const target = tabStore.allTabs.find((tab) => tab.path === active);
+    if (target) {
+      router.push({ path: target.path, query: target.query, hash: target.hash });
+    }
+  }
 };
 
-const handleRefresh = (route: TRouterInfo, routeIdx: number) => {
-  tabsRouterStore.toggleTabRouterAlive(routeIdx);
-  nextTick(() => {
-    tabsRouterStore.toggleTabRouterAlive(routeIdx);
-    router.replace({ path: route.path, query: route.query });
-  });
+const handleRefresh = (tab: NavigationTab, index: number) => {
+  navigationService.refresh(tab.path);
   activeTabPath.value = '';
 };
-const handleCloseAhead = (path: string, routeIdx: number) => {
-  tabsRouterStore.subtractTabRouterAhead({ path, routeIdx });
 
-  handleOperationEffect('ahead', routeIdx);
-};
-const handleCloseBehind = (path: string, routeIdx: number) => {
-  tabsRouterStore.subtractTabRouterBehind({ path, routeIdx });
-
-  handleOperationEffect('behind', routeIdx);
-};
-const handleCloseOther = (path: string, routeIdx: number) => {
-  tabsRouterStore.subtractTabRouterOther({ path, routeIdx });
-
-  handleOperationEffect('other', routeIdx);
+const handleCloseAhead = (path: string, index: number) => {
+  navigationService.close(path, 'left');
+  redirectIfNeeded();
 };
 
-// 处理非当前路由操作的副作用
-const handleOperationEffect = (type: 'other' | 'ahead' | 'behind', routeIndex: number) => {
-  const currentPath = router.currentRoute.value.path;
-  const { tabRouters } = tabsRouterStore;
+const handleCloseBehind = (path: string, index: number) => {
+  navigationService.close(path, 'right');
+  redirectIfNeeded();
+};
 
-  const currentIdx = tabRouters.findIndex((i) => i.path === currentPath);
-  // 存在三种情况需要刷新当前路由
-  // 点击非当前路由的关闭其他、点击非当前路由的关闭左侧且当前路由小于触发路由、点击非当前路由的关闭右侧且当前路由大于触发路由
-  const needRefreshRouter =
-    (type === 'other' && currentIdx !== routeIndex) ||
-    (type === 'ahead' && currentIdx < routeIndex) ||
-    (type === 'behind' && currentIdx === -1);
-  if (needRefreshRouter) {
-    const nextRouteIdx = type === 'behind' ? tabRouters.length - 1 : 1;
-    const nextRouter = tabRouters[nextRouteIdx];
-    router.push({ path: nextRouter.path, query: nextRouter.query });
+const handleCloseOther = (path: string, index: number) => {
+  navigationService.close(path, 'others');
+  redirectIfNeeded();
+};
+
+const redirectIfNeeded = () => {
+  const target = tabStore.allTabs.find((tab) => tab.path === tabStore.activePath);
+  if (target && target.path !== route.path) {
+    router.push({ path: target.path, query: target.query, hash: target.hash });
   }
-
   activeTabPath.value = '';
 };
 const handleTabMenuClick = (visible: boolean, ctx, path: string) => {
   if (ctx.trigger === 'document') activeTabPath.value = '';
   if (visible) activeTabPath.value = path;
 };
+
+onMounted(() => {
+  navigationService.initialize();
+});
+
+watch(
+  () => route.path,
+  () => {
+    const layoutElement = document.querySelector(`.${prefix}-layout`);
+    if (layoutElement) {
+      layoutElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+);
 </script>

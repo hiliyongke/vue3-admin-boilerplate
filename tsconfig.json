@@ -18,7 +18,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "noImplicitAny": false,
@@ -48,6 +48,7 @@
       "@layouts/*": ["src/layouts/*"],
       "@pages/*": ["src/pages/*"],
       "@services/*": ["src/services/*"],
+      "@core/*": ["src/core/*"],
       "@plugins/*": ["src/plugins/*"],
       "@router/*": ["src/router/*"],
       "@composables/*": ["src/composables/*"],
@@ -69,11 +70,7 @@
     "dist",
     "build",
     "public",
-    "**/*.js",
-    "packages/**/*",
-    "packages/logger/**/*",
-    "packages/**/node_modules",
-    "packages/**/dist"
+    "**/*.js"
   ],
   "references": [
     {

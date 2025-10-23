@@ -6,6 +6,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import pinyin from 'pinyin';
 import { InputValue } from 'tdesign-vue-next';
 

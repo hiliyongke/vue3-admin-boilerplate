@@ -16,9 +16,9 @@ export async function setupPerformanceMonitor(app: App): Promise<void> {
   }
 
   // 生产环境启用性能监控
-  if (import.meta.env.PROD) {
+  if (import.meta.env.PROD && import.meta.env.VITE_MONITOR_URL) {
     new MiniMonitor({
-      url: import.meta.env.VITE_MONITOR_URL || '',
+      url: import.meta.env.VITE_MONITOR_URL,
       baseParams: {
         appName: import.meta.env.VITE_APP_TITLE || 'Vue3-Admin',
         version: import.meta.env.VITE_APP_VERSION || '1.0.0',

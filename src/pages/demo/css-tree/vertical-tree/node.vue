@@ -24,6 +24,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { defineProps } from 'vue';
+
 /**
  * 树节点类型
  */
